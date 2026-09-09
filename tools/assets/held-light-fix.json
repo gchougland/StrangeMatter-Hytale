@@ -1,0 +1,49 @@
+{
+  "snapshot": "build/art-preservation/20260909T152632807879Z",
+  "heldModels": {
+    "field_scanner": {
+      "attachment": "R-Attachment",
+      "geometryChild": "bone",
+      "gripYawDegrees": 180,
+      "sha256": "c62c1cc54acd58c6c4a31819fd4031075f385bd3fdeb485e1f82ba01c14d7845"
+    },
+    "graviton_hammer": {
+      "attachment": "R-Attachment",
+      "geometryChild": "bone",
+      "gripYawDegrees": 90,
+      "sha256": "2fb2645aa8850a9f7b510de8c5e8dd8db4c7473b861ec4ddb562a976f66498d4"
+    }
+  },
+  "lights": {
+    "gravitic": {
+      "Color": "#60f",
+      "Radius": 0
+    },
+    "chrono": {
+      "Color": "#f90",
+      "Radius": 0
+    },
+    "energetic": {
+      "Color": "#0ff",
+      "Radius": 0
+    },
+    "spatial": {
+      "Color": "#f0d",
+      "Radius": 0
+    },
+    "shade": {
+      "Color": "#09f",
+      "Radius": 0
+    },
+    "insight": {
+      "Color": "#0ff",
+      "Radius": 0
+    }
+  },
+  "notes": [
+    "All painted geometry, UV maps and textures retained",
+    "Item interactions and animation IDs untouched",
+    "Native radius-zero fixture default; RGB voxel brightness remains explicit",
+    "Client renderer source is not present in the shared checkout; final held/light appearance requires a client pass"
+  ]
+}

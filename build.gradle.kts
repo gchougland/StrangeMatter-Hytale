@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.hexvane"
-version = "0.4.0"
+version = "0.7.0"
 
 val hytaleHome = providers.environmentVariable("APPDATA").map { "$it/Hytale/install/release/package/game/latest" }
 val localServerJar = providers.gradleProperty("hytaleServerJar").orElse(hytaleHome.map { "$it/Server/HytaleServer.jar" })
@@ -30,7 +30,11 @@ tasks.withType<JavaCompile>().configureEach {
     options.sourcepath = files("build/empty-sourcepath")
     options.compilerArgs.add("-implicit:none")
 }
-tasks.named<Jar>("jar") { archiveBaseName = "StrangeMatter" }
+tasks.named<Jar>("jar") {
+    archiveBaseName = "StrangeMatter"
+    from("LICENSE.txt") { into("META-INF") }
+}
+tasks.named<Jar>("sourcesJar") { from("LICENSE.txt") { into("META-INF") } }
 val verifyGameplay by tasks.registering(JavaExec::class) {
     dependsOn(tasks.testClasses)
     classpath = sourceSets.test.get().runtimeClasspath
@@ -45,13 +49,40 @@ val verifyRecipeAssets by tasks.registering(Exec::class) {
 val verifyUiAssets by tasks.registering(Exec::class) {
     commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/test_validate_ui.py")
 }
+val verifyLaboratoryUi by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_laboratory_ui.py")
+}
 val verifyEffects by tasks.registering(Exec::class) {
     commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_effects.py")
 }
 val verifyPresentation by tasks.registering(Exec::class) {
     commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/test_validate_presentation.py")
 }
-tasks.check { dependsOn(verifyGameplay, verifyRecipeAssets, verifyUiAssets, verifyEffects, verifyPresentation) }
+val verifyMachineWork by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_machine_work.py")
+}
+val verifyHeldLights by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/assets/test_held_light_fix.py")
+}
+val verifyEnergeticPresentation by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_energetic_presentation.py")
+}
+val verifyClientAnimations by tasks.registering(Exec::class) {
+    commandLine("pwsh", "-NoProfile", "-File", "tools/validate_blockyanim_client.ps1")
+}
+val verifyGrassStatusIcon by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_grass_status_icon.py")
+}
+val verifyThoughtwellEchoes by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_thoughtwell_echoes.py")
+}
+val verifyThoughtwellHallucinations by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_thoughtwell_hallucinations.py")
+}
+val verifySeamlessTerrain by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_seamless_terrain.py")
+}
+tasks.check { dependsOn(verifyGameplay, verifyRecipeAssets, verifyUiAssets, verifyLaboratoryUi, verifyEffects, verifyPresentation, verifyMachineWork, verifyHeldLights, verifyEnergeticPresentation, verifyClientAnimations, verifyGrassStatusIcon, verifyThoughtwellEchoes, verifyThoughtwellHallucinations, verifySeamlessTerrain) }
 // Match Aetherhaven: the editor changes build/resources/main during a development
 // run; copy those edits back only after the server exits. This is Copy, not Sync:
 // generated output must never delete source assets or overwrite manifest metadata.

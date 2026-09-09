@@ -1,0 +1,12 @@
+{
+  "sampleRate": 48000,
+  "channels": 1,
+  "seconds": 8,
+  "sourceRms": 0.2,
+  "sourcePeak": 0.32733163708885904,
+  "loopBoundaryStep": 0.0065630582648554155,
+  "largestSampleStep": 0.007150712415433663,
+  "eventDb": -18,
+  "maxDistanceBlocks": 7,
+  "maxInstances": 3
+}

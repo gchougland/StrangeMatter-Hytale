@@ -7,7 +7,12 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.vector.Rotation3f;
 import com.hypixel.hytale.protocol.ToClientPacket;
-import com.hypixel.hytale.protocol.ToServerPacket;
+import com.hypixel.hytale.protocol.NetworkChannel;
+import com.hypixel.hytale.protocol.FormattedMessage;
+import com.hypixel.hytale.protocol.io.ChannelConnection;
+import com.hypixel.hytale.protocol.io.ConnectionHandler;
+import com.hypixel.hytale.protocol.io.PacketStatsRecorder;
+import com.hypixel.hytale.protocol.packets.connection.QuicApplicationErrorCode;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager;
@@ -15,7 +20,7 @@ import com.hypixel.hytale.server.core.entity.movement.MovementStatesComponent;
 import com.hypixel.hytale.server.core.inventory.InventoryComponent;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.inventory.container.ItemContainer;
-import com.hypixel.hytale.server.core.io.PacketHandler;
+import com.hypixel.hytale.server.core.io.handlers.game.GamePacketHandler;
 import com.hypixel.hytale.server.core.io.ProtocolVersion;
 import com.hypixel.hytale.server.core.modules.entity.component.*;
 import com.hypixel.hytale.server.core.modules.entity.player.ChunkTracker;
@@ -43,6 +48,7 @@ public final class NativePlayerFixture implements AutoCloseable {
         world.getEntityStore().getStore().assertThread();
         this.world=world;packets=new RecordingPackets();var tracker=new ChunkTracker();
         owner=new PlayerRef(holder,id,name,"en-US",packets,tracker);
+        packets.setPlayerRef(owner);
         tracker.setDefaultMaxSectionsPerSecond(owner);
         holder.putComponent(PlayerRef.getComponentType(),owner);
         holder.putComponent(ChunkTracker.getComponentType(),tracker);
@@ -114,11 +120,16 @@ public final class NativePlayerFixture implements AutoCloseable {
         }
         System.out.println("NATIVE_PLAYER_PERSISTENCE_VERIFICATION_PASSED: actual ECS player add/remove, native inventory initialization, required DiskPlayerStorage save/decode, exact item metadata, recipe knowledge and reattached saved player.");
     }
-    public static final class RecordingPackets extends PacketHandler {
-        public final List<ToClientPacket> packets=Collections.synchronizedList(new ArrayList<>());
-        public RecordingPackets(){super(null,new ProtocolVersion(0));}
+    public static final class RecordingPackets extends GamePacketHandler {
+        public final List<ToClientPacket> packets;
+        public RecordingPackets(){this(new RecordingChannel());}
+        private RecordingPackets(RecordingChannel channel){
+            super(channel,new ProtocolVersion(0),null);packets=channel.packets;
+            // All native networking systems see a live, writable transport. Their actual packet
+            // creation and chunk/entity tracking still run; only delivery to a socket is replaced.
+            for(var network:NetworkChannel.values())setChannel(network,channel);
+        }
         @Override public String getIdentifier(){return "Native test player (no socket)";}
-        @Override public void accept(ToServerPacket packet){}
         @Override public boolean isLocalConnection(){return true;}
         @Override public boolean isLANConnection(){return false;}
         @Override public void tryFlush(){}
@@ -128,6 +139,43 @@ public final class NativePlayerFixture implements AutoCloseable {
         @Override public void write(ToClientPacket... values){Collections.addAll(packets,values);}
         @Override public void write(ToClientPacket[] values,ToClientPacket last){Collections.addAll(packets,values);packets.add(last);}
         public <T extends ToClientPacket> List<T> ofType(Class<T> type){synchronized(packets){return packets.stream().filter(type::isInstance).map(type::cast).toList();}}
+    }
+    public static final class RecordingChannel implements ChannelConnection {
+        final List<ToClientPacket> packets=Collections.synchronizedList(new ArrayList<>());
+        private boolean active=true;
+        @Override public void flush(){}
+        @Override public void write(ToClientPacket packet){packets.add(packet);}
+        @Override public void writeAndFlush(ToClientPacket packet){write(packet);}
+        @Override public void write(ToClientPacket[] values){Collections.addAll(packets,values);}
+        @Override public void writeAndFlush(ToClientPacket[] values){write(values);}
+        @Override public boolean isActive(){return active;}
+        @Override public boolean isWritable(){return active;}
+        @Override public java.net.SocketAddress remoteAddress(){return new java.net.InetSocketAddress("127.0.0.1",0);}
+        @Override public String formatRemoteAddress(){return "native-test-loopback";}
+        @Override public void disconnect(FormattedMessage message){active=false;}
+        @Override public PacketStatsRecorder getPacketStatsRecorder(){return null;}
+        @Override public String getSniHostname(){return "localhost";}
+        @Override public boolean isFromSameOrigin(ChannelConnection other){return other instanceof RecordingChannel;}
+        @Override public void execute(Runnable runnable){runnable.run();}
+        @Override public java.security.cert.X509Certificate getClientCertificate(){return null;}
+        @Override public void initTimeoutContext(String stage,String identifier){}
+        @Override public void updateTimeoutContext(String stage,String identifier){}
+        @Override public void updateTimeoutContext(String stage){}
+        @Override public void setPacketTimeout(java.time.Duration timeout){}
+        @Override public void clearPacketTimeout(){}
+        @Override public void setStageTimeout(String stage,java.time.Duration timeout,java.util.function.BooleanSupplier condition,Runnable onTimeout){}
+        @Override public void clearStageTimeout(){}
+        @Override public void logConnectionTimings(String message,java.util.logging.Level level){}
+        @Override public java.util.concurrent.CompletableFuture<Void> setupAuxiliaryChannels(ConnectionHandler handler,java.util.function.BiConsumer<NetworkChannel,ChannelConnection> ready){
+            for(var network:NetworkChannel.values())ready.accept(network,this);
+            return java.util.concurrent.CompletableFuture.completedFuture(null);
+        }
+        @Override public void setChannelHandler(ConnectionHandler handler){}
+        @Override public void closeConnection(){active=false;}
+        @Override public void closeApplicationConnection(){active=false;}
+        @Override public void closeApplicationConnection(QuicApplicationErrorCode code){active=false;}
+        @Override public void closeApplicationConnection(QuicApplicationErrorCode code,FormattedMessage message){active=false;}
+        @Override public void updateStreamPriority(int urgency,boolean incremental){}
     }
     private static void require(boolean value,String message){if(!value)throw new AssertionError(message);}
 }

@@ -1,0 +1,27 @@
+{
+  "snapshot": "build\\art-preservation\\20260909T161746108506Z",
+  "existingBitmapsUnchanged": 203,
+  "core": {
+    "preservedOriginalNodes": 7,
+    "addedPlasmaSplinters": 8,
+    "shellNodes": 29,
+    "shellAtlas": "Items/StrangeMatter/anomaly_energetic_shell.png",
+    "unchangedAtlasSource": "Blocks/StrangeMatter/reality_forge.png"
+  },
+  "particles": {
+    "layers": 13,
+    "particlesPerOneSecondPulse": 64,
+    "maximumParticleLife": 1.2,
+    "conservativeConcurrentLimit": 128,
+    "emitterLife": 0.92,
+    "systemLife": 2.25
+  },
+  "stabilizer": {
+    "orientation": "BillboardVelocity",
+    "localForwardSpeed": 0.01,
+    "runtimeScale": "segment length",
+    "runtimeRotation": "native Rotation3f.lookAt(segment start, segment end)",
+    "particlesPerSegment": 2,
+    "maximumSegments": 56
+  }
+}

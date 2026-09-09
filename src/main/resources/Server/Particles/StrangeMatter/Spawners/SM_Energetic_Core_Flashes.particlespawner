@@ -1,0 +1,136 @@
+{
+  "Shape": "Sphere",
+  "RenderMode": "BlendAdd",
+  "LifeSpan": 0.92,
+  "TotalParticles": {
+    "Min": 4,
+    "Max": 4
+  },
+  "MaxConcurrentParticles": 4,
+  "ParticleLifeSpan": {
+    "Min": 0.08,
+    "Max": 0.15
+  },
+  "SpawnRate": {
+    "Min": 4.444444444444445,
+    "Max": 4.444444444444445
+  },
+  "SpawnBurst": false,
+  "EmitOffset": {
+    "X": {
+      "Min": -0.14,
+      "Max": 0.14
+    },
+    "Y": {
+      "Min": -0.95,
+      "Max": 0.95
+    },
+    "Z": {
+      "Min": -0.14,
+      "Max": 0.14
+    }
+  },
+  "ParticleRotationInfluence": "Billboard",
+  "ParticleRotateWithSpawner": false,
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 0,
+      "Max": 0
+    },
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": -90,
+      "Max": 90
+    }
+  },
+  "Particle": {
+    "Texture": "Particles/StrangeMatter/star.png",
+    "FrameSize": {
+      "Width": 128,
+      "Height": 128
+    },
+    "ScaleRatioConstraint": "None",
+    "UVOption": "None",
+    "InitialAnimationFrame": {
+      "Color": "#ffffff",
+      "Opacity": 1,
+      "Scale": {
+        "X": {
+          "Min": 0.105,
+          "Max": 0.105
+        },
+        "Y": {
+          "Min": 0.105,
+          "Max": 0.105
+        }
+      },
+      "FrameIndex": {
+        "Min": 0,
+        "Max": 0
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0.75,
+        "Color": "#e6ffff",
+        "Scale": {
+          "X": {
+            "Min": 1,
+            "Max": 1
+          },
+          "Y": {
+            "Min": 1,
+            "Max": 1
+          }
+        }
+      },
+      "8": {
+        "Opacity": 0.85
+      },
+      "38": {
+        "Opacity": 0.68,
+        "Scale": {
+          "X": {
+            "Min": 1.04,
+            "Max": 1.04
+          },
+          "Y": {
+            "Min": 0.96,
+            "Max": 0.96
+          }
+        }
+      },
+      "66": {
+        "Opacity": 0.85,
+        "Scale": {
+          "X": {
+            "Min": 0.95,
+            "Max": 0.95
+          },
+          "Y": {
+            "Min": 1.05,
+            "Max": 1.05
+          }
+        }
+      },
+      "100": {
+        "Opacity": 0,
+        "Scale": {
+          "X": {
+            "Min": 1.12,
+            "Max": 1.12
+          },
+          "Y": {
+            "Min": 1.12,
+            "Max": 1.12
+          }
+        }
+      }
+    }
+  }
+}

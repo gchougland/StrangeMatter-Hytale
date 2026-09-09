@@ -1,0 +1,31 @@
+{
+  "snapshot": "build/art-preservation/20260909T184345920591Z",
+  "models": [
+    {
+      "id": "SM_Thoughtwell_Phantom_Wolf",
+      "nativeSource": "Beast/Wolf_Black",
+      "model": "NPC/Beast/Wolf/Models/Model.blockymodel",
+      "texture": "NPC/Beast/Wolf/Models/Model_Textures/Black.png"
+    },
+    {
+      "id": "SM_Thoughtwell_Phantom_Spectre",
+      "nativeSource": "Void/Spectre_Void",
+      "model": "NPC/Void/Spectre_Void/Models/Model.blockymodel",
+      "texture": "NPC/Void/Spectre_Void/Models/Texture.png"
+    },
+    {
+      "id": "SM_Thoughtwell_Phantom_Crawler",
+      "nativeSource": "Void/Crawler_Void",
+      "model": "NPC/Void/Crawler_Void/Models/Model.blockymodel",
+      "texture": "NPC/Void/Crawler_Void/Models/Texture.png"
+    }
+  ],
+  "nativeModelCount": 3,
+  "maximumPhantomsPerPlayer": 1,
+  "lifetimeSeconds": 2.15,
+  "vanishParticles": 14,
+  "vanishMaximumLifetimeSeconds": 0.68,
+  "commonAssetsChanged": 0,
+  "registration": "ThoughtwellHallucinations.register(IComponentRegistry<EntityStore>)",
+  "privacy": "Owner component filtered after all native visible collectors and before ClearPreviouslyVisible. Native entity IDs, spawn, transforms, animations and removal packets."
+}

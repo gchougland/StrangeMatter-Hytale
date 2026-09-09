@@ -334,8 +334,13 @@ public final class MachineService implements AutoCloseable {
                 ParticleUtil.spawnParticleEffect(particle,m.center().add(0,.6,0),0,0,0,1f,1f,world.getEntityStore().getStore());
             }
         }
+        // Reconcile every loaded machine, including disabled/full/unpowered instruments and
+        // a Working block state restored from disk. Only real work starts the native loops.
+        for(var machine:loaded)MachineWorkEffects.sync(world,machine);
         if(tick%200==0&&dirty)save();
     }
+    /** Called during orderly world/plugin cleanup; unloading itself also removes client loops. */
+    public synchronized void cleanupPresentation(World world){for(var machine:inWorld(world))MachineWorkEffects.stop(world,machine);}
     public static String shard(AnomalyType type){return "SM_"+switch(type){case GRAVITY->"Gravitic";case TEMPORAL_BLOOM->"Chrono";case ENERGETIC_RIFT->"Energetic";case WARP_GATE->"Spatial";case ECHOING_SHADOW->"Shade";case THOUGHTWELL->"Insight";}+"_Shard";}
     static boolean consumeFuelTick(MachineState state){
         if(state.fuelTicks<=0&&state.queuedFuelTicks>0){

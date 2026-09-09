@@ -55,7 +55,7 @@ def main():
     pages={'research/ResearchMachinePage.java':['ResearchMachine.ui','ResearchNoteRow.ui'],
       'research/ResearchTabletPage.java':['ResearchTablet.ui','ResearchNodeRow.ui'],
       'research/ResearchInfoPage.java':['ResearchInfo.ui'],
-      'machine/MachinePage.java':['Machine.ui','RealityForge.ui']}
+      'machine/MachinePage.java':['Machine.ui','RealityForge.ui','ForgeRecipeRow.ui']}
     for source,ui_files in pages.items():
         text=(ROOT/'src/main/java/com/hexvane/strangematter'/source).read_text();ids=set().union(*(selectors[f] for f in ui_files))
         refs=set(re.findall(r'"\s*#([A-Za-z]\w*)',text))

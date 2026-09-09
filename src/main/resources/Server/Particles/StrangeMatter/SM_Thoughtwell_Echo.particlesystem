@@ -1,0 +1,7 @@
+{
+  "Spawners": [{"SpawnerId": "SM_Thoughtwell_Echo_Glyphs"}],
+  "LifeSpan": 1.2,
+  "CullDistance": 12,
+  "BoundingRadius": 1,
+  "IsImportant": false
+}

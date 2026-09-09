@@ -92,6 +92,7 @@
       }
     },
     "InitialAnimationFrame": {
+      "Rotation": { "Z": { "Min": 90, "Max": 90 } },
       "Color": "#ffffff",
       "Opacity": 1,
       "Scale": {

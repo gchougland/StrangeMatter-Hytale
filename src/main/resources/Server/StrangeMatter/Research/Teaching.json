@@ -253,7 +253,7 @@
   "gravity_anomalies": [
     {
       "title": "Gravity Anomalies",
-      "content": "FASCINATING! Gravity\nanomalies represent\nlocalized distortions\nin the gravitational\nfield.\n\nThese entities manifest\nas floating geometric\nshapes that rotate\ncontinuously, creating\npockets of altered\ngravity.\n\nThey can affect\nnearby entities and\nterrain, making them\nvaluable for research\ninto spatial\nmanipulation."
+      "content": "Gravity anomalies make nearby players, creatures and loose items float. Move with your usual controls. Hold jump to rise and crouch to sink. Leave the field to return to normal.\n\nAround a wild anomaly, small pieces of open ground can lift into the air and drift around it. These pieces are solid. A Tinfoil Hat lets you walk on them without floating yourself.\n\nCapture or turn off the anomaly and its ground returns. A field released from a capsule still makes things float, but leaves your laboratory floor alone."
     }
   ],
   "temporal_anomalies": [
@@ -283,13 +283,13 @@
   "cognitive_anomalies": [
     {
       "title": "Cognitive Anomalies",
-      "content": "ASTOUNDING! Cognitive\nanomalies manifest as\nthoughtwells that\nchannel mental\nenergies.\n\nThese entities create\nlocalized regions\nwhere thoughts and\nmemories can be\namplified or\nmanipulated.\n\nThey represent the\nintersection between\nanomaly physics\nand consciousness,\nopening new\npossibilities for\nmind-machine\ninterfaces."
+      "content": "Thoughtwells cloud your senses. A blue haze fills your sight and your steps become slower.\n\nStay close and a wolf, floating spectre or crawler may appear beside your view and move toward you. It vanishes in a cloud moments later. These false creatures cannot hurt you, and other explorers do not see them. You may also hear footsteps where nobody is walking.\n\nThe closer you are, the more often these visions appear. They wear off after you leave. Nearby real creatures may briefly look like something else and forget what they were chasing.\n\nWear a Tinfoil Hat to protect your thoughts and stop the visions."
     }
   ],
   "tinfoil_hat": [
     {
       "title": "Tinfoil Hat Protection",
-      "content": "The Tinfoil Hat is a unique piece of protective equipment crafted from resonite ingots. When worn, it provides protection against two specific anomaly effects:\n\n• Energetic Rift Electric Sparks: The hat's conductive properties redirect electrical energy, preventing damage from energetic rifts.\n\n• Thoughtwell Nausea: The resonite material creates a cognitive barrier that shields the wearer's mind from the disorienting effects of thoughtwells.\n\nThe hat provides minimal physical protection (1 armor point) but excels at protecting against these specific anomaly hazards."
+      "content": "A Tinfoil Hat protects you from the tricks of several anomalies. It stops Thoughtwell visions, shields you from energetic rift shocks and lets you move normally near gravity anomalies.\n\nWear it on your head. Carrying it in your bag will not protect you.\n\nIt offers little protection in a fight, but a clear head can save your life in the field."
     },
     {
       "title": "Crafting the Tinfoil Hat",

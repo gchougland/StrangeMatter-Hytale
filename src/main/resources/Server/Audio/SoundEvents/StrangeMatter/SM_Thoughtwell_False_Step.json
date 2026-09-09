@@ -1,0 +1,18 @@
+{
+  "Parent": "SFX_Attn_Quiet",
+  "AudioCategory": "AudioCat_SFX",
+  "SpatialBlend": 1,
+  "StartAttenuationDistance": 1,
+  "MaxDistance": 12,
+  "MaxInstance": 2,
+  "Volume": -12,
+  "Layers": [{
+    "Files": [
+      "Sounds/PlayerActions/Footsteps/Block_Steps/Walk_Crystal_01.ogg",
+      "Sounds/PlayerActions/Footsteps/Block_Steps/Walk_Crystal_02.ogg",
+      "Sounds/PlayerActions/Footsteps/Block_Steps/Walk_Crystal_03.ogg"
+    ],
+    "RoundRobinHistorySize": 2,
+    "RandomSettings": {"MinPitch": -2, "MaxPitch": 1, "MinVolume": -2}
+  }]
+}

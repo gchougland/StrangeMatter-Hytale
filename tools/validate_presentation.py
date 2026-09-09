@@ -1,15 +1,37 @@
 """Check client-facing art constraints without Pillow, a renderer, or a running game."""
 import argparse
 import json
+import os
 import re
 import struct
+import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def png_size(path):
-    header = path.read_bytes()[:24]
+    if path.exists():
+        header = path.read_bytes()[:24]
+    else:
+        # Native creature models may intentionally reference the base asset pack.
+        # Resolve the same Common path rather than requiring duplicate textures.
+        parts = path.parts
+        relative = Path(*parts[parts.index('Common') + 1:]) if 'Common' in parts else None
+        if relative is None or '..' in relative.parts:
+            raise FileNotFoundError(path)
+        native = ROOT.parent / 'HytaleSourceCode/hytale-shared-source/HytaleAssets/Common' / relative
+        installed = Path(os.environ.get('APPDATA', '')) / 'Hytale/install/release/package/game/latest/Assets.zip'
+        if native.exists():
+            header = native.read_bytes()[:24]
+        elif installed.exists():
+            with zipfile.ZipFile(installed) as archive:
+                name = 'Common/' + relative.as_posix()
+                if name not in archive.namelist():
+                    raise FileNotFoundError(path)
+                header = archive.read(name)[:24]
+        else:
+            raise FileNotFoundError(path)
     if header[:8] != b'\x89PNG\r\n\x1a\n' or header[12:16] != b'IHDR':
         raise ValueError('not a PNG with an IHDR header')
     return struct.unpack('>II', header[16:24])

@@ -1,8 +1,8 @@
 {
   "Group": "Hexvane",
   "Name": "StrangeMatter",
-  "Version": "0.4.0",
-  "Description": "Study, contain and harness six reality-bending anomalies through mad science.",
+  "Version": "0.7.0",
+  "Description": "Explore strange anomalies, discover new inventions and build a mad science laboratory.",
   "Authors": [{ "Name": "Hexvane" }],
   "ServerVersion": "*",
   "Dependencies": {},

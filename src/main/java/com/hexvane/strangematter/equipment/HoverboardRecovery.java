@@ -78,7 +78,9 @@ final class HoverboardRecovery {
                     if(System.nanoTime()<pending.retry)continue;
                     if(pending.future!=null){reportFailure(pending);continue;}
                 }
-                var inventory=InventoryComponent.getCombined(ref.getStore(),ref,InventoryComponent.BACKPACK_STORAGE_HOTBAR);
+                // Search all carried sections for existing receipts, but insert a folded board
+                // into an open hotbar slot before falling back to storage or the backpack.
+                var inventory=InventoryComponent.getCombined(ref.getStore(),ref,InventoryComponent.HOTBAR_STORAGE_BACKPACK);
                 if(inventory==null||!reconcile(inventory,receipt)){
                     if(pending==null){pending=new Pending(world,owner,receipt.id);returning.put(receipt.id,pending);notice.accept(owner,"Your folded hoverboard is safe. Free an inventory slot to receive it.");}
                     pending.retry=System.nanoTime()+1_000_000_000L;continue;

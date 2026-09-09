@@ -1,0 +1,17 @@
+{
+  "AudioCategory": "AudioCat_SFX",
+  "SpatialBlend": 1,
+  "StartAttenuationDistance": 1.6,
+  "MaxDistance": 8,
+  "MaxInstance": 8,
+  "Volume": -16,
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/StrangeMatter/hoverboard_riding_hum.ogg"
+      ],
+      "Looping": true,
+      "Volume": 0
+    }
+  ]
+}

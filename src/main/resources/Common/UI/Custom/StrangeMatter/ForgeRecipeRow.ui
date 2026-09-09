@@ -1,0 +1,9 @@
+$R = "ResearchStyle.ui";
+Group { Anchor: (Height: 73, Bottom: 5);
+  Button #SelectRecipe { Style: $R.@RowStyle;
+    Group #RecipeAccent { Anchor: (Left: 0, Top: 0, Width: 3, Bottom: 0); Background: #354360; HitTestVisible: false; }
+    ItemIcon #RecipeIcon { Anchor: (Left: 8, Top: 14, Width: 44, Height: 44); ItemId: "SM_Resonite_Ingot"; HitTestVisible: false; }
+    Label #RecipeName { Anchor: (Left: 62, Top: 8, Right: 8, Height: 37); Style: (FontSize: 13, TextColor: #d6e2f2, Wrap: true, VerticalAlignment: Center); HitTestVisible: false; }
+    Label #RecipeState { Anchor: (Left: 62, Top: 49, Right: 8, Height: 18); Style: (FontSize: 10, TextColor: #a791c9); HitTestVisible: false; }
+  }
+}

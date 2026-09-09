@@ -30,6 +30,7 @@ public final class AnomalyService {
     private final Map<UUID,TemporalAge> temporalAges=new HashMap<>();
     private final Map<UUID,Set<AnomalyType>> firstContacts=new HashMap<>();
     private final HytaleAnomalyEffects effects=new HytaleAnomalyEffects();
+    private final GravityTerrain gravityTerrain;
     private final Random random=new Random();
     private GroundingHook groundingHook=(w,p,r)->false;
     private FieldSuppressionHook suppressionHook=(w,p,t)->false;
@@ -45,12 +46,19 @@ public final class AnomalyService {
 
     public AnomalyService(Path directory) {
         saveFile=directory.resolve("anomalies.json");
+        gravityTerrain=new GravityTerrain(directory);
         Path config=directory.resolve("anomaly-generation.json");
         if(Files.exists(config))try(Reader reader=Files.newBufferedReader(config,StandardCharsets.UTF_8)) {
             generationSettings=Objects.requireNonNull(GSON.fromJson(reader,AnomalyGenerationSettings.class),"Empty anomaly generation config");
         }catch(IOException e){throw new UncheckedIOException("Cannot read anomaly generation settings",e);}
         load();
     }
+    public com.hypixel.hytale.component.system.tick.EntityTickingSystem<com.hypixel.hytale.server.core.universe.world.storage.EntityStore> gravitySystem(){return new GravityField.MotionSystem();}
+    public com.hypixel.hytale.component.system.RefSystem<com.hypixel.hytale.server.core.universe.world.storage.EntityStore> gravityCleanupSystem(){return new GravityField.CleanupSystem();}
+    public synchronized boolean terrainReturnProtected(World world,int x,int y,int z){return gravityTerrain.protectedReturn(world,x,y,z);}
+    public synchronized void terrainPlayerPlaced(World world,int x,int y,int z){gravityTerrain.placed(world,x,y,z);}
+    public synchronized void terrainEnvironmentBreak(World world,int x,int y,int z){gravityTerrain.environmentBreak(world,x,y,z);}
+    GravityTerrain terrain(){return gravityTerrain;}
     public synchronized void setGroundingHook(GroundingHook hook) { groundingHook=Objects.requireNonNull(hook); }
     public synchronized void setDischargeHook(BiConsumer<World,Vector3d> hook) { dischargeHook=Objects.requireNonNull(hook); }
     public synchronized void setSuppressionHook(FieldSuppressionHook hook) { suppressionHook=Objects.requireNonNull(hook); }
@@ -89,7 +97,7 @@ public final class AnomalyService {
         if(a==null || !a.active()) return Optional.empty();
         a.contained=true;a.capsuleNonce=UUID.randomUUID();dirty=true;
         World world=worlds.get(a.world);
-        if(world!=null) { effects.removeCore(world,a.id);effects.particle(world,"SM_Anomaly_Capture",a.position()); }
+        if(world!=null) { effects.removeCore(world,a.id);stopGravity(world,a);effects.particle(world,"SM_Anomaly_Capture",a.position()); }
         save();
         return Optional.of(new CapturedAnomaly(a.id,a.type,a.id+":"+a.capsuleNonce));
     }
@@ -139,21 +147,24 @@ public final class AnomalyService {
     }
     public synchronized void setEnabled(UUID id,boolean enabled) {
         var a=records.get(id);if(a==null)return;a.enabled=enabled;dirty=true;
-        if(!enabled) {var w=worlds.get(a.world);if(w!=null) effects.removeCore(w,id);}
+        if(!enabled) {var w=worlds.get(a.world);if(w!=null) {effects.removeCore(w,id);stopGravity(w,a);}}
     }
     public synchronized boolean remove(UUID id) {
         var a=records.remove(id);if(a==null)return false;unlink(a);dirty=true;
-        var w=worlds.get(a.world);if(w!=null)effects.removeCore(w,id);return true;
+        var w=worlds.get(a.world);if(w!=null){effects.removeCore(w,id);stopGravity(w,a);}return true;
     }
+    private void stopGravity(World world,AnomalyRecord anomaly){if(anomaly.type==AnomalyType.GRAVITY){effects.removeGravity(world,anomaly.id);gravityTerrain.remove(world,anomaly.id);}}
     public synchronized void tick(World world,double dt) {
         if(!Double.isFinite(dt) || dt<=0)return;dt=Math.min(dt,.25);
         worlds.put(world.getName(),world);effects.cleanup(world);
+        effects.tickThoughts(world,dt);
         dirty|=effects.tickAges(world,temporalAges,dt);
         double survey=surveyClocks.getOrDefault(world.getName(),0.0)+dt;
         if(survey>=2) {survey=0;if(naturalGeneration) discover(world);}
         surveyClocks.put(world.getName(),survey);
         var playerPositions=new ArrayList<Vector3d>();var store=world.getEntityStore().getStore();
         for(var player:world.getPlayerRefs()) {var ref=player.getReference();if(ref!=null && ref.isValid()) {var t=store.getComponent(ref,TransformComponent.getComponentType());if(t!=null)playerPositions.add(new Vector3d(t.getPosition()));}}
+        var gravityFields=new ArrayList<AnomalyRecord>();
         for(AnomalyRecord a:new ArrayList<>(records.values())) {
             if(!a.world.equals(world.getName()))continue;
             boolean nearby=playerPositions.stream().anyMatch(p->a.distanceSquared(p)<128*128);
@@ -166,7 +177,7 @@ public final class AnomalyService {
             if(a.sound<=0) {effects.sound(world,a);a.sound=a.type==AnomalyType.GRAVITY?6.074535:4;}
             if(suppressionHook.suppressed(world,a.position(),a.type))continue;
             switch(a.type) {
-                case GRAVITY -> effects.gravity(world,a,dt);
+                case GRAVITY -> gravityFields.add(a);
                 case TEMPORAL_BLOOM -> {
                     if(a.primary<=0) {effects.crops(world,a,random);a.primary=5;}
                     if(a.secondary<=0) {dirty|=effects.temporalMobs(world,a,temporalAges);a.secondary=10;}
@@ -187,6 +198,8 @@ public final class AnomalyService {
                 case WARP_GATE -> {if(a.primary<=0) {tickGate(world,a);a.primary=.1;}}
             }
         }
+        effects.gravity(world,gravityFields);
+        gravityTerrain.tick(world,gravityFields,dt);
         saveClock+=dt;if(saveClock>=30) {saveClock=0;save();}
     }
     private void tickGate(World world,AnomalyRecord a) {
@@ -287,7 +300,7 @@ public final class AnomalyService {
     }
     private static long mix(long v) {v=(v^(v>>>30))*0xbf58476d1ce4e5b9L;v=(v^(v>>>27))*0x94d049bb133111ebL;return v^(v>>>31);}
     private static void validate(Vector3d p) {if(p==null || !Double.isFinite(p.x) || !Double.isFinite(p.y) || !Double.isFinite(p.z) || p.y<0 || p.y>=320)throw new IllegalArgumentException("Anomaly position must be finite and inside build height");}
-    public synchronized void stopWorld(World world) {effects.restore(world);save();worlds.remove(world.getName());}
+    public synchronized void stopWorld(World world) {effects.restore(world);gravityTerrain.stopWorld(world);save();worlds.remove(world.getName());}
     public synchronized void save() {
         if(!dirty)return;
         try {

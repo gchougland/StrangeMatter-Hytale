@@ -171,13 +171,15 @@ def main():
     args=parser.parse_args()
     hashes={str(p.relative_to(COMMON)):hashlib.sha256(p.read_bytes()).hexdigest() for p in COMMON.rglob('*') if p.is_file() and p.suffix in ('.blockymodel','.blockyanim','.png') and not str(p.relative_to(COMMON)).startswith('Icons')}
     entries=[]
+    views_path=ROOT/'tools/assets/icon_views.json'
+    views=read(views_path) if views_path.exists() else {}
     paths=sorted((RES/'Server/Item/Items/StrangeMatter').glob('*.json'))
     if args.items:
         unknown=set(args.items)-{p.stem for p in paths}
         if unknown:parser.error('Unknown item IDs: '+', '.join(sorted(unknown)))
         paths=[p for p in paths if p.stem in args.items]
     for path in paths:
-        item=read(path);faces=item_faces(item);icon=render(faces).resize((64,64),Image.Resampling.LANCZOS)
+        item=read(path);faces=item_faces(item);icon=render(faces,**views.get(path.stem,{})).resize((64,64),Image.Resampling.LANCZOS)
         icon.save(COMMON/item['Icon']);entries.append((path.stem.removeprefix('SM_').replace('_',' '),faces))
     for relative,expected in hashes.items():
         assert hashlib.sha256((COMMON/relative).read_bytes()).hexdigest()==expected,'Renderer altered source '+relative

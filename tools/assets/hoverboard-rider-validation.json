@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "animationFiles": 3,
+  "nativeBones": 16,
+  "maxFootCenterDriftNativeUnits": 1.0901599218428187e-05,
+  "footBottomNativeUnits": 0,
+  "stanceWidthNativeUnits": 46,
+  "preview": "Native player rig fitting. No claim of closed client rendering or avatar world scale.",
+  "playerAnimationStates": 3,
+  "integerFrameKeys": 459,
+  "maxKeyTimeQuantizationFrames": 0.5,
+  "clientFrameSchema": "Int32 JSON duration and keyframe time tokens; all authored transforms preserved"
+}

@@ -1,0 +1,42 @@
+{
+  "Shape": "Sphere",
+  "RenderMode": "BlendAdd",
+  "LifeSpan": 0.1,
+  "TotalParticles": {"Min": 3, "Max": 3},
+  "MaxConcurrentParticles": 3,
+  "ParticleLifeSpan": {"Min": 0.65, "Max": 1.05},
+  "SpawnRate": {"Min": 3, "Max": 3},
+  "SpawnBurst": true,
+  "EmitOffset": {
+    "X": {"Min": -0.18, "Max": 0.18},
+    "Y": {"Min": -0.2, "Max": 0.2},
+    "Z": {"Min": -0.1, "Max": 0.1}
+  },
+  "ParticleRotationInfluence": "Billboard",
+  "ParticleRotateWithSpawner": false,
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "InitialVelocity": {
+    "Speed": {"Min": 0.08, "Max": 0.2},
+    "Yaw": {"Min": -180, "Max": 180},
+    "Pitch": {"Min": 15, "Max": 60}
+  },
+  "Particle": {
+    "Texture": "Particles/StrangeMatter/rune.png",
+    "FrameSize": {"Width": 128, "Height": 128},
+    "ScaleRatioConstraint": "None",
+    "UVOption": "None",
+    "InitialAnimationFrame": {
+      "Color": "#a7e6ff",
+      "Opacity": 1,
+      "Scale": {"X": {"Min": 0.032, "Max": 0.038}, "Y": {"Min": 0.032, "Max": 0.038}},
+      "FrameIndex": {"Min": 0, "Max": 0}
+    },
+    "Animation": {
+      "0": {"Opacity": 0, "Color": "#9ff5ef"},
+      "18": {"Opacity": 0.42},
+      "60": {"Opacity": 0.25, "Color": "#b39cf4"},
+      "100": {"Opacity": 0, "Scale": {"X": {"Min": 1.12, "Max": 1.12}, "Y": {"Min": 1.12, "Max": 1.12}}, "Rotation": {"Z": {"Min": 18, "Max": 18}}}
+    }
+  }
+}

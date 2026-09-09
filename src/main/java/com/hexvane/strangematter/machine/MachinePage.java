@@ -29,8 +29,16 @@ public final class MachinePage extends InteractiveCustomUIPage<ResearchPageData>
         if(!initialized){
             input=service.research.pages().attach(playerRef,this,ref,store,data->handleDataEvent(ref,store,data));
             initialized=true;cmd.append(forge()?"StrangeMatter/RealityForge.ui":"StrangeMatter/Machine.ui");
-            for(String id:forge()?new String[]{"Close","Collect","Toggle","Previous","Next"}:new String[]{"Close","Fuel","FuelMax","Collect","Toggle"})input.bind(events,"#"+id,id,"");
-            if(forge()){boundRecipe=service.recipes.get(recipeIndex).id;bindRecipe(events,boundRecipe);}
+            for(String id:forge()?new String[]{"Close","Collect","Toggle"}:new String[]{"Close","Fuel","FuelMax","Collect","Toggle"})input.bind(events,"#"+id,id,"");
+            if(forge()){
+                for(int i=0;i<service.recipes.size();i++){
+                    var recipe=service.recipes.get(i);String row="#Recipes["+i+"]";
+                    cmd.append("#Recipes","StrangeMatter/ForgeRecipeRow.ui");
+                    cmd.set(row+" #RecipeIcon.ItemId",recipe.output);cmd.set(row+" #RecipeName.Text",InventoryOps.label(recipe.output));
+                    input.bind(events,row+" #SelectRecipe","SelectRecipe",recipe.id);
+                }
+                boundRecipe=service.recipes.get(recipeIndex).id;bindRecipe(events,boundRecipe);
+            }
             refreshLater(ref,store);
         }
         draw(cmd,store.getComponent(ref,Player.getComponentType()));
@@ -60,9 +68,21 @@ public final class MachinePage extends InteractiveCustomUIPage<ResearchPageData>
         if(player==null)return;
         var recipe=service.recipes.get(recipeIndex);
         var readiness=service.readiness(playerRef.getUuid(),player,recipe);
+        int available=0;
+        for(int i=0;i<service.recipes.size();i++){
+            var entry=service.recipes.get(i);String row="#Recipes["+i+"]";
+            String required=service.research.requiredResearchForItem(entry.output);if(required==null)required=entry.research;
+            boolean known=service.research.hasUnlocked(playerRef.getUuid(),required),selected=i==recipeIndex;
+            if(known)available++;
+            cmd.set(row+" #RecipeState.Text",selected?(known?"SELECTED":"SELECTED   RESEARCH NEEDED"):(known?"AVAILABLE":"RESEARCH NEEDED"));
+            cmd.set(row+" #RecipeState.Style.TextColor",known?"#8bddca":"#dca2b7");
+            cmd.set(row+" #RecipeName.Style.TextColor",selected?"#78f2f6":known?"#d6e2f2":"#aab4c8");
+            cmd.set(row+" #RecipeAccent.Background",selected?"#69edf2":known?"#466b73":"#614263");
+        }
+        cmd.set("#RecipeCount.Text",available+" available   "+service.recipes.size()+" total");
         boolean busy=!machine.recipe.isEmpty(),complete=machine.outputQuantity>0,animating=busy&&machine.enabled;
         double progress=complete?1:busy?Math.min(1,(double)machine.progress/Math.max(1,service.config.forgeCraftTicks)):0;
-        cmd.set("#State.Text",complete?"OUTPUT READY":busy?(machine.enabled?"COALESCING":"PAUSED"):"STANDBY");
+        cmd.set("#State.Text",complete?"OUTPUT READY":busy?(machine.enabled?"CRAFTING":"PAUSED"):"STANDBY");
         cmd.set("#Recipe.Text",InventoryOps.label(recipe.output));cmd.set("#RecipeIndex.Text",(recipeIndex+1)+" / "+service.recipes.size());
         cmd.set("#Research.Text",(readiness.researched()?"RESEARCH VERIFIED  /  ":"RESEARCH REQUIRED  /  ")+readiness.researchName());
         cmd.set("#Research.Style.TextColor",readiness.researched()?"#a5dccc":"#f0a6bd");
@@ -71,13 +91,13 @@ public final class MachinePage extends InteractiveCustomUIPage<ResearchPageData>
             if(i>=readiness.materials().size())continue;
             var material=readiness.materials().get(i);String color=material.missing()==0?"#67e8ef":"#f0a6bd";
             cmd.set("#MaterialIcon"+i+".ItemId",material.icon());cmd.set("#MaterialName"+i+".Text",material.name());
-            cmd.set("#MaterialCount"+i+".Text",material.available()+" / "+material.required()+(material.missing()==0?"  READY":"  NEED "+material.missing()));
+            cmd.set("#MaterialCount"+i+".Text",material.available()+" / "+material.required());
             cmd.set("#MaterialCount"+i+".Style.TextColor",color);cmd.set("#MaterialAccent"+i+".Background",color);
         }
         var working=busy?service.recipes.stream().filter(r->r.id.equals(machine.recipe)).findFirst().orElse(recipe):recipe;
         cmd.set("#ForgePreview.ItemId",complete?machine.output:working.output);
         cmd.set("#ForgeQuantity.Text",(complete?machine.outputQuantity:working.quantity)+" x "+(complete?"READY":"OUTPUT"));
-        cmd.set("#Progress.Text",complete?"COLLECT YOUR CREATION":busy?(machine.enabled?"COALESCING  ":"PAUSED  ")+(int)(progress*100)+"%":"COALESCENCE CHAMBER");
+        cmd.set("#Progress.Text",complete?"COLLECT YOUR CREATION":busy?(machine.enabled?"CRAFTING  ":"PAUSED  ")+(int)(progress*100)+"%":"CRAFTING CHAMBER");
         anchor(cmd,"#ForgeFill",0,0,Math.max(1,(int)(392*progress)),5);
         double phase=machine.progress*.14;
         anchor(cmd,"#ForgePreview",153,67+(animating?(int)(Math.sin(phase)*7):0),96,96);
@@ -118,9 +138,14 @@ public final class MachinePage extends InteractiveCustomUIPage<ResearchPageData>
             case "FuelMax"->message=service.fuelMax(player,machine);
             case "Collect"->message=service.collect(player,machine);
             case "Toggle"->{service.toggle(machine);message="";}
-            case "Previous"->{if(!forge())return;recipeIndex=(recipeIndex+service.recipes.size()-1)%service.recipes.size();service.selectRecipe(machine,playerRef.getUuid(),service.recipes.get(recipeIndex).id);message="";}
-            case "Next"->{if(!forge())return;recipeIndex=(recipeIndex+1)%service.recipes.size();service.selectRecipe(machine,playerRef.getUuid(),service.recipes.get(recipeIndex).id);message="";}
+            case "SelectRecipe"->{
+                if(!forge()||data.value==null)return;
+                int selected=-1;for(int i=0;i<service.recipes.size();i++)if(service.recipes.get(i).id.equals(data.value)){selected=i;break;}
+                if(selected<0)return;
+                recipeIndex=selected;service.selectRecipe(machine,playerRef.getUuid(),service.recipes.get(recipeIndex).id);message="";
+            }
             case "Craft"->{
+                if(!forge())return;
                 var recipe=service.recipes.get(recipeIndex);
                 message=recipe.id.equals(data.value)?service.craft(playerRef,player,machine,recipe.id):"Recipe selection changed. Review the displayed recipe before crafting.";
             }
@@ -137,17 +162,19 @@ public final class MachinePage extends InteractiveCustomUIPage<ResearchPageData>
                 if(!ref.isValid()){dispose();return;}
                 if(!service.canUse(store,playerRef,machine)){dispose();close();return;}
                 var player=store.getComponent(ref,Player.getComponentType());if(player==null||player.getPageManager().getCustomPage()!=this){dispose();return;}
-                if(input.ready()){
-                    UICommandBuilder cmd=new UICommandBuilder();UIEventBuilder events=new UIEventBuilder();draw(cmd,player);
-                    String renderedRecipe=service.recipes.get(recipeIndex).id;
-                    // Recipe text and its matching transaction ID change in the SAME packet.
-                    // Progress/power animation leaves every existing binding alone.
-                    if(forge()&&!renderedRecipe.equals(boundRecipe))bindRecipe(events,renderedRecipe);
-                    if(input.send(cmd,events))boundRecipe=renderedRecipe;
-                }
+                renderFrame(player);
                 refreshLater(ref,store);
             }); } catch(RuntimeException stopped){dispose();}
         }); } catch(RuntimeException stopped){dispose();}
+    }
+    private void renderFrame(Player player){
+        if(!input.ready())return;
+        UICommandBuilder cmd=new UICommandBuilder();UIEventBuilder events=new UIEventBuilder();draw(cmd,player);
+        String renderedRecipe=service.recipes.get(recipeIndex).id;
+        // Recipe text and its matching transaction ID change in the SAME packet.
+        // Progress/power animation leaves every existing row binding alone.
+        if(forge()&&!renderedRecipe.equals(boundRecipe))bindRecipe(events,renderedRecipe);
+        if(input.send(cmd,events))boundRecipe=renderedRecipe;
     }
     private void dispose(){dismissed=true;if(input!=null)input.close();}
     @Override public void onDismiss(Ref<EntityStore> ref,Store<EntityStore> store){dispose();super.onDismiss(ref,store);}

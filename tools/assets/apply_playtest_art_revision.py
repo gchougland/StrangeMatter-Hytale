@@ -48,7 +48,7 @@ def lamp(family):
     entry=m.save()
     if family=='shade':shade_texture(Image.open(COMMON/entry['texture'])).save(COMMON/entry['texture'])
     item=read(ITEMS/(art.hid(name)+'.json'));b=item['BlockType']
-    b['Light']={'Color':family_light(family,True),'Radius':15}
+    b['Light']={'Color':family_light(family,True),'Radius':0}
     b['CustomModel']=entry['model'];b['CustomModelTexture']=[{'Texture':entry['texture'],'Weight':1}]
     b['VariantRotation']='NESW';b['HitboxType']=art.hid(name);b['InteractionHitboxType']=art.hid(name)
     b['PlacementSettings']={'AllowRotationKey':True}

@@ -81,6 +81,11 @@ def main():
         sp('SM_Rift_Hit_Lightning','fissure','#deffff',size=.9,stretch=2.6,count=3,spread=(.35,.1,.35),life=(.22,.45)),
         sp('SM_Rift_Hit_Corona','halo',CYAN,size=2.2,stretch=1.2,opacity=.5,end_size=2.8),
         sp('SM_Rift_Hit_Sparks','spark','#a7faff',size=.12,count=18,speed=(2,4),stretch=2)],radius=4)
+    # Native billboards preserve Z roll; these fissure sprites are painted vertically.
+    for name in ('SM_Rift_Arc_Trace', 'SM_Rift_Hit_Lightning'):
+        path=SERVER/'Spawners'/(name+'.particlespawner'); data=json.loads(path.read_text())
+        data['Particle']['InitialAnimationFrame']['Rotation']={'Z':R(90)}
+        path.write_text(json.dumps(data,indent=2)+'\n')
     sound('SM_Rift_Hit','SFX_Eye_Void_Attack_Blast',pitch=3,volume=-9)
     emit('SM_Temporal_Field',[
         sp('SM_Temporal_Field_Glyphs','rune',GOLD,size=.18,count=3,spread=(.42,.42,.42),life=(.35,.6),opacity=.7),

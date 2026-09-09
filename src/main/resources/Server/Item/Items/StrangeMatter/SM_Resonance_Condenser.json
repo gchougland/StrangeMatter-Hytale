@@ -49,7 +49,17 @@
         "RequireNewClick": true
       }
     },
-    "InteractionHint": "server.interactionHints.SM_Resonance_Condenser"
+    "InteractionHint": "server.interactionHints.SM_Resonance_Condenser",
+    "State": {
+      "Definitions": {
+        "Working": {
+          "Looping": true,
+          "CustomModelAnimation": "Blocks/StrangeMatter/resonance_condenser_working.blockyanim",
+          "CustomModelAnimationSpeed": 1,
+          "AmbientSoundEventId": "SM_Condenser_Working_Hum"
+        }
+      }
+    }
   },
   "Interactions": {
     "Primary": "Block_Primary",

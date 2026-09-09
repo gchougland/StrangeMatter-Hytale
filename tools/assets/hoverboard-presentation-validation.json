@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "actualShoeContacts": 54,
+  "previousGapBlocks": 0.8243749999999999,
+  "gripWorldY": 1.64,
+  "riderAnchorY": 1.64,
+  "originalGeometryUvAndTexturePreserved": true,
+  "loop": "mono48kHz8s",
+  "particleMaxPerMovingPulse": 8
+}

@@ -8,6 +8,9 @@ import com.hypixel.hytale.math.vector.Rotation3f;
 import com.hypixel.hytale.protocol.ChangeVelocityType;
 import com.hypixel.hytale.protocol.GameMode;
 import com.hypixel.hytale.protocol.SoundCategory;
+import com.hypixel.hytale.protocol.ItemArmorSlot;
+import com.hypixel.hytale.server.core.inventory.InventoryComponent;
+import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent;
 import com.hypixel.hytale.server.core.universe.world.SoundUtil;
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
@@ -48,6 +51,8 @@ final class HytaleAnomalyEffects {
     private final Map<UUID, Ref<EntityStore>> cores = new HashMap<>();
     private final Map<Ref<EntityStore>, TemporaryModel> models = new HashMap<>();
     private final Map<Ref<EntityStore>, Long> teleports = new HashMap<>();
+    private final ThoughtwellConfusion thoughts = new ThoughtwellConfusion();
+    private final GravityField gravity = new GravityField();
     private record TemporaryModel(Model original, Model applied, long expires) {}
     private static final String[] DISGUISES = {"Chicken", "Cow", "Pig", "Sheep", "Zombie", "Skeleton", "Spider"};
     private static final String[] HOSTILES = {"Zombie", "Skeleton_Fighter", "Skeleton_Archer", "Spider"};
@@ -109,6 +114,8 @@ final class HytaleAnomalyEffects {
         teleports.entrySet().removeIf(e->!e.getKey().isValid() || e.getValue()<now);
     }
     void restore(World world) {
+        thoughts.clear(world);
+        gravity.clear(world);
         var store=world.getEntityStore().getStore();
         for(var entry:new ArrayList<>(models.entrySet())) if(entry.getKey().isValid() && entry.getKey().getStore()==store) {
             var current=store.getComponent(entry.getKey(),ModelComponent.getComponentType());
@@ -118,33 +125,18 @@ final class HytaleAnomalyEffects {
         for(var entry:new ArrayList<>(cores.entrySet())) if(entry.getValue()!=null && entry.getValue().isValid() && entry.getValue().getStore()==store) removeCore(world,entry.getKey());
     }
     boolean protectedBy(World world, Ref<EntityStore> ref, String item) {
-        Player player=world.getEntityStore().getStore().getComponent(ref,Player.getComponentType());
-        if(player==null || player.getInventory()==null || player.getInventory().getArmor()==null) return false;
-        var armor=player.getInventory().getArmor();
-        for(short i=0;i<armor.getCapacity();i++) { var stack=armor.getItemStack(i); if(stack!=null && item.equals(stack.getItemId())) return true; }
-        return false;
-    }
-    void gravity(World world, AnomalyRecord a, double dt) {
         var store=world.getEntityStore().getStore();
-        for(var ref:entities(world,a)) {
-            if(!ref.isValid()) continue;
-            var transform=store.getComponent(ref,TransformComponent.getComponentType());
-            var velocity=store.getComponent(ref,Velocity.getComponentType());
-            var player=store.getComponent(ref,Player.getComponentType());
-            if(transform==null || velocity==null || (player!=null && player.getGameMode()==GameMode.Creative)) continue;
-            double strength=Math.max(.1,1-Math.sqrt(a.distanceSquared(transform.getPosition()))/8);
-            if(player!=null) {
-                // Hytale clients own locomotion. A server velocity instruction delivers lift without changing persistent movement settings.
-                double y=velocity.getClientVelocity().y;
-                double lift= y<0 ? Math.min(1.8,-y*.35+dt*27.5)*strength : dt*27.5*strength;
-                velocity.addInstruction(new Vector3d(0,lift,0),null,ChangeVelocityType.Add);
-            } else {
-                double phase=ref.hashCode()*.1;
-                double floatY=(Math.sin(a.age*.8+phase)*3+Math.sin(a.age*1.2+phase*1.5))*strength;
-                velocity.set(velocity.getX()*.7+Math.cos(a.age*.6+phase)*.6*strength,velocity.getY()*.2+floatY,velocity.getZ()*.7+Math.sin(a.age*.7+phase)*.6*strength);
-            }
-        }
+        if(ref==null||!ref.isValid()||ref.getStore()!=store)return false;
+        // Inventory's legacy armor reference is captured when the player enters the world.
+        // Read the current ECS component on every check, including after armor replacement.
+        var armor=store.getComponent(ref,InventoryComponent.Armor.getComponentType());
+        short head=(short)ItemArmorSlot.Head.ordinal();
+        if(armor==null||head>=armor.getInventory().getCapacity())return false;
+        var stack=armor.getInventory().getItemStack(head);
+        return !ItemStack.isEmpty(stack)&&item.equals(stack.getItemId());
     }
+    void gravity(World world,List<AnomalyRecord> active) {gravity.publish(world,active);}
+    void removeGravity(World world,UUID source){gravity.remove(world,source);}
     void zap(World world, AnomalyRecord a) {
         for(var ref:entities(world,a)) zapTarget(world,a,ref);
     }
@@ -153,20 +145,21 @@ final class HytaleAnomalyEffects {
         // Hytale has no native Lightning cause. Use an elemental subtype instead of silently
         // classifying the discharge as Physical and subjecting it to unrelated physical armor.
         int cause=DamageCause.getAssetMap().getIndex("SM_Energetic_Rift");
-        if(cause<0 || ref==null || !ref.isValid()) return false;
-            var player=store.getComponent(ref,Player.getComponentType());
-            if(player==null && store.getComponent(ref,NPCEntity.getComponentType())==null) return false;
-            if(player!=null && player.getGameMode()==GameMode.Creative) return false;
-            // Original 1 / 20 maximum HP: scale to Hytale's standard 100 HP pool.
-            boolean protectedByHat=player!=null && protectedBy(world,ref,"SM_Tinfoil_Hat");
-            if(!protectedByHat)DamageSystems.executeDamage(ref,store,new Damage(new Damage.EnvironmentSource("energetic rift"),cause,5));
-            var t=store.getComponent(ref,TransformComponent.getComponentType());
-            if(t!=null) {
-                Vector3d impact=new Vector3d(t.getPosition()).add(0,1,0);
-                GadgetEffects.beam(world,"SM_Rift_Arc",a.position(),impact);
-                GadgetEffects.use(world,"SM_Rift_Hit",impact);
-            }
-            return !protectedByHat;
+        if(cause<0 || ref==null || !ref.isValid() || ref.getStore()!=store) return false;
+        var player=store.getComponent(ref,Player.getComponentType());
+        if(player==null && store.getComponent(ref,NPCEntity.getComponentType())==null) return false;
+        // Creative and a worn hat remain immune, while visible contact still shows that an
+        // ungrounded field is alive. Native spawn protection/Invulnerable can also cancel damage.
+        boolean immune=player!=null && (player.getGameMode()==GameMode.Creative || protectedBy(world,ref,"SM_Tinfoil_Hat"));
+        // Original 1 / 20 maximum HP: scale to Hytale's standard 100 HP pool.
+        if(!immune)DamageSystems.executeDamage(ref,store,new Damage(new Damage.EnvironmentSource("energetic rift"),cause,5));
+        var t=store.getComponent(ref,TransformComponent.getComponentType());
+        if(t!=null) {
+            Vector3d impact=new Vector3d(t.getPosition()).add(0,1,0);
+            GadgetEffects.beam(world,"SM_Rift_Arc",a.position(),impact);
+            GadgetEffects.use(world,"SM_Rift_Hit",impact);
+        }
+        return !immune;
     }
     void cognitive(World world,AnomalyRecord a,boolean players,Random random) {
         var store=world.getEntityStore().getStore();
@@ -179,7 +172,10 @@ final class HytaleAnomalyEffects {
                     var effect=EntityEffect.getAssetMap().getAsset("SM_Cognitive_Dissonance");
                     var controller=store.getComponent(ref,EffectControllerComponent.getComponentType());
                     float duration=t==null?5:(float)(5+5*Math.max(0,1-Math.sqrt(a.distanceSquared(t.getPosition()))/6));
-                    if(effect!=null && controller!=null)controller.addEffect(ref,effect,duration,OverlapBehavior.OVERWRITE,store);
+                    if(effect!=null && controller!=null) {
+                        controller.addEffect(ref,effect,duration,OverlapBehavior.OVERWRITE,store);
+                        thoughts.expose(world,ref,duration,t==null?0:Math.max(0,1-Math.sqrt(a.distanceSquared(t.getPosition()))/6));
+                    }
                 }
             } else if(p==null && store.getComponent(ref,NPCEntity.getComponentType())!=null) {
                 ModelAsset asset=ModelAsset.getAssetMap().getAsset(DISGUISES[random.nextInt(DISGUISES.length)]);
@@ -190,6 +186,7 @@ final class HytaleAnomalyEffects {
             }
         }
     }
+    void tickThoughts(World world,double dt){thoughts.tick(world,dt);}
     private void temporaryModel(World world,Ref<EntityStore> ref,Model model,long duration) {
         var store=world.getEntityStore().getStore();
         ModelComponent old=store.getComponent(ref,ModelComponent.getComponentType());

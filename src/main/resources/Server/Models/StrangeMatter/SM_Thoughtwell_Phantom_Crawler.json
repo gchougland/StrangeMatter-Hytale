@@ -1,0 +1,37 @@
+{
+  "Model": "NPC/Void/Crawler_Void/Models/Model.blockymodel",
+  "Texture": "NPC/Void/Crawler_Void/Models/Texture.png",
+  "HitBox": {
+    "Max": {
+      "X": 0.6,
+      "Y": 0.9,
+      "Z": 0.6
+    },
+    "Min": {
+      "X": -0.6,
+      "Y": 0,
+      "Z": -0.6
+    }
+  },
+  "EyeHeight": 0.5,
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "NPC/Void/Crawler_Void/Animations/Default/Idle.blockyanim",
+          "Speed": 0.9,
+          "Looping": true
+        }
+      ]
+    },
+    "Run": {
+      "Animations": [
+        {
+          "Animation": "NPC/Void/Crawler_Void/Animations/Default/Run.blockyanim",
+          "Speed": 0.9,
+          "Looping": true
+        }
+      ]
+    }
+  }
+}

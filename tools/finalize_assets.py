@@ -91,7 +91,7 @@ def lights(source,b):
     family=source.split('_')[0]
     if family in FAMILIES and source.endswith(('_crystal','_lamp','_lantern')):
         fixture=source.endswith(('_lamp','_lantern'))
-        b['Light']={'Color':family_light(family,fixture),'Radius':15 if fixture else 5}
+        b['Light']={'Color':family_light(family,fixture),'Radius':0 if fixture else 5}
         return
     colors={'chrono':'#eb5','gravitic':'#95d','shade':'#749','spatial':'#d6c','insight':'#4dc','energetic':'#5dd'}
     color=next((v for k,v in colors.items() if k in source),'#6dc')
@@ -144,7 +144,7 @@ def source_parity(source,item):
           'Textures':[{'Up':'BlockTextures/StrangeMatter/Anomalous_Grass_Top.png',
             'Sides':'BlockTextures/StrangeMatter/Anomalous_Grass_Side.png',
             'Down':'BlockTextures/StrangeMatter/Anomalous_Grass_Soil.png','Weight':1}],
-          'TransitionTexture':'BlockTextures/Transition_Soil_Grass_GS.png',
+          'TransitionTexture':'BlockTextures/StrangeMatter/Anomalous_Grass_Transition.png',
           'TransitionToGroups':['Stone','Dirt','Dirt_Dark','Sand','Gravel','Wood','Cobble']})
         b.pop('Interactions',None);b.pop('InteractionHint',None)
         b.pop('CustomModel',None);b.pop('CustomModelTexture',None)

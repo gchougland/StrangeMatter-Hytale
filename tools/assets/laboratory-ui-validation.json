@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "templates": 4,
+  "rejectedRegressions": 5,
+  "checks": [
+    "Native scrolling and stable selectable row templates",
+    "Item icons and wrapped names preserve button hit testing",
+    "Control bounds and text regions do not overlap",
+    "Eight ingredient rows fit",
+    "Full research picker and six full shutters",
+    "Crafting animation selectors remain present",
+    "Forge generator matches shipped layout"
+  ],
+  "limitation": "Static layout verification. Native client parsing and visual playtesting are separate checks."
+}

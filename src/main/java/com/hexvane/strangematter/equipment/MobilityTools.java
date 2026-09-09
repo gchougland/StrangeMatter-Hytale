@@ -45,7 +45,11 @@ import java.util.concurrent.ConcurrentHashMap;
 /** Ground-following native hoverboard mounts and the cosmetic Echoform Imprinter. */
 public final class MobilityTools {
     private static final String BOARD = "SM_Hoverboard", BOARD_ROLE = "SM_Hoverboard_Mount", IMPRINTER = "SM_Echoform_Imprinter";
-    static final float BOARD_SCALE = 2, BOARD_ANCHOR_Y = .54f;
+    static final float BOARD_SCALE = 2, BOARD_ANCHOR_Y = 1.64f;
+    // Entity artwork uses 64 units per block. At scale 2, shifting the original
+    // roots 43.98 units puts each grip top (8.5 units) exactly at the rider anchor.
+    // The collider and mounted controller keep their existing native feet origin.
+    static final double BOARD_VISUAL_ORIGIN_Y = 43.98 * BOARD_SCALE / 64;
     private final Map<UUID, Ride> rides = new ConcurrentHashMap<>();
     private final Map<UUID, Scan> scans = new ConcurrentHashMap<>();
     private final Map<UUID, Morph> morphs = new ConcurrentHashMap<>();
@@ -54,7 +58,7 @@ public final class MobilityTools {
     private final GadgetHudService hud;
     private final HoverboardRecovery recovery;
     public MobilityTools(GadgetHudService hud,Path directory) { this.hud = hud;this.recovery=new HoverboardRecovery(directory); }
-    private record Ride(World world, PlayerRef player, Ref<EntityStore> board, UUID boardId, UUID receipt, int networkId, MovementManager originalMovement) {}
+    private record Ride(World world, PlayerRef player, Ref<EntityStore> board, UUID boardId, UUID receipt, int networkId, MovementManager originalMovement, HoverboardRiderPose pose) {}
     private record Scan(World world, PlayerRef player, Ref<EntityStore> target, long began, boolean automatic) {}
     private record Morph(World world, PlayerRef player, Model originalModel, Model.ModelReference originalReference, PlayerSkinComponent originalSkin, Model appliedModel, PlayerSkinComponent appliedSkin) {}
 
@@ -109,9 +113,12 @@ public final class MobilityTools {
         if (head != null) rotation.setYaw(head.getRotation().yaw());
         var mount = new NPCMountComponent(); mount.setOriginalRoleIndex(role); mount.setOwnerPlayerRef(playerRef); mount.setAnchor(0, BOARD_ANCHOR_Y, 0);
         Model model = boardModel(modelAsset);
-        // Spawn with the scaled collider's bottom at the rider's feet, never inside the ground.
-        // Native horse movement then owns collision, jumps, slopes and steering.
-        p.y -= Math.min(0, model.getBoundingBox().min.y);
+        // The client mount controller expects a feet origin. Do not compensate for a negative
+        // collider here: model, collider, eye height and rider anchor share the same origin.
+        if (Math.abs(model.getBoundingBox().min.y) > 1e-6) {
+            say(playerRef, "The hoverboard mount has incompatible collision assets. Reload the current asset pack.");
+            return false;
+        }
         var spawned = NPCPlugin.get().spawnEntity(store, role, p, rotation, model,
                 (npc, holder, entityStore) -> {
                     // NPCMountSystems.OnAdd is a RefSystem: adding the component to an existing
@@ -125,20 +132,23 @@ public final class MobilityTools {
         MovementManager original = (MovementManager) movement.clone();
         movement.setDefaultSettings(config, physics, player.getGameMode()); movement.applyDefaultSettings(); movement.update(playerRef.getPacketHandler());
         var velocity = store.getComponent(board, Velocity.getComponentType()); if (velocity != null) velocity.setZero();
-        rides.put(uuid, new Ride(world, playerRef, board, store.getComponent(board,UUIDComponent.getComponentType()).getUuid(), receipt, network.getId(), original));
-        GadgetEffects.use(world, "SM_Hoverboard_Engage", p);
+        var pose = new HoverboardRiderPose();
+        pose.ensure(playerRef, store);
+        rides.put(uuid, new Ride(world, playerRef, board, store.getComponent(board,UUIDComponent.getComponentType()).getUuid(), receipt, network.getId(), original, pose));
+        GadgetEffects.use(world, "SM_Hoverboard_Engage", new Vector3d(p).add(0, BOARD_VISUAL_ORIGIN_Y, 0));
         say(playerRef, "Hoverboard engaged. Move to steer, sprint to boost, jump to hop; dismount to fold it away.");
         return true;
     }
     static void prepareBoard(Holder<EntityStore> holder,NPCMountComponent mount){
         holder.ensureComponent(Interactable.getComponentType());
         // Mounted movement packets own this disposable entity. Without this marker the NPC
-        // Walk steering system also applies gravity/collision, snapping it back on downsteps.
+        // Walk steering system also applies a second gravity/collision simulation.
         // Frozen gates NPC simulation only; GamePacketHandler still applies rider movement.
         holder.addComponent(Frozen.getComponentType(),Frozen.get());
         holder.tryRemoveComponent(StepComponent.getComponentType());
         holder.addComponent(NPCMountComponent.getComponentType(),mount);
         holder.addComponent(EntityStore.REGISTRY.getNonSerializedComponentType(),NonSerialized.get());
+        HoverboardRideEffects.attach(holder);
     }
     static Model boardModel(ModelAsset asset) { return Model.createScaledModel(asset, BOARD_SCALE); }
 
@@ -202,6 +212,7 @@ public final class MobilityTools {
         ModelComponent originalComponent = store.getComponent(ref, ModelComponent.getComponentType());
         ModelComponent target = store.getComponent(scan.target(), ModelComponent.getComponentType());
         if (originalComponent == null || target == null) { say(scan.player(), "This echoform has no compatible model."); return; }
+        suspendRiderPose(scan.player(), store);
         Morph previous = morphs.get(scan.player().getUuid());
         Model originalModel = previous == null ? originalComponent.getModel() : previous.originalModel();
         PersistentModel persistent = store.getComponent(ref, PersistentModel.getComponentType());
@@ -217,6 +228,7 @@ public final class MobilityTools {
         if (appliedSkin != null) store.putComponent(ref, PlayerSkinComponent.getComponentType(), appliedSkin);
         else store.tryRemoveComponent(ref, PlayerSkinComponent.getComponentType());
         morphs.put(scan.player().getUuid(), new Morph(scan.world(), scan.player(), originalModel, originalReference, originalSkin, appearance, appliedSkin));
+        resumeRiderPose(scan.player(), store);
         var location = store.getComponent(ref, TransformComponent.getComponentType());
         if (location != null) GadgetEffects.use(scan.world(), "SM_Imprint", new Vector3d(location.getPosition()).add(0, 1, 0));
         say(scan.player(), "Echoform imprinted. Secondary or Use restores your original form.");
@@ -235,6 +247,7 @@ public final class MobilityTools {
         Store<EntityStore> store = ref.getStore();
         store.getExternalData().getWorld().execute(() -> {
             if (!ref.isValid()) return;
+            suspendRiderPose(morph.player(), store);
             var current = store.getComponent(ref, ModelComponent.getComponentType());
             // Another mod replacing the appearance takes precedence over this temporary disguise.
             if (current != null && current.getModel() == morph.appliedModel()) {
@@ -244,6 +257,7 @@ public final class MobilityTools {
                 if (morph.originalSkin() != null) store.putComponent(ref, PlayerSkinComponent.getComponentType(), new PlayerSkinComponent(morph.originalSkin().getPlayerSkin()));
                 else store.tryRemoveComponent(ref, PlayerSkinComponent.getComponentType());
             }
+            resumeRiderPose(morph.player(), store);
             if (announce) {
                 var location = store.getComponent(ref, TransformComponent.getComponentType());
                 if (location != null) GadgetEffects.use(store.getExternalData().getWorld(), "SM_Imprint_Revert", new Vector3d(location.getPosition()).add(0, 1, 0));
@@ -272,14 +286,16 @@ public final class MobilityTools {
             if (ref == null || !ref.isValid() || ref.getStore() != store || !ride.board().isValid()) { stopRide(ride); continue; }
             Player player = store.getComponent(ref, Player.getComponentType());
             if (player == null || player.getMountEntityId() != ride.networkId() || store.getComponent(ref, DeathComponent.getComponentType()) != null) { stopRide(ride); continue; }
+            ride.pose().ensure(ride.player(), store);
             var viewer = store.getComponent(ref, EntityTrackerSystems.EntityViewer.getComponentType());
             if (viewer != null && viewer.sent.containsKey(ride.board()) && mountPresented.add(ride.player().getUuid())) {
                 // The native OnAdd packet may precede the first entity update on a fresh spawn.
                 // Reassert once after the tracker has sent the board, never every tick.
                 ride.player().getPacketHandler().write(new MountNPC(0, BOARD_ANCHOR_Y, 0, ride.networkId()));
+                ride.pose().replayOwner(ride.player(), store);
             }
             // Leave mounted velocity and transforms to the native rider controller.
-            if(visual){var location=store.getComponent(ride.board(),TransformComponent.getComponentType());if(location!=null)GadgetEffects.particle(world,"SM_Hoverboard_Exhaust",new Vector3d(location.getPosition()).add(0,-.18,0));}
+            if (visual) HoverboardRideEffects.pulse(store, ride.board());
         }
         for (Morph morph : morphs.values()) {
             if (morph.world() != world) continue;
@@ -293,6 +309,7 @@ public final class MobilityTools {
         recovery.fold(ride.receipt());
         if (!rides.remove(ride.player().getUuid(), ride)) return;
         mountPresented.remove(ride.player().getUuid());
+        ride.pose().restore(ride.player());
         Store<EntityStore> store = ride.world().getEntityStore().getStore();
         onWorld(ride.world(),() -> {
             // Native dismount role changes can unload/add the holder and replace its Ref.
@@ -300,7 +317,7 @@ public final class MobilityTools {
             var board=ride.board().isValid()?ride.board():ride.world().getEntityStore().getRefFromUUID(ride.boardId());
             if (board!=null&&board.isValid()) {
                 var position = store.getComponent(board, TransformComponent.getComponentType());
-                if (position != null) GadgetEffects.use(ride.world(), "SM_Hoverboard_Disengage", position.getPosition());
+                if (position != null) GadgetEffects.use(ride.world(), "SM_Hoverboard_Disengage", new Vector3d(position.getPosition()).add(0,BOARD_VISUAL_ORIGIN_Y,0));
                 var mount = store.getComponent(board, NPCMountComponent.getComponentType());
                 // A moving player can already belong to a different world; detach ownership before
                 // the native NPC removal callback tries to restore movement through the old store.
@@ -327,6 +344,14 @@ public final class MobilityTools {
         });
     }
     private static void onWorld(World world,Runnable action){if(world.isInThread())action.run();else world.execute(action);}
+    private void suspendRiderPose(PlayerRef owner, Store<EntityStore> store) {
+        var ride = rides.get(owner.getUuid());
+        if (ride != null && ride.world().getEntityStore().getStore() == store) ride.pose().restoreNow(owner, store);
+    }
+    private void resumeRiderPose(PlayerRef owner, Store<EntityStore> store) {
+        var ride = rides.get(owner.getUuid());
+        if (ride != null && ride.world().getEntityStore().getStore() == store) ride.pose().ensure(owner, store);
+    }
     public void cleanup(World world) {
         recovery.cleanup(world);
         for (Ride ride : List.copyOf(rides.values())) if (ride.world() == world) stopRide(ride);

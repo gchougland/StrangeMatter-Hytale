@@ -1,9 +1,9 @@
 {
   "status": "PASS",
-  "uiFiles": 13,
-  "selectors": 438,
-  "importedSymbolUses": 78,
-  "javaLiteralSelectorFamilies": 85,
+  "uiFiles": 14,
+  "selectors": 458,
+  "importedSymbolUses": 80,
+  "javaLiteralSelectorFamilies": 107,
   "checks": [
     "Native string escape rules",
     "Native label alignment literals",

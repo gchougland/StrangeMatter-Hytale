@@ -39,8 +39,8 @@
     "BlockSoundSetId": "Stone",
     "PhysicalMaterialId": "Stone",
     "Light": {
-      "Color": "#69f",
-      "Radius": 15
+      "Color": "#09f",
+      "Radius": 0
     }
   },
   "Interactions": {

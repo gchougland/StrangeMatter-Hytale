@@ -39,8 +39,8 @@
     "BlockSoundSetId": "Stone",
     "PhysicalMaterialId": "Stone",
     "Light": {
-      "Color": "#f6f",
-      "Radius": 15
+      "Color": "#f0d",
+      "Radius": 0
     },
     "InteractionHitboxType": "SM_Spatial_Shard_Lamp",
     "PlacementSettings": {

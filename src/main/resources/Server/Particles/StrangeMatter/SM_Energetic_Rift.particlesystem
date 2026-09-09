@@ -10,13 +10,38 @@
       "SpawnerId": "SM_Energetic_Corona"
     },
     {
-      "SpawnerId": "SM_Energetic_Sparks"
+      "SpawnerId": "SM_Energetic_Ring_Oblique"
+    },
+    {
+      "SpawnerId": "SM_Energetic_Ring_Counter",
+      "StartDelay": 0.12
+    },
+    {
+      "SpawnerId": "SM_Energetic_Cross_Arc_1"
+    },
+    {
+      "SpawnerId": "SM_Energetic_Cross_Arc_2"
+    },
+    {
+      "SpawnerId": "SM_Energetic_Cross_Arc_3"
     },
     {
       "SpawnerId": "SM_Energetic_Arcs"
+    },
+    {
+      "SpawnerId": "SM_Energetic_Orbit_Debris"
+    },
+    {
+      "SpawnerId": "SM_Energetic_Orbit_Glint"
+    },
+    {
+      "SpawnerId": "SM_Energetic_Sparks"
+    },
+    {
+      "SpawnerId": "SM_Energetic_Core_Flashes"
     }
   ],
-  "LifeSpan": 3.5,
+  "LifeSpan": 2.25,
   "CullDistance": 96,
   "BoundingRadius": 4,
   "IsImportant": false

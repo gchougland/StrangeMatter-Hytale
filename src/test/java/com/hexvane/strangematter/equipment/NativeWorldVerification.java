@@ -41,6 +41,15 @@ public final class NativeWorldVerification extends JavaPlugin {
             machines=new MachineService(getDataDirectory(),config,research,anomalies);
             getCodecRegistry(Interaction.CODEC).register("SM_Use",StrangeMatterInteraction.class,StrangeMatterInteraction.CODEC);
             getCodecRegistry(RandomTickProcedure.CODEC).register("SM_Anomalous_Grass",AnomalousGrassService.class,AnomalousGrassService.CODEC);
+            getChunkStoreRegistry().registerSystem(new com.hexvane.strangematter.block.FixtureLightingRefresh());
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.equipment.HoverboardRiderPose.RestoreOnRemove());
+            getEntityStoreRegistry().registerSystem(anomalies.gravitySystem());
+            getEntityStoreRegistry().registerSystem(anomalies.gravityCleanupSystem());
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.anomaly.GravityTerrainEvents.Place(anomalies));
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.anomaly.GravityTerrainEvents.Break(anomalies));
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.anomaly.GravityTerrainEvents.Damage(anomalies));
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.anomaly.GravityTerrainEvents.EnvironmentBreak(anomalies));
+            com.hexvane.strangematter.anomaly.ThoughtwellHallucinations.register(getEntityStoreRegistry());
         }catch(Exception ex){throw new IllegalStateException(ex);}
     }
     @Override protected void start(){
@@ -49,7 +58,8 @@ public final class NativeWorldVerification extends JavaPlugin {
             var config=new WorldConfig();config.setWorldGenProvider(new FlatWorldGenProvider());config.setSpawningNPC(false);config.setIsSpawnMarkersEnabled(false);config.setBlockTicking(false);config.setCanUnloadChunks(false);
             String name="sm_verification_"+UUID.randomUUID().toString().replace("-","");
             return Universe.get().makeWorld(name,Universe.get().validateWorldPath(name),config);
-        }).thenCompose(world->world.getChunkAsync(ChunkUtil.indexChunk(0,0)).thenCompose(chunk->CompletableFuture.runAsync(()->verify(world),world)))
+        }).thenCompose(world->CompletableFuture.allOf(world.getChunkAsync(ChunkUtil.indexChunk(0,0)),world.getChunkAsync(ChunkUtil.indexChunk(1,0)))
+                .thenRunAsync(()->verify(world),world))
           .whenComplete((ignored,error)->finish(error));
     }
     private void verify(World world){
@@ -61,10 +71,18 @@ public final class NativeWorldVerification extends JavaPlugin {
         verifyForgeIngredients();
         com.hexvane.strangematter.machine.NativeMachineVerification.verify(machines,research);
         com.hexvane.strangematter.machine.NativeMachineVerification.verifyGrounding(world,machines);
+        try {NativeLaboratorySelectionVerification.verify(world,research,machines);}
+        catch(Exception ex){throw new IllegalStateException(ex);}
         try {com.hexvane.strangematter.machine.MachineControlsVerification.verify(world,machines);}
         catch(Exception ex){throw new IllegalStateException(ex);}
         verifyConduits(world);
         verifyPresentationPackets();
+        com.hexvane.strangematter.effects.NativeEnergeticPresentationVerification.verify();
+        NativeHeldLightVerification.verify();
+        com.hexvane.strangematter.block.NativeGrassStatusIconVerification.verify();
+        try {com.hexvane.strangematter.block.NativeFixtureLightingVerification.verify(world);}
+        catch(Exception ex){throw new IllegalStateException(ex);}
+        com.hexvane.strangematter.machine.NativeMachineWorkVerification.verify(world,machines);
         world.setBlock(4,8,4,"SM_Resonant_Burner");
         require(world.getBlockType(4,8,4).getId().equals("SM_Resonant_Burner"),"Native custom block placement");
         var burner=machines.register(world,new Vector3i(4,8,4),"SM_Resonant_Burner");burner.fuelTicks=20;
@@ -89,7 +107,16 @@ public final class NativeWorldVerification extends JavaPlugin {
         catch(Exception ex){throw new IllegalStateException(ex);}
         verifyPortalChannels(world);
         com.hexvane.strangematter.anomaly.NativeAnomalyRevisionVerification.verify(world);
-        try {NativeMobilityRevisionVerification.verify(world);com.hexvane.strangematter.anomaly.NativeTerrainHostVerification.verify(world);}
+        try {com.hexvane.strangematter.anomaly.NativeRiftHatVerification.verify(world);NativeMobilityRevisionVerification.verify(world);com.hexvane.strangematter.anomaly.NativeTerrainHostVerification.verify(world);}
+        catch(Exception ex){throw new IllegalStateException(ex);}
+        try {
+            NativeHoverboardRiderVerification.verify(world);
+            NativeHoverboardPresentationVerification.verify(world);
+            com.hexvane.strangematter.anomaly.NativeThoughtwellVerification.verify(world);
+            com.hexvane.strangematter.anomaly.NativeGravityVerification.verify(world);
+            com.hexvane.strangematter.anomaly.NativeGravityTerrainVerification.verify(world);
+            com.hexvane.strangematter.anomaly.NativeRiftExposureVerification.verify(world);
+        }
         catch(Exception ex){throw new IllegalStateException(ex);}
     }
     private void verifyConduits(World world) {
@@ -230,7 +257,7 @@ public final class NativeWorldVerification extends JavaPlugin {
     }
     private void finish(Throwable error){
         if(!finished.compareAndSet(false,true))return;
-        String message=error==null?"NATIVE_WORLD_VERIFICATION_PASSED: research and recipe packets,429 native furnace fuels, bounded bulk fuel loading, remembered Forge recipes, native player disk saves, visible capsule flight, hoverboard consume/downsteps/dismount/return, desert soil and ore hosts, rift damage, charged hammer animation/audio/damage,64 conduits, portals and temporal expiry.":"NATIVE_WORLD_VERIFICATION_FAILED: "+error;
+        String message=error==null?"NATIVE_WORLD_VERIFICATION_PASSED: colored grass border and Thoughtwell icon, surfing Action packets with preserved avatar and skin, energetic presentation and directed stabilizer arcs, scheduled rift exposure and grounding, fixtures, machines, mounted player lifecycle, inventory recovery, research/recipes, fuel/Forge controls, capsules, hammer, terrain, conduits and anomaly lifecycles.":"NATIVE_WORLD_VERIFICATION_FAILED: "+error;
         System.out.println(message);if(error!=null)error.printStackTrace();
         try{Files.writeString(Path.of("native-world-result.txt"),message+"\n");}catch(Exception ex){ex.printStackTrace();}
         CompletableFuture.runAsync(()->HytaleServer.get().shutdownServer());

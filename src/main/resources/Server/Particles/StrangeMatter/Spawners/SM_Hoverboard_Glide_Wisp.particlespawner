@@ -1,0 +1,113 @@
+{
+  "Shape": "Sphere",
+  "RenderMode": "BlendAdd",
+  "LifeSpan": 0.08,
+  "TotalParticles": {
+    "Min": 3,
+    "Max": 3
+  },
+  "MaxConcurrentParticles": 3,
+  "ParticleLifeSpan": {
+    "Min": 0.3,
+    "Max": 0.48
+  },
+  "SpawnRate": {
+    "Min": 3,
+    "Max": 3
+  },
+  "SpawnBurst": true,
+  "EmitOffset": {
+    "X": {
+      "Min": -0.025,
+      "Max": 0.025
+    },
+    "Y": {
+      "Min": -0.025,
+      "Max": 0.025
+    },
+    "Z": {
+      "Min": -0.025,
+      "Max": 0.025
+    }
+  },
+  "ParticleRotationInfluence": "Billboard",
+  "ParticleRotateWithSpawner": false,
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 0.3,
+      "Max": 0.7
+    },
+    "Yaw": {
+      "Min": 170,
+      "Max": 190
+    },
+    "Pitch": {
+      "Min": -12,
+      "Max": 3
+    }
+  },
+  "Particle": {
+    "Texture": "Particles/StrangeMatter/halo.png",
+    "FrameSize": {
+      "Width": 128,
+      "Height": 128
+    },
+    "ScaleRatioConstraint": "None",
+    "UVOption": "None",
+    "InitialAnimationFrame": {
+      "Color": "#66e9ff",
+      "Opacity": 0,
+      "Scale": {
+        "X": {
+          "Min": 0.08,
+          "Max": 0.08
+        },
+        "Y": {
+          "Min": 0.15,
+          "Max": 0.15
+        }
+      },
+      "FrameIndex": {
+        "Min": 0,
+        "Max": 0
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#66e9ff",
+        "Scale": {
+          "X": {
+            "Min": 1,
+            "Max": 1
+          },
+          "Y": {
+            "Min": 1,
+            "Max": 1
+          }
+        }
+      },
+      "14": {
+        "Opacity": 0.52
+      },
+      "55": {
+        "Opacity": 0.28600000000000003
+      },
+      "100": {
+        "Opacity": 0,
+        "Scale": {
+          "X": {
+            "Min": 0.25,
+            "Max": 0.25
+          },
+          "Y": {
+            "Min": 0.55,
+            "Max": 0.55
+          }
+        }
+      }
+    }
+  }
+}

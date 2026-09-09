@@ -1,0 +1,31 @@
+{
+  "snapshot": "build/art-preservation/20260909T173156948611Z",
+  "transition": "BlockTextures/StrangeMatter/Anomalous_Grass_Transition.png",
+  "icon": "UI/StatusEffects/SM_Cognitive_Dissonance.png",
+  "iconSource": "Icons/ItemsGenerated/SM_Anomaly_Thoughtwell.png",
+  "grassTopSha256": "1cef66485ce49e6cf2b126d2ec1c514358b3ab8e0eebb3fcadf0833c4b457346",
+  "nativeTransitionSha256": "bb131325f557aebb8c9d923efedad424522e6857dda17af2c134565abaeca7ab",
+  "transitionSha256": "135ccdf4afef8c08a1df07dff09d0664fed34dd070b9645334d0f04e4ead5eda",
+  "iconSha256": "0a1f4dcbd166d20f986b9ff677796c2086c12119e0d6be8cd70dbed471bc3c14",
+  "size": [
+    32,
+    32
+  ],
+  "grassMeanRGB": [
+    79.869140625,
+    133.068359375,
+    76.8095703125
+  ],
+  "nativeBorderMeanGray": 212.98945036396245,
+  "tintFactors": [
+    0.37499106405747956,
+    0.6247650254395651,
+    0.36062617271064656
+  ],
+  "nativeAlphaSha256": "91e6a37404964b5a31dbeaedfb4a3cf28c0135d8d890b6b82ab283dc942aa6be",
+  "unchangedTerrainTextures": [
+    "Anomalous_Grass_Top.png",
+    "Anomalous_Grass_Side.png",
+    "Anomalous_Grass_Soil.png"
+  ]
+}

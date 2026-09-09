@@ -1,0 +1,51 @@
+{
+  "Model": "NPC/Void/Spectre_Void/Models/Model.blockymodel",
+  "Texture": "NPC/Void/Spectre_Void/Models/Texture.png",
+  "HitBox": {
+    "Max": {
+      "X": 0.4,
+      "Y": 0.9,
+      "Z": 0.4
+    },
+    "Min": {
+      "X": -0.4,
+      "Y": 0,
+      "Z": -0.4
+    }
+  },
+  "EyeHeight": 0.45,
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "NPC/Void/Spectre_Void/Animations/Default/Idle.blockyanim",
+          "Speed": 0.9,
+          "Looping": true
+        }
+      ]
+    },
+    "Run": {
+      "Animations": [
+        {
+          "Animation": "NPC/Void/Spectre_Void/Animations/Default/Run.blockyanim",
+          "Speed": 0.9,
+          "Looping": true
+        }
+      ]
+    }
+  },
+  "Particles": [
+    {
+      "PositionOffset": {
+        "Y": 0,
+        "Z": 0
+      },
+      "SystemId": "Spectre_Void_Tail",
+      "TargetNodeName": "Chest"
+    },
+    {
+      "SystemId": "Spectre_Void_Body",
+      "TargetNodeName": "Chest"
+    }
+  ]
+}

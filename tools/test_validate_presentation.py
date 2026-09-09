@@ -65,6 +65,10 @@ class PresentationValidationTest(unittest.TestCase):
         with self.override_json('SM_Field_Scanner.json', lambda d: d['Recipe'].pop('KnowledgeRequired')):
             self.assert_rejected(presentation.validate(RESOURCES), 'crafting knowledge gate')
 
+    def test_reject_missing_native_creature_atlas(self):
+        with self.override_json('SM_Thoughtwell_Phantom_Wolf.json', lambda d: d.update(Texture='NPC/Missing/Thoughtwell.png')):
+            self.assert_rejected(presentation.validate(RESOURCES), 'NPC')
+
 
 if __name__ == '__main__':
     unittest.main()

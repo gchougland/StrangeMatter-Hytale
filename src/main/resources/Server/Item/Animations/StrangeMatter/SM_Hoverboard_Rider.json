@@ -1,0 +1,29 @@
+{
+  "Parent": "Default",
+  "Animations": {
+    "SurfIdle": {
+      "ThirdPerson": "Characters/Animations/StrangeMatter/Hoverboard/Surf_Idle.blockyanim",
+      "ThirdPersonMoving": "Characters/Animations/StrangeMatter/Hoverboard/Surf_Idle.blockyanim",
+      "Looping": true,
+      "Speed": 1,
+      "BlendingDuration": 0.18,
+      "KeepPreviousFirstPersonAnimation": true
+    },
+    "SurfGlide": {
+      "ThirdPerson": "Characters/Animations/StrangeMatter/Hoverboard/Surf_Glide.blockyanim",
+      "ThirdPersonMoving": "Characters/Animations/StrangeMatter/Hoverboard/Surf_Glide.blockyanim",
+      "Looping": true,
+      "Speed": 1,
+      "BlendingDuration": 0.18,
+      "KeepPreviousFirstPersonAnimation": true
+    },
+    "SurfBoost": {
+      "ThirdPerson": "Characters/Animations/StrangeMatter/Hoverboard/Surf_Boost.blockyanim",
+      "ThirdPersonMoving": "Characters/Animations/StrangeMatter/Hoverboard/Surf_Boost.blockyanim",
+      "Looping": true,
+      "Speed": 1,
+      "BlendingDuration": 0.18,
+      "KeepPreviousFirstPersonAnimation": true
+    }
+  }
+}

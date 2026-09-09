@@ -49,7 +49,7 @@
         "Weight": 1
       }
     ],
-    "TransitionTexture": "BlockTextures/Transition_Soil_Grass_GS.png",
+    "TransitionTexture": "BlockTextures/StrangeMatter/Anomalous_Grass_Transition.png",
     "TransitionToGroups": [
       "Stone",
       "Dirt",

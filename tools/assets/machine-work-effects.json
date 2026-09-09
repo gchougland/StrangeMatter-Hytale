@@ -1,0 +1,25 @@
+{
+  "machines": [
+    {
+      "machine": "SM_Resonance_Condenser",
+      "animatedNodes": 10,
+      "geometryUVSha256": "5c85ed86df70299cd7bdc1304a661743acb43520c66e4c778fd704d6d8090c68"
+    },
+    {
+      "machine": "SM_Resonant_Burner",
+      "animatedNodes": 5,
+      "geometryUVSha256": "fefac7a48399aa1e206baa311a95c124195cbf1106f1c793cf1e3201e074f4f2"
+    },
+    {
+      "machine": "SM_Reality_Forge",
+      "animatedNodes": 4,
+      "geometryUVSha256": "729d1b862f2ce3b4e5e840cbb2b4af63f39d0879afa5fccc5a2be9d477098c0d"
+    },
+    {
+      "machine": "SM_Rift_Stabilizer",
+      "animatedNodes": 21,
+      "geometryUVSha256": "7189f86d10914ac55936d00bcdf617272d09b77d91975833e0c4662c7864281e"
+    }
+  ],
+  "preserved": "All model IDs, geometry, hierarchy, UVs and textures; only animated node names/static flags change."
+}

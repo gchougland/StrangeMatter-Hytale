@@ -7,8 +7,8 @@
       "SpawnerId": "SM_Stabilizer_Link_Glow"
     }
   ],
-  "LifeSpan": 0.4,
+  "LifeSpan": 0.3,
   "CullDistance": 64,
-  "BoundingRadius": 1,
+  "BoundingRadius": 1.5,
   "IsImportant": false
 }

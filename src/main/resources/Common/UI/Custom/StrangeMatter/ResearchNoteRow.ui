@@ -1,7 +1,9 @@
 $R = "ResearchStyle.ui";
-Group { Anchor: (Height: 36, Bottom: 4);
-  Button #InsertNote { Style: $R.@RowStyle; Padding: (Horizontal: 10); LayoutMode: Left;
-    Label #NoteName { Style: (FontSize: 14, TextColor: #bca4ef, VerticalAlignment: Center); FlexWeight: 1; }
-    Label { Text: "INSERT"; Style: (FontSize: 12, TextColor: #69e4ef, VerticalAlignment: Center); Anchor: (Width: 72); }
+Group { Anchor: (Height: 76, Bottom: 5);
+  Button #SelectNote { Style: $R.@RowStyle;
+    Group #NoteAccent { Anchor: (Left: 0, Top: 0, Width: 3, Bottom: 0); Background: #485070; HitTestVisible: false; }
+    ItemIcon #NoteRowIcon { Anchor: (Left: 10, Top: 17, Width: 40, Height: 40); ItemId: "SM_Research_Notes"; HitTestVisible: false; }
+    Label #NoteName { Anchor: (Left: 63, Top: 8, Right: 10, Height: 37); Style: (FontSize: 14, TextColor: #d8deef, Wrap: true, VerticalAlignment: Center); HitTestVisible: false; }
+    Label #NoteState { Anchor: (Left: 63, Top: 52, Right: 10, Height: 18); Style: (FontSize: 11, TextColor: #a590c6); HitTestVisible: false; }
   }
 }

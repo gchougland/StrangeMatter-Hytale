@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "animations": 4,
+  "animatedNodes": 40,
+  "machines": [
+    {
+      "machine": "SM_Resonance_Condenser",
+      "animatedNodes": 10,
+      "manualGeometryAndUV": "preserved"
+    },
+    {
+      "machine": "SM_Resonant_Burner",
+      "animatedNodes": 5,
+      "manualGeometryAndUV": "preserved"
+    },
+    {
+      "machine": "SM_Reality_Forge",
+      "animatedNodes": 4,
+      "manualGeometryAndUV": "preserved"
+    },
+    {
+      "machine": "SM_Rift_Stabilizer",
+      "animatedNodes": 21,
+      "manualGeometryAndUV": "preserved"
+    }
+  ],
+  "checks": [
+    "Unique target-node bindings",
+    "Finite ordered keys",
+    "Seamless closed loops",
+    "Restrained motion",
+    "Native work-only states",
+    "Preserved manual geometry and UVs",
+    "Quiet positional bounded ambient OGG"
+  ]
+}

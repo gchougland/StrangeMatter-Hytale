@@ -15,6 +15,11 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hexvane.strangematter.ui.LivePageTransport;
 
 import java.util.Locale;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
@@ -28,8 +33,11 @@ public final class ResearchMachinePage extends InteractiveCustomUIPage<ResearchP
     private final AtomicBoolean queued = new AtomicBoolean();
     private ResearchSession session;
     private LivePageTransport.Lease input;
-    private String noteToken, machineKey, message = "Choose a purchased research note. All active instruments must remain stable together.";
-    private boolean initialized, acquired, resultRecorded, dirty;
+    private String noteToken, machineKey, message = "Choose a research note from your inventory. Keep its active instruments stable to complete the experiment.";
+    private record NoteChoice(String token, ResearchNode node) { }
+    private List<NoteChoice> notes = List.of();
+    private String selectedNote, boundNote;
+    private boolean initialized, acquired, resultRecorded, dirty, notesDirty;
     private volatile boolean disposed;
     private ScheduledFuture<?> pulse;
     public ResearchMachinePage(PlayerRef player, ResearchService service, Vector3i position) {
@@ -48,6 +56,7 @@ public final class ResearchMachinePage extends InteractiveCustomUIPage<ResearchP
             cmd.append("StrangeMatter/ResearchMachine.ui"); initialized = true;
             input.bind(events, "#Close", "close", "");
             input.bind(events, "#Begin", "begin", "");
+            input.bind(events, "#RefreshNotes", "refresh", "");
             sound(store, "Open");
             bindControl(events, "EnergyAmpMinus", "ENERGY", "amplitude", -1); bindControl(events, "EnergyAmpPlus", "ENERGY", "amplitude", 1);
             bindControl(events, "EnergyPeriodMinus", "ENERGY", "period", -1); bindControl(events, "EnergyPeriodPlus", "ENERGY", "period", 1);
@@ -61,25 +70,70 @@ public final class ResearchMachinePage extends InteractiveCustomUIPage<ResearchP
         }
         rebuildNotes(ref, cmd, events, store);
         render(cmd);
+        bindInsert(events);boundNote=selectedNote;
     }
     private void bindControl(UIEventBuilder events, String id, String type, String control, int value) {
         input.bind(events, "#" + id, "control", type + ":" + control + ":" + value);
     }
     private void rebuildNotes(Ref<EntityStore> ref, UICommandBuilder cmd, UIEventBuilder events, Store<EntityStore> store) {
         cmd.clear("#Notes");
+        notes=List.of();
         if (session != null) return;
         var inventory = ResearchService.inventory(store, ref);
-        int index = 0;
+        var found=new ArrayList<NoteChoice>();
         if (inventory != null) for (short slot = 0; slot < inventory.getCapacity(); slot++) {
             var stack = inventory.getItemStack(slot);
             ResearchNode node = service.noteNode(stack);
             if (node == null || service.hasUnlocked(playerRef.getUuid(), node.id())) continue;
+            String token=ResearchService.noteToken(stack);
+            if(token==null||found.stream().anyMatch(choice->choice.token().equals(token)))continue;
             cmd.append("#Notes", "StrangeMatter/ResearchNoteRow.ui");
-            String selector = "#Notes[" + index++ + "]";
-            cmd.set(selector + " #NoteName.Text", node.name() + "  /  " + node.costs().size() + " disciplines");
-            input.bind(events, selector + " #InsertNote", "insert", ResearchService.noteToken(stack));
+            String selector = "#Notes[" + found.size() + "]";
+            cmd.set(selector + " #NoteName.Text", node.name());
+            cmd.set(selector + " #NoteRowIcon.ItemId", noteIcon(node));
+            input.bind(events, selector + " #SelectNote", "select", token);
+            found.add(new NoteChoice(token,node));
         }
-        if (index == 0) message = "No eligible notes found. Use your Research Tablet to write a note using field observations.";
+        notes=List.copyOf(found);
+        if(notes.stream().noneMatch(choice->choice.token().equals(selectedNote)))selectedNote=notes.isEmpty()?null:notes.getFirst().token();
+        if (notes.isEmpty()) message = "Use your Research Tablet to create a note from field observations.";
+    }
+    private void bindInsert(UIEventBuilder events){input.bind(events,"#InsertNote","insert",selectedNote==null?"":selectedNote);}
+    private String missingPrerequisites(ResearchNode node){
+        return node.prerequisites().stream().filter(id->!service.hasUnlocked(playerRef.getUuid(),id)).map(service::researchName).collect(Collectors.joining(", "));
+    }
+    private void renderNotes(UICommandBuilder cmd){
+        cmd.set("#NotePicker.Visible",session==null);
+        if(session!=null)return;
+        cmd.set("#NoteCount.Text",notes.size()+" unfinished "+(notes.size()==1?"note":"notes")+" in your inventory");
+        cmd.set("#NoNotes.Visible",notes.isEmpty());
+        var choice=notes.stream().filter(note->note.token().equals(selectedNote)).findFirst().orElse(null);
+        cmd.set("#NoteDetails.Visible",choice!=null);cmd.set("#NoNoteSelection.Visible",choice==null);
+        for(int i=0;i<notes.size();i++){
+            var note=notes.get(i);String row="#Notes["+i+"]";
+            boolean selected=note.token().equals(selectedNote),ready=missingPrerequisites(note.node()).isEmpty();
+            cmd.set(row+" #NoteState.Text",selected?(ready?"SELECTED":"SELECTED   RESEARCH NEEDED"):(ready?note.node().costs().size()+" active instruments":"PREREQUISITE NEEDED"));
+            cmd.set(row+" #NoteState.Style.TextColor",ready?"#9bdbd7":"#dfa9be");
+            cmd.set(row+" #NoteName.Style.TextColor",selected?"#79eff5":"#d8deef");
+            cmd.set(row+" #NoteAccent.Background",selected?"#74eaf0":ready?"#544772":"#654355");
+        }
+        if(choice==null)return;
+        var node=choice.node();String missing=missingPrerequisites(node);
+        cmd.set("#NoteIcon.ItemId",noteIcon(node));cmd.set("#NoteTitle.Text",node.name());
+        cmd.set("#NoteDescription.Text",node.description());
+        cmd.set("#NoteDisciplines.Text",Arrays.stream(ResearchType.values()).filter(node.costs()::containsKey).map(ResearchType::displayName).collect(Collectors.joining("   |   ")));
+        cmd.set("#NotePrerequisites.Text",missing.isEmpty()?"Ready to insert. Your note is used only when the experiment succeeds.":"Complete this research first: "+missing);
+        cmd.set("#NotePrerequisites.Style.TextColor",missing.isEmpty()?"#a6daca":"#efaabe");
+        cmd.set("#InsertNote.Disabled",!missing.isEmpty());
+    }
+    private static String noteIcon(ResearchNode node){
+        String special=switch(node.id()){
+            case "gravity_anomalies"->"SM_Gravitic_Shard";case "temporal_anomalies"->"SM_Chrono_Shard";
+            case "spatial_anomalies"->"SM_Spatial_Shard";case "energy_anomalies"->"SM_Energetic_Shard";
+            case "shadow_anomalies"->"SM_Shade_Shard";case "cognitive_anomalies"->"SM_Insight_Shard";
+            case "containment_basics"->"SM_Echo_Vacuum";default->"SM_"+Arrays.stream(node.id().split("_")).map(part->Character.toUpperCase(part.charAt(0))+part.substring(1)).collect(Collectors.joining("_"));
+        };
+        return com.hypixel.hytale.server.core.asset.type.item.config.Item.getAssetMap().getAsset(special)==null?ResearchService.NOTE_ITEM:special;
     }
     @Override public void handleDataEvent(Ref<EntityStore> ref, Store<EntityStore> store, ResearchPageData data) {
         if (disposed || input == null || !input.accepts(data) || data.action == null) return;
@@ -87,7 +141,13 @@ public final class ResearchMachinePage extends InteractiveCustomUIPage<ResearchP
         if (data.action.equals("close")) { dispose(); close(); return; }
         if (!validMachine(ref, store)) { message = "Research connection lost. Return to the Research Machine."; dispose(); close(); return; }
         switch (data.action) {
+            case "select" -> {
+                if(session!=null||notes.stream().noneMatch(note->note.token().equals(data.value)))return;
+                selectedNote=data.value;message="Review this note, then insert it when you are ready.";
+            }
+            case "refresh" -> {if(session!=null)return;service.refreshNotes(store,ref);notesDirty=true;message="Notes refreshed from your inventory.";}
             case "insert" -> {
+                if(!Objects.equals(selectedNote,data.value)){message="Note selection changed. Review the selected note before inserting it.";break;}
                 insert(ref, store, data.value);
             }
             case "begin" -> { if (session != null && session.state() == ResearchSession.State.READY) { session.begin(); sound(store, "Begin_Research"); message = "Keep all active instruments stable until the instability gauge clears."; } }
@@ -150,7 +210,14 @@ public final class ResearchMachinePage extends InteractiveCustomUIPage<ResearchP
         // visible frame is awaiting acknowledgement. Slow links slow simulation, not input.
         if (!input.ready()) return;
         if (session == null || session.state() == ResearchSession.State.READY || resultRecorded) {
-            if (dirty) { UICommandBuilder cmd = new UICommandBuilder(); render(cmd); if (input.send(cmd, null)) dirty = false; }
+            if (dirty||notesDirty) {
+                UICommandBuilder cmd=new UICommandBuilder();UIEventBuilder events=new UIEventBuilder();
+                if(notesDirty)rebuildNotes(ref,cmd,events,store);
+                render(cmd);
+                if(!Objects.equals(selectedNote,boundNote))bindInsert(events);
+                // The selected title and its exact note token travel together.
+                if(input.send(cmd,events)){dirty=false;notesDirty=false;boundNote=selectedNote;}
+            }
             return;
         }
         var inventory = ResearchService.inventory(store, ref);
@@ -160,18 +227,18 @@ public final class ResearchMachinePage extends InteractiveCustomUIPage<ResearchP
             boolean completed = false;
             try {
                 completed = service.finish(playerRef.getUuid(), session, noteToken, inventory);
-                message = completed ? "RESEARCH COMPLETE - " + session.node().name() + " unlocked. The note has been consumed." : "Research could not be recorded. Your note remains available.";
+                message = completed ? "Research complete. " + session.node().name() + " unlocked. The note has been consumed." : "Research could not be recorded. Your note remains available.";
                 sound(store, completed ? "Success" : "Note_Reject");
             } catch (RuntimeException e) { message = "Research could not be saved. Your note was restored; check the server storage."; }
             if (completed) try { service.syncRecipes(playerRef, store); }
             catch (RuntimeException delivery) {
                 System.getLogger(ResearchMachinePage.class.getName()).log(System.Logger.Level.WARNING, "Research committed; native recipe synchronization will retry on the next join", delivery);
-                message = "RESEARCH COMPLETE - " + session.node().name() + " unlocked. Recipe discovery will refresh when you reconnect.";
+                message = "Research complete. " + session.node().name() + " unlocked. Recipe discovery will refresh when you reconnect.";
             }
             release();
             resultRecorded = true;
         } else if (session.state() == ResearchSession.State.FAILURE) {
-            message = "CONTAINMENT FAILURE - experiment aborted. Your note remains in your inventory for another attempt.";
+            message = "Containment failed. Your note remains in your inventory for another attempt.";
             sound(store, "Failure");
             release();
             resultRecorded = true;
@@ -199,7 +266,7 @@ public final class ResearchMachinePage extends InteractiveCustomUIPage<ResearchP
     private void render(UICommandBuilder cmd) {
         cmd.set("#Message.Text", message);
         cmd.set("#ResearchName.Text", session == null ? "RESEARCH MACHINE / AWAITING NOTE" : session.node().name().toUpperCase(Locale.ROOT));
-        cmd.set("#Notes.Visible", session == null);
+        renderNotes(cmd);
         cmd.set("#Begin.Visible", session != null && session.state() == ResearchSession.State.READY);
         double instability = session == null ? .5 : session.state() == ResearchSession.State.SUCCESS ? 0 : session.instability();
         cmd.set("#Instability.Text", "INSTABILITY  " + displayedInstability(session) + "%");

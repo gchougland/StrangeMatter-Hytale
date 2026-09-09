@@ -6,13 +6,23 @@ ROOT = Path(__file__).resolve().parents[2]
 COMMON = ROOT / 'src/main/resources/Common'
 FAMILIES = ('gravitic', 'chrono', 'energetic', 'spatial', 'shade', 'insight')
 CRYSTAL_LIGHT = dict(zip(FAMILIES, ('#325', '#542', '#255', '#525', '#235', '#255')))
+# Measured from the current edited crystal atlases (bright, saturated mineral
+# texels). Unlike the low-intensity crystal light, these retain enough precision
+# to distinguish violet/rose and the Shade atlas's teal-blue hue.
+FIXTURE_MINERAL_RGB = {'gravitic': (142,81,226), 'chrono': (240,178,77),
+    'energetic': (67,222,226), 'spatial': (211,96,197), 'shade': (54,113,151), 'insight': (67,222,226)}
 
 
 def family_light(family, fixture=False):
     # Hytale ColorLight channels are intensities, not an sRGB texture swatch.
-    # Multiplying all three channels equally keeps the crystal's exact light hue.
-    multiplier = 3 if fixture else 1
-    return '#' + ''.join(format(int(c, 16) * multiplier, 'x') for c in CRYSTAL_LIGHT[family][1:])
+    # Crystal channels include neutral fill. Bright fixtures remove that shared
+    # white component before scaling, preserving hue without an overbright wash.
+    channels = [int(c, 16) for c in CRYSTAL_LIGHT[family][1:]]
+    if fixture:
+        channels = FIXTURE_MINERAL_RGB[family]
+        low = min(channels); spread = max(channels) - low
+        channels = [round((c - low) * 15 / spread) for c in channels]
+    return '#' + ''.join(format(c, 'x') for c in channels)
 
 
 def model_reference(path):

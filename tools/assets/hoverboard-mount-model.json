@@ -1,0 +1,16 @@
+{
+  "source": "Items/StrangeMatter/hoverboard.blockymodel",
+  "variant": "Items/StrangeMatter/hoverboard_mount.blockymodel",
+  "rootShiftYModelUnits": 43.98,
+  "entityArtUnitsPerBlock": 64,
+  "runtimeScale": 2,
+  "riderAnchorY": 1.64,
+  "originalGripTopModelUnits": 8.5,
+  "visualOriginWorldY": 1.374375,
+  "gripTopWorldY": 1.64,
+  "legacyGapWorldBlocks": 0.8243749999999999,
+  "sourceSha256": "fb147f032bd40fea9429da16db98243403e94b45889df22e17fe06cc63165281",
+  "variantSha256": "8816f86672b343ced4e8730fec4cf95189e519920dd7a8be373f7a370af01bfc",
+  "itemAndModelAssetUnchanged": true,
+  "status": "PASS"
+}

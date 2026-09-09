@@ -95,7 +95,7 @@ def main():
             if i in INTERACTION_PROMPTS:b['InteractionHint']='server.interactionHints.'+i
             if name.endswith(('_lamp','_lantern','_crystal')):
                 fixture=name.endswith(('_lamp','_lantern'))
-                b['Light']={'Color':family_light(name.split('_')[0],fixture),'Radius':15 if fixture else 5}
+                b['Light']={'Color':family_light(name.split('_')[0],fixture),'Radius':0 if fixture else 5}
             if name=='time_dilation_block':
                 b['Material']='Empty'
                 b.pop('Gathering',None)

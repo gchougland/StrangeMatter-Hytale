@@ -374,7 +374,24 @@ Label  { Anchor: (Left: 12, Top: 106, Width: 284, Height: 36); Text: "SEALED / D
 }
 }
 }
-Group #Notes { Anchor: (Left: 12, Top: 114, Width: 935, Height: 405); Background: #111c30; Padding: (Full: 16); LayoutMode: TopScrolling; ScrollbarStyle: $C.@DefaultScrollbarStyle; }
+Group #NotePicker { Anchor: (Left: 0, Top: 92, Width: 960, Height: 508); Background: #0e192c;
+ Label { Anchor: (Left: 20, Top: 15, Width: 720, Height: 28); Text: "CHOOSE A RESEARCH NOTE"; Style: (FontSize: 21, TextColor: #bba2ed, RenderBold: true); }
+ Label { Anchor: (Left: 20, Top: 49, Width: 718, Height: 24); Text: "Select a note from your inventory, review its instruments, then insert it."; Style: (FontSize: 13, TextColor: #9db0cb); }
+ $R.@Control #RefreshNotes { Text: "REFRESH NOTES"; Anchor: (Left: 794, Top: 22, Width: 146, Height: 34); }
+ Label #NoteCount { Anchor: (Left: 20, Top: 80, Width: 338, Height: 20); Style: (FontSize: 12, TextColor: #869cbb); }
+ Group #Notes { Anchor: (Left: 20, Top: 109, Width: 338, Height: 379); Background: #0a1322; Padding: (Full: 5); LayoutMode: TopScrolling; ScrollbarStyle: $C.@DefaultScrollbarStyle; }
+ Label #NoNotes { Anchor: (Left: 37, Top: 160, Width: 302, Height: 146); Text: "No unfinished notes found. Use your Research Tablet to create a note from field observations, then return here."; Style: (FontSize: 15, TextColor: #9aabc6, Wrap: true, HorizontalAlignment: Center); Visible: false; HitTestVisible: false; }
+ Label #NoNoteSelection { Anchor: (Left: 412, Top: 204, Width: 488, Height: 100); Text: "Your next discovery begins with a research note. Choose one to see what you will learn."; Style: (FontSize: 17, TextColor: #849bb8, Wrap: true, HorizontalAlignment: Center); }
+ Group #NoteDetails { Anchor: (Left: 378, Top: 109, Width: 562, Height: 379); Background: #18243a;
+  ItemIcon #NoteIcon { Anchor: (Left: 18, Top: 16, Width: 64, Height: 64); ItemId: "SM_Research_Notes"; }
+  Label #NoteTitle { Anchor: (Left: 98, Top: 17, Width: 446, Height: 55); Style: (FontSize: 21, TextColor: #e0e9f7, Wrap: true, RenderBold: true, VerticalAlignment: Center); }
+  Label #NoteDescription { Anchor: (Left: 20, Top: 92, Width: 522, Height: 82); Style: (FontSize: 14, TextColor: #b6c6dc, Wrap: true); }
+  Label { Anchor: (Left: 20, Top: 183, Width: 522, Height: 21); Text: "ACTIVE INSTRUMENTS"; Style: (FontSize: 12, TextColor: #ac93d5, RenderBold: true); }
+  Label #NoteDisciplines { Anchor: (Left: 20, Top: 212, Width: 522, Height: 41); Style: (FontSize: 15, TextColor: #78dfe9, Wrap: true); }
+  Label #NotePrerequisites { Anchor: (Left: 20, Top: 261, Width: 522, Height: 48); Style: (FontSize: 13, TextColor: #a6daca, Wrap: true); }
+  $R.@Control #InsertNote { Text: "INSERT SELECTED NOTE"; Anchor: (Left: 20, Top: 321, Width: 522, Height: 40); }
+ }
+}
 $R.@Control #Begin { Text: "BEGIN STABILIZATION"; Anchor: (Left: 318, Top: 590, Width: 330, Height: 34); Visible: false; }
 Label #Message { Anchor: (Left: 0, Top: 638, Width: 960, Height: 49); Style: (FontSize: 13, TextColor: #a4b4d2, Wrap: true, HorizontalAlignment: Center); }
 }

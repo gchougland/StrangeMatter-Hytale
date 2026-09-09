@@ -10,9 +10,12 @@ import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.inventory.InventoryComponent;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.inventory.container.SimpleItemContainer;
-import com.hypixel.hytale.server.core.io.ProtocolVersion;
-import com.hypixel.hytale.server.core.io.handlers.game.GamePacketHandler;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
+import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent;
+import com.hypixel.hytale.protocol.packets.interaction.MountNPC;
+import com.hypixel.hytale.server.core.modules.entity.player.PlayerInput;
+import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
+import com.hypixel.hytale.protocol.packets.player.ClientTeleport;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.npc.components.StepComponent;
 import com.hypixel.hytale.server.npc.entities.NPCEntity;
@@ -41,14 +44,24 @@ public final class NativeMobilityRevisionVerification {
             int network=fixture.player().getMountEntityId();require(network!=0,"Two native required inventory saves deploy and mount the owned board");
             require(countBoards(fixture.inventory())==0,"Deployed board is consumed from actual native inventory");
             var board=world.getEntityStore().getRefFromNetworkId(network);require(board!=null&&board.isValid(),"Mounted native board entity exists");
+            var model=fixture.store().getComponent(board,ModelComponent.getComponentType()).getModel();
+            var bounds=model.getBoundingBox();
+            require(bounds.min.y==0&&Math.abs(bounds.max.y-1.74)<1e-6,"Native mounted collision is rooted at its feet, not 1.1 blocks below its origin");
+            require(model.getModel().equals("Items/StrangeMatter/hoverboard_mount.blockymodel")&&Math.abs(model.getEyeHeight()-1.64)<1e-6,"Mount uses the dedicated feet-origin model and corresponding eye height");
+            var spawnedAt=fixture.store().getComponent(board,TransformComponent.getComponentType()).getPosition();
+            require(Math.abs(spawnedAt.y-17)<1e-6,"Spawn no longer applies a separate negative-collider compensation");
+            var mountPacket=fixture.packets().ofType(MountNPC.class).getLast();
+            require(Math.abs(mountPacket.anchorY-1.64)<1e-6&&Math.abs(MobilityTools.BOARD_VISUAL_ORIGIN_Y+8.5*model.getScale()/64-mountPacket.anchorY)<1e-6,"Translated mount artwork places its original grip top exactly at the unchanged native rider anchor");
+            var boardAudio=fixture.store().getComponent(board,com.hypixel.hytale.server.core.modules.entity.component.AudioComponent.getComponentType());
+            require(boardAudio!=null&&boardAudio.getSoundEventIds().length==1,"Actual deployed board owns exactly one continuous riding sound");
             UUID boardId=fixture.store().getComponent(board,UUIDComponent.getComponentType()).getUuid();
             require(fixture.store().getComponent(board,Frozen.getComponentType())!=null&&fixture.store().getComponent(board,StepComponent.getComponentType())==null,"Only NPC simulation is suspended for client-controlled mount");
-            var handler=new GamePacketHandler(null,new ProtocolVersion(0),null);
+            var handler=fixture.packets();
             var steering=new SteeringSystem(NPCEntity.getComponentType());
             // Exercise the native packet path and then the exact NPC steering system which used
             // to overwrite the rider's downhill position. Not merely a MountNPC packet assertion.
             for(int step=0;step<5;step++){
-                var expected=new Vector3d(16.5+step*.4,18.1-step*.25,16.5);
+                var expected=new Vector3d(16.5+step*.4,17-step*.25,16.5);
                 var packet=new MountMovement();packet.absolutePosition=new Position(expected.x,expected.y,expected.z);
                 packet.bodyOrientation=new Direction(0,0,0);packet.movementStates=new MovementStates();packet.movementStates.running=true;
                 handler.handleMountMovement(packet,fixture.owner(),fixture.ref(),world,fixture.store());
@@ -58,6 +71,27 @@ public final class NativeMobilityRevisionVerification {
                 var actual=fixture.store().getComponent(board,TransformComponent.getComponentType()).getPosition();
                 require(actual.distanceSquared(expected)<1e-12,"Native NPC steering must preserve each rider downstep: actual="+actual+" expected="+expected);
             }
+            // Reproduce airborne rider input through ALL registered server systems, including
+            // fall damage, player collision processing, mount tracking and transform replication.
+            // The former fixture checked the board's steering only and never moved the rider.
+            int teleportsBefore=fixture.packets().ofType(ClientTeleport.class).size();
+            for(int step=0;step<6;step++){
+                var expected=new Vector3d(21.5,24-step*.35,20.5);
+                var rider=new Vector3d(expected).add(0,MobilityTools.BOARD_ANCHOR_Y,0);
+                var states=new MovementStates();states.falling=true;states.running=true;
+                var packet=new MountMovement();packet.absolutePosition=new Position(expected.x,expected.y,expected.z);
+                packet.bodyOrientation=new Direction(0,0,0);packet.movementStates=states;
+                handler.handleMountMovement(packet,fixture.owner(),fixture.ref(),world,fixture.store());
+                var input=fixture.store().getComponent(fixture.ref(),PlayerInput.getComponentType());
+                input.queue(new PlayerInput.SetMovementStates(states));
+                input.queue(new PlayerInput.SetClientVelocity(new Vector3d(0,-7,0)));
+                input.queue(new PlayerInput.AbsoluteMovement(rider.x,rider.y,rider.z));
+                fixture.store().tick(.05f);
+                var actual=fixture.store().getComponent(board,TransformComponent.getComponentType()).getPosition();
+                var riderActual=fixture.store().getComponent(fixture.ref(),TransformComponent.getComponentType()).getPosition();
+                require(actual.distanceSquared(expected)<1e-12&&riderActual.distanceSquared(rider)<1e-12,"Full native airborne tick preserves mount/rider: board="+actual+" rider="+riderActual);
+                require(fixture.store().getComponent(fixture.ref(),Teleport.getComponentType())==null&&fixture.packets().ofType(ClientTeleport.class).size()==teleportsBefore,"Airborne native systems cannot add a rider teleport");
+            }
             MountPlugin.checkDismountNpc(fixture.store(),fixture.ref(),fixture.player());
             mobility.tick(world,.05);
             require(world.getEntityStore().getRefFromUUID(boardId)==null,"Native dismount folds and removes owned entity");
@@ -65,10 +99,42 @@ public final class NativeMobilityRevisionVerification {
             fixture.save();mobility.tick(world,.05);
             require(countBoards(fixture.inventory())==1,"Native dismount returns exactly one physical item");
             ItemStack returned=board(fixture.inventory());assertPayload(original,returned);
+            require(returned.equals(fixture.hotbar().getItemStack((short)0)),"Open hotbar receives the folded board ahead of empty storage");
             require(new HoverboardLedger(directory.resolve("live")).validAvailable(returned),"Completed native return save retires the receipt with usable current identity");
             mobility.cleanup(world);
         }
-        System.out.println("NATIVE_MOBILITY_REVISION_PASSED: actual player save-gated consumption/return, full metadata and durability, native mount movement then NPC steering across five downhill positions, entity cleanup, full inventory and restart nonce replay boundaries.");
+        verifyReturnSlots(world,directory.resolve("return-slots"),original);
+        System.out.println("NATIVE_MOBILITY_REVISION_PASSED: feet-origin mount model/collider/anchor/spawn, actual player save-gated consumption/return, native mount input plus complete ECS airborne ticks with no board/rider snap or teleport, full metadata, entity cleanup, full inventory and restart nonce replay boundaries.");
+    }
+    private static void verifyReturnSlots(World world,Path directory,ItemStack original)throws Exception{
+        try(var fixture=NativePlayerFixture.create(world,"NativeHoverboardReturnSlots",new Vector3d(16.5,17,16.5))){
+            var storage=fixture.store().getComponent(fixture.ref(),InventoryComponent.Storage.getComponentType()).getInventory();
+            for(int scenario=0;scenario<3;scenario++){
+                var inventory=fixture.inventory();
+                for(short slot=0;slot<inventory.getCapacity();slot++)inventory.setItemStackForSlot(slot,new ItemStack("Rock_Stone",100),false);
+                var recovery=new HoverboardRecovery(directory.resolve(Integer.toString(scenario)));
+                var receipt=recovery.ledger().prepare(fixture.owner().getUuid(),original);
+                require(recovery.ledger().reserve(receipt.id)&&recovery.ledger().mounted(receipt.id),"Owned consumed board has a durable return receipt");
+                recovery.fold(receipt.id);
+                if(scenario<2)storage.setItemStackForSlot((short)0,ItemStack.EMPTY,false);
+                if(scenario==0)fixture.hotbar().setItemStackForSlot((short)6,ItemStack.EMPTY,false);
+                recovery.tick(world,(owner,id)->{throw new AssertionError("Return must not redeploy");},(owner,message)->{});
+                if(scenario==2){
+                    require(countBoards(fixture.inventory())==0&&recovery.ledger().pendingReturns(fixture.owner().getUuid()).size()==1,
+                            "Full native inventory retains the receipt without adding or dropping a board");
+                    fixture.save();
+                    recovery=new HoverboardRecovery(directory.resolve(Integer.toString(scenario)));
+                    fixture.hotbar().setItemStackForSlot((short)2,ItemStack.EMPTY,false);
+                }
+                for(int tick=0;tick<4;tick++){fixture.save();recovery.tick(world,(owner,id)->false,(owner,message)->{});}
+                require(countBoards(fixture.inventory())==1,"Return and retry produce exactly one physical board");
+                var expected=scenario==1?storage.getItemStack((short)0):fixture.hotbar().getItemStack((short)(scenario==0?6:2));
+                require(!ItemStack.isEmpty(expected)&&HoverboardLedger.ITEM.equals(expected.getItemId()),
+                        "Return uses an open hotbar slot, storage only when hotbar is full, and hotbar after full-inventory restart: scenario="+scenario+" actual="+expected);
+                assertPayload(original,expected);
+                require(recovery.ledger().validAvailable(expected),"Preferred slot return remains saved and usable");
+            }
+        }
     }
     private static void verifyReceiptBoundaries(Path directory,ItemStack original)throws Exception{
         UUID owner=UUID.randomUUID();var ledger=new HoverboardLedger(directory);

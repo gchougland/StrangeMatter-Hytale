@@ -1,0 +1,152 @@
+{
+  "Shape": "Sphere",
+  "RenderMode": "BlendAdd",
+  "LifeSpan": 0.92,
+  "TotalParticles": {
+    "Min": 3,
+    "Max": 3
+  },
+  "MaxConcurrentParticles": 3,
+  "ParticleLifeSpan": {
+    "Min": 0.12,
+    "Max": 0.28
+  },
+  "SpawnRate": {
+    "Min": 3.333333333333333,
+    "Max": 3.333333333333333
+  },
+  "SpawnBurst": false,
+  "EmitOffset": {
+    "X": {
+      "Min": -0.22,
+      "Max": 0.22
+    },
+    "Y": {
+      "Min": -0.52,
+      "Max": 0.52
+    },
+    "Z": {
+      "Min": -0.18,
+      "Max": 0.18
+    }
+  },
+  "ParticleRotationInfluence": "None",
+  "ParticleRotateWithSpawner": true,
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 0,
+      "Max": 0
+    },
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": -90,
+      "Max": 90
+    }
+  },
+  "Particle": {
+    "Texture": "Particles/StrangeMatter/fissure.png",
+    "FrameSize": {
+      "Width": 128,
+      "Height": 128
+    },
+    "ScaleRatioConstraint": "None",
+    "UVOption": "None",
+    "InitialAnimationFrame": {
+      "Color": "#ffffff",
+      "Opacity": 1,
+      "Scale": {
+        "X": {
+          "Min": 0.115,
+          "Max": 0.115
+        },
+        "Y": {
+          "Min": 0.475,
+          "Max": 0.475
+        }
+      },
+      "FrameIndex": {
+        "Min": 0,
+        "Max": 0
+      },
+      "Rotation": {
+        "Y": {
+          "Min": 133,
+          "Max": 133
+        },
+        "Z": {
+          "Min": 76,
+          "Max": 76
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#976bff",
+        "Scale": {
+          "X": {
+            "Min": 1,
+            "Max": 1
+          },
+          "Y": {
+            "Min": 1,
+            "Max": 1
+          }
+        }
+      },
+      "8": {
+        "Opacity": 0.8
+      },
+      "38": {
+        "Opacity": 0.6400000000000001,
+        "Scale": {
+          "X": {
+            "Min": 1.04,
+            "Max": 1.04
+          },
+          "Y": {
+            "Min": 0.96,
+            "Max": 0.96
+          }
+        }
+      },
+      "66": {
+        "Opacity": 0.8,
+        "Scale": {
+          "X": {
+            "Min": 0.95,
+            "Max": 0.95
+          },
+          "Y": {
+            "Min": 1.05,
+            "Max": 1.05
+          }
+        }
+      },
+      "100": {
+        "Opacity": 0,
+        "Scale": {
+          "X": {
+            "Min": 1.12,
+            "Max": 1.12
+          },
+          "Y": {
+            "Min": 1.12,
+            "Max": 1.12
+          }
+        },
+        "Rotation": {
+          "Z": {
+            "Min": 35,
+            "Max": 35
+          }
+        }
+      }
+    }
+  }
+}

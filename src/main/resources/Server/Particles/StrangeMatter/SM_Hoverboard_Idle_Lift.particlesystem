@@ -1,0 +1,11 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Hoverboard_Lift_Ring"
+    }
+  ],
+  "LifeSpan": 0.65,
+  "CullDistance": 24,
+  "BoundingRadius": 1.2,
+  "IsImportant": false
+}

@@ -5,6 +5,7 @@ import com.hexvane.strangematter.machine.*;
 import com.hexvane.strangematter.equipment.EquipmentService;
 import com.hexvane.strangematter.research.ResearchService;
 import com.hexvane.strangematter.block.AnomalousGrassService;
+import com.hexvane.strangematter.block.FixtureLightingRefresh;
 import com.hexvane.strangematter.worldgen.ScientistService;
 import com.hexvane.strangematter.progression.ProgressionService;
 import com.hexvane.strangematter.research.ResearchType;
@@ -57,6 +58,15 @@ public final class StrangeMatterPlugin extends JavaPlugin {
             getEntityStoreRegistry().registerSystem(new MachineEvents.EnvironmentBreak(machines));
             getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.research.ResearchCraftGate(research));
             getEntityStoreRegistry().registerSystem(new LaboratoryTick());
+            getEntityStoreRegistry().registerSystem(anomalies.gravitySystem());
+            getEntityStoreRegistry().registerSystem(anomalies.gravityCleanupSystem());
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.anomaly.GravityTerrainEvents.Place(anomalies));
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.anomaly.GravityTerrainEvents.Break(anomalies));
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.anomaly.GravityTerrainEvents.Damage(anomalies));
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.anomaly.GravityTerrainEvents.EnvironmentBreak(anomalies));
+            com.hexvane.strangematter.anomaly.ThoughtwellHallucinations.register(getEntityStoreRegistry());
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.equipment.HoverboardRiderPose.RestoreOnRemove());
+            getChunkStoreRegistry().registerSystem(new FixtureLightingRefresh());
             getCommandRegistry().registerCommand(new StrangeMatterCommand(research,anomalies,machines,scientists,progression));
             getEventRegistry().registerGlobal(PlayerReadyEvent.class,event->{
                 var ref=event.getPlayerRef();if(ref==null||!ref.isValid())return;
@@ -68,6 +78,11 @@ public final class StrangeMatterPlugin extends JavaPlugin {
             getEventRegistry().registerGlobal(EventPriority.LAST,RemoveWorldEvent.class,event->{if(!event.isCancelled())cleanupWorld(event.getWorld());});
             getLogger().atInfo().log("Strange Matter initialized: six anomaly disciplines and native laboratory research.");
         }catch(Exception e){throw new IllegalStateException("Strange Matter initialization failed",e);}
+    }
+    @Override protected void start(){
+        // Loaded chunk lighting can outlive changes to block asset colors.
+        for(var world:Universe.get().getWorlds().values())if(world.isAlive())
+            world.execute(()->{if(instance==this)FixtureLightingRefresh.refreshLoaded(world);});
     }
     private final class LaboratoryTick extends TickingSystem<EntityStore> {
         private final Set<String> pending=ConcurrentHashMap.newKeySet();
@@ -108,7 +123,7 @@ public final class StrangeMatterPlugin extends JavaPlugin {
     }
     private void cleanupWorld(World world){
         if(equipment==null||anomalies==null)return;
-        Runnable cleanup=()->{equipment.cleanup(world);anomalies.stopWorld(world);};
+        Runnable cleanup=()->{equipment.cleanup(world);anomalies.stopWorld(world);if(machines!=null)machines.cleanupPresentation(world);};
         if(world.isInThread()){cleanup.run();return;}
         if(!world.isAlive())return;
         try{CompletableFuture.runAsync(cleanup,world).get(5,TimeUnit.SECONDS);}

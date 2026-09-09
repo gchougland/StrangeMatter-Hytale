@@ -1,6 +1,8 @@
 package com.hexvane.strangematter.effects;
 
 import com.hexvane.strangematter.anomaly.AnomalyType;
+import com.hypixel.hytale.math.vector.Rotation3f;
+import com.hypixel.hytale.server.core.universe.world.ParticleUtil;
 import com.hypixel.hytale.server.core.universe.world.World;
 import org.joml.Vector3d;
 import java.util.*;
@@ -28,8 +30,25 @@ public final class MachineLinks {
         return new Vector3d(from).lerp(to,t).add(Math.cos(angle)*radius,Math.sin(Math.PI*t)*.5,Math.sin(angle)*radius);
     }
     public static String stream(AnomalyType type){return "SM_Condenser_Link_"+type.name();}
+    public record ArcSegment(Vector3d midpoint, Rotation3f rotation, float length) { }
+    /** A beam sprite's local velocity must follow each segment, including slopes.
+     * Native BillboardVelocity aligns its Y axis to that velocity instead of screen up.
+     */
+    public static List<ArcSegment> segments(Vector3d from,Vector3d to,int frame){
+        var path=arc(from,to,frame);var result=new ArrayList<ArcSegment>(Math.max(0,path.size()-1));
+        for(int i=1;i<path.size();i++){
+            var a=path.get(i-1);var b=path.get(i);double length=a.distance(b);
+            if(length<.00001||!Double.isFinite(length))continue;
+            result.add(new ArcSegment(new Vector3d(a).lerp(b,.5),Rotation3f.lookAt(a,b),(float)length));
+        }
+        return result;
+    }
     public static void rift(World world,Vector3d from,Vector3d receiver,int tick){
-        for(var point:arc(from,receiver,tick/5))GadgetEffects.particle(world,"SM_Stabilizer_Link",point);
+        for(var segment:segments(from,receiver,tick/5)){
+            var rotation=segment.rotation();
+            ParticleUtil.spawnParticleEffect("SM_Stabilizer_Link",segment.midpoint(),
+                rotation.yaw(),rotation.pitch(),0,segment.length(),.30f,world.getEntityStore().getStore());
+        }
         if(tick%20==0)GadgetEffects.particle(world,"SM_Condenser_Receipt",receiver);
     }
     public static void condenser(World world,AnomalyType type,Vector3d from,Vector3d receiver,int tick){

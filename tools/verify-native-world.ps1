@@ -40,6 +40,8 @@ try {
     }
     & $jarCommand --update --file $testJar -C $testClasses 'com/hexvane/strangematter/machine/NativeMachineVerification.class'
     if ($LASTEXITCODE -ne 0) { throw 'Could not package the native machine fixture' }
+    & $jarCommand --update --file $testJar -C $testClasses 'com/hexvane/strangematter/machine/NativeMachineWorkVerification.class'
+    if ($LASTEXITCODE -ne 0) { throw 'Could not package the native machine working-state fixture' }
     & $jarCommand --update --file $testJar -C $testClasses 'com/hexvane/strangematter/machine/MachineControlsVerification.class'
     if ($LASTEXITCODE -ne 0) { throw 'Could not package the machine controls fixture' }
     $anomalyFixturePath = Join-Path $testClasses 'com/hexvane/strangematter/anomaly'
@@ -48,6 +50,16 @@ try {
         if ($LASTEXITCODE -ne 0) { throw "Could not package native anomaly fixture $($fixture.Name)" }
     }
     $equipmentFixturePath = Join-Path $testClasses 'com/hexvane/strangematter/equipment'
+    $effectsFixturePath = Join-Path $testClasses 'com/hexvane/strangematter/effects'
+    foreach ($fixture in Get-ChildItem -LiteralPath $effectsFixturePath -Filter 'Native*.class') {
+        & $jarCommand --update --file $testJar -C $testClasses "com/hexvane/strangematter/effects/$($fixture.Name)"
+        if ($LASTEXITCODE -ne 0) { throw "Could not package native effects fixture $($fixture.Name)" }
+    }
+    $blockFixturePath = Join-Path $testClasses 'com/hexvane/strangematter/block'
+    foreach ($fixture in Get-ChildItem -LiteralPath $blockFixturePath -Filter 'Native*.class') {
+        & $jarCommand --update --file $testJar -C $testClasses "com/hexvane/strangematter/block/$($fixture.Name)"
+        if ($LASTEXITCODE -ne 0) { throw "Could not package native block fixture $($fixture.Name)" }
+    }
     foreach ($fixture in Get-ChildItem -LiteralPath $equipmentFixturePath -Filter 'Native*.class') {
         & $jarCommand --update --file $testJar -C $testClasses "com/hexvane/strangematter/equipment/$($fixture.Name)"
         if ($LASTEXITCODE -ne 0) { throw "Could not package native equipment fixture $($fixture.Name)" }

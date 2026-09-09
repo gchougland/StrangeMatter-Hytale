@@ -1,0 +1,10 @@
+{
+  "Parent": "SFX_Attn_Quiet",
+  "AudioCategory": "AudioCat_SFX",
+  "SpatialBlend": 1,
+  "StartAttenuationDistance": 1,
+  "MaxDistance": 12,
+  "MaxInstance": 2,
+  "Volume": -14,
+  "Layers": [{"Files": ["Sounds/StrangeMatter/energy_wave_align.ogg"]}]
+}

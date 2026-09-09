@@ -1,0 +1,64 @@
+{
+  "snapshot": "build/art-preservation/20260909T175943153203Z",
+  "textures": {
+    "Common/BlockTextures/StrangeMatter/Anomalous_Grass_Top.png": {
+      "beforeSha256": "1cef66485ce49e6cf2b126d2ec1c514358b3ab8e0eebb3fcadf0833c4b457346",
+      "afterSha256": "2200123629b667aa7784873cef77b86c2ba3ab6aa6f21dead88ff3e86600eb30",
+      "changedPixels": 95,
+      "untouchedInteriorPixels": 900,
+      "baseChannelDifferences": [
+        -54,
+        56
+      ],
+      "originalMeanRGB": [
+        79.869140625,
+        133.068359375,
+        76.8095703125
+      ],
+      "currentMeanRGB": [
+        79.779296875,
+        132.978515625,
+        76.7197265625
+      ]
+    },
+    "Common/BlockTextures/StrangeMatter/Anomalous_Grass_Soil.png": {
+      "beforeSha256": "0054d98c0518cd5b04a1065a991ae88178b9b6e966e2f507e06e943ee38ab027",
+      "afterSha256": "e9a1723d8a009b34b5a393ad68185894a1582f95f2f7bf14d7a98f0318bb678f",
+      "changedPixels": 100,
+      "untouchedInteriorPixels": 900,
+      "baseChannelDifferences": [
+        26,
+        23
+      ],
+      "originalMeanRGB": [
+        102.3564453125,
+        77.6787109375,
+        54.9111328125
+      ],
+      "currentMeanRGB": [
+        102.3466796875,
+        77.6689453125,
+        54.9013671875
+      ]
+    }
+  },
+  "crystal": {
+    "path": "Common/Blocks/StrangeMatter/Shared/shard_crystal_84dcace58934.blockymodel",
+    "rootCount": 63,
+    "deltaModelUnitsY": -3.2,
+    "modelUnitsPerBlock": 32,
+    "deltaBlocksY": -0.1,
+    "beforeSha256": "d1495dcb45d6dfb8be53588ad60211df7efd7f3b1447bc92625267fc07eafb85",
+    "afterSha256": "98fecccf006458d0932d95d21bf7b17038089b34d3dc49075ceb78dbe463044c",
+    "collisionBoxesUnchanged": true
+  },
+  "preservation": "Only two texture borders and placed crystal root Y positions change. All UVs, texture assignments, child transforms, shard and ore models, icons, grass sides, grass transition and hitboxes remain unchanged.",
+  "concurrentArtEdits": {
+    "Common/NPC/StrangeMatter/Scientist/Scientist.blockymodel": {
+      "beforeSha256": "6f05fdfe1050e44e4f9fcc1ea07d10a594f8d9ca5be6c082b8aa80bdc8461646",
+      "afterSha256": "cc05730dda36808feaa6486c1c62fca872099a3986ca39686f06e09f9289a7c0",
+      "snapshot": "build/art-preservation/20260909T182458987418Z",
+      "reason": "User confirmed editing is finished and requested the latest saved scientist model in this release."
+    }
+  }
+}

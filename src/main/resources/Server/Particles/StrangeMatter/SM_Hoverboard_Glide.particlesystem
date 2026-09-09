@@ -1,0 +1,14 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Hoverboard_Glide_Wisp"
+    },
+    {
+      "SpawnerId": "SM_Hoverboard_Glide_Spark"
+    }
+  ],
+  "LifeSpan": 0.65,
+  "CullDistance": 24,
+  "BoundingRadius": 1.2,
+  "IsImportant": false
+}

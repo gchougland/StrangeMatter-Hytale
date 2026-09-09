@@ -8,6 +8,11 @@
     "EntityTopTint": "#53f2ee",
     "ScreenEffect": "ScreenEffects/Snow.png",
     "HorizontalSpeedMultiplier": 0.85,
-    "Particles": [ { "SystemId": "SM_Thoughtwell" } ]
-  }
+    "Particles": [
+      {
+        "SystemId": "SM_Thoughtwell"
+      }
+    ]
+  },
+  "StatusEffectIcon": "UI/StatusEffects/SM_Cognitive_Dissonance.png"
 }

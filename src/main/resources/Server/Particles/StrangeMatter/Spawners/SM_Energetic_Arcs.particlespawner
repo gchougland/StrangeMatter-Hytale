@@ -1,43 +1,43 @@
 {
   "Shape": "Sphere",
   "RenderMode": "BlendAdd",
-  "LifeSpan": 1.05,
+  "LifeSpan": 0.92,
   "TotalParticles": {
-    "Min": 5,
-    "Max": 5
+    "Min": 10,
+    "Max": 10
   },
-  "MaxConcurrentParticles": 5,
+  "MaxConcurrentParticles": 10,
   "ParticleLifeSpan": {
-    "Min": 0.3,
-    "Max": 0.6
+    "Min": 0.26,
+    "Max": 0.5
   },
   "SpawnRate": {
-    "Min": 5,
-    "Max": 5
+    "Min": 11.11111111111111,
+    "Max": 11.11111111111111
   },
   "SpawnBurst": false,
   "EmitOffset": {
     "X": {
-      "Min": -0.45,
-      "Max": 0.45
+      "Min": 0.85,
+      "Max": 1.15
     },
     "Y": {
-      "Min": -0.7,
-      "Max": 0.7
+      "Min": -0.5,
+      "Max": 0.5
     },
     "Z": {
-      "Min": -0.45,
-      "Max": 0.45
+      "Min": 0.85,
+      "Max": 1.15
     }
   },
-  "ParticleRotationInfluence": "Billboard",
+  "ParticleRotationInfluence": "BillboardVelocity",
   "ParticleRotateWithSpawner": false,
   "LinearFiltering": true,
   "LightInfluence": 0,
   "InitialVelocity": {
     "Speed": {
-      "Min": 0,
-      "Max": 0
+      "Min": 0.02,
+      "Max": 0.05
     },
     "Yaw": {
       "Min": -180,
@@ -56,64 +56,97 @@
     },
     "ScaleRatioConstraint": "None",
     "UVOption": "None",
-    "Animation": {
-      "0": {
-        "Opacity": 0,
-        "Color": "#6b92ef",
-        "Scale": {
-          "X": {
-            "Min": 1,
-            "Max": 1
-          },
-          "Y": {
-            "Min": 1,
-            "Max": 1
-          }
-        }
-      },
-      "12": {
-        "Opacity": 0.65
-      },
-      "70": {
-        "Opacity": 0.52
-      },
-      "100": {
-        "Opacity": 0,
-        "Scale": {
-          "X": {
-            "Min": 1.1,
-            "Max": 1.1
-          },
-          "Y": {
-            "Min": 1.1,
-            "Max": 1.1
-          }
-        },
-        "Rotation": {
-          "Z": {
-            "Min": 45,
-            "Max": 45
-          }
-        }
-      }
-    },
     "InitialAnimationFrame": {
       "Color": "#ffffff",
       "Opacity": 1,
       "Scale": {
         "X": {
-          "Min": 0.1,
-          "Max": 0.1
+          "Min": 0.06,
+          "Max": 0.06
         },
         "Y": {
-          "Min": 0.18000000000000002,
-          "Max": 0.18000000000000002
+          "Min": 0.2,
+          "Max": 0.2
         }
       },
       "FrameIndex": {
         "Min": 0,
         "Max": 0
       }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#70baff",
+        "Scale": {
+          "X": {
+            "Min": 1,
+            "Max": 1
+          },
+          "Y": {
+            "Min": 1,
+            "Max": 1
+          }
+        }
+      },
+      "8": {
+        "Opacity": 0.8
+      },
+      "38": {
+        "Opacity": 0.6400000000000001,
+        "Scale": {
+          "X": {
+            "Min": 1.04,
+            "Max": 1.04
+          },
+          "Y": {
+            "Min": 0.96,
+            "Max": 0.96
+          }
+        }
+      },
+      "66": {
+        "Opacity": 0.8,
+        "Scale": {
+          "X": {
+            "Min": 0.95,
+            "Max": 0.95
+          },
+          "Y": {
+            "Min": 1.05,
+            "Max": 1.05
+          }
+        }
+      },
+      "100": {
+        "Opacity": 0,
+        "Scale": {
+          "X": {
+            "Min": 1.12,
+            "Max": 1.12
+          },
+          "Y": {
+            "Min": 1.12,
+            "Max": 1.12
+          }
+        }
+      }
     }
-  }
+  },
+  "Attractors": [
+    {
+      "Position": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "RadialAxis": {
+        "X": 0,
+        "Y": 1,
+        "Z": 0
+      },
+      "RadialAcceleration": -1.1,
+      "RadialTangentImpulse": 2.7
+    }
+  ]
 }

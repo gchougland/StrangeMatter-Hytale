@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "monoSampleRate": 48000,
+  "durationSeconds": 8,
+  "peak": 0.36,
+  "rms": 0.19161688890941844,
+  "seamDelta": 0.008336630638877436,
+  "largestAdjacentSampleDelta": 0.00833663063896128,
+  "maxParticlesPerGlidePulse": 8,
+  "maxConcurrentPerRiderAtFiveHz": 24,
+  "files": {
+    "Server/Particles/StrangeMatter/Spawners/SM_Hoverboard_Glide_Wisp.particlespawner": "b82abc38c7c6a72de9b8a74aa244c6c94d5d8def7699297f064a810b9a860792",
+    "Server/Particles/StrangeMatter/Spawners/SM_Hoverboard_Glide_Spark.particlespawner": "4187873f172e10dccce6a621a75a1db3e519041acef772a76aa2924201488685",
+    "Server/Particles/StrangeMatter/Spawners/SM_Hoverboard_Lift_Ring.particlespawner": "db566264100024343489a13ba6de3ce410776387c8b0f74115e2c2d00cd6d31e",
+    "Server/Particles/StrangeMatter/SM_Hoverboard_Glide.particlesystem": "c92dc929d3221d5b845d314a3e0a6c382dcf761f51714b6525a6c8dbfe28a10f",
+    "Server/Particles/StrangeMatter/SM_Hoverboard_Idle_Lift.particlesystem": "d5717fd03b2e53b4d60055f3445b4df50cf0c180cf4195f833e0057e5545228c",
+    "Common/Sounds/StrangeMatter/hoverboard_riding_hum.ogg": "fc40dc725d7710f0b9ee4eb524e756fae0220c378b548d9cdc31e1b44b2ff09e",
+    "Server/Audio/SoundEvents/StrangeMatter/SM_Hoverboard_Riding_Hum.json": "eec3f5bfb2ce84a4bc14d395ab220db5d5a312ae439faf1dd29eb6f036b2b4fd"
+  }
+}

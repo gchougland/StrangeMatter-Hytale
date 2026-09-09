@@ -1,10 +1,9 @@
 """Surgically writes only machine-link emitters; reuses existing particle sprites untouched."""
 from build_gadget_effects import emit, sp
+from build_energetic_revision import write_stabilizer
 
 def main():
-    emit('SM_Stabilizer_Link', [
-        sp('SM_Stabilizer_Link_Filament', 'fissure', '#d6ffff', size=.48, life=(.23,.28), opacity=.95),
-        sp('SM_Stabilizer_Link_Glow', 'star', '#58dcff', size=.19, life=(.20,.27), opacity=.72)], radius=1,duration=.4)
+    write_stabilizer()
     colors={'GRAVITY':'#9555dd','TEMPORAL_BLOOM':'#ffd66d','ENERGETIC_RIFT':'#5eefff',
             'WARP_GATE':'#de83f3','ECHOING_SHADOW':'#4c91b2','THOUGHTWELL':'#b1fff1'}
     for kind,color in colors.items():
