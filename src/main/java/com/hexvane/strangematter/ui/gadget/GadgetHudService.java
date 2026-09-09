@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.ui.gadget;
 
+import com.hexvane.strangematter.research.ResearchDisciplineUi;
+import com.hexvane.strangematter.research.ResearchType;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.hud.CustomUIHud;
@@ -11,15 +13,22 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /** A keyed native HUD layer: instrument feedback never replaces another mod's HUD. */
 public final class GadgetHudService implements AutoCloseable {
     public static final String KEY = "SM_Gadget_Hud";
+    static final String DOCUMENT_RESOURCE = "/Common/UI/Custom/StrangeMatter/GadgetHud.ui";
+    private static final String DOCUMENT = loadDocument();
     private final ConcurrentHashMap<UUID, State> states = new ConcurrentHashMap<>();
     private volatile boolean closed;
-    public record Readout(String title, String status, String detail, double progress, boolean error, String itemId) {
+    public record Readout(String title, String status, String detail, double progress, boolean error, String itemId, ResearchType discipline) {
+        public Readout(String title, String status, String detail, double progress, boolean error, String itemId) {
+            this(title, status, detail, progress, error, itemId, null);
+        }
         public Readout {
             title = bounded(title, 48); status = bounded(status, 82); detail = bounded(detail, 200);
             progress = Double.isFinite(progress) && progress >= 0 ? Math.min(1, progress) : -1;
@@ -37,17 +46,23 @@ public final class GadgetHudService implements AutoCloseable {
     }
     /** Refresh while a gadget is held; stops displaying within one second after updates cease. */
     public void update(PlayerRef player, Store<EntityStore> store, String title, String status, String detail, double progress) {
+        update(player, store, title, status, detail, progress, null);
+    }
+    public void update(PlayerRef player, Store<EntityStore> store, String title, String status, String detail, double progress, ResearchType discipline) {
         onWorld(store, () -> {
             State state = obtain(player, store); if (state == null) return;
-            state.base = new Readout(title, status, detail, progress, false, heldItem(player, store)); state.baseUntil = System.nanoTime() + 1_000_000_000L;
+            state.base = new Readout(title, status, detail, progress, false, heldItem(player, store), discipline); state.baseUntil = System.nanoTime() + 1_000_000_000L;
             render(state, System.nanoTime());
         });
     }
     /** A short result/error overlay; routine held-tool refreshes cannot immediately erase it. */
     public void notice(PlayerRef player, Store<EntityStore> store, String title, String status, String detail, boolean error) {
+        notice(player, store, title, status, detail, error, null);
+    }
+    public void notice(PlayerRef player, Store<EntityStore> store, String title, String status, String detail, boolean error, ResearchType discipline) {
         onWorld(store, () -> {
             State state = obtain(player, store); if (state == null) return;
-            state.notice = new Readout(title, status, detail, -1, error, heldItem(player, store)); state.noticeUntil = System.nanoTime() + 4_000_000_000L;
+            state.notice = new Readout(title, status, detail, -1, error, heldItem(player, store), discipline); state.noticeUntil = System.nanoTime() + 4_000_000_000L;
             render(state, System.nanoTime());
         });
     }
@@ -95,15 +110,37 @@ public final class GadgetHudService implements AutoCloseable {
         closed = true;
         for (State state : states.values()) onWorld(state.store, () -> remove(state));
     }
+    private static String loadDocument() {
+        try (var stream = GadgetHudService.class.getResourceAsStream(DOCUMENT_RESOURCE)) {
+            if (stream == null) throw new IllegalStateException("Missing packaged gadget HUD: " + DOCUMENT_RESOURCE);
+            return new String(stream.readAllBytes(), StandardCharsets.UTF_8);
+        } catch (IOException failure) {
+            throw new IllegalStateException("Cannot read packaged gadget HUD: " + DOCUMENT_RESOURCE, failure);
+        }
+    }
     static final class GadgetHud extends CustomUIHud {
         private Readout shown;
         GadgetHud(PlayerRef player) { super(player, KEY, 20); }
-        @Override protected void build(UICommandBuilder commands) { commands.append("StrangeMatter/GadgetHud.ui"); }
+        @Override protected void build(UICommandBuilder commands) {
+            // This small template has no imports. Sending it inline avoids a client document
+            // registry lookup while preserving the packaged UI file as the single layout source.
+            // Native SpectatingHud uses an absent selector for the document root. An empty
+            // string is serialized as a present, zero-length selector and reaches the parser.
+            commands.appendInline(null, DOCUMENT);
+            // A native HUD reset can reattach this instance. Its newly built elements need values
+            // even when the instrument's readout is unchanged since the previous attachment.
+            shown = null;
+        }
         void render(Readout data) {
             if (data.equals(shown)) return;
             UICommandBuilder cmd = new UICommandBuilder();
             cmd.set("#GadgetTitle.Text", data.title()); cmd.set("#GadgetStatus.Text", data.status()); cmd.set("#GadgetDetail.Text", data.detail());
             cmd.set("#GadgetIcon.ItemId", data.itemId());
+            cmd.set("#GadgetDiscipline.Visible", data.discipline() != null);
+            if (data.discipline() != null) {
+                ResearchDisciplineUi.icon(cmd, "#GadgetDisciplineIcon", data.discipline());
+                cmd.set("#GadgetDisciplineName.Text", data.discipline().displayName());
+            }
             cmd.set("#GadgetAccent.Background", data.error() ? "#f37c9c" : "#67e8ef");
             cmd.set("#GadgetStatus.Style.TextColor", data.error() ? "#f59bb4" : "#c1a5ef");
             cmd.set("#GadgetProgress.Visible", data.progress() >= 0);

@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "originalIcons": 6,
+  "byteIdenticalSourceComparisons": 6,
+  "mutatedAssetsRejected": 6,
+  "machineHeaders": 6,
+  "machineShutters": 6,
+  "uses": [
+    "Tablet observation balances",
+    "Research costs",
+    "Anomaly discipline nodes and details",
+    "Machine headers and shutters",
+    "Note rows and active instruments",
+    "Field guide legend",
+    "Typed scanner HUD helper"
+  ],
+  "preservation": "Original PNG bytes, dimensions, colors and transparency preserved. Equipment and material ItemIcons remain."
+}

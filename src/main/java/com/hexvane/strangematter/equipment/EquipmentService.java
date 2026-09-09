@@ -139,7 +139,7 @@ public final class EquipmentService {
     private void completeScan(PlayerRef p,Store<EntityStore> store,Aim aim){
         var a=ready(p,store,aim,"SM_Field_Scanner");if(a==null)return;
         if(a.anomaly!=null&&!anomalies.get(a.anomaly).map(AnomalyRecord::scannable).orElse(false))return;
-        boolean fresh=research.scan(p.getUuid(),a.subject,a.discipline,a.amount);say(p,fresh?"Recorded +"+a.amount+" "+a.discipline.displayName()+" observations.":"This subject has already been recorded.");
+        boolean fresh=research.scan(p.getUuid(),a.subject,a.discipline,a.amount);say(p,fresh?"Recorded +"+a.amount+" "+a.discipline.displayName()+" observations.":"This subject has already been recorded.",a.discipline);
         if(fresh)GadgetEffects.use(store.getExternalData().getWorld(),"SM_Scanner_Complete",EquipmentQueries.handheldOrigin(aim.eye,aim.direction));
     }
     private void completeCapture(PlayerRef p,Store<EntityStore> store,Aim aim){
@@ -158,7 +158,7 @@ public final class EquipmentService {
                 inventory.setItemStackForSlot(slot,empty,false);anomalies.cancelCapture(token.token());return;
             }
         }
-        anomalies.save();GadgetEffects.use(store.getExternalData().getWorld(),"SM_Vacuum_Capture",EquipmentQueries.handheldOrigin(aim.eye,aim.direction));say(p,"Contained "+token.type().displayName+". Its identity is preserved in the capsule.");
+        anomalies.save();GadgetEffects.use(store.getExternalData().getWorld(),"SM_Vacuum_Capture",EquipmentQueries.handheldOrigin(aim.eye,aim.direction));say(p,"Contained "+token.type().displayName+". Its identity is preserved in the capsule.",a.discipline);
     }
     private void release(PlayerRef p,Store<EntityStore> store,Aim aim,ItemContainer container,short slot,ItemStack item){
         var player=store.getComponent(p.getReference(),Player.getComponentType());boolean creative=player!=null&&player.getGameMode()==GameMode.Creative;
@@ -175,9 +175,9 @@ public final class EquipmentService {
     private void resonate(PlayerRef p,World world,Aim aim,String action){
         int frequency=frequencies.getOrDefault(p.getUuid(),0);if(action.equals("secondary")){frequency=(frequency+1)%7;frequencies.put(p.getUuid(),frequency);}GadgetEffects.use(world,"SM_Scanner_Lock",EquipmentQueries.handheldOrigin(aim.eye,aim.direction));
         AnomalyType type=frequency==0?null:AnomalyType.values()[frequency-1];var a=anomalies.nearest(world,aim.eye,100000,type);
-        if(a.isEmpty()){say(p,"Frequency "+(type==null?"ALL":type.displayName)+": no surveyed field in range.");return;}
+        if(a.isEmpty()){say(p,"Frequency "+(type==null?"ALL":type.displayName)+": no surveyed field in range.",type==null?null:ResearchType.fromName(type.researchType));return;}
         var v=a.get();var delta=v.position().sub(aim.eye);String dir=Math.abs(delta.x)>Math.abs(delta.z)?delta.x>0?"east":"west":delta.z>0?"south":"north";
-        say(p,v.type.displayName+" | "+Math.round(delta.length())+" blocks "+dir+" | elevation "+Math.round(v.y));
+        say(p,v.type.displayName+" | "+Math.round(delta.length())+" blocks "+dir+" | elevation "+Math.round(v.y),ResearchType.fromName(v.type.researchType));
     }
     private void portal(PlayerRef p,Store<EntityStore> store,Aim aim,ItemContainer inv,short slot,ItemStack gun,String action){
         String a=gun.getFromMetadataOrNull("SMPortalA",Codec.STRING),b=gun.getFromMetadataOrNull("SMPortalB",Codec.STRING);
@@ -263,18 +263,20 @@ public final class EquipmentService {
     }
     private static boolean wear(ItemContainer inv,short slot,ItemStack item,int amount,boolean creative){return creative||item.getMaxDurability()<=0||inv.setItemStackForSlot(slot,item.withDurability(Math.max(0,item.getDurability()-amount)),false).succeeded();}
     private static ItemContainer inventory(PlayerRef p,Store<EntityStore> store){return InventoryComponent.getCombined(store,p.getReference(),InventoryComponent.BACKPACK_STORAGE_HOTBAR);}
-    private void say(PlayerRef p,String text){
+    private void say(PlayerRef p,String text){say(p,text,null);}
+    private void say(PlayerRef p,String text,ResearchType discipline){
         var ref=p.getReference();if(ref==null||!ref.isValid())return;var store=ref.getStore();var held=InventoryComponent.getItemInHand(store,ref);
-        research.hud().notice(p,store,held==null?"Strange Matter":InventoryOps.label(held.getItemId()),text,"",false);
+        research.hud().notice(p,store,held==null?"Strange Matter":InventoryOps.label(held.getItemId()),text,"",false,discipline);
     }
     private void heldReadout(PlayerRef p,Store<EntityStore> store,ItemStack held,Aim aim){
         if(ItemStack.isEmpty(held)||aim==null)return;
-        String id=held.getItemId(),title=InventoryOps.label(id),status="",detail="";double progress=-1;
+        String id=held.getItemId(),title=InventoryOps.label(id),status="",detail="";double progress=-1;ResearchType discipline=null;
         var a=acquisitions.get(p.getUuid());
         switch(id){
             case "SM_Field_Scanner","SM_Echo_Vacuum"->{
                 boolean vacuum=id.equals("SM_Echo_Vacuum");
                 var target=targeted(store.getExternalData().getWorld(),aim,vacuum?8:12);
+                discipline=target.map(t->ResearchType.fromName(t.type.researchType)).orElse(null);
                 status=target.map(t->t.type.displayName+(vacuum?"":" / "+(t.scannable()?"Natural field":"Transported field"))).orElse("No research subject in range");
                 detail=vacuum?"Hold primary for 2s to extract. Carry an empty containment capsule.":"Hold primary for 2s to record a natural field. Each identity grants observations once.";
                 if(a!=null){progress=Math.min(1,(System.nanoTime()-a.began)/2_000_000_000d);status=(vacuum?"Extracting ":"Analyzing ")+target.map(t->t.type.displayName).orElse("field");}
@@ -282,6 +284,7 @@ public final class EquipmentService {
             case "SM_Anomaly_Resonator"->{
                 int f=frequencies.getOrDefault(p.getUuid(),0);AnomalyType type=f==0?null:AnomalyType.values()[f-1];
                 var nearest=anomalies.nearest(store.getExternalData().getWorld(),aim.eye,100000,type);
+                discipline=type==null?nearest.map(t->ResearchType.fromName(t.type.researchType)).orElse(null):ResearchType.fromName(type.researchType);
                 status="Frequency: "+(type==null?"ALL":type.displayName);
                 if(nearest.isPresent()){var field=nearest.get();var delta=field.position().sub(aim.eye);String compass=Math.abs(delta.x)>Math.abs(delta.z)?delta.x>0?"east":"west":delta.z>0?"south":"north";detail=field.type.displayName+" / "+Math.round(delta.length())+" blocks "+compass+" / elevation "+Math.round(field.y)+". Secondary changes frequency.";}
                 else detail="No surveyed field on this frequency. Secondary changes frequency.";
@@ -293,7 +296,7 @@ public final class EquipmentService {
             case "SM_Containment_Capsule"->{status="Empty containment chamber";detail="Carry this capsule and hold the Echo Vacuum on an anomaly for two seconds.";}
             default->{if(!id.startsWith("SM_Containment_Capsule_"))return;status=projectiles.status(held.getFromMetadataOrNull("SMAnomaly",Codec.STRING));detail="Primary or secondary: throw. The original field returns at the impact point.";}
         }
-        research.hud().update(p,store,title,status,detail,progress);
+        research.hud().update(p,store,title,status,detail,progress,discipline);
     }
     private String portalStatus(ItemStack gun,String key){
         String id=gun.getFromMetadataOrNull(key,Codec.STRING);if(id==null)return "unset";

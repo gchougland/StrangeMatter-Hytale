@@ -58,6 +58,7 @@ public final class StrangeMatterPlugin extends JavaPlugin {
             getEntityStoreRegistry().registerSystem(new MachineEvents.EnvironmentBreak(machines));
             getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.research.ResearchCraftGate(research));
             getEntityStoreRegistry().registerSystem(new LaboratoryTick());
+            getEntityStoreRegistry().registerSystem(anomalies.gravityInputSystem());
             getEntityStoreRegistry().registerSystem(anomalies.gravitySystem());
             getEntityStoreRegistry().registerSystem(anomalies.gravityCleanupSystem());
             getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.anomaly.GravityTerrainEvents.Place(anomalies));

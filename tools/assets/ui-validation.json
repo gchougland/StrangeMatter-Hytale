@@ -1,11 +1,12 @@
 {
   "status": "PASS",
-  "uiFiles": 14,
-  "selectors": 458,
-  "importedSymbolUses": 80,
-  "javaLiteralSelectorFamilies": 107,
+  "uiFiles": 20,
+  "selectors": 515,
+  "importedSymbolUses": 98,
+  "javaLiteralSelectorFamilies": 145,
   "checks": [
     "Native string escape rules",
+    "Native parameter declaration order",
     "Native label alignment literals",
     "String and delimiter balance",
     "Unique selectors per template",

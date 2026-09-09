@@ -1,0 +1,14 @@
+$C = "../Common.ui";
+@NodeStyle = ButtonStyle(Default: (Background: #000000(0)), Hovered: (Background: #446674(0.18)), Pressed: (Background: #74628f(0.25)));
+Group #Node {
+ Anchor: (Width: 128, Height: 68);
+ Button #SelectNode { Anchor: (Left: 0, Top: 0, Width: 128, Height: 68); Style: @NodeStyle; TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+  Group #NodeOutline { Anchor: (Left: 38, Top: 0, Width: 52, Height: 48); Background: #3b6269; HitTestVisible: false; }
+  Group #NodeFace { Anchor: (Left: 40, Top: 2, Width: 48, Height: 44); Background: #102932; HitTestVisible: false; }
+  ItemIcon #NodeIcon { Anchor: (Left: 46, Top: 6, Width: 36, Height: 36); ItemId: "SM_Research_Notes"; HitTestVisible: false; }
+  Group #NodeDisciplineIcon { Anchor: (Left: 46, Top: 6, Width: 36, Height: 36); Background: (TexturePath: "Disciplines/cognition.png"); Visible: false; HitTestVisible: false; }
+  Group #NodeLamp { Anchor: (Left: 80, Top: 38, Width: 5, Height: 5); Background: #516575; HitTestVisible: false; }
+  Group #NodeCaption { Anchor: (Left: 0, Top: 48, Width: 128, Height: 20); Background: #07171e; HitTestVisible: false; }
+  Label #NodeName { Anchor: (Left: 2, Top: 49, Width: 124, Height: 19); Style: (FontSize: 10, TextColor: #a3bac8, HorizontalAlignment: Center, Wrap: true); HitTestVisible: false; }
+ }
+}

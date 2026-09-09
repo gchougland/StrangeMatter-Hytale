@@ -50,6 +50,11 @@ try {
         if ($LASTEXITCODE -ne 0) { throw "Could not package native anomaly fixture $($fixture.Name)" }
     }
     $equipmentFixturePath = Join-Path $testClasses 'com/hexvane/strangematter/equipment'
+    $uiFixturePath = Join-Path $testClasses 'com/hexvane/strangematter/ui'
+    foreach ($fixture in Get-ChildItem -LiteralPath $uiFixturePath -Filter 'Native*.class') {
+        & $jarCommand --update --file $testJar -C $testClasses "com/hexvane/strangematter/ui/$($fixture.Name)"
+        if ($LASTEXITCODE -ne 0) { throw "Could not package native UI fixture $($fixture.Name)" }
+    }
     $effectsFixturePath = Join-Path $testClasses 'com/hexvane/strangematter/effects'
     foreach ($fixture in Get-ChildItem -LiteralPath $effectsFixturePath -Filter 'Native*.class') {
         & $jarCommand --update --file $testJar -C $testClasses "com/hexvane/strangematter/effects/$($fixture.Name)"

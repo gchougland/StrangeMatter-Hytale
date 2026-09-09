@@ -219,8 +219,10 @@ public final class MachineService implements AutoCloseable {
     public synchronized Readiness readiness(UUID player,Player entity,ForgeRecipe recipe) {
         return readiness(player,inventory(entity),recipe,entity.getGameMode()==com.hypixel.hytale.protocol.GameMode.Creative);
     }
+    public synchronized boolean knowsRecipe(UUID player,ForgeRecipe recipe){return research.hasUnlocked(player,recipeResearch(recipe));}
+    private String recipeResearch(ForgeRecipe recipe){String node=research.requiredResearchForItem(recipe.output);return node==null?recipe.research:node;}
     public synchronized Readiness readiness(UUID player,ItemContainer inventory,ForgeRecipe recipe,boolean creative) {
-        String node=research.requiredResearchForItem(recipe.output);if(node==null)node=recipe.research;
+        String node=recipeResearch(recipe);
         var materials=new ArrayList<Material>();
         for(var cost:recipe.totalCost().entrySet()){
             String id=cost.getKey(),icon=id;

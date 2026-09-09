@@ -1,5 +1,5 @@
 Group {
-  Anchor: (Right: 34, Bottom: 176, Width: 376, Height: 214);
+  Anchor: (Right: 34, Bottom: 176, Width: 376, Height: 244);
   HitTestVisible: false;
   Background: #263955;
   Padding: (Full: 1);
@@ -11,7 +11,11 @@ Group {
     Group { Anchor: (Left: 16, Top: 63, Width: 340, Height: 1); Background: #29425c; }
     Label #GadgetStatus { Anchor: (Left: 16, Top: 73, Width: 340, Height: 58); Style: (FontSize: 16, TextColor: #c1a5ef, RenderBold: true, Wrap: true); }
     Label #GadgetDetail { Anchor: (Left: 16, Top: 137, Width: 340, Height: 54); Style: (FontSize: 12, TextColor: #adc0d5, Wrap: true); }
-    Group #GadgetProgress { Anchor: (Left: 16, Top: 198, Width: 340, Height: 5); Background: #293a55; Visible: false;
+    Group #GadgetDiscipline { Anchor: (Left: 16, Top: 197, Width: 340, Height: 24); Visible: false;
+      Group #GadgetDisciplineIcon { Anchor: (Left: 0, Top: 0, Width: 24, Height: 24); }
+      Label #GadgetDisciplineName { Anchor: (Left: 32, Top: 2, Width: 308, Height: 20); Style: (FontSize: 12, TextColor: #c1a5ef, RenderBold: true); }
+    }
+    Group #GadgetProgress { Anchor: (Left: 16, Top: 228, Width: 340, Height: 5); Background: #293a55; Visible: false;
       Group #GadgetProgressFill { Anchor: (Left: 0, Top: 0, Width: 1, Height: 5); Background: #67e8ef; }
     }
   }

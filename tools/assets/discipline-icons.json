@@ -1,0 +1,53 @@
+{
+  "copiedWithoutModification": true,
+  "icons": [
+    {
+      "discipline": "cognition",
+      "source": "textures/ui/cognition_icon.png",
+      "resource": "Common/UI/Custom/StrangeMatter/Disciplines/cognition.png",
+      "width": 256,
+      "height": 256,
+      "sha256": "b3b8d9cc764f78652165cc1d7e794c84f4a024a00acd789edd2e7faa23dcb5d1"
+    },
+    {
+      "discipline": "energy",
+      "source": "textures/ui/energy_icon.png",
+      "resource": "Common/UI/Custom/StrangeMatter/Disciplines/energy.png",
+      "width": 256,
+      "height": 256,
+      "sha256": "9e62197defa2ee10c7112b401e69250d9958e419c65fd6b6553684a574f3e4f1"
+    },
+    {
+      "discipline": "gravity",
+      "source": "textures/ui/gravity_icon.png",
+      "resource": "Common/UI/Custom/StrangeMatter/Disciplines/gravity.png",
+      "width": 256,
+      "height": 256,
+      "sha256": "40be373609fcf2f8d686e46deffe5e50c03ecb93770f8146c30bed045ec2b385"
+    },
+    {
+      "discipline": "shadow",
+      "source": "textures/ui/shadow_icon.png",
+      "resource": "Common/UI/Custom/StrangeMatter/Disciplines/shadow.png",
+      "width": 256,
+      "height": 256,
+      "sha256": "704aaf328ad7128745b9830e739da91667e579fcccd4073be187bec7b025c122"
+    },
+    {
+      "discipline": "space",
+      "source": "textures/ui/space_icon.png",
+      "resource": "Common/UI/Custom/StrangeMatter/Disciplines/space.png",
+      "width": 256,
+      "height": 256,
+      "sha256": "3348829fb603e62f87544459c0ddc5f4947eb330908130aff8b4009126bc3a60"
+    },
+    {
+      "discipline": "time",
+      "source": "textures/ui/time_icon.png",
+      "resource": "Common/UI/Custom/StrangeMatter/Disciplines/time.png",
+      "width": 256,
+      "height": 256,
+      "sha256": "cbade6f92fb9074c0a203cc7bbbee2e5184fc997218b9fd23f1c3a1c1c3dc402"
+    }
+  ]
+}

@@ -54,6 +54,11 @@ public final class ResearchMachinePage extends InteractiveCustomUIPage<ResearchP
             service.refreshNotes(store, ref);
             if (requestedToken != null && validMachine(ref, store)) insert(ref, store, requestedToken);
             cmd.append("StrangeMatter/ResearchMachine.ui"); initialized = true;
+            for(var type:ResearchType.values()){
+                ResearchDisciplineUi.icon(cmd,"#"+type.name()+"Icon",type);ResearchDisciplineUi.icon(cmd,"#"+type.name()+"ShutterIcon",type);
+                cmd.append("#NoteDisciplines","StrangeMatter/ResearchDisciplineChip.ui");String chip="#NoteDisciplines["+type.ordinal()+"]";
+                ResearchDisciplineUi.icon(cmd,chip+" #DisciplineIcon",type);cmd.set(chip+" #DisciplineLabel.Text",type.displayName());
+            }
             input.bind(events, "#Close", "close", "");
             input.bind(events, "#Begin", "begin", "");
             input.bind(events, "#RefreshNotes", "refresh", "");
@@ -64,7 +69,7 @@ public final class ResearchMachinePage extends InteractiveCustomUIPage<ResearchP
             bindControl(events, "ShadowDistanceMinus", "SHADOW", "distance", -1); bindControl(events, "ShadowDistancePlus", "SHADOW", "distance", 1);
             bindControl(events, "SpaceMinus", "SPACE", "warp", -1); bindControl(events, "SpacePlus", "SPACE", "warp", 1);
             bindControl(events, "TimeMinus", "TIME", "speed", -1); bindControl(events, "TimePlus", "TIME", "speed", 1);
-            for (int i = 0; i < 9; i++) bindControl(events, "Rune" + i, "COGNITION", "symbol", i);
+            bindCognition(events, input);
             for (int i = -5; i <= 5; i++) bindControl(events, "Force" + (i + 5), "GRAVITY", "force", i);
             startPulse(ref, store);
         }
@@ -74,6 +79,9 @@ public final class ResearchMachinePage extends InteractiveCustomUIPage<ResearchP
     }
     private void bindControl(UIEventBuilder events, String id, String type, String control, int value) {
         input.bind(events, "#" + id, "control", type + ":" + control + ":" + value);
+    }
+    private static void bindCognition(UIEventBuilder events, LivePageTransport.Lease input) {
+        for (int i = 0; i < 9; i++) input.bind(events, "#Rune" + i, "control", "COGNITION:symbol:" + i);
     }
     private void rebuildNotes(Ref<EntityStore> ref, UICommandBuilder cmd, UIEventBuilder events, Store<EntityStore> store) {
         cmd.clear("#Notes");
@@ -91,6 +99,8 @@ public final class ResearchMachinePage extends InteractiveCustomUIPage<ResearchP
             String selector = "#Notes[" + found.size() + "]";
             cmd.set(selector + " #NoteName.Text", node.name());
             cmd.set(selector + " #NoteRowIcon.ItemId", noteIcon(node));
+            var discipline=ResearchType.forResearchNode(node.id());cmd.set(selector+" #NoteRowIcon.Visible",discipline==null);cmd.set(selector+" #NoteRowDisciplineIcon.Visible",discipline!=null);
+            if(discipline!=null)ResearchDisciplineUi.icon(cmd,selector+" #NoteRowDisciplineIcon",discipline);
             input.bind(events, selector + " #SelectNote", "select", token);
             found.add(new NoteChoice(token,node));
         }
@@ -120,8 +130,13 @@ public final class ResearchMachinePage extends InteractiveCustomUIPage<ResearchP
         if(choice==null)return;
         var node=choice.node();String missing=missingPrerequisites(node);
         cmd.set("#NoteIcon.ItemId",noteIcon(node));cmd.set("#NoteTitle.Text",node.name());
+        var discipline=ResearchType.forResearchNode(node.id());cmd.set("#NoteIcon.Visible",discipline==null);cmd.set("#NoteDisciplineIcon.Visible",discipline!=null);
+        if(discipline!=null)ResearchDisciplineUi.icon(cmd,"#NoteDisciplineIcon",discipline);
         cmd.set("#NoteDescription.Text",node.description());
-        cmd.set("#NoteDisciplines.Text",Arrays.stream(ResearchType.values()).filter(node.costs()::containsKey).map(ResearchType::displayName).collect(Collectors.joining("   |   ")));
+        int activeIndex=0;for(var type:ResearchType.values()){
+            String chip="#NoteDisciplines["+type.ordinal()+"]";boolean active=node.costs().containsKey(type);cmd.set(chip+".Visible",active);
+            if(active){var at=new Anchor();at.setLeft(Value.of((activeIndex%3)*174));at.setTop(Value.of((activeIndex/3)*21));at.setWidth(Value.of(170));at.setHeight(Value.of(20));cmd.setObject(chip+".Anchor",at);activeIndex++;}
+        }
         cmd.set("#NotePrerequisites.Text",missing.isEmpty()?"Ready to insert. Your note is used only when the experiment succeeds.":"Complete this research first: "+missing);
         cmd.set("#NotePrerequisites.Style.TextColor",missing.isEmpty()?"#a6daca":"#efaabe");
         cmd.set("#InsertNote.Disabled",!missing.isEmpty());
@@ -294,9 +309,9 @@ public final class ResearchMachinePage extends InteractiveCustomUIPage<ResearchP
     static int displayedInstability(ResearchSession session) {
         return session == null ? 50 : session.state() == ResearchSession.State.SUCCESS ? 0 : (int) Math.round(session.instability() * 100);
     }
-    private void renderCognition(UICommandBuilder cmd, ResearchSession.Panel p) {
+    private static void renderCognition(UICommandBuilder cmd, ResearchSession.Panel p) {
         for (int i = 0; i < 9; i++) cmd.set("#RuneGlow" + i + ".Visible", p.displaying && p.pattern[p.displayIndex] == i);
-        cmd.set("#CognitionReadout.Text", p.stable ? "Sequence locked" : "Recall the sequence  " + p.inputCount + "/" + p.pattern.length);
+        cmd.set("#CognitionReadout.Text", p.stable ? "Sequence locked" : p.displaying ? "Watch the glowing symbols" : "Repeat the symbols  " + p.inputCount + "/" + p.pattern.length);
     }
     private void renderEnergy(UICommandBuilder cmd, ResearchSession.Panel p) {
         for (int i = 0; i < 32; i++) {

@@ -38,7 +38,12 @@ public final class NativeLaboratorySelectionVerification {
                 var page=new ResearchMachinePage(fixture.owner(),research,researchAt);
                 var initial=ui.open(page);
                 require(bindings(initial,"#SelectNote")==2,"Every inventory note has a stable selectable token binding");
-                require(Arrays.stream(initial.commands).filter(c->c.selector!=null&&c.selector.endsWith("#NoteRowIcon.ItemId")).count()==2,"Native note rows carry actual item icons");
+                require(Arrays.stream(initial.commands).filter(c->c.selector!=null&&c.selector.endsWith("#NoteRowDisciplineIcon.Background")).count()==2,"Anomaly note rows carry the original discipline symbols");
+                for(var type:ResearchType.values()){
+                    require(has(initial,"#"+type.name()+"Icon.Background",type.uiIconPath()),"Machine header uses the original "+type+" symbol");
+                    require(has(initial,"#"+type.name()+"ShutterIcon.Background",type.uiIconPath()),"Closed instrument keeps the same original symbol");
+                    require(has(initial,"#NoteDisciplines["+type.ordinal()+"] #DisciplineIcon.Background",type.uiIconPath()),"Note summary uses typed labeled symbols");
+                }
                 var oldInsert=binding(initial,"#InsertNote");String first=value(oldInsert);
                 var choose=Arrays.stream(initial.eventBindings).filter(b->b.selector.endsWith("#SelectNote")&&!value(b).equals(first)).findFirst().orElseThrow();
                 String selected=value(choose);
@@ -62,37 +67,62 @@ public final class NativeLaboratorySelectionVerification {
                 ui.click(page,binding(initial,"#Close"));
                 require(fixture.player().getPageManager().getCustomPage()==null,"Close works while the note detail frame is awaiting ACK");ui.ackAll();
 
-                var forgePage=new MachinePage(fixture.owner(),machines,forge);var forgeInitial=ui.open(forgePage);
-                require(bindings(forgeInitial,"#SelectRecipe")==machines.recipes.size(),"Scrollable forge binds every row to its stable recipe ID");
-                require(Arrays.stream(forgeInitial.commands).filter(c->c.selector!=null&&c.selector.endsWith("#RecipeIcon.ItemId")).count()==machines.recipes.size(),"Every forge row contains its actual output icon");
                 var target=machines.recipes.stream().filter(r->r.id.equals("levitation_pad")).findFirst().orElseThrow();
-                var selectRecipe=Arrays.stream(forgeInitial.eventBindings).filter(b->b.selector.endsWith("#SelectRecipe")&&value(b).equals(target.id)).findFirst().orElseThrow();
-                var staleCraft=binding(forgeInitial,"#Craft");ui.click(forgePage,selectRecipe);
-                require(machines.recipes.get(machines.selectedRecipeIndex(forge,fixture.owner().getUuid())).id.equals(target.id),"Choosing a locked recipe still remembers it for this player and forge");
-                ui.click(forgePage,staleCraft);
-                require(forge.recipe.isEmpty()&&field(forgePage,"message").toString().contains("selection changed"),"Stale Craft ID is rejected without starting or reserving a different recipe");
-                before=fixture.packets().ofType(CustomPage.class).size();ui.frame(forgePage);
-                require(before==fixture.packets().ofType(CustomPage.class).size(),"Forge selection inputs remain live while visual updates await ACK");
-                ui.ackAll();var locked=ui.frame(forgePage);
-                require(has(locked,"#Recipe.Text","Levitation Pad")&&has(locked,"#Craft.Disabled","true")&&value(binding(locked,"#Craft")).equals(target.id),"Locked recipe detail, disabled craft and matching ID share the same packet");
-                ui.click(forgePage,binding(locked,"#Craft"));require(forge.recipe.isEmpty(),"Forging a locked displayed recipe cannot bypass research");
+                machines.selectRecipe(forge,fixture.owner().getUuid(),target.id);
+                var forgePage=new MachinePage(fixture.owner(),machines,forge);var forgeInitial=ui.open(forgePage);
+                require(bindings(forgeInitial,"#SelectRecipe")==0,"Undiscovered recipes have no list rows or selection bindings");
+                require(Arrays.stream(forgeInitial.commands).noneMatch(c->c.selector!=null&&c.selector.endsWith("#RecipeIcon.ItemId")),"Locked output icons are absent from the recipe list");
+                require(has(forgeInitial,"#NoRecipes.Visible","true")&&has(forgeInitial,"#Craft.Disabled","true")
+                        &&has(forgeInitial,"#ForgeChamber.Visible","false")&&value(binding(forgeInitial,"#Craft")).isEmpty(),"Empty discovery state hides stale remembered details and disables crafting");
+                var injected=withAction(binding(forgeInitial,"#Craft"),"SelectRecipe",target.id);
+                ui.click(forgePage,injected);
+                require((int)field(forgePage,"recipeIndex")==-1,"Forged selection cannot reveal a hidden recipe");
+                ui.click(forgePage,withAction(binding(forgeInitial,"#Craft"),"Craft",target.id));
+                require(forge.recipe.isEmpty()&&forge.reservedInputs.isEmpty(),"Forged hidden Craft cannot reserve ingredients");
+
+                research.unlock(fixture.owner().getUuid(),"chrono_blister",true);
+                int beforeUnlock=fixture.packets().ofType(CustomPage.class).size();ui.frame(forgePage);
+                require(beforeUnlock==fixture.packets().ofType(CustomPage.class).size(),"Newly learned recipe structure waits for the outstanding visual ACK");
+                ui.ackAll();var discovered=ui.frame(forgePage);
+                long known=machines.recipes.stream().filter(r->machines.knowsRecipe(fixture.owner().getUuid(),r)).count();
+                require(known>0&&known<machines.recipes.size()&&bindings(discovered,"#SelectRecipe")==known,"Only researched recipes receive native icon rows and stable ID bindings");
+                for(var event:discovered.eventBindings)if(event.selector.endsWith("#SelectRecipe")){
+                    var entry=machines.recipes.stream().filter(r->r.id.equals(value(event))).findFirst().orElseThrow();
+                    require(machines.knowsRecipe(fixture.owner().getUuid(),entry),"Every displayed recipe is actually unlocked");
+                }
+                require(Arrays.stream(discovered.commands).filter(c->c.selector!=null&&c.selector.endsWith("#RecipeIcon.ItemId")).count()==known,"Filtered row count matches its output icons without hidden gaps");
+                require(!has(discovered,"#Recipe.Text","Levitation Pad")&&Arrays.stream(discovered.eventBindings).noneMatch(e->e.selector.endsWith("#SelectRecipe")&&target.id.equals(value(e))),"The locked remembered recipe is absent from details and rows");
+                var staleCraft=binding(discovered,"#Craft");
                 String needed=research.requiredResearchForItem(target.output);research.unlock(fixture.owner().getUuid(),needed==null?target.research:needed,true);
+                ui.ackAll();var expanded=ui.frame(forgePage);
+                var selectRecipe=Arrays.stream(expanded.eventBindings).filter(e->e.selector.endsWith("#SelectRecipe")&&target.id.equals(value(e))).findFirst().orElseThrow();
+                ui.click(forgePage,selectRecipe);
+                require(machines.recipes.get(machines.selectedRecipeIndex(forge,fixture.owner().getUuid())).id.equals(target.id),"Selecting a newly learned recipe remembers its stable ID");
+                ui.click(forgePage,staleCraft);
+                require(forge.recipe.isEmpty()&&field(forgePage,"message").toString().contains("selection changed"),"Stale Craft ID cannot start or reserve a different recipe");
+                before=fixture.packets().ofType(CustomPage.class).size();ui.frame(forgePage);
+                require(before==fixture.packets().ofType(CustomPage.class).size(),"Selection input remains live while the list frame awaits ACK");
                 for(var cost:target.totalCost().entrySet())fixture.inventory().addItemStack(new ItemStack(cost.getKey(),cost.getValue()),true,false,true);
                 ui.ackAll();var ready=ui.frame(forgePage);
-                require(has(ready,"#Craft.Disabled","false"),"Unlocked recipe becomes craftable after its actual materials arrive");
-                ui.click(forgePage,binding(locked,"#Craft"));
-                require(forge.recipe.equals(target.id)&&!forge.reservedInputs.isEmpty(),"Matching Craft event reserves the real ingredients even with a visual ACK pending");
+                require(has(ready,"#Recipe.Text","Levitation Pad")&&has(ready,"#Craft.Disabled","false")&&value(binding(ready,"#Craft")).equals(target.id),"Unlocked selected detail and matching Craft ID share one native packet");
+                ui.click(forgePage,binding(ready,"#Craft"));
+                require(forge.recipe.equals(target.id)&&!forge.reservedInputs.isEmpty(),"Matching Craft reserves real ingredients with a pending visual ACK");
                 ui.click(forgePage,binding(forgeInitial,"#Close"));ui.ackAll();
                 var reopened=new MachinePage(fixture.owner(),machines,forge);var reopening=ui.open(reopened);
-                require(has(reopening,"#Recipe.Text","Levitation Pad")&&value(binding(reopening,"#Craft")).equals(target.id),"Reopening restores the saved recipe and its matching transaction binding");
-                require(has(reopening,"#ForgeScan.Visible","true"),"Existing coalescence animation remains active while the recipe list is shown");
+                require(has(reopening,"#Recipe.Text","Levitation Pad")&&value(binding(reopening,"#Craft")).equals(target.id),"Reopening restores the saved researched recipe and transaction binding");
+                require(has(reopening,"#ForgeScan.Visible","true"),"Crafting animation remains active beside the filtered list");
                 ui.click(reopened,binding(reopening,"#Close"));ui.ackAll();
             } finally {ui.close();}
         } finally {
             world.setBlock(researchAt.x,researchAt.y,researchAt.z,"Empty");
             world.setBlock(forgeAt.x,forgeAt.y,forgeAt.z,"Empty");machines.removed(world,forgeAt);
         }
-        System.out.println("NATIVE_LABORATORY_SELECTION_VERIFICATION_PASSED: real icon rows, note token selection/refresh/insert, stale note and recipe rejection, research lock, real crafting reservation, selection persistence, active chamber and native Close under held ACKs.");
+        System.out.println("NATIVE_LABORATORY_SELECTION_VERIFICATION_PASSED: real icon rows, note selection/refresh/insert, hidden locked recipes and empty state, forged hidden events rejected, newly learned rows under held ACKs, stale selection rejection, real crafting reservation, saved selection, active chamber and native Close.");
+    }
+    private static CustomUIEventBinding withAction(CustomUIEventBinding source,String action,String value){
+        var json=JsonParser.parseString(source.data).getAsJsonObject();String old=json.get("Action").getAsString();
+        json.addProperty("Action",old.substring(0,old.lastIndexOf(':')+1)+action);json.addProperty("Value",value);
+        var event=new CustomUIEventBinding();event.data=json.toString();return event;
     }
     private static ItemStack findNote(NativePlayerFixture player,String token){for(short slot=0;slot<player.inventory().getCapacity();slot++){var item=player.inventory().getItemStack(slot);if(token.equals(ResearchService.noteToken(item)))return item;}return ItemStack.EMPTY;}
     private static long bindings(CustomPage page,String ending){return Arrays.stream(page.eventBindings).filter(b->b.selector.endsWith(ending)).count();}

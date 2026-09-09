@@ -253,7 +253,7 @@
   "gravity_anomalies": [
     {
       "title": "Gravity Anomalies",
-      "content": "Gravity anomalies make nearby players, creatures and loose items float. Move with your usual controls. Hold jump to rise and crouch to sink. Leave the field to return to normal.\n\nAround a wild anomaly, small pieces of open ground can lift into the air and drift around it. These pieces are solid. A Tinfoil Hat lets you walk on them without floating yourself.\n\nCapture or turn off the anomaly and its ground returns. A field released from a capsule still makes things float, but leaves your laboratory floor alone."
+      "content": "Gravity anomalies make nearby players, creatures and loose items float. Your movement carries you into the field, then slowly eases as you drift and gently bob through the air. Use your movement controls to steer. Look up or down and move forward to rise or sink. Release the controls to keep drifting. Leave the field to feel gravity again.\n\nAround a wild anomaly, loose blocks of ground can rise to different heights and gently sway and tilt around it. These blocks are solid. A Tinfoil Hat lets you walk on them without floating yourself.\n\nCapture or turn off the anomaly and its ground returns. A field released from a capsule still makes things float, but leaves your laboratory floor alone."
     }
   ],
   "temporal_anomalies": [

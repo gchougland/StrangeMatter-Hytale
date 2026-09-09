@@ -11,6 +11,7 @@ $C.@PageOverlay {
         }
         Label #Heading { Anchor: (Height: 64); Style: (FontSize: 27, TextColor: #d6c4f5, RenderBold: true, Wrap: true); }
         Group { Anchor: (Height: 2, Bottom: 16); Background: #3b5370; }
+        Group #GuideDisciplines { Anchor: (Height: 27, Bottom: 10); }
         Group { FlexWeight: 1; LayoutMode: TopScrolling; ScrollbarStyle: $C.@DefaultScrollbarStyle; Padding: (Right: 18);
           Label #Body { Anchor: (Height: 420); Style: (FontSize: 17, TextColor: #c4d1e2, Wrap: true); }
           Group #Recipe { Anchor: (Height: 146, Bottom: 20); Background: #14233b; Padding: (Full: 14); LayoutMode: Left;

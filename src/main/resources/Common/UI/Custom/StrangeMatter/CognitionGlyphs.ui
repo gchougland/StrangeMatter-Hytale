@@ -1,0 +1,469 @@
+// Literal-color native vector glyphs. All strokes pass input through to the existing button.
+
+@Fork = Group {
+ HitTestVisible: false;
+ Group { Anchor: (Left: 19, Top: 3, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 5, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 21, Top: 5, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 7, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 7, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 9, Width: 16, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 11, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 13, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 15, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 15, Width: 6, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 17, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 17, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 19, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 19, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 21, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 21, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 23, Width: 14, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 3, Width: 2, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 15, Width: 2, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+};
+
+@ForkLit = Group {
+ HitTestVisible: false;
+ Group { Anchor: (Left: 19, Top: 3, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 5, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 21, Top: 5, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 7, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 7, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 9, Width: 16, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 11, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 13, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 15, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 15, Width: 6, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 17, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 17, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 19, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 19, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 21, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 21, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 23, Width: 14, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 3, Width: 2, Height: 2); Background: #a7faff; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 15, Width: 2, Height: 2); Background: #a7faff; HitTestVisible: false; }
+};
+
+@Eye = Group {
+ HitTestVisible: false;
+ Group { Anchor: (Left: 17, Top: 3, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 5, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 5, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 13, Top: 7, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 21, Top: 7, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 9, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 9, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 11, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 11, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 13, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 13, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 15, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 15, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 17, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 17, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 13, Top: 19, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 21, Top: 19, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 21, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 21, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 23, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 11, Width: 6, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 13, Width: 6, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 15, Width: 6, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+};
+
+@EyeLit = Group {
+ HitTestVisible: false;
+ Group { Anchor: (Left: 17, Top: 3, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 5, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 5, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 13, Top: 7, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 21, Top: 7, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 9, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 9, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 11, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 11, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 13, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 13, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 15, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 15, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 17, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 17, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 13, Top: 19, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 21, Top: 19, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 21, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 21, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 23, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 11, Width: 6, Height: 2); Background: #a7faff; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 13, Width: 6, Height: 2); Background: #a7faff; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 15, Width: 6, Height: 2); Background: #a7faff; HitTestVisible: false; }
+};
+
+@Spiral = Group {
+ HitTestVisible: false;
+ Group { Anchor: (Left: 7, Top: 3, Width: 22, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 5, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 5, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 7, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 7, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 9, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 11, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 11, Width: 14, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 13, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 13, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 13, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 15, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 15, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 15, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 17, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 17, Width: 6, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 17, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 19, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 19, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 21, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 21, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 23, Width: 22, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 21, Top: 17, Width: 2, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+};
+
+@SpiralLit = Group {
+ HitTestVisible: false;
+ Group { Anchor: (Left: 7, Top: 3, Width: 22, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 5, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 5, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 7, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 7, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 9, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 11, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 11, Width: 14, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 13, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 13, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 13, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 15, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 15, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 15, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 17, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 17, Width: 6, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 17, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 19, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 19, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 21, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 21, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 23, Width: 22, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 21, Top: 17, Width: 2, Height: 2); Background: #a7faff; HitTestVisible: false; }
+};
+
+@Crown = Group {
+ HitTestVisible: false;
+ Group { Anchor: (Left: 7, Top: 7, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 7, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 7, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 7, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 9, Width: 4, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 9, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 9, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 9, Width: 4, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 11, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 11, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 11, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 11, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 11, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 11, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 13, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 13, Top: 13, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 21, Top: 13, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 13, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 15, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 15, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 17, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 17, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 19, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 19, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 21, Width: 8, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 21, Top: 21, Width: 8, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 3, Width: 2, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 5, Width: 2, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 21, Width: 6, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+};
+
+@CrownLit = Group {
+ HitTestVisible: false;
+ Group { Anchor: (Left: 7, Top: 7, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 7, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 7, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 7, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 9, Width: 4, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 9, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 9, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 9, Width: 4, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 11, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 11, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 11, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 11, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 11, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 11, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 13, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 13, Top: 13, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 21, Top: 13, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 13, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 15, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 15, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 17, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 17, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 19, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 19, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 21, Width: 8, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 21, Top: 21, Width: 8, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 3, Width: 2, Height: 2); Background: #a7faff; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 5, Width: 2, Height: 2); Background: #a7faff; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 21, Width: 6, Height: 2); Background: #a7faff; HitTestVisible: false; }
+};
+
+@Hourglass = Group {
+ HitTestVisible: false;
+ Group { Anchor: (Left: 9, Top: 5, Width: 18, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 7, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 7, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 13, Top: 9, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 21, Top: 9, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 11, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 11, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 15, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 15, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 13, Top: 17, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 21, Top: 17, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 19, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 19, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 21, Width: 18, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 13, Width: 6, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+};
+
+@HourglassLit = Group {
+ HitTestVisible: false;
+ Group { Anchor: (Left: 9, Top: 5, Width: 18, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 7, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 7, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 13, Top: 9, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 21, Top: 9, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 11, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 11, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 15, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 15, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 13, Top: 17, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 21, Top: 17, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 19, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 19, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 21, Width: 18, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 13, Width: 6, Height: 2); Background: #a7faff; HitTestVisible: false; }
+};
+
+@Gate = Group {
+ HitTestVisible: false;
+ Group { Anchor: (Left: 15, Top: 3, Width: 6, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 13, Top: 5, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 21, Top: 5, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 7, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 7, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 9, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 9, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 11, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 11, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 13, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 13, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 15, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 15, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 17, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 17, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 19, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 19, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 21, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 21, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 23, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 23, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 11, Width: 6, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 13, Width: 2, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 15, Width: 2, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 17, Width: 2, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+};
+
+@GateLit = Group {
+ HitTestVisible: false;
+ Group { Anchor: (Left: 15, Top: 3, Width: 6, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 13, Top: 5, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 21, Top: 5, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 7, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 7, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 9, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 9, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 11, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 11, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 13, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 13, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 15, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 15, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 17, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 17, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 19, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 19, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 21, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 21, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 23, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 23, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 11, Width: 6, Height: 2); Background: #a7faff; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 13, Width: 2, Height: 2); Background: #a7faff; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 15, Width: 2, Height: 2); Background: #a7faff; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 17, Width: 2, Height: 2); Background: #a7faff; HitTestVisible: false; }
+};
+
+@Star = Group {
+ HitTestVisible: false;
+ Group { Anchor: (Left: 17, Top: 5, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 7, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 9, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 9, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 13, Top: 11, Width: 4, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 11, Width: 4, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 13, Width: 4, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 13, Width: 4, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 13, Top: 15, Width: 4, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 15, Width: 4, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 17, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 17, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 19, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 21, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 3, Width: 2, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 3, Width: 2, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 13, Width: 2, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 23, Width: 2, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 23, Width: 2, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+};
+
+@StarLit = Group {
+ HitTestVisible: false;
+ Group { Anchor: (Left: 17, Top: 5, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 7, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 9, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 9, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 13, Top: 11, Width: 4, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 11, Width: 4, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 13, Width: 4, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 13, Width: 4, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 13, Top: 15, Width: 4, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 15, Width: 4, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 17, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 17, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 19, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 21, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 3, Width: 2, Height: 2); Background: #a7faff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 3, Width: 2, Height: 2); Background: #a7faff; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 13, Width: 2, Height: 2); Background: #a7faff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 23, Width: 2, Height: 2); Background: #a7faff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 23, Width: 2, Height: 2); Background: #a7faff; HitTestVisible: false; }
+};
+
+@Comet = Group {
+ HitTestVisible: false;
+ Group { Anchor: (Left: 13, Top: 3, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 5, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 5, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 7, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 7, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 9, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 9, Width: 4, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 11, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 11, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 11, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 13, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 13, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 13, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 13, Top: 15, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 15, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 15, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 13, Top: 17, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 21, Top: 17, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 19, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 19, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 21, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 21, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 23, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 13, Top: 9, Width: 2, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 23, Width: 2, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+};
+
+@CometLit = Group {
+ HitTestVisible: false;
+ Group { Anchor: (Left: 13, Top: 3, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 5, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 5, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 7, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 7, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 9, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 9, Width: 4, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 11, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 11, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 11, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 13, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 13, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 13, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 13, Top: 15, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 15, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 15, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 13, Top: 17, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 21, Top: 17, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 15, Top: 19, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 23, Top: 19, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 21, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 21, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 23, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 13, Top: 9, Width: 2, Height: 2); Background: #a7faff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 23, Width: 2, Height: 2); Background: #a7faff; HitTestVisible: false; }
+};
+
+@Orbit = Group {
+ HitTestVisible: false;
+ Group { Anchor: (Left: 11, Top: 5, Width: 6, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 5, Width: 6, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 7, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 7, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 9, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 9, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 11, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 11, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 13, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 13, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 15, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 15, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 17, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 17, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 19, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 19, Width: 2, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 21, Width: 6, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 21, Width: 6, Height: 2); Background: #64dce6; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 9, Width: 2, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 17, Width: 2, Height: 2); Background: #ab86dc; HitTestVisible: false; }
+};
+
+@OrbitLit = Group {
+ HitTestVisible: false;
+ Group { Anchor: (Left: 11, Top: 5, Width: 6, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 5, Width: 6, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 7, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 7, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 9, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 9, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 11, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 11, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 13, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 13, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 15, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 15, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 7, Top: 17, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 27, Top: 17, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 9, Top: 19, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 25, Top: 19, Width: 2, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 11, Top: 21, Width: 6, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 19, Top: 21, Width: 6, Height: 2); Background: #efffff; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 9, Width: 2, Height: 2); Background: #a7faff; HitTestVisible: false; }
+ Group { Anchor: (Left: 17, Top: 17, Width: 2, Height: 2); Background: #a7faff; HitTestVisible: false; }
+};

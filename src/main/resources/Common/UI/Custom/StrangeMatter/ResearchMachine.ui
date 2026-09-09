@@ -1,5 +1,6 @@
 $C = "../Common.ui";
 $R = "ResearchStyle.ui";
+$G = "CognitionGlyphs.ui";
 
 $C.@PageOverlay {
  LayoutMode: Middle;
@@ -14,31 +15,41 @@ $C.@PageOverlay {
     }
 Group { Anchor: (Left: 0, Top: 92, Width: 310, Height: 234); Background: #263553; Padding: (Full: 1);
  Group { Background: #101b2f;
- Label  { Anchor: (Left: 10, Top: 10, Width: 290, Height: 23); Text: "COGNITION / MNEMONIC MATRIX"; Style: (FontSize: 12, TextColor: #8a9dc5, Wrap: true, HorizontalAlignment: Center); }
+ Group #COGNITIONIcon { Anchor: (Left: 10, Top: 12, Width: 18, Height: 18); Background: (TexturePath: "Disciplines/cognition.png"); HitTestVisible: false; }
+ Label { Anchor: (Left: 34, Top: 10, Width: 264, Height: 23); Text: "COGNITION / MNEMONIC MATRIX"; Style: (FontSize: 12, TextColor: #8a9dc5, Wrap: true, HorizontalAlignment: Center); }
 
  Label #COGNITIONState { Anchor: (Left: 180, Top: 31, Width: 116, Height: 18); Text: "OFFLINE"; Style: (FontSize: 10, TextColor: #697a98, Wrap: true, HorizontalAlignment: Center); }
 
  Group #COGNITIONControls { Anchor: (Left: 10, Top: 53, Width: 288, Height: 174); Visible: false;
-$R.@Control #Rune0 { Text: "1"; Anchor: (Left: 76, Top: 0, Width: 37, Height: 29); }
-Group #RuneGlow0 { Anchor: (Left: 76, Top: 0, Width: 37, Height: 3); Background: #e7c38a; Visible: false; HitTestVisible: false; }
-$R.@Control #Rune1 { Text: "2"; Anchor: (Left: 118, Top: 0, Width: 37, Height: 29); }
-Group #RuneGlow1 { Anchor: (Left: 118, Top: 0, Width: 37, Height: 3); Background: #e7c38a; Visible: false; HitTestVisible: false; }
-$R.@Control #Rune2 { Text: "3"; Anchor: (Left: 160, Top: 0, Width: 37, Height: 29); }
-Group #RuneGlow2 { Anchor: (Left: 160, Top: 0, Width: 37, Height: 3); Background: #e7c38a; Visible: false; HitTestVisible: false; }
-$R.@Control #Rune3 { Text: "4"; Anchor: (Left: 76, Top: 34, Width: 37, Height: 29); }
-Group #RuneGlow3 { Anchor: (Left: 76, Top: 34, Width: 37, Height: 3); Background: #e7c38a; Visible: false; HitTestVisible: false; }
-$R.@Control #Rune4 { Text: "5"; Anchor: (Left: 118, Top: 34, Width: 37, Height: 29); }
-Group #RuneGlow4 { Anchor: (Left: 118, Top: 34, Width: 37, Height: 3); Background: #e7c38a; Visible: false; HitTestVisible: false; }
-$R.@Control #Rune5 { Text: "6"; Anchor: (Left: 160, Top: 34, Width: 37, Height: 29); }
-Group #RuneGlow5 { Anchor: (Left: 160, Top: 34, Width: 37, Height: 3); Background: #e7c38a; Visible: false; HitTestVisible: false; }
-$R.@Control #Rune6 { Text: "7"; Anchor: (Left: 76, Top: 68, Width: 37, Height: 29); }
-Group #RuneGlow6 { Anchor: (Left: 76, Top: 68, Width: 37, Height: 3); Background: #e7c38a; Visible: false; HitTestVisible: false; }
-$R.@Control #Rune7 { Text: "8"; Anchor: (Left: 118, Top: 68, Width: 37, Height: 29); }
-Group #RuneGlow7 { Anchor: (Left: 118, Top: 68, Width: 37, Height: 3); Background: #e7c38a; Visible: false; HitTestVisible: false; }
-$R.@Control #Rune8 { Text: "9"; Anchor: (Left: 160, Top: 68, Width: 37, Height: 29); }
-Group #RuneGlow8 { Anchor: (Left: 160, Top: 68, Width: 37, Height: 3); Background: #e7c38a; Visible: false; HitTestVisible: false; }
+$R.@Control #Rune0 { Text: ""; Anchor: (Left: 76, Top: 0, Width: 37, Height: 29); }
+$G.@Fork #RuneMark0 { Anchor: (Left: 76, Top: 0, Width: 37, Height: 29); }
+$G.@ForkLit #RuneGlow0 { Anchor: (Left: 76, Top: 0, Width: 37, Height: 29); Background: #31526a; Visible: false; HitTestVisible: false; }
+$R.@Control #Rune1 { Text: ""; Anchor: (Left: 118, Top: 0, Width: 37, Height: 29); }
+$G.@Eye #RuneMark1 { Anchor: (Left: 118, Top: 0, Width: 37, Height: 29); }
+$G.@EyeLit #RuneGlow1 { Anchor: (Left: 118, Top: 0, Width: 37, Height: 29); Background: #31526a; Visible: false; HitTestVisible: false; }
+$R.@Control #Rune2 { Text: ""; Anchor: (Left: 160, Top: 0, Width: 37, Height: 29); }
+$G.@Spiral #RuneMark2 { Anchor: (Left: 160, Top: 0, Width: 37, Height: 29); }
+$G.@SpiralLit #RuneGlow2 { Anchor: (Left: 160, Top: 0, Width: 37, Height: 29); Background: #31526a; Visible: false; HitTestVisible: false; }
+$R.@Control #Rune3 { Text: ""; Anchor: (Left: 76, Top: 34, Width: 37, Height: 29); }
+$G.@Crown #RuneMark3 { Anchor: (Left: 76, Top: 34, Width: 37, Height: 29); }
+$G.@CrownLit #RuneGlow3 { Anchor: (Left: 76, Top: 34, Width: 37, Height: 29); Background: #31526a; Visible: false; HitTestVisible: false; }
+$R.@Control #Rune4 { Text: ""; Anchor: (Left: 118, Top: 34, Width: 37, Height: 29); }
+$G.@Hourglass #RuneMark4 { Anchor: (Left: 118, Top: 34, Width: 37, Height: 29); }
+$G.@HourglassLit #RuneGlow4 { Anchor: (Left: 118, Top: 34, Width: 37, Height: 29); Background: #31526a; Visible: false; HitTestVisible: false; }
+$R.@Control #Rune5 { Text: ""; Anchor: (Left: 160, Top: 34, Width: 37, Height: 29); }
+$G.@Gate #RuneMark5 { Anchor: (Left: 160, Top: 34, Width: 37, Height: 29); }
+$G.@GateLit #RuneGlow5 { Anchor: (Left: 160, Top: 34, Width: 37, Height: 29); Background: #31526a; Visible: false; HitTestVisible: false; }
+$R.@Control #Rune6 { Text: ""; Anchor: (Left: 76, Top: 68, Width: 37, Height: 29); }
+$G.@Star #RuneMark6 { Anchor: (Left: 76, Top: 68, Width: 37, Height: 29); }
+$G.@StarLit #RuneGlow6 { Anchor: (Left: 76, Top: 68, Width: 37, Height: 29); Background: #31526a; Visible: false; HitTestVisible: false; }
+$R.@Control #Rune7 { Text: ""; Anchor: (Left: 118, Top: 68, Width: 37, Height: 29); }
+$G.@Comet #RuneMark7 { Anchor: (Left: 118, Top: 68, Width: 37, Height: 29); }
+$G.@CometLit #RuneGlow7 { Anchor: (Left: 118, Top: 68, Width: 37, Height: 29); Background: #31526a; Visible: false; HitTestVisible: false; }
+$R.@Control #Rune8 { Text: ""; Anchor: (Left: 160, Top: 68, Width: 37, Height: 29); }
+$G.@Orbit #RuneMark8 { Anchor: (Left: 160, Top: 68, Width: 37, Height: 29); }
+$G.@OrbitLit #RuneGlow8 { Anchor: (Left: 160, Top: 68, Width: 37, Height: 29); Background: #31526a; Visible: false; HitTestVisible: false; }
 Label #CognitionReadout { Anchor: (Left: 0, Top: 111, Width: 288, Height: 23); Text: "Recall the sequence 0/3"; Style: (FontSize: 12, TextColor: #c0abd9, Wrap: true, HorizontalAlignment: Center); }
-Label  { Anchor: (Left: 0, Top: 137, Width: 288, Height: 34); Text: "Watch the lit keys, then repeat their order. A new pattern emerges after 30 seconds."; Style: (FontSize: 11, TextColor: #8197b9, Wrap: true, HorizontalAlignment: Center); }
+Label  { Anchor: (Left: 0, Top: 137, Width: 288, Height: 34); Text: "Watch the glowing symbols, then repeat their order. A new pattern emerges after 30 seconds."; Style: (FontSize: 11, TextColor: #8197b9, Wrap: true, HorizontalAlignment: Center); }
 }
  Group #COGNITIONShutter { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #131e33;
 Group #COGNITIONSlat0 { Anchor: (Left: 0, Top: 15, Width: 288, Height: 2); Background: #213049; HitTestVisible: false; }
@@ -48,13 +59,16 @@ Group #COGNITIONSlat3 { Anchor: (Left: 0, Top: 81, Width: 288, Height: 2); Backg
 Group #COGNITIONSlat4 { Anchor: (Left: 0, Top: 103, Width: 288, Height: 2); Background: #213049; HitTestVisible: false; }
 Group #COGNITIONSlat5 { Anchor: (Left: 0, Top: 125, Width: 288, Height: 2); Background: #213049; HitTestVisible: false; }
 Group #COGNITIONSlat6 { Anchor: (Left: 0, Top: 147, Width: 288, Height: 2); Background: #213049; HitTestVisible: false; }
-Label  { Anchor: (Left: 12, Top: 106, Width: 284, Height: 36); Text: "SEALED / DISCIPLINE NOT REQUIRED"; Style: (FontSize: 10, TextColor: #64738f, Wrap: true, HorizontalAlignment: Center); }
+Group #COGNITIONShutterIcon { Anchor: (Left: 142, Top: 65, Width: 24, Height: 24); Background: (TexturePath: "Disciplines/cognition.png"); HitTestVisible: false; }
+Label { Anchor: (Left: 12, Top: 93, Width: 284, Height: 17); Text: "COGNITION"; Style: (FontSize: 11, TextColor: #8b9caf, HorizontalAlignment: Center); HitTestVisible: false; }
+Label  { Anchor: (Left: 12, Top: 115, Width: 284, Height: 36); Text: "SEALED / DISCIPLINE NOT REQUIRED"; Style: (FontSize: 10, TextColor: #64738f, Wrap: true, HorizontalAlignment: Center); }
 }
 }
 }
 Group { Anchor: (Left: 326, Top: 92, Width: 310, Height: 234); Background: #263553; Padding: (Full: 1);
  Group { Background: #101b2f;
- Label  { Anchor: (Left: 10, Top: 10, Width: 290, Height: 23); Text: "ENERGY / WAVE ALIGNMENT"; Style: (FontSize: 12, TextColor: #8a9dc5, Wrap: true, HorizontalAlignment: Center); }
+ Group #ENERGYIcon { Anchor: (Left: 10, Top: 12, Width: 18, Height: 18); Background: (TexturePath: "Disciplines/energy.png"); HitTestVisible: false; }
+ Label { Anchor: (Left: 34, Top: 10, Width: 264, Height: 23); Text: "ENERGY / WAVE ALIGNMENT"; Style: (FontSize: 12, TextColor: #8a9dc5, Wrap: true, HorizontalAlignment: Center); }
 
  Label #ENERGYState { Anchor: (Left: 180, Top: 31, Width: 116, Height: 18); Text: "OFFLINE"; Style: (FontSize: 10, TextColor: #697a98, Wrap: true, HorizontalAlignment: Center); }
 
@@ -141,13 +155,16 @@ Group #ENERGYSlat3 { Anchor: (Left: 0, Top: 81, Width: 288, Height: 2); Backgrou
 Group #ENERGYSlat4 { Anchor: (Left: 0, Top: 103, Width: 288, Height: 2); Background: #213049; HitTestVisible: false; }
 Group #ENERGYSlat5 { Anchor: (Left: 0, Top: 125, Width: 288, Height: 2); Background: #213049; HitTestVisible: false; }
 Group #ENERGYSlat6 { Anchor: (Left: 0, Top: 147, Width: 288, Height: 2); Background: #213049; HitTestVisible: false; }
-Label  { Anchor: (Left: 12, Top: 106, Width: 284, Height: 36); Text: "SEALED / DISCIPLINE NOT REQUIRED"; Style: (FontSize: 10, TextColor: #64738f, Wrap: true, HorizontalAlignment: Center); }
+Group #ENERGYShutterIcon { Anchor: (Left: 142, Top: 65, Width: 24, Height: 24); Background: (TexturePath: "Disciplines/energy.png"); HitTestVisible: false; }
+Label { Anchor: (Left: 12, Top: 93, Width: 284, Height: 17); Text: "ENERGY"; Style: (FontSize: 11, TextColor: #8b9caf, HorizontalAlignment: Center); HitTestVisible: false; }
+Label  { Anchor: (Left: 12, Top: 115, Width: 284, Height: 36); Text: "SEALED / DISCIPLINE NOT REQUIRED"; Style: (FontSize: 10, TextColor: #64738f, Wrap: true, HorizontalAlignment: Center); }
 }
 }
 }
 Group { Anchor: (Left: 652, Top: 92, Width: 310, Height: 234); Background: #263553; Padding: (Full: 1);
  Group { Background: #101b2f;
- Label  { Anchor: (Left: 10, Top: 10, Width: 290, Height: 23); Text: "GRAVITY / SUSPENSION CELL"; Style: (FontSize: 12, TextColor: #8a9dc5, Wrap: true, HorizontalAlignment: Center); }
+ Group #GRAVITYIcon { Anchor: (Left: 10, Top: 12, Width: 18, Height: 18); Background: (TexturePath: "Disciplines/gravity.png"); HitTestVisible: false; }
+ Label { Anchor: (Left: 34, Top: 10, Width: 264, Height: 23); Text: "GRAVITY / SUSPENSION CELL"; Style: (FontSize: 12, TextColor: #8a9dc5, Wrap: true, HorizontalAlignment: Center); }
 
  Label #GRAVITYState { Anchor: (Left: 180, Top: 31, Width: 116, Height: 18); Text: "OFFLINE"; Style: (FontSize: 10, TextColor: #697a98, Wrap: true, HorizontalAlignment: Center); }
 
@@ -180,13 +197,16 @@ Group #GRAVITYSlat3 { Anchor: (Left: 0, Top: 81, Width: 288, Height: 2); Backgro
 Group #GRAVITYSlat4 { Anchor: (Left: 0, Top: 103, Width: 288, Height: 2); Background: #213049; HitTestVisible: false; }
 Group #GRAVITYSlat5 { Anchor: (Left: 0, Top: 125, Width: 288, Height: 2); Background: #213049; HitTestVisible: false; }
 Group #GRAVITYSlat6 { Anchor: (Left: 0, Top: 147, Width: 288, Height: 2); Background: #213049; HitTestVisible: false; }
-Label  { Anchor: (Left: 12, Top: 106, Width: 284, Height: 36); Text: "SEALED / DISCIPLINE NOT REQUIRED"; Style: (FontSize: 10, TextColor: #64738f, Wrap: true, HorizontalAlignment: Center); }
+Group #GRAVITYShutterIcon { Anchor: (Left: 142, Top: 65, Width: 24, Height: 24); Background: (TexturePath: "Disciplines/gravity.png"); HitTestVisible: false; }
+Label { Anchor: (Left: 12, Top: 93, Width: 284, Height: 17); Text: "GRAVITY"; Style: (FontSize: 11, TextColor: #8b9caf, HorizontalAlignment: Center); HitTestVisible: false; }
+Label  { Anchor: (Left: 12, Top: 115, Width: 284, Height: 36); Text: "SEALED / DISCIPLINE NOT REQUIRED"; Style: (FontSize: 10, TextColor: #64738f, Wrap: true, HorizontalAlignment: Center); }
 }
 }
 }
 Group { Anchor: (Left: 0, Top: 338, Width: 310, Height: 234); Background: #263553; Padding: (Full: 1);
  Group { Background: #101b2f;
- Label  { Anchor: (Left: 10, Top: 10, Width: 290, Height: 23); Text: "SHADOW / LIGHT ROUTING"; Style: (FontSize: 12, TextColor: #8a9dc5, Wrap: true, HorizontalAlignment: Center); }
+ Group #SHADOWIcon { Anchor: (Left: 10, Top: 12, Width: 18, Height: 18); Background: (TexturePath: "Disciplines/shadow.png"); HitTestVisible: false; }
+ Label { Anchor: (Left: 34, Top: 10, Width: 264, Height: 23); Text: "SHADOW / LIGHT ROUTING"; Style: (FontSize: 12, TextColor: #8a9dc5, Wrap: true, HorizontalAlignment: Center); }
 
  Label #SHADOWState { Anchor: (Left: 180, Top: 31, Width: 116, Height: 18); Text: "OFFLINE"; Style: (FontSize: 10, TextColor: #697a98, Wrap: true, HorizontalAlignment: Center); }
 
@@ -234,13 +254,16 @@ Group #SHADOWSlat3 { Anchor: (Left: 0, Top: 81, Width: 288, Height: 2); Backgrou
 Group #SHADOWSlat4 { Anchor: (Left: 0, Top: 103, Width: 288, Height: 2); Background: #213049; HitTestVisible: false; }
 Group #SHADOWSlat5 { Anchor: (Left: 0, Top: 125, Width: 288, Height: 2); Background: #213049; HitTestVisible: false; }
 Group #SHADOWSlat6 { Anchor: (Left: 0, Top: 147, Width: 288, Height: 2); Background: #213049; HitTestVisible: false; }
-Label  { Anchor: (Left: 12, Top: 106, Width: 284, Height: 36); Text: "SEALED / DISCIPLINE NOT REQUIRED"; Style: (FontSize: 10, TextColor: #64738f, Wrap: true, HorizontalAlignment: Center); }
+Group #SHADOWShutterIcon { Anchor: (Left: 142, Top: 65, Width: 24, Height: 24); Background: (TexturePath: "Disciplines/shadow.png"); HitTestVisible: false; }
+Label { Anchor: (Left: 12, Top: 93, Width: 284, Height: 17); Text: "SHADOW"; Style: (FontSize: 11, TextColor: #8b9caf, HorizontalAlignment: Center); HitTestVisible: false; }
+Label  { Anchor: (Left: 12, Top: 115, Width: 284, Height: 36); Text: "SEALED / DISCIPLINE NOT REQUIRED"; Style: (FontSize: 10, TextColor: #64738f, Wrap: true, HorizontalAlignment: Center); }
 }
 }
 }
 Group { Anchor: (Left: 326, Top: 338, Width: 310, Height: 234); Background: #263553; Padding: (Full: 1);
  Group { Background: #101b2f;
- Label  { Anchor: (Left: 10, Top: 10, Width: 290, Height: 23); Text: "SPACE / IMAGE UNWARP"; Style: (FontSize: 12, TextColor: #8a9dc5, Wrap: true, HorizontalAlignment: Center); }
+ Group #SPACEIcon { Anchor: (Left: 10, Top: 12, Width: 18, Height: 18); Background: (TexturePath: "Disciplines/space.png"); HitTestVisible: false; }
+ Label { Anchor: (Left: 34, Top: 10, Width: 264, Height: 23); Text: "SPACE / IMAGE UNWARP"; Style: (FontSize: 12, TextColor: #8a9dc5, Wrap: true, HorizontalAlignment: Center); }
 
  Label #SPACEState { Anchor: (Left: 180, Top: 31, Width: 116, Height: 18); Text: "OFFLINE"; Style: (FontSize: 10, TextColor: #697a98, Wrap: true, HorizontalAlignment: Center); }
 
@@ -308,13 +331,16 @@ Group #SPACESlat3 { Anchor: (Left: 0, Top: 81, Width: 288, Height: 2); Backgroun
 Group #SPACESlat4 { Anchor: (Left: 0, Top: 103, Width: 288, Height: 2); Background: #213049; HitTestVisible: false; }
 Group #SPACESlat5 { Anchor: (Left: 0, Top: 125, Width: 288, Height: 2); Background: #213049; HitTestVisible: false; }
 Group #SPACESlat6 { Anchor: (Left: 0, Top: 147, Width: 288, Height: 2); Background: #213049; HitTestVisible: false; }
-Label  { Anchor: (Left: 12, Top: 106, Width: 284, Height: 36); Text: "SEALED / DISCIPLINE NOT REQUIRED"; Style: (FontSize: 10, TextColor: #64738f, Wrap: true, HorizontalAlignment: Center); }
+Group #SPACEShutterIcon { Anchor: (Left: 142, Top: 65, Width: 24, Height: 24); Background: (TexturePath: "Disciplines/space.png"); HitTestVisible: false; }
+Label { Anchor: (Left: 12, Top: 93, Width: 284, Height: 17); Text: "SPACE"; Style: (FontSize: 11, TextColor: #8b9caf, HorizontalAlignment: Center); HitTestVisible: false; }
+Label  { Anchor: (Left: 12, Top: 115, Width: 284, Height: 36); Text: "SEALED / DISCIPLINE NOT REQUIRED"; Style: (FontSize: 10, TextColor: #64738f, Wrap: true, HorizontalAlignment: Center); }
 }
 }
 }
 Group { Anchor: (Left: 652, Top: 338, Width: 310, Height: 234); Background: #263553; Padding: (Full: 1);
  Group { Background: #101b2f;
- Label  { Anchor: (Left: 10, Top: 10, Width: 290, Height: 23); Text: "TIME / CHRONAL SYNCHRONIZER"; Style: (FontSize: 12, TextColor: #8a9dc5, Wrap: true, HorizontalAlignment: Center); }
+ Group #TIMEIcon { Anchor: (Left: 10, Top: 12, Width: 18, Height: 18); Background: (TexturePath: "Disciplines/time.png"); HitTestVisible: false; }
+ Label { Anchor: (Left: 34, Top: 10, Width: 264, Height: 23); Text: "TIME / CHRONAL SYNCHRONIZER"; Style: (FontSize: 12, TextColor: #8a9dc5, Wrap: true, HorizontalAlignment: Center); }
 
  Label #TIMEState { Anchor: (Left: 180, Top: 31, Width: 116, Height: 18); Text: "OFFLINE"; Style: (FontSize: 10, TextColor: #697a98, Wrap: true, HorizontalAlignment: Center); }
 
@@ -370,7 +396,9 @@ Group #TIMESlat3 { Anchor: (Left: 0, Top: 81, Width: 288, Height: 2); Background
 Group #TIMESlat4 { Anchor: (Left: 0, Top: 103, Width: 288, Height: 2); Background: #213049; HitTestVisible: false; }
 Group #TIMESlat5 { Anchor: (Left: 0, Top: 125, Width: 288, Height: 2); Background: #213049; HitTestVisible: false; }
 Group #TIMESlat6 { Anchor: (Left: 0, Top: 147, Width: 288, Height: 2); Background: #213049; HitTestVisible: false; }
-Label  { Anchor: (Left: 12, Top: 106, Width: 284, Height: 36); Text: "SEALED / DISCIPLINE NOT REQUIRED"; Style: (FontSize: 10, TextColor: #64738f, Wrap: true, HorizontalAlignment: Center); }
+Group #TIMEShutterIcon { Anchor: (Left: 142, Top: 65, Width: 24, Height: 24); Background: (TexturePath: "Disciplines/time.png"); HitTestVisible: false; }
+Label { Anchor: (Left: 12, Top: 93, Width: 284, Height: 17); Text: "TIME"; Style: (FontSize: 11, TextColor: #8b9caf, HorizontalAlignment: Center); HitTestVisible: false; }
+Label  { Anchor: (Left: 12, Top: 115, Width: 284, Height: 36); Text: "SEALED / DISCIPLINE NOT REQUIRED"; Style: (FontSize: 10, TextColor: #64738f, Wrap: true, HorizontalAlignment: Center); }
 }
 }
 }
@@ -384,10 +412,11 @@ Group #NotePicker { Anchor: (Left: 0, Top: 92, Width: 960, Height: 508); Backgro
  Label #NoNoteSelection { Anchor: (Left: 412, Top: 204, Width: 488, Height: 100); Text: "Your next discovery begins with a research note. Choose one to see what you will learn."; Style: (FontSize: 17, TextColor: #849bb8, Wrap: true, HorizontalAlignment: Center); }
  Group #NoteDetails { Anchor: (Left: 378, Top: 109, Width: 562, Height: 379); Background: #18243a;
   ItemIcon #NoteIcon { Anchor: (Left: 18, Top: 16, Width: 64, Height: 64); ItemId: "SM_Research_Notes"; }
+  Group #NoteDisciplineIcon { Anchor: (Left: 18, Top: 16, Width: 64, Height: 64); Background: (TexturePath: "Disciplines/cognition.png"); Visible: false; HitTestVisible: false; }
   Label #NoteTitle { Anchor: (Left: 98, Top: 17, Width: 446, Height: 55); Style: (FontSize: 21, TextColor: #e0e9f7, Wrap: true, RenderBold: true, VerticalAlignment: Center); }
   Label #NoteDescription { Anchor: (Left: 20, Top: 92, Width: 522, Height: 82); Style: (FontSize: 14, TextColor: #b6c6dc, Wrap: true); }
   Label { Anchor: (Left: 20, Top: 183, Width: 522, Height: 21); Text: "ACTIVE INSTRUMENTS"; Style: (FontSize: 12, TextColor: #ac93d5, RenderBold: true); }
-  Label #NoteDisciplines { Anchor: (Left: 20, Top: 212, Width: 522, Height: 41); Style: (FontSize: 15, TextColor: #78dfe9, Wrap: true); }
+  Group #NoteDisciplines { Anchor: (Left: 20, Top: 212, Width: 522, Height: 41); }
   Label #NotePrerequisites { Anchor: (Left: 20, Top: 261, Width: 522, Height: 48); Style: (FontSize: 13, TextColor: #a6daca, Wrap: true); }
   $R.@Control #InsertNote { Text: "INSERT SELECTED NOTE"; Anchor: (Left: 20, Top: 321, Width: 522, Height: 40); }
  }

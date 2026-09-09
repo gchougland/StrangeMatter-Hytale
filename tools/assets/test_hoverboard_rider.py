@@ -11,7 +11,10 @@ class HoverboardRiderTest(unittest.TestCase):
 
     def test_native_animation_registration_keeps_player_model_and_first_person_intact(self):
         config=json.loads(rig.PLAYER_ANIMATIONS.read_text(encoding='utf-8'))
-        self.assertEqual('Default',config['Parent'])
+        self.assertNotIn('Parent',config,'Action-only rider clips must not inherit first-person-only movement entries')
+        native_default=json.loads((rig.NATIVE.parent/'Server/Item/Animations/Default.json').read_text())
+        for field in ('Camera','WiggleWeights'):
+            self.assertEqual(native_default[field],config[field],'Previously inherited non-animation settings remain unchanged')
         self.assertEqual({'SurfIdle','SurfGlide','SurfBoost'},set(config['Animations']))
         self.assertEqual(rig.player_animation_config(),config)
         for entry in config['Animations'].values():

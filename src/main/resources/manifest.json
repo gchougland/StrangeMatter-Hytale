@@ -1,7 +1,7 @@
 {
   "Group": "Hexvane",
   "Name": "StrangeMatter",
-  "Version": "0.7.0",
+  "Version": "0.8.2",
   "Description": "Explore strange anomalies, discover new inventions and build a mad science laboratory.",
   "Authors": [{ "Name": "Hexvane" }],
   "ServerVersion": "*",

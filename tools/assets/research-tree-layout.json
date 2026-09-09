@@ -1,0 +1,930 @@
+{
+  "general": {
+    "nodes": [
+      {
+        "research": {
+          "id": "research",
+          "category": "general",
+          "name": "Research",
+          "description": "Introduction to the research machine and how to unlock new technologies through anomaly study.",
+          "costs": {},
+          "prerequisites": []
+        },
+        "x": 388,
+        "y": 236
+      },
+      {
+        "research": {
+          "id": "field_scanner",
+          "category": "general",
+          "name": "Field Scanner",
+          "description": "A handheld device for detecting and analyzing anomalies in the field.",
+          "costs": {},
+          "prerequisites": [
+            "research"
+          ]
+        },
+        "x": 212,
+        "y": 236
+      },
+      {
+        "research": {
+          "id": "anomaly_shards",
+          "category": "general",
+          "name": "Anomaly Shards",
+          "description": "Understanding the different types of anomaly shards and their generation in the world.",
+          "costs": {},
+          "prerequisites": [
+            "research"
+          ]
+        },
+        "x": 564,
+        "y": 236
+      },
+      {
+        "research": {
+          "id": "anomaly_types",
+          "category": "general",
+          "name": "Anomaly Types",
+          "description": "Comprehensive understanding of the six fundamental types of anomalies and their properties.",
+          "costs": {},
+          "prerequisites": [
+            "research"
+          ]
+        },
+        "x": 388,
+        "y": 160
+      },
+      {
+        "research": {
+          "id": "resonite",
+          "category": "general",
+          "name": "Resonite",
+          "description": "The fundamental energy source derived from anomalies. Learn to collect and process resonite ore.",
+          "costs": {},
+          "prerequisites": [
+            "research"
+          ]
+        },
+        "x": 212,
+        "y": 312
+      },
+      {
+        "research": {
+          "id": "resonant_energy",
+          "category": "general",
+          "name": "Resonant Energy",
+          "description": "Understanding resonant power systems and the Resonant Burner for generating energy from fuel.",
+          "costs": {},
+          "prerequisites": [
+            "research"
+          ]
+        },
+        "x": 564,
+        "y": 312
+      },
+      {
+        "research": {
+          "id": "tinfoil_hat",
+          "category": "general",
+          "name": "Tinfoil Hat",
+          "description": "A protective helmet crafted from resonite that shields the mind from cognitive anomalies and deflects electrical energy.",
+          "costs": {
+            "ENERGY": 10,
+            "COGNITION": 10
+          },
+          "prerequisites": [
+            "resonite"
+          ]
+        },
+        "x": 36,
+        "y": 312
+      },
+      {
+        "research": {
+          "id": "anomaly_resonator",
+          "category": "general",
+          "name": "Anomaly Resonator",
+          "description": "An advanced compass-like device that points toward nearby anomalies and allows synchronization.",
+          "costs": {
+            "ENERGY": 10,
+            "SPACE": 10
+          },
+          "prerequisites": [
+            "field_scanner"
+          ]
+        },
+        "x": 36,
+        "y": 236
+      },
+      {
+        "research": {
+          "id": "reality_forge",
+          "category": "general",
+          "name": "Reality Forge",
+          "description": "The ultimate crafting machine that uses anomaly shards to create powerful and exotic items.",
+          "costs": {
+            "TIME": 5,
+            "ENERGY": 5,
+            "SPACE": 5
+          },
+          "prerequisites": [
+            "resonite"
+          ]
+        },
+        "x": 212,
+        "y": 388
+      },
+      {
+        "research": {
+          "id": "gravity_anomalies",
+          "category": "general",
+          "name": "Gravity Anomalies",
+          "description": "In-depth study of gravitational anomalies and their unique physics-defying properties.",
+          "costs": {
+            "GRAVITY": 5
+          },
+          "prerequisites": [
+            "anomaly_types"
+          ]
+        },
+        "x": 212,
+        "y": 84
+      },
+      {
+        "research": {
+          "id": "temporal_anomalies",
+          "category": "general",
+          "name": "Temporal Anomalies",
+          "description": "Advanced research into temporal distortions and time-based anomaly phenomena.",
+          "costs": {
+            "TIME": 5
+          },
+          "prerequisites": [
+            "anomaly_types"
+          ]
+        },
+        "x": 388,
+        "y": 84
+      },
+      {
+        "research": {
+          "id": "spatial_anomalies",
+          "category": "general",
+          "name": "Spatial Anomalies",
+          "description": "Understanding spatial distortions, dimensional rifts, and reality-bending anomalies.",
+          "costs": {
+            "SPACE": 5
+          },
+          "prerequisites": [
+            "anomaly_types"
+          ]
+        },
+        "x": 564,
+        "y": 84
+      },
+      {
+        "research": {
+          "id": "energy_anomalies",
+          "category": "general",
+          "name": "Energy Anomalies",
+          "description": "Study of energetic rifts and electrical anomaly phenomena that crackle with raw power.",
+          "costs": {
+            "ENERGY": 5
+          },
+          "prerequisites": [
+            "anomaly_types"
+          ]
+        },
+        "x": 212,
+        "y": 8
+      },
+      {
+        "research": {
+          "id": "shadow_anomalies",
+          "category": "general",
+          "name": "Shadow Anomalies",
+          "description": "Research into shadow-based anomalies and dimensional void phenomena.",
+          "costs": {
+            "SHADOW": 5
+          },
+          "prerequisites": [
+            "anomaly_types"
+          ]
+        },
+        "x": 388,
+        "y": 8
+      },
+      {
+        "research": {
+          "id": "cognitive_anomalies",
+          "category": "general",
+          "name": "Cognitive Anomalies",
+          "description": "Understanding thoughtwells and anomaly phenomena that affect mental perception and cognition.",
+          "costs": {
+            "COGNITION": 5
+          },
+          "prerequisites": [
+            "anomaly_types"
+          ]
+        },
+        "x": 564,
+        "y": 8
+      }
+    ],
+    "traces": [
+      {
+        "parent": "research",
+        "child": "field_scanner",
+        "x": 276,
+        "y": 260,
+        "width": 178,
+        "height": 2
+      },
+      {
+        "parent": "research",
+        "child": "anomaly_shards",
+        "x": 452,
+        "y": 260,
+        "width": 178,
+        "height": 2
+      },
+      {
+        "parent": "research",
+        "child": "anomaly_types",
+        "x": 452,
+        "y": 184,
+        "width": 2,
+        "height": 78
+      },
+      {
+        "parent": "research",
+        "child": "resonite",
+        "x": 452,
+        "y": 260,
+        "width": 2,
+        "height": 78
+      },
+      {
+        "parent": "research",
+        "child": "resonite",
+        "x": 450,
+        "y": 334,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "research",
+        "child": "resonite",
+        "x": 276,
+        "y": 336,
+        "width": 178,
+        "height": 2
+      },
+      {
+        "parent": "research",
+        "child": "resonant_energy",
+        "x": 452,
+        "y": 260,
+        "width": 106,
+        "height": 2
+      },
+      {
+        "parent": "research",
+        "child": "resonant_energy",
+        "x": 554,
+        "y": 258,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "research",
+        "child": "resonant_energy",
+        "x": 556,
+        "y": 260,
+        "width": 2,
+        "height": 54
+      },
+      {
+        "parent": "research",
+        "child": "resonant_energy",
+        "x": 554,
+        "y": 310,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "research",
+        "child": "resonant_energy",
+        "x": 556,
+        "y": 312,
+        "width": 74,
+        "height": 2
+      },
+      {
+        "parent": "research",
+        "child": "resonant_energy",
+        "x": 626,
+        "y": 310,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "research",
+        "child": "resonant_energy",
+        "x": 628,
+        "y": 312,
+        "width": 2,
+        "height": 26
+      },
+      {
+        "parent": "resonite",
+        "child": "tinfoil_hat",
+        "x": 100,
+        "y": 336,
+        "width": 178,
+        "height": 2
+      },
+      {
+        "parent": "field_scanner",
+        "child": "anomaly_resonator",
+        "x": 100,
+        "y": 260,
+        "width": 178,
+        "height": 2
+      },
+      {
+        "parent": "resonite",
+        "child": "reality_forge",
+        "x": 276,
+        "y": 336,
+        "width": 2,
+        "height": 78
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "gravity_anomalies",
+        "x": 276,
+        "y": 184,
+        "width": 178,
+        "height": 2
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "gravity_anomalies",
+        "x": 274,
+        "y": 182,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "gravity_anomalies",
+        "x": 276,
+        "y": 108,
+        "width": 2,
+        "height": 78
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "temporal_anomalies",
+        "x": 452,
+        "y": 108,
+        "width": 2,
+        "height": 78
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "spatial_anomalies",
+        "x": 452,
+        "y": 184,
+        "width": 178,
+        "height": 2
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "spatial_anomalies",
+        "x": 626,
+        "y": 182,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "spatial_anomalies",
+        "x": 628,
+        "y": 108,
+        "width": 2,
+        "height": 78
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "energy_anomalies",
+        "x": 348,
+        "y": 184,
+        "width": 106,
+        "height": 2
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "energy_anomalies",
+        "x": 346,
+        "y": 182,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "energy_anomalies",
+        "x": 348,
+        "y": 76,
+        "width": 2,
+        "height": 110
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "energy_anomalies",
+        "x": 346,
+        "y": 74,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "energy_anomalies",
+        "x": 276,
+        "y": 76,
+        "width": 74,
+        "height": 2
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "energy_anomalies",
+        "x": 274,
+        "y": 74,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "energy_anomalies",
+        "x": 276,
+        "y": 32,
+        "width": 2,
+        "height": 46
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "shadow_anomalies",
+        "x": 452,
+        "y": 184,
+        "width": 74,
+        "height": 2
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "shadow_anomalies",
+        "x": 522,
+        "y": 182,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "shadow_anomalies",
+        "x": 524,
+        "y": 76,
+        "width": 2,
+        "height": 110
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "shadow_anomalies",
+        "x": 522,
+        "y": 74,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "shadow_anomalies",
+        "x": 452,
+        "y": 76,
+        "width": 74,
+        "height": 2
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "shadow_anomalies",
+        "x": 450,
+        "y": 74,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "shadow_anomalies",
+        "x": 452,
+        "y": 32,
+        "width": 2,
+        "height": 46
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "cognitive_anomalies",
+        "x": 452,
+        "y": 184,
+        "width": 106,
+        "height": 2
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "cognitive_anomalies",
+        "x": 554,
+        "y": 182,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "cognitive_anomalies",
+        "x": 556,
+        "y": 76,
+        "width": 2,
+        "height": 110
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "cognitive_anomalies",
+        "x": 554,
+        "y": 74,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "cognitive_anomalies",
+        "x": 556,
+        "y": 76,
+        "width": 74,
+        "height": 2
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "cognitive_anomalies",
+        "x": 626,
+        "y": 74,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "anomaly_types",
+        "child": "cognitive_anomalies",
+        "x": 628,
+        "y": 32,
+        "width": 2,
+        "height": 46
+      }
+    ],
+    "height": 472
+  },
+  "reality_forge": {
+    "nodes": [
+      {
+        "research": {
+          "id": "reality_forge_category",
+          "category": "reality_forge",
+          "name": "Reality Forge",
+          "description": "The ultimate crafting machine that uses anomaly shards to create powerful and exotic items.",
+          "costs": {
+            "TIME": 5,
+            "ENERGY": 5,
+            "SPACE": 5
+          },
+          "prerequisites": [
+            "reality_forge"
+          ]
+        },
+        "x": 300,
+        "y": 124
+      },
+      {
+        "research": {
+          "id": "resonance_condenser",
+          "category": "reality_forge",
+          "name": "Resonance Condenser",
+          "description": "An advanced machine that condenses anomaly energy into crystallized shards for advanced crafting.",
+          "costs": {
+            "ENERGY": 25,
+            "SPACE": 15
+          },
+          "prerequisites": [
+            "reality_forge_category"
+          ]
+        },
+        "x": 156,
+        "y": 48
+      },
+      {
+        "research": {
+          "id": "containment_basics",
+          "category": "reality_forge",
+          "name": "Containment Basics",
+          "description": "Fundamental principles of anomaly containment using Echo Vacuum and Containment Capsules.",
+          "costs": {
+            "ENERGY": 20,
+            "SHADOW": 15
+          },
+          "prerequisites": [
+            "reality_forge_category"
+          ]
+        },
+        "x": 300,
+        "y": 276
+      },
+      {
+        "research": {
+          "id": "echoform_imprinter",
+          "category": "reality_forge",
+          "name": "Echoform Imprinter",
+          "description": "A revolutionary device that scans and mimics the physical forms of living entities through shadow-cognitive resonance.",
+          "costs": {
+            "COGNITION": 20,
+            "SHADOW": 25
+          },
+          "prerequisites": [
+            "containment_basics"
+          ]
+        },
+        "x": 588,
+        "y": 276
+      },
+      {
+        "research": {
+          "id": "warp_gun",
+          "category": "reality_forge",
+          "name": "Warp Gun",
+          "description": "A powerful weapon that shoots projectiles creating temporary mini warp gates.",
+          "costs": {
+            "ENERGY": 10,
+            "SPACE": 15
+          },
+          "prerequisites": [
+            "containment_basics"
+          ]
+        },
+        "x": 444,
+        "y": 200
+      },
+      {
+        "research": {
+          "id": "chrono_blister",
+          "category": "reality_forge",
+          "name": "Chrono Blister",
+          "description": "A temporal gadget that shoots projectiles spawning time dilation blocks, slowing all movement through them.",
+          "costs": {
+            "ENERGY": 10,
+            "TIME": 15
+          },
+          "prerequisites": [
+            "containment_basics"
+          ]
+        },
+        "x": 444,
+        "y": 352
+      },
+      {
+        "research": {
+          "id": "graviton_hammer",
+          "category": "reality_forge",
+          "name": "Graviton Hammer",
+          "description": "A powerful mining tool that manipulates gravitational forces to mine in 3x3 areas and create charged tunnels. Left-click for area mining, right-click and hold to charge up for tunnel mining.",
+          "costs": {
+            "ENERGY": 5,
+            "GRAVITY": 20
+          },
+          "prerequisites": [
+            "containment_basics"
+          ]
+        },
+        "x": 300,
+        "y": 352
+      },
+      {
+        "research": {
+          "id": "stasis_projector",
+          "category": "reality_forge",
+          "name": "Stasis Projector",
+          "description": "An advanced device that manipulates gravitational and temporal fields to suspend objects in a frozen state.",
+          "costs": {
+            "TIME": 5,
+            "GRAVITY": 5
+          },
+          "prerequisites": [
+            "reality_forge_category"
+          ]
+        },
+        "x": 588,
+        "y": 124
+      },
+      {
+        "research": {
+          "id": "rift_stabilizer",
+          "category": "reality_forge",
+          "name": "Rift Stabilizer",
+          "description": "A revolutionary power generation device that harnesses raw energy directly from Energetic Rift anomalies.",
+          "costs": {
+            "ENERGY": 20,
+            "SPACE": 10
+          },
+          "prerequisites": [
+            "reality_forge_category"
+          ]
+        },
+        "x": 444,
+        "y": 48
+      },
+      {
+        "research": {
+          "id": "levitation_pad",
+          "category": "reality_forge",
+          "name": "Levitation Pad",
+          "description": "An advanced device that creates controlled levitation fields for safe transportation and anti-gravity applications.",
+          "costs": {
+            "ENERGY": 10,
+            "GRAVITY": 15
+          },
+          "prerequisites": [
+            "reality_forge_category"
+          ]
+        },
+        "x": 12,
+        "y": 124
+      },
+      {
+        "research": {
+          "id": "hoverboard",
+          "category": "reality_forge",
+          "name": "Hoverboard",
+          "description": "A personal transportation device that hovers above the ground using anti-gravity technology.",
+          "costs": {
+            "ENERGY": 15,
+            "GRAVITY": 10
+          },
+          "prerequisites": [
+            "containment_basics"
+          ]
+        },
+        "x": 12,
+        "y": 276
+      }
+    ],
+    "traces": [
+      {
+        "parent": "reality_forge_category",
+        "child": "resonance_condenser",
+        "x": 220,
+        "y": 148,
+        "width": 146,
+        "height": 2
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "resonance_condenser",
+        "x": 218,
+        "y": 146,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "resonance_condenser",
+        "x": 220,
+        "y": 72,
+        "width": 2,
+        "height": 78
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "containment_basics",
+        "x": 364,
+        "y": 148,
+        "width": 2,
+        "height": 154
+      },
+      {
+        "parent": "containment_basics",
+        "child": "echoform_imprinter",
+        "x": 364,
+        "y": 300,
+        "width": 290,
+        "height": 2
+      },
+      {
+        "parent": "containment_basics",
+        "child": "warp_gun",
+        "x": 364,
+        "y": 300,
+        "width": 146,
+        "height": 2
+      },
+      {
+        "parent": "containment_basics",
+        "child": "warp_gun",
+        "x": 506,
+        "y": 298,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "containment_basics",
+        "child": "warp_gun",
+        "x": 508,
+        "y": 224,
+        "width": 2,
+        "height": 78
+      },
+      {
+        "parent": "containment_basics",
+        "child": "chrono_blister",
+        "x": 364,
+        "y": 300,
+        "width": 146,
+        "height": 2
+      },
+      {
+        "parent": "containment_basics",
+        "child": "chrono_blister",
+        "x": 506,
+        "y": 298,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "containment_basics",
+        "child": "chrono_blister",
+        "x": 508,
+        "y": 300,
+        "width": 2,
+        "height": 78
+      },
+      {
+        "parent": "containment_basics",
+        "child": "graviton_hammer",
+        "x": 364,
+        "y": 300,
+        "width": 2,
+        "height": 78
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "stasis_projector",
+        "x": 364,
+        "y": 148,
+        "width": 290,
+        "height": 2
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "rift_stabilizer",
+        "x": 364,
+        "y": 148,
+        "width": 146,
+        "height": 2
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "rift_stabilizer",
+        "x": 506,
+        "y": 146,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "rift_stabilizer",
+        "x": 508,
+        "y": 72,
+        "width": 2,
+        "height": 78
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "levitation_pad",
+        "x": 76,
+        "y": 148,
+        "width": 290,
+        "height": 2
+      },
+      {
+        "parent": "containment_basics",
+        "child": "hoverboard",
+        "x": 76,
+        "y": 300,
+        "width": 290,
+        "height": 2
+      }
+    ],
+    "height": 464
+  }
+}

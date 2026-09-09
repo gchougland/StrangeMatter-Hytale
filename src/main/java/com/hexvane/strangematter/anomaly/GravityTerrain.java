@@ -22,6 +22,7 @@ import com.hypixel.hytale.server.core.universe.world.chunk.WorldChunk;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.core.universe.world.storage.component.ChunkSavingSystems;
 import org.joml.Vector3d;
+import org.joml.Quaterniond;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -42,8 +43,14 @@ final class GravityTerrain {
     record Saved(int version,List<Receipt> terrain,Map<String,Set<Placed>> placed) {}
     private static final class Moving {
         final Receipt receipt;final List<Ref<EntityStore>> parts=new ArrayList<>();
+        final double height,phase;final Rotation3f rotation=new Rotation3f();
         double age;Vector3d offset=new Vector3d();
-        Moving(Receipt receipt){this.receipt=receipt;}
+        Moving(Receipt receipt){
+            this.receipt=receipt;var cell=receipt.cells().getFirst();
+            long seed=cell.x()*73856093L^cell.y()*19349663L^cell.z()*83492791L^receipt.anomaly().getLeastSignificantBits();
+            seed=(seed^(seed>>>33))*0xff51afd7ed558ccdl;seed^=seed>>>33;
+            height=1.4+((seed>>>16)&7)*.28;phase=(seed&65535)*Math.PI*2/65536;
+        }
     }
     private final Path file;
     private final Function<World,CompletableFuture<Void>> saveWorld;
@@ -86,30 +93,26 @@ final class GravityTerrain {
             // A relocated field gives zero G without repeatedly excavating the player's laboratory.
             if(!a.natural||a.released||receipts.values().stream().anyMatch(r->r.anomaly().equals(a.id)))continue;
             if(receipts.values().stream().filter(r->r.world().equals(world.getName())).count()>=48)break;
-            for(int arm=0;arm<3;arm++){
-                double angle=arm*Math.PI*2/3+(a.id.getLeastSignificantBits()&1023)*Math.PI/512;
-                int x=(int)Math.floor(a.x+Math.cos(angle)*3.8),z=(int)Math.floor(a.z+Math.sin(angle)*3.8);
-                var cells=findPatch(world,a,x,z);if(cells.isEmpty())continue;
+            for(int arm=0;arm<8;arm++){
+                if(receipts.values().stream().filter(r->r.world().equals(world.getName())).count()>=48)break;
+                double angle=arm*Math.PI/4+(a.id.getLeastSignificantBits()&1023)*Math.PI/512;
+                double radius=(arm&1)==0?3.2:4.6;
+                int x=(int)Math.floor(a.x+Math.cos(angle)*radius),z=(int)Math.floor(a.z+Math.sin(angle)*radius);
+                var cells=findBlock(world,a,x,z);if(cells.isEmpty())continue;
                 var receipt=new Receipt(UUID.randomUUID(),a.id,world.getName(),a.x,a.y,a.z,cells);
                 lift(world,receipt);
             }
         }
     }
-    private List<Cell> findPatch(World world,AnomalyRecord a,int x,int z){
+    private List<Cell> findBlock(World world,AnomalyRecord a,int x,int z){
         for(int y=Math.min(ChunkUtil.HEIGHT-5,(int)Math.floor(a.y)+1);y>=Math.max(2,(int)Math.floor(a.y)-7);y--){
-            List<Cell> cells=new ArrayList<>();boolean valid=true;
-            for(int dx=0;dx<2;dx++)for(int dz=0;dz<2;dz++){
-                var chunk=chunk(world,x+dx,z+dz);
-                if(chunk==null){valid=false;continue;}
-                var block=chunk.getBlockType(x+dx,y,z+dz);
-                if(block==null||!natural(block.getId())||placed.getOrDefault(world.getName(),Set.of()).contains(new Placed(x+dx,y,z+dz))
-                        ||block.getBlockEntity()!=null||chunk.getFiller(x+dx,y,z+dz)!=0
-                        ||chunk.getRotationIndex(x+dx,y,z+dz)!=0||chunk.getFluidId(x+dx,y,z+dz)!=0){valid=false;continue;}
-                for(int above=1;above<=4;above++)if(!empty(world,x+dx,y+above,z+dz)){valid=false;break;}
-                if(reserved(world.getName(),x+dx,y,z+dz)){valid=false;continue;}
-                cells.add(new Cell(x+dx,y,z+dz,block.getId()));
-            }
-            if(valid&&cells.size()==4&&!nearConstruction(world,x,y,z))return List.copyOf(cells);
+            var source=chunk(world,x,z);if(source==null)return List.of();
+            var block=source.getBlockType(x,y,z);
+            if(block==null||!natural(block.getId())||placed.getOrDefault(world.getName(),Set.of()).contains(new Placed(x,y,z))
+                    ||block.getBlockEntity()!=null||source.getFiller(x,y,z)!=0||source.getRotationIndex(x,y,z)!=0
+                    ||source.getFluidId(x,y,z)!=0||reserved(world.getName(),x,y,z))continue;
+            boolean clear=true;for(int above=1;above<=4;above++)if(!empty(world,x,y+above,z)){clear=false;break;}
+            if(clear&&!nearConstruction(world,x,y,z))return List.of(new Cell(x,y,z,block.getId()));
         }
         return List.of();
     }
@@ -185,22 +188,41 @@ final class GravityTerrain {
         double angle=Math.max(0,m.age-4)*.045;
         double px=r.cells().stream().mapToDouble(c->c.x()+.5).average().orElse(r.cx()),pz=r.cells().stream().mapToDouble(c->c.z()+.5).average().orElse(r.cz());
         double rx=px-r.cx(),rz=pz-r.cz();
-        var target=new Vector3d(rx*(Math.cos(angle)-1)-rz*Math.sin(angle),(2.3+.35*Math.sin(m.age*.65))*eased,rx*Math.sin(angle)+rz*(Math.cos(angle)-1));
+        var target=new Vector3d(rx*(Math.cos(angle)-1)-rz*Math.sin(angle),(m.height+GravityMomentum.bob(m.age,m.phase))*eased,rx*Math.sin(angle)+rz*(Math.cos(angle)-1));
         var step=new Vector3d(target).sub(m.offset);double maxStep=1.1*Math.min(.25,dt);
         if(step.length()>maxStep)step.normalize(maxStep);
         target.set(m.offset).add(step);
-        for(int sample=1;sample<=6;sample++)if(!clear(world,r,new Vector3d(step).mul(sample/6d).add(m.offset)))return;
-        m.offset.set(target);var store=world.getEntityStore().getStore();
+        // Wait until the complete cube is above neighboring terrain before gently tilting it.
+        double tilt=Math.max(0,Math.min(1,(target.y-1.15)/.4));
+        var rotation=new Rotation3f((float)(.10*Math.sin(m.age*.47+m.phase)*tilt),
+                (float)(.10*Math.sin(m.age*.22+m.phase)*tilt),(float)(.08*Math.cos(m.age*.39+m.phase)*tilt));
+        for(int sample=1;sample<=6;sample++){
+            double t=sample/6d;var intermediate=new Rotation3f(
+                    (float)(m.rotation.pitch()+(rotation.pitch()-m.rotation.pitch())*t),
+                    (float)(m.rotation.yaw()+(rotation.yaw()-m.rotation.yaw())*t),
+                    (float)(m.rotation.roll()+(rotation.roll()-m.rotation.roll())*t));
+            if(!clear(world,r,new Vector3d(step).mul(t).add(m.offset),intermediate))return;
+        }
+        m.offset.set(target);m.rotation.set(rotation);var store=world.getEntityStore().getStore();
         for(int i=0;i<m.parts.size();i++){
             var c=r.cells().get(i);var transform=store.getComponent(m.parts.get(i),TransformComponent.getComponentType());
-            if(transform!=null)transform.setPosition(new Vector3d(c.x()+.5,c.y()+.5,c.z()+.5).add(target));
+            if(transform!=null){transform.setPosition(new Vector3d(c.x()+.5,c.y()+.5,c.z()+.5).add(target));transform.setRotation(rotation);}
         }
     }
-    private static boolean clear(World world,Receipt receipt,Vector3d offset){
-        for(var c:receipt.cells())for(int x=(int)Math.floor(c.x()+offset.x+.02);x<=Math.floor(c.x()+offset.x+.98);x++)
-            for(int y=(int)Math.floor(c.y()+offset.y+.02);y<=Math.floor(c.y()+offset.y+.98);y++)
-                for(int z=(int)Math.floor(c.z()+offset.z+.02);z<=Math.floor(c.z()+offset.z+.98);z++)if(!empty(world,x,y,z))return false;
+    static boolean clear(World world,Receipt receipt,Vector3d offset,Rotation3f rotation){
+        // Conservative swept bounds include the rotated corners, not just the original cube.
+        var extent=rotatedExtent(rotation);
+        for(var c:receipt.cells())for(int x=(int)Math.floor(c.x()+.5+offset.x-extent.x+.01);x<=Math.floor(c.x()+.5+offset.x+extent.x-.01);x++)
+            for(int y=(int)Math.floor(c.y()+.5+offset.y-extent.y+.01);y<=Math.floor(c.y()+.5+offset.y+extent.y-.01);y++)
+                for(int z=(int)Math.floor(c.z()+.5+offset.z-extent.z+.01);z<=Math.floor(c.z()+.5+offset.z+extent.z-.01);z++)if(!empty(world,x,y,z))return false;
         return true;
+    }
+    static Vector3d rotatedExtent(Rotation3f rotation){
+        var q=rotation.getQuaternion(new Quaterniond());var extent=new Vector3d();var corner=new Vector3d();
+        for(int x=-1;x<=1;x+=2)for(int y=-1;y<=1;y+=2)for(int z=-1;z<=1;z+=2){
+            q.transform(corner.set(x*.5,y*.5,z*.5));extent.max(new Vector3d(corner).absolute());
+        }
+        return extent;
     }
     synchronized void remove(World world,UUID anomaly){
         for(var m:List.copyOf(moving.values()))if(m.receipt.world().equals(world.getName())&&m.receipt.anomaly().equals(anomaly))detach(world,m);

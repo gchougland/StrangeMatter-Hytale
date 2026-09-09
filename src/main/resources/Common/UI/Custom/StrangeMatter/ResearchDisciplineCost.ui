@@ -1,0 +1,4 @@
+Group { Anchor: (Width: 328, Height: 19);
+ Group #CostIcon { Anchor: (Left: 0, Top: 1, Width: 16, Height: 16); Background: (TexturePath: "Disciplines/cognition.png"); HitTestVisible: false; }
+ Label #CostLabel { Anchor: (Left: 24, Top: 0, Right: 0, Height: 19); Style: (FontSize: 13, TextColor: #82e1e0); }
+}

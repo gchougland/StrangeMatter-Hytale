@@ -53,6 +53,7 @@ public final class AnomalyService {
         }catch(IOException e){throw new UncheckedIOException("Cannot read anomaly generation settings",e);}
         load();
     }
+    public com.hypixel.hytale.component.system.tick.EntityTickingSystem<com.hypixel.hytale.server.core.universe.world.storage.EntityStore> gravityInputSystem(){return new GravityField.InputSystem();}
     public com.hypixel.hytale.component.system.tick.EntityTickingSystem<com.hypixel.hytale.server.core.universe.world.storage.EntityStore> gravitySystem(){return new GravityField.MotionSystem();}
     public com.hypixel.hytale.component.system.RefSystem<com.hypixel.hytale.server.core.universe.world.storage.EntityStore> gravityCleanupSystem(){return new GravityField.CleanupSystem();}
     public synchronized boolean terrainReturnProtected(World world,int x,int y,int z){return gravityTerrain.protectedReturn(world,x,y,z);}

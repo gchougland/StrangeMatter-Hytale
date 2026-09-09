@@ -20,6 +20,11 @@ public final class ResearchInfoPage extends InteractiveCustomUIPage<ResearchPage
             cmd.append("StrangeMatter/ResearchInfo.ui"); initialized = true;
             ResearchTabletPage.bind(events, "#Back", "back", ""); ResearchTabletPage.bind(events, "#Close", "close", "");
             ResearchTabletPage.bind(events, "#Previous", "previous", ""); ResearchTabletPage.bind(events, "#Next", "next", "");
+            for(var type:ResearchType.values()){
+                cmd.append("#GuideDisciplines","StrangeMatter/ResearchDisciplineChip.ui");String row="#GuideDisciplines["+type.ordinal()+"]";
+                ResearchDisciplineUi.icon(cmd,row+" #DisciplineIcon",type);cmd.set(row+" #DisciplineLabel.Text",type.displayName());
+                var a=new Anchor();a.setLeft(Value.of(type.ordinal()*140));a.setTop(Value.of(0));a.setWidth(Value.of(138));a.setHeight(Value.of(20));cmd.setObject(row+".Anchor",a);
+            }
         }
         var pages = ResearchTeaching.pages(node); var page = pages.get(index);
         cmd.set("#Topic.Text", node.name().toUpperCase(java.util.Locale.ROOT)); cmd.set("#Heading.Text", page.title());

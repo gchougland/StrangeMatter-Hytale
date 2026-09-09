@@ -28,6 +28,42 @@ def structure(text,path):
         elif c in '})':assert stack and stack.pop()=={'}':'{',')':'('}[c],path
         i+=1
     assert not stack and not quote,path
+    parameter_declarations(text,path)
+
+
+def parameter_declarations(text,path):
+    """Element parameters precede properties/children, as in native Common.ui.
+
+    In the client, a late @Name is parsed as a child template reference. Its '='
+    therefore fails with 'Expected {, found ='. Keep native leading overrides
+    legal, including declarations whose values contain nested parentheses.
+    """
+    masked=re.sub(r'"(?:\\.|[^"\\])*"|//[^\n]*',lambda m:re.sub(r'[^\n]',' ',m.group()),text)
+    frames=[];parens=0
+
+    def statement(frame,end,child=False):
+        value=masked[frame['start']:end]
+        declaration=re.match(r'\s*@\w+\s*(=)',value)
+        if declaration:
+            if frame['body']:
+                at=frame['start']+declaration.start(1)
+                line=text.count('\n',0,at)+1;column=at-text.rfind('\n',0,at)
+                raise ValueError(f'{path}:{line}:{column}: UI parameter declaration after a property or child; declare parameters first or use a separate template')
+        elif value.strip() or child:
+            frame['body']=True
+
+    for i,c in enumerate(masked):
+        if c=='(':parens+=1
+        elif c==')':parens-=1
+        elif c=='{':
+            if frames:statement(frames[-1],i,child=True)
+            frames.append({'start':i+1,'body':False,'parens':parens})
+        elif c=='}':
+            if frames:frames.pop()
+            if frames:frames[-1]['start']=i+1
+        elif c==';' and frames and parens==frames[-1]['parens']:
+            statement(frames[-1],i)
+            frames[-1]['start']=i+1
 
 def label_alignments(text,path):
     # Both axes use LabelAlignment: Start/Center/End. Anchor.Right is a different property.
@@ -52,10 +88,11 @@ def main():
             assert path.exists(),(name,rel)
             assert re.search(r'@'+re.escape(symbol)+r'\s*=',path.read_text()),(name,alias,symbol)
             imports+=1
-    pages={'research/ResearchMachinePage.java':['ResearchMachine.ui','ResearchNoteRow.ui'],
-      'research/ResearchTabletPage.java':['ResearchTablet.ui','ResearchNodeRow.ui'],
-      'research/ResearchInfoPage.java':['ResearchInfo.ui'],
-      'machine/MachinePage.java':['Machine.ui','RealityForge.ui','ForgeRecipeRow.ui']}
+    pages={'research/ResearchMachinePage.java':['ResearchMachine.ui','ResearchNoteRow.ui','ResearchDisciplineChip.ui'],
+      'research/ResearchTabletPage.java':['ResearchTablet.ui','ResearchTreeNode.ui','ResearchPoint.ui','ResearchTrace.ui','ResearchDisciplineCost.ui'],
+      'research/ResearchInfoPage.java':['ResearchInfo.ui','ResearchDisciplineChip.ui'],
+      'machine/MachinePage.java':['Machine.ui','RealityForge.ui','ForgeRecipeRow.ui'],
+      'ui/gadget/GadgetHudService.java':['GadgetHud.ui']}
     for source,ui_files in pages.items():
         text=(ROOT/'src/main/java/com/hexvane/strangematter'/source).read_text();ids=set().union(*(selectors[f] for f in ui_files))
         refs=set(re.findall(r'"\s*#([A-Za-z]\w*)',text))
@@ -75,7 +112,7 @@ def main():
     for discipline in ['COGNITION','ENERGY','GRAVITY','SHADOW','SPACE','TIME']:
         assert all(discipline+suffix in machine for suffix in ['Controls','Shutter','State']),discipline
     report={'status':'PASS','uiFiles':len(files),'selectors':sum(map(len,selectors.values())),'importedSymbolUses':imports,'javaLiteralSelectorFamilies':java_refs,
-      'checks':['Native string escape rules','Native label alignment literals','String and delimiter balance','Unique selectors per template','Imported UI files and style symbols resolve','Java page selectors resolve','Every dynamic minigame selector range exists'],
+      'checks':['Native string escape rules','Native parameter declaration order','Native label alignment literals','String and delimiter balance','Unique selectors per template','Imported UI files and style symbols resolve','Java page selectors resolve','Every dynamic minigame selector range exists'],
       'limitation':'Static comparison with supplied native UI assets; client UI parser and visual session still required.'}
     (ROOT/'tools/assets/ui-validation.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report))
 

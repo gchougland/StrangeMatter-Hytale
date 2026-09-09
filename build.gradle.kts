@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.hexvane"
-version = "0.7.0"
+version = "0.8.2"
 
 val hytaleHome = providers.environmentVariable("APPDATA").map { "$it/Hytale/install/release/package/game/latest" }
 val localServerJar = providers.gradleProperty("hytaleServerJar").orElse(hytaleHome.map { "$it/Server/HytaleServer.jar" })
@@ -52,6 +52,21 @@ val verifyUiAssets by tasks.registering(Exec::class) {
 val verifyLaboratoryUi by tasks.registering(Exec::class) {
     commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_laboratory_ui.py")
 }
+val verifyCognitionGlyphs by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_cognition_glyphs.py")
+}
+val verifyResearchTreeLayout by tasks.registering(JavaExec::class) {
+    dependsOn(tasks.testClasses)
+    classpath = sourceSets.test.get().runtimeClasspath
+    mainClass = "com.hexvane.strangematter.research.ResearchTreeLayoutVerification"
+    enableAssertions = true
+}
+val verifyTabletUi by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_tablet_ui.py")
+}
+val verifyDisciplineIcons by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_discipline_icons.py")
+}
 val verifyEffects by tasks.registering(Exec::class) {
     commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_effects.py")
 }
@@ -82,7 +97,7 @@ val verifyThoughtwellHallucinations by tasks.registering(Exec::class) {
 val verifySeamlessTerrain by tasks.registering(Exec::class) {
     commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_seamless_terrain.py")
 }
-tasks.check { dependsOn(verifyGameplay, verifyRecipeAssets, verifyUiAssets, verifyLaboratoryUi, verifyEffects, verifyPresentation, verifyMachineWork, verifyHeldLights, verifyEnergeticPresentation, verifyClientAnimations, verifyGrassStatusIcon, verifyThoughtwellEchoes, verifyThoughtwellHallucinations, verifySeamlessTerrain) }
+tasks.check { dependsOn(verifyGameplay, verifyRecipeAssets, verifyUiAssets, verifyLaboratoryUi, verifyCognitionGlyphs, verifyResearchTreeLayout, verifyTabletUi, verifyDisciplineIcons, verifyEffects, verifyPresentation, verifyMachineWork, verifyHeldLights, verifyEnergeticPresentation, verifyClientAnimations, verifyGrassStatusIcon, verifyThoughtwellEchoes, verifyThoughtwellHallucinations, verifySeamlessTerrain) }
 // Match Aetherhaven: the editor changes build/resources/main during a development
 // run; copy those edits back only after the server exits. This is Copy, not Sync:
 // generated output must never delete source assets or overwrite manifest metadata.

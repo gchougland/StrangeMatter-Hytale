@@ -14,6 +14,17 @@ public enum ResearchType {
     public String getName() { return name().toLowerCase(Locale.ROOT); }
     public String displayName() { return displayName; }
     public String color() { return color; }
+    /** Byte-identical original discipline artwork, resolved from the native Custom UI root. */
+    public String uiIconPath() { return "StrangeMatter/Disciplines/" + getName() + ".png"; }
+    public static ResearchType forResearchNode(String id) {
+        if (id == null) return null;
+        return switch(id) {
+            case "cognitive_anomalies" -> COGNITION; case "energy_anomalies" -> ENERGY;
+            case "gravity_anomalies" -> GRAVITY; case "shadow_anomalies" -> SHADOW;
+            case "spatial_anomalies" -> SPACE; case "temporal_anomalies" -> TIME;
+            default -> null;
+        };
+    }
     public static ResearchType fromName(String value) {
         if (value == null) return null;
         try { return valueOf(value.toUpperCase(Locale.ROOT)); } catch (IllegalArgumentException ignored) { return null; }

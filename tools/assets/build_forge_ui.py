@@ -26,6 +26,7 @@ Group {
   Label { Anchor: (Left: 26, Top: 105, Width: 265, Height: 24); Text: "RECIPES"; Style: (FontSize: 16, TextColor: #72edf2, RenderBold: true); }
   Label #RecipeCount { Anchor: (Left: 26, Top: 134, Width: 265, Height: 20); Style: (FontSize: 12, TextColor: #93a9c6); }
   Group #Recipes { Anchor: (Left: 26, Top: 162, Width: 268, Height: 517); Background: #0b1423; Padding: (Full: 5); LayoutMode: TopScrolling; ScrollbarStyle: $C.@DefaultScrollbarStyle; }
+  Label #NoRecipes { Anchor: (Left: 44, Top: 194, Width: 225, Height: 90); Text: "Your discoveries will appear here."; Style: (FontSize: 15, TextColor: #93a9c6, Wrap: true, HorizontalAlignment: Center); HitTestVisible: false; Visible: false; }
   Label #Recipe { Anchor: (Left: 318, Top: 104, Width: 670, Height: 31); Style: (FontSize: 23, TextColor: #e1eafa, RenderBold: true); }
   Label #RecipeIndex { Anchor: (Right: 26, Top: 111, Width: 118, Height: 20); Style: (FontSize: 13, TextColor: #93a9c6, HorizontalAlignment: End); }
   Label #Research { Anchor: (Left: 318, Top: 143, Width: 796, Height: 31); Style: (FontSize: 13, TextColor: #ba9bef, Wrap: true); }

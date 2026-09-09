@@ -1,5 +1,4 @@
 {
-  "Parent": "Default",
   "Animations": {
     "SurfIdle": {
       "ThirdPerson": "Characters/Animations/StrangeMatter/Hoverboard/Surf_Idle.blockyanim",
@@ -25,5 +24,37 @@
       "BlendingDuration": 0.18,
       "KeepPreviousFirstPersonAnimation": true
     }
+  },
+  "Camera": {
+    "Pitch": {
+      "AngleRange": {
+        "Max": 45,
+        "Min": -45
+      },
+      "TargetNodes": [
+        "Head"
+      ]
+    },
+    "Yaw": {
+      "AngleRange": {
+        "Max": 45,
+        "Min": -45
+      },
+      "TargetNodes": [
+        "Head"
+      ]
+    }
+  },
+  "WiggleWeights": {
+    "Pitch": 2,
+    "PitchDeceleration": 0.1,
+    "Roll": 0.1,
+    "RollDeceleration": 0.1,
+    "X": 3,
+    "XDeceleration": 0.1,
+    "Y": 0.1,
+    "YDeceleration": 0.1,
+    "Z": 0.1,
+    "ZDeceleration": 0.1
   }
 }

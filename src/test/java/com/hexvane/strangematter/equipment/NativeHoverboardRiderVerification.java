@@ -167,6 +167,8 @@ public final class NativeHoverboardRiderVerification {
         var bytes = MemorySegment.ofArray(new byte[generated.computeSize()]);
         require(generated.serialize(bytes, 0) == bytes.byteSize(), "Native animation asset packet size matches wire serialization");
         var packet = UpdateItemPlayerAnimations.toObject(bytes).itemPlayerAnimations.get(asset.getId());
+        require(packet.animations.keySet().equals(java.util.Set.copyOf(HoverboardRiderPose.ANIMATIONS)),
+                "Dedicated surfing family contains no inherited movement entries with missing third person clips");
         for (var key : HoverboardRiderPose.ANIMATIONS) {
             var clip = packet.animations.get(key);
             require(clip != null && clip.looping && clip.thirdPerson.equals(clip.thirdPersonMoving), "Stationary and moving avatar use the same complete surfing clip: " + key);

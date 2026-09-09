@@ -1,0 +1,5 @@
+Group { Anchor: (Width: 116, Height: 43, Right: 3);
+ Group #PointIcon { Anchor: (Left: 0, Top: 9, Width: 23, Height: 23); Background: (TexturePath: "Disciplines/cognition.png"); HitTestVisible: false; }
+ Label #PointName { Anchor: (Left: 29, Top: 3, Width: 83, Height: 17); Style: (FontSize: 11, TextColor: #8da8b9); }
+ Label #PointCount { Anchor: (Left: 29, Top: 21, Width: 83, Height: 19); Style: (FontSize: 14, TextColor: #82e8e0, RenderBold: true); }
+}

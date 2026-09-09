@@ -43,6 +43,7 @@ public final class NativeWorldVerification extends JavaPlugin {
             getCodecRegistry(RandomTickProcedure.CODEC).register("SM_Anomalous_Grass",AnomalousGrassService.class,AnomalousGrassService.CODEC);
             getChunkStoreRegistry().registerSystem(new com.hexvane.strangematter.block.FixtureLightingRefresh());
             getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.equipment.HoverboardRiderPose.RestoreOnRemove());
+            getEntityStoreRegistry().registerSystem(anomalies.gravityInputSystem());
             getEntityStoreRegistry().registerSystem(anomalies.gravitySystem());
             getEntityStoreRegistry().registerSystem(anomalies.gravityCleanupSystem());
             getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.anomaly.GravityTerrainEvents.Place(anomalies));
@@ -65,6 +66,8 @@ public final class NativeWorldVerification extends JavaPlugin {
     private void verify(World world){
         var store=world.getEntityStore().getStore();
         verifyRecipePackets();
+        try {com.hexvane.strangematter.ui.NativeCognitionSymbolsVerification.verify();}
+        catch(Exception ex){throw new IllegalStateException(ex);}
         try {com.hexvane.strangematter.research.ResearchNoteVerification.verify();com.hexvane.strangematter.research.ResearchUnlockVerification.verify(world);}
         catch(Exception ex){throw new IllegalStateException(ex);}
         verifyReservedMetadata();
@@ -72,6 +75,8 @@ public final class NativeWorldVerification extends JavaPlugin {
         com.hexvane.strangematter.machine.NativeMachineVerification.verify(machines,research);
         com.hexvane.strangematter.machine.NativeMachineVerification.verifyGrounding(world,machines);
         try {NativeLaboratorySelectionVerification.verify(world,research,machines);}
+        catch(Exception ex){throw new IllegalStateException(ex);}
+        try {NativeResearchTabletVerification.verify(world,research);}
         catch(Exception ex){throw new IllegalStateException(ex);}
         try {com.hexvane.strangematter.machine.MachineControlsVerification.verify(world,machines);}
         catch(Exception ex){throw new IllegalStateException(ex);}

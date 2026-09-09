@@ -1,0 +1,4 @@
+Group { Anchor: (Width: 170, Height: 20);
+ Group #DisciplineIcon { Anchor: (Left: 0, Top: 2, Width: 16, Height: 16); Background: (TexturePath: "Disciplines/cognition.png"); HitTestVisible: false; }
+ Label #DisciplineLabel { Anchor: (Left: 22, Top: 0, Right: 0, Height: 20); Style: (FontSize: 13, TextColor: #97dbe0); }
+}

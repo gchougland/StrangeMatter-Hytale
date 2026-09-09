@@ -1,54 +1,61 @@
 $C = "../Common.ui";
 $R = "ResearchStyle.ui";
-
 $C.@PageOverlay {
-  LayoutMode: Middle;
-  Group {
-    LayoutMode: Center;
-    Group #Tablet {
-      Anchor: (Width: 1032, Height: 690);
-      Background: #293658;
-      Padding: (Full: 2);
-      Group {
-        Background: #0c1425;
-        LayoutMode: Top;
-        Padding: (Full: 24);
-        Group {
-          LayoutMode: Left;
-          Anchor: (Height: 45);
-          Group { FlexWeight: 1; LayoutMode: Top;
-            Label { Text: "STRANGE MATTER / RESEARCH ARCHIVE"; Style: (FontSize: 23, TextColor: #68eef5, RenderBold: true); Anchor: (Height: 28); }
-            Label #Scanned { Style: $R.@Caption; Anchor: (Height: 17); }
-          }
-          $R.@Control #Close { Text: "CLOSE"; Anchor: (Width: 85, Height: 32); }
-        }
-        Group { Anchor: (Height: 2, Top: 12, Bottom: 12); Background: #705691; }
-        Label #Points { Style: (FontSize: 13, TextColor: #baa4e8); Anchor: (Height: 25); }
-        Group {
-          LayoutMode: Left;
-          Anchor: (Height: 37, Bottom: 12);
-          $R.@Control #General { Text: "FOUNDATIONS + ANOMALIES"; Anchor: (Width: 277, Height: 34, Right: 8); }
-          $R.@Control #Forge { Text: "REALITY FORGE"; Anchor: (Width: 190, Height: 34); }
-          $R.@Control #Journal { Text: "FIELD JOURNAL"; Anchor: (Width: 190, Height: 34, Left: 8); }
-        }
-        Group {
-          LayoutMode: Left;
-          FlexWeight: 1;
-          Group { Anchor: (Width: 335, Right: 20); Background: #101b2e; Padding: (Full: 8); LayoutMode: TopScrolling; ScrollbarStyle: $C.@DefaultScrollbarStyle;
-            Group #Nodes { LayoutMode: Top; }
-          }
-          Group {
-            FlexWeight: 1; LayoutMode: Top; Padding: (Full: 14); Background: #141c31;
-            Label #NodeTitle { Style: (FontSize: 27, RenderBold: true, TextColor: #dcd3fc, Wrap: true); Anchor: (Height: 70); }
-            Group { Anchor: (Height: 2, Bottom: 20); Background: #3c526f; }
-            Label #Description { Style: (FontSize: 17, TextColor: #c3cfe5, Wrap: true); Anchor: (Height: 145); }
-            Label #Prerequisites { Style: $R.@Caption; Anchor: (Height: 40); }
-            Label #Costs { Style: (FontSize: 14, TextColor: #79e2ee, Wrap: true); Anchor: (Height: 44); }
-            $R.@Control #Purchase { Text: "CREATE RESEARCH NOTE"; Anchor: (Height: 42, Bottom: 16); }
-            Label #Message { Style: (FontSize: 13, TextColor: #ab9cca, Wrap: true); FlexWeight: 1; }
-          }
-        }
+ LayoutMode: Middle;
+ Group { LayoutMode: Center;
+  Group #Tablet { Anchor: (Width: 1232, Height: 776); Background: #26394a;
+   Group { Anchor: (Left: 3, Top: 3, Right: 3, Bottom: 3); Background: #111c2b; }
+   Group { Anchor: (Left: 7, Top: 29, Width: 5, Height: 682); Background: #2e224d; }
+   Group { Anchor: (Right: 7, Top: 29, Width: 5, Height: 682); Background: #483466; }
+   Group { Anchor: (Left: 27, Top: 23, Width: 42, Height: 3); Background: #a59c55; }
+   Group { Anchor: (Left: 76, Top: 23, Width: 8, Height: 3); Background: #54b9ba; }
+   Group { Anchor: (Right: 29, Top: 24, Width: 4, Height: 4); Background: #44b9bd; }
+   Group { Anchor: (Left: 24, Top: 31, Width: 1184, Height: 708); Background: #385057; Padding: (Full: 2);
+    Group { Background: #071820; }
+   }
+   Label { Anchor: (Left: 46, Top: 45, Width: 395, Height: 27); Text: "RESEARCH TABLET"; Style: (FontSize: 23, TextColor: #71e7e5, RenderBold: true); }
+   Label #Scanned { Anchor: (Left: 47, Top: 75, Width: 395, Height: 18); Style: (FontSize: 11, TextColor: #7f9da9); }
+   Group #Points { Anchor: (Left: 478, Top: 44, Width: 714, Height: 44); LayoutMode: Left; }
+   Group #GeneralTab { Anchor: (Left: 46, Top: 104, Width: 248, Height: 35); Background: #426a6c;
+    $R.@Control #General { Text: "FOUNDATIONS AND ANOMALIES"; Anchor: (Left: 2, Top: 2, Right: 2, Bottom: 2); }
+   }
+   Group #ForgeTab { Anchor: (Left: 304, Top: 104, Width: 222, Height: 35); Background: #393752;
+    $R.@Control #Forge { Text: "REALITY FORGE"; Anchor: (Left: 2, Top: 2, Right: 2, Bottom: 2); TextTooltipStyle: $C.@DefaultTextTooltipStyle; }
+   }
+   Label { Anchor: (Left: 546, Top: 112, Width: 352, Height: 18); Text: "Hover for details. Select a node to continue."; Style: (FontSize: 11, TextColor: #8ea5b3); }
+   $R.@Control #Journal { Text: "FIELD JOURNAL"; Anchor: (Left: 928, Top: 104, Width: 160, Height: 35); }
+   $R.@Control #Close { Text: "CLOSE"; Anchor: (Left: 1100, Top: 104, Width: 94, Height: 35); }
+   Group { Anchor: (Left: 46, Top: 153, Width: 764, Height: 542); Background: #304a51; Padding: (Full: 1);
+    Group { Background: #091e26;
+     Label #CategoryTitle { Anchor: (Left: 15, Top: 12, Width: 515, Height: 20); Style: (FontSize: 13, TextColor: #7ab8bd, RenderBold: true); }
+     Label #NodeCount { Anchor: (Right: 15, Top: 12, Width: 175, Height: 20); Style: (FontSize: 11, TextColor: #70919e, HorizontalAlignment: End); }
+     Group #GraphScroll { Anchor: (Left: 12, Top: 45, Width: 740, Height: 481); LayoutMode: TopScrolling; ScrollbarStyle: $C.@DefaultScrollbarStyle;
+      Group #Graph { Anchor: (Width: 728, Height: 464);
+       Group #Traces { Anchor: (Left: 0, Top: 0, Width: 728, Height: 464); HitTestVisible: false; }
+       Group #Nodes { Anchor: (Left: 0, Top: 0, Width: 728, Height: 464); }
       }
+     }
     }
+   }
+   Group #Details { Anchor: (Left: 830, Top: 153, Width: 364, Height: 542); Background: #10232d;
+    ItemIcon #DetailIcon { Anchor: (Left: 17, Top: 19, Width: 52, Height: 52); ItemId: "SM_Research_Notes"; }
+    Group #DetailDisciplineIcon { Anchor: (Left: 17, Top: 19, Width: 52, Height: 52); Background: (TexturePath: "Disciplines/cognition.png"); Visible: false; HitTestVisible: false; }
+    Label #NodeTitle { Anchor: (Left: 83, Top: 19, Width: 263, Height: 58); Style: (FontSize: 22, TextColor: #cfe8e9, Wrap: true, RenderBold: true); }
+    Label #NodeStatus { Anchor: (Left: 18, Top: 82, Width: 328, Height: 19); Style: (FontSize: 11, TextColor: #82dfc4, RenderBold: true); }
+    Label #Description { Anchor: (Left: 18, Top: 113, Width: 328, Height: 88); Style: (FontSize: 14, TextColor: #abc3ce, Wrap: true); }
+    Label #Prerequisites { Anchor: (Left: 18, Top: 211, Width: 328, Height: 53); Style: (FontSize: 12, TextColor: #a38cbf, Wrap: true); }
+    Label #Costs { Anchor: (Left: 18, Top: 278, Width: 328, Height: 114); Style: (FontSize: 13, TextColor: #82e1e0, Wrap: true); }
+    Group #CostRows { Anchor: (Left: 18, Top: 278, Width: 328, Height: 114); }
+    $R.@Control #Purchase { Text: "CREATE RESEARCH NOTE"; Anchor: (Left: 18, Top: 403, Width: 328, Height: 42); }
+    Label #Message { Anchor: (Left: 18, Top: 464, Width: 328, Height: 61); Style: (FontSize: 12, TextColor: #8ea8b8, Wrap: true); }
+   }
+   Group { Anchor: (Left: 48, Top: 714, Width: 7, Height: 7); Background: #70dfc3; }
+   Label { Anchor: (Left: 63, Top: 709, Width: 108, Height: 19); Text: "UNLOCKED"; Style: (FontSize: 10, TextColor: #8ab1b6); }
+   Group { Anchor: (Left: 185, Top: 714, Width: 7, Height: 7); Background: #a992db; }
+   Label { Anchor: (Left: 200, Top: 709, Width: 145, Height: 19); Text: "READY TO RESEARCH"; Style: (FontSize: 10, TextColor: #8ab1b6); }
+   Group { Anchor: (Left: 359, Top: 714, Width: 7, Height: 7); Background: #516575; }
+   Label { Anchor: (Left: 374, Top: 709, Width: 180, Height: 19); Text: "PREREQUISITE NEEDED"; Style: (FontSize: 10, TextColor: #8ab1b6); }
+   Group { Anchor: (Left: 592, Top: 752, Width: 48, Height: 3); Background: #375862; }
   }
+ }
 }

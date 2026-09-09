@@ -133,7 +133,18 @@ def validate_client_frame_numbers(anim):
 
 def player_animation_config():
     """Native PlayAnimation selects this item-animation family without replacing the player model."""
-    return {'Parent': 'Default', 'Animations': {
+    # Default includes first-person-only movement entries. Inheriting them makes
+    # the client warn about 50 missing third-person clips for this action family.
+    # Preserve its non-animation settings explicitly; only these three actions
+    # belong in the rider map, and KeepPreviousFirstPersonAnimation retains hands.
+    return {'Camera': {
+        axis: {'AngleRange': {'Max': 45, 'Min': -45}, 'TargetNodes': ['Head']}
+        for axis in ('Pitch', 'Yaw')
+    }, 'WiggleWeights': {
+        'Pitch': 2, 'PitchDeceleration': .1, 'Roll': .1, 'RollDeceleration': .1,
+        'X': 3, 'XDeceleration': .1, 'Y': .1, 'YDeceleration': .1,
+        'Z': .1, 'ZDeceleration': .1
+    }, 'Animations': {
         f'Surf{mode}': {
             'ThirdPerson': f'Characters/Animations/StrangeMatter/Hoverboard/Surf_{mode}.blockyanim',
             'ThirdPersonMoving': f'Characters/Animations/StrangeMatter/Hoverboard/Surf_{mode}.blockyanim',

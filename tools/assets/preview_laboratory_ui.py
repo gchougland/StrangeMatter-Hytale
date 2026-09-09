@@ -59,12 +59,15 @@ class Preview:
         icon.thumbnail((int(rect[2]), int(rect[3])), Image.Resampling.LANCZOS)
         self.image.paste(icon, (int(rect[0] + (rect[2] - icon.width) / 2), int(rect[1] + (rect[3] - icon.height) / 2)), icon)
 
-    def element(self, source, selector, text=None, item=None, color=None, origin=None, parent=(1140, 754)):
+    def element(self, source, selector, text=None, item=None, color=None, origin=None, parent=(1140, 754), texture=None):
         body = layout.block(source, selector)
         x1, y1, x2, y2 = layout.rect(body, *parent)
         ox, oy = origin or self.origin
         rect = (ox + x1, oy + y1, x2 - x1, y2 - y1)
-        if item:
+        if texture:
+            picture=Image.open(texture).convert('RGBA');picture.thumbnail((int(rect[2]),int(rect[3])),Image.Resampling.LANCZOS)
+            self.image.paste(picture,(int(rect[0]+(rect[2]-picture.width)/2),int(rect[1]+(rect[3]-picture.height)/2)),picture)
+        elif item:
             self.icon(rect, item)
         elif text is not None:
             font = re.search(r'FontSize:\s*(\d+)', body)
@@ -164,7 +167,10 @@ def research():
         r = (picker[0] + 25, picker[1] + 114 + i * 81)
         page.box((*r, 317, 76), '#152138')
         page.element(row, 'NoteAccent', color='#78dfe9' if i == 2 else '#485070', origin=r, parent=(317, 76))
-        page.element(row, 'NoteRowIcon', item=item, origin=r, parent=(317, 76))
+        if name in ('Gravity Anomalies','Energy Anomalies'):
+            page.element(row,'NoteRowDisciplineIcon',texture=UI/'Disciplines'/('gravity.png' if name.startswith('Gravity') else 'energy.png'),origin=r,parent=(317,76))
+        else:
+            page.element(row, 'NoteRowIcon', item=item, origin=r, parent=(317, 76))
         page.element(row, 'NoteName', name, color='#78dfe9' if i == 2 else '#d8deef', origin=r, parent=(317, 76))
         page.element(row, 'NoteState', state, origin=r, parent=(317, 76))
     page.box((picker[0] + 348, picker[1] + 117, 4, 363), '#1e2a42')
@@ -175,7 +181,11 @@ def research():
     page.element(source, 'NoteTitle', 'Hoverboard', origin=detail, parent=(562, 379))
     page.element(source, 'NoteDescription', 'A personal transportation device that hovers above the ground using anti-gravity technology.', origin=detail, parent=(562, 379))
     page.label((detail[0] + 20, detail[1] + 183, 522, 21), 'ACTIVE INSTRUMENTS', 12, '#ac93d5', True)
-    page.element(source, 'NoteDisciplines', 'Energy   |   Gravity', origin=detail, parent=(562, 379))
+    chip=(UI/'ResearchDisciplineChip.ui').read_text()
+    for i,name in enumerate(['Energy','Gravity']):
+        at=(detail[0]+20+i*174,detail[1]+212)
+        page.element(chip,'DisciplineIcon',texture=UI/'Disciplines'/(name.lower()+'.png'),origin=at,parent=(170,20))
+        page.element(chip,'DisciplineLabel',name,origin=at,parent=(170,20))
     page.element(source, 'NotePrerequisites', 'Ready to insert. Your note is used only when the experiment succeeds.', origin=detail, parent=(562, 379))
     page.button(source, 'InsertNote', 'INSERT SELECTED NOTE', origin=detail, parent=(562, 379))
     page.element(source, 'Message', 'Choose a research note from your inventory. Keep its active instruments stable to complete the experiment.', origin=origin, parent=(980, 708))

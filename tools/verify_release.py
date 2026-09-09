@@ -2,6 +2,7 @@
 from pathlib import Path
 import hashlib
 import json
+import re
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,13 +21,26 @@ with zipfile.ZipFile(jar) as z, zipfile.ZipFile(run / 'mods/StrangeMatter-Smoke.
         zipfile.ZipFile(validation / 'mods' / jar.name) as assets:
     names = set(z.namelist())
     assert len(names) == len(z.namelist()), 'Duplicate ZIP entry'
-    assert json.loads(z.read('manifest.json'))['Version'] == version
+    manifest = json.loads(z.read('manifest.json'))
+    assert manifest['Version'] == version
+    assert manifest.get('IncludesAssetPack') is True, 'Native UI documents and images must be advertised to clients'
     assert z.read('META-INF/LICENSE.txt') == (ROOT / 'LICENSE.txt').read_bytes(), 'Packaged license differs from repository license'
     assert 'All Rights Reserved.' in (ROOT / 'LICENSE.txt').read_text(encoding='utf-8-sig'), 'Release must carry the requested license'
     resource_names = {p.relative_to(ROOT / 'src/main/resources').as_posix() for p in resources}
     archived_assets = {name for name in names if name.startswith(('Common/', 'Server/')) and not name.endswith('/')}
     source_assets = {name for name in resource_names if name.startswith(('Common/', 'Server/'))}
     assert archived_assets == source_assets, f'Stale or missing packaged assets: {sorted(archived_assets ^ source_assets)}'
+    # Check the exact archive casing of both client document appends and server-side
+    # classpath templates. A Windows file existence check alone would hide a case error.
+    referenced_ui = set()
+    for java in (ROOT / 'src/main/java').rglob('*.java'):
+        for reference in re.findall(r'"([^"\r\n]+\.ui)"', java.read_text(encoding='utf-8-sig')):
+            path = reference.lstrip('/')
+            if path.startswith('StrangeMatter/'):
+                path = 'Common/UI/Custom/' + path
+            if path.startswith('Common/UI/Custom/'):
+                assert path in names, f'UI resource referenced by {java.name} is absent from release: {path}'
+                referenced_ui.add(path)
     for p in resources:
         name = p.relative_to(ROOT / 'src/main/resources').as_posix()
         assert z.read(name) == p.read_bytes(), f'Stale release resource: {name}'
@@ -51,6 +65,7 @@ report = {
     'nativeAssetRun': validation.relative_to(ROOT).as_posix(),
     'nativeTestArchiveMatchesRelease': True, 'nativeValidatedAssetsMatchRelease': True,
     'packagedAssetInventoryMatchesSource': True,
+    'referencedUiDocumentsPackaged': len(referenced_ui),
     'liveClientVerified': False,
     'license': 'All Rights Reserved', 'packagedLicenseMatchesRepository': True,
 }

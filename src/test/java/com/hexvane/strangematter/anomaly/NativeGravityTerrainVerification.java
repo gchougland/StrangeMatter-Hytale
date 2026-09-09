@@ -34,7 +34,7 @@ public final class NativeGravityTerrainVerification {
         try {
             terrain.tick(world,List.of(source),.05);
             var receipts=terrain.receipts();var parts=terrain.parts();
-            require(receipts.size()==3&&parts.size()==12,"Three bounded four-block terrain fragments are lifted");
+            require(receipts.size()==8&&parts.size()==8&&receipts.stream().allMatch(r->r.cells().size()==1),"Eight separate natural blocks are lifted, each with its own restoration receipt");
             var ids=new HashSet<Integer>();
             for(var ref:parts){
                 require(ref.isValid()&&store.getComponent(ref,BlockEntity.getComponentType())!=null,"Floating cell is a real native block entity");
@@ -47,14 +47,25 @@ public final class NativeGravityTerrainVerification {
             var first=parts.getFirst();var initial=new Vector3d(store.getComponent(first,TransformComponent.getComponentType()).getPosition());
             for(int i=0;i<100;i++){terrain.tick(world,List.of(source),.05);store.tick(.05f);}
             var position=store.getComponent(first,TransformComponent.getComponentType()).getPosition();
-            require(position.y>initial.y+1.9&&position.distance(initial)<3.1,"Native ECS preserves smoothly lifted platforms instead of applying falling physics");
+            require(position.y>initial.y+1&&position.distance(initial)<4.2,"Native ECS preserves smoothly lifted pieces instead of applying falling physics");
+            double lowest=parts.stream().mapToDouble(r->store.getComponent(r,TransformComponent.getComponentType()).getPosition().y).min().orElseThrow();
+            double highest=parts.stream().mapToDouble(r->store.getComponent(r,TransformComponent.getComponentType()).getPosition().y).max().orElseThrow();
+            require(highest-lowest>.65,"Separate blocks occupy distinct floating heights instead of a single flat platform");
+            require(parts.stream().allMatch(r->{var rotation=store.getComponent(r,TransformComponent.getComponentType()).getRotation();return Math.abs(rotation.pitch())+Math.abs(rotation.roll())>.001;}),"Every lifted native block has a gentle real transform tilt");
+            double low=position.y,high=position.y,previous=position.y;boolean rose=false,sank=false;
+            for(int i=0;i<100;i++){
+                terrain.tick(world,List.of(source),.05);store.tick(.05f);
+                double current=store.getComponent(first,TransformComponent.getComponentType()).getPosition().y;
+                low=Math.min(low,current);high=Math.max(high,current);rose|=current>previous+.0001;sank|=current<previous-.0001;previous=current;
+            }
+            require(high-low>.45&&rose&&sank,"Actual native solid terrain completes both phases of its gentle sine bob after the initial lift");
             var blocked=receipts.getFirst().cells().getFirst();world.setBlock(blocked.x(),blocked.y(),blocked.z(),"Wood_Hardwood_Planks");
             terrain.remove(world,source.id);
             require(parts.stream().noneMatch(r->r.isValid()),"Removing the field removes all owned moving entities");
             require(world.getBlockType(blocked.x(),blocked.y(),blocked.z()).getId().equals("Wood_Hardwood_Planks"),"Return preserves construction placed in the old hole");
-            require(terrain.receipts().size()==3,"No receipt retires before the terrain save acknowledges");
-            var neighbor=receipts.getFirst().cells().get(1);
-            require(world.getBlock(neighbor.x(),neighbor.y(),neighbor.z())==0,"Blocked patch returns atomically, preventing repeated replenishment of its other cells");
+            require(terrain.receipts().size()==8,"No receipt retires before the terrain save acknowledges");
+            var neighbor=receipts.get(1).cells().getFirst();
+            require(world.getBlockType(neighbor.x(),neighbor.y(),neighbor.z()).getId().equals(neighbor.block()),"An occupied single-block return does not strand independent pieces");
             world.setBlock(blocked.x(),blocked.y(),blocked.z(),"Empty");terrain.tick(world,List.of(),.05);
             for(var r:receipts)for(var cell:r.cells())require(world.getBlockType(cell.x(),cell.y(),cell.z()).getId().equals(cell.block()),"All source blocks restore exactly once the footprint is clear");
             var checkpointCell=receipts.getFirst().cells().getFirst();var checkpointPos=new Vector3i(checkpointCell.x(),checkpointCell.y(),checkpointCell.z());
@@ -67,6 +78,20 @@ public final class NativeGravityTerrainVerification {
             save.complete(null);terrain.tick(world,List.of(),.05);require(terrain.receipts().isEmpty(),"Acknowledged native terrain snapshot permits durable receipt retirement");
             breaking=new BreakBlockEvent(null,checkpointPos,checkpointBlock);new GravityTerrainEvents.Break(terrain).handle(0,null,store,null,breaking);
             require(!breaking.isCancelled(),"Receipt protection ends after acknowledged retirement");
+            var cornerReceipt=new GravityTerrain.Receipt(UUID.randomUUID(),source.id,world.getName(),13,84,13,List.of(new GravityTerrain.Cell(13,84,13,"Rock_Stone")));
+            world.setBlock(14,84,13,"Rock_Stone");
+            try{
+                require(GravityTerrain.clear(world,cornerReceipt,new Vector3d(),new com.hypixel.hytale.math.vector.Rotation3f()),"Upright cube can touch an adjacent solid block without overlap");
+                require(!GravityTerrain.clear(world,cornerReceipt,new Vector3d(),new com.hypixel.hytale.math.vector.Rotation3f(.1f,.1f,.08f)),"Rotated-corner collision bounds prevent a tilted block entering adjacent terrain");
+            }finally{world.setBlock(14,84,13,"Empty");}
+
+            var legacyDirectory=Files.createTempDirectory("sm-native-gravity-legacy-");
+            var legacyCells=List.of(new GravityTerrain.Cell(12,78,12,"Rock_Stone"),new GravityTerrain.Cell(13,78,12,"Rock_Stone"),new GravityTerrain.Cell(12,78,13,"Rock_Stone"),new GravityTerrain.Cell(13,78,13,"Rock_Stone"));
+            var legacyReceipt=new GravityTerrain.Receipt(UUID.randomUUID(),source.id,world.getName(),20,80,20,legacyCells);
+            Files.writeString(legacyDirectory.resolve("gravity-terrain.json"),new com.google.gson.Gson().toJson(new GravityTerrain.Saved(1,List.of(legacyReceipt),Map.of())));
+            for(var c:legacyCells)world.setBlock(c.x(),c.y(),c.z(),"Empty");
+            var legacy=new GravityTerrain(legacyDirectory,w->CompletableFuture.completedFuture(null));legacy.tick(world,List.of(),.05);legacy.tick(world,List.of(),.05);
+            require(legacy.receipts().isEmpty()&&legacyCells.stream().allMatch(c->c.block().equals(world.getBlockType(c.x(),c.y(),c.z()).getId())),"Version 1 four-cell receipts from previous releases still restore and retire safely");
 
             // Simulate restart after the excavation reached disk, before any return was saved.
             var failed=new GravityTerrain(directory,w->CompletableFuture.failedFuture(new java.io.IOException("fixture save failure")));
