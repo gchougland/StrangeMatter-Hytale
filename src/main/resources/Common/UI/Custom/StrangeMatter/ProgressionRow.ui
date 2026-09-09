@@ -1,0 +1,7 @@
+Group { Anchor: (Height: 94); Padding: (Full: 12); LayoutMode: Top; Background: #14223a;
+  Group { Anchor: (Height: 24); LayoutMode: Left;
+    Label #Name { FlexWeight: 1; Style: (FontSize: 16, TextColor: #d8eff3, RenderBold: true); }
+    Label #State { Anchor: (Width: 120); Style: (FontSize: 11, TextColor: #8190ac, HorizontalAlignment: End, VerticalAlignment: Center); }
+  }
+  Label #Description { FlexWeight: 1; Style: (FontSize: 13, TextColor: #879cbd, Wrap: true); }
+}

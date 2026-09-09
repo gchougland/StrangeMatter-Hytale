@@ -1,0 +1,19 @@
+{
+  "Parent": "Klops",
+  "Model": "NPC/StrangeMatter/Scientist/Scientist.blockymodel",
+  "Texture": "NPC/StrangeMatter/Scientist/Scientist.png",
+  "DefaultAttachments": [
+    {
+      "Model": "NPC/Intelligent/Klops/Models/Attachments/Cosmetics/Tail/Tail.blockymodel",
+      "Texture": "NPC/Intelligent/Klops/Models/Attachments/Cosmetics/Tail/Tail_Default.png"
+    },
+    {
+      "Model": "NPC/Intelligent/Klops/Models/Attachments/Merchant/Shoes.blockymodel",
+      "Texture": "NPC/Intelligent/Klops/Models/Attachments/Merchant/Shoes_Texture.png"
+    },
+    {
+      "Model": "NPC/Intelligent/Klops/Models/Attachments/Cosmetics/Head/Eyebrows/Eyebrows.blockymodel",
+      "Texture": "NPC/Intelligent/Klops/Models/Attachments/Cosmetics/Head/Eyebrows/Eyebrows_White.png"
+    }
+  ]
+}

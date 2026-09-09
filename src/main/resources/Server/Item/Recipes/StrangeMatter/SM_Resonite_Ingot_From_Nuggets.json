@@ -1,0 +1,29 @@
+{
+  "Input": [
+    {
+      "ItemId": "SM_Resonite_Nugget",
+      "Quantity": 9
+    }
+  ],
+  "PrimaryOutput": {
+    "ItemId": "SM_Resonite_Ingot",
+    "Quantity": 1
+  },
+  "Output": [
+    {
+      "ItemId": "SM_Resonite_Ingot",
+      "Quantity": 1
+    }
+  ],
+  "TimeSeconds": 2.0,
+  "BenchRequirement": [
+    {
+      "Type": "Crafting",
+      "Id": "SM_Laboratory",
+      "Categories": [
+        "SM_Laboratory_All"
+      ]
+    }
+  ],
+  "KnowledgeRequired": true
+}

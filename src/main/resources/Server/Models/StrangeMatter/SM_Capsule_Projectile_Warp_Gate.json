@@ -1,0 +1,19 @@
+{
+  "HitBox": {
+    "Max": {
+      "Y": 0.35,
+      "Z": 0.12,
+      "X": 0.12
+    },
+    "Min": {
+      "Y": 0,
+      "Z": -0.12,
+      "X": -0.12
+    }
+  },
+  "MaxScale": 1,
+  "EyeHeight": 0,
+  "MinScale": 1,
+  "Model": "Items/StrangeMatter/containment_capsule_warp_gate.blockymodel",
+  "Texture": "Items/StrangeMatter/containment_capsule_warp_gate.png"
+}

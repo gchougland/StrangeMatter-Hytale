@@ -1,0 +1,74 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Research_Tablet.name",
+    "Description": "server.items.SM_Research_Tablet.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Research_Tablet.png",
+  "MaxStack": 1,
+  "Categories": [
+    "Items",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Item",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "Model": "Items/StrangeMatter/research_tablet.blockymodel",
+  "Texture": "Items/StrangeMatter/research_tablet.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "primary"
+        }
+      ],
+      "RequireNewClick": true
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "secondary"
+        }
+      ],
+      "RequireNewClick": true
+    },
+    "Use": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "use"
+        }
+      ],
+      "RequireNewClick": true
+    }
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "SM_Resonite_Ingot",
+        "Quantity": 4
+      },
+      {
+        "ItemId": "Rock_Crystal_White_Block",
+        "Quantity": 1
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 2.0,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_All"
+        ]
+      }
+    ],
+    "KnowledgeRequired": true
+  }
+}

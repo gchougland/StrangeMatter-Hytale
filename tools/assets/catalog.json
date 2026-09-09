@@ -1,0 +1,2870 @@
+{
+  "unitsPerBlock": 32,
+  "items": [
+    {
+      "sourceId": "anomalous_grass",
+      "id": "SM_Anomalous_Grass",
+      "block": true,
+      "model": "Blocks/StrangeMatter/anomalous_grass.blockymodel",
+      "texture": "Blocks/StrangeMatter/anomalous_grass.png",
+      "icon": "Icons/ItemsGenerated/SM_Anomalous_Grass.png",
+      "nodes": 1,
+      "boundsModelUnits": {
+        "min": [
+          -16.0,
+          0.0,
+          -16.0
+        ],
+        "max": [
+          16.0,
+          32.0,
+          16.0
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "anomaly_resonator",
+      "id": "SM_Anomaly_Resonator",
+      "block": false,
+      "model": "Items/StrangeMatter/anomaly_resonator.blockymodel",
+      "texture": "Items/StrangeMatter/anomaly_resonator.png",
+      "icon": "Icons/ItemsGenerated/SM_Anomaly_Resonator.png",
+      "nodes": 14,
+      "boundsModelUnits": {
+        "min": [
+          -7.0,
+          1.5,
+          -5.5
+        ],
+        "max": [
+          8.0,
+          33.0,
+          6.5
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "anomaly_spawner_marker",
+      "id": "SM_Anomaly_Spawner_Marker",
+      "block": true,
+      "model": "Blocks/StrangeMatter/anomaly_spawner_marker.blockymodel",
+      "texture": "Blocks/StrangeMatter/anomaly_spawner_marker.png",
+      "icon": "Icons/ItemsGenerated/SM_Anomaly_Spawner_Marker.png",
+      "nodes": 13,
+      "boundsModelUnits": {
+        "min": [
+          -8.0,
+          0.0,
+          -8.0
+        ],
+        "max": [
+          8.0,
+          2.6,
+          8.0
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "chrono_blister",
+      "id": "SM_Chrono_Blister",
+      "block": false,
+      "model": "Items/StrangeMatter/chrono_blister.blockymodel",
+      "texture": "Items/StrangeMatter/chrono_blister.png",
+      "icon": "Icons/ItemsGenerated/SM_Chrono_Blister.png",
+      "nodes": 11,
+      "boundsModelUnits": {
+        "min": [
+          -7.75,
+          3.0,
+          -7.75
+        ],
+        "max": [
+          7.75,
+          21.575,
+          7.75
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "chrono_shard",
+      "id": "SM_Chrono_Shard",
+      "block": false,
+      "model": "Items/StrangeMatter/Shared/shard_1c8e23d7fc2c.blockymodel",
+      "texture": "Items/StrangeMatter/chrono_shard.png",
+      "icon": "Icons/ItemsGenerated/SM_Chrono_Shard.png",
+      "nodes": 9,
+      "boundsModelUnits": {
+        "min": [
+          -5.243,
+          0.48,
+          -4.055
+        ],
+        "max": [
+          5.243,
+          19.52,
+          4.055
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "chrono_shard_crystal",
+      "id": "SM_Chrono_Shard_Crystal",
+      "block": true,
+      "model": "Blocks/StrangeMatter/Shared/shard_crystal_84dcace58934.blockymodel",
+      "texture": "Blocks/StrangeMatter/chrono_shard_crystal.png",
+      "icon": "Icons/ItemsGenerated/SM_Chrono_Shard_Crystal.png",
+      "nodes": 63,
+      "boundsModelUnits": {
+        "min": [
+          -13.451,
+          -0.0,
+          -12.597
+        ],
+        "max": [
+          13.451,
+          26.0,
+          12.597
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "chrono_shard_lamp",
+      "id": "SM_Chrono_Shard_Lamp",
+      "block": true,
+      "model": "Blocks/StrangeMatter/Shared/shard_lamp_f9d17c298777.blockymodel",
+      "texture": "Blocks/StrangeMatter/chrono_shard_lamp.png",
+      "icon": "Icons/ItemsGenerated/SM_Chrono_Shard_Lamp.png",
+      "nodes": 18,
+      "boundsModelUnits": {
+        "min": [
+          -11.0,
+          0.0,
+          -11.0
+        ],
+        "max": [
+          11.0,
+          28.0,
+          11.0
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "chrono_shard_lantern",
+      "id": "SM_Chrono_Shard_Lantern",
+      "block": true,
+      "model": "Blocks/StrangeMatter/Shared/shard_lantern_abcc9021638d.blockymodel",
+      "texture": "Blocks/StrangeMatter/chrono_shard_lantern.png",
+      "icon": "Icons/ItemsGenerated/SM_Chrono_Shard_Lantern.png",
+      "nodes": 25,
+      "boundsModelUnits": {
+        "min": [
+          -9.5,
+          0.0,
+          -9.5
+        ],
+        "max": [
+          9.5,
+          35.7,
+          9.5
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "chrono_shard_ore",
+      "id": "SM_Chrono_Shard_Ore",
+      "block": true,
+      "model": "Blocks/StrangeMatter/chrono_shard_ore.blockymodel",
+      "texture": "Blocks/StrangeMatter/chrono_shard_ore.png",
+      "icon": "Icons/ItemsGenerated/SM_Chrono_Shard_Ore.png",
+      "nodes": 37,
+      "boundsModelUnits": {
+        "min": [
+          -16.67,
+          -0.67,
+          -16.67
+        ],
+        "max": [
+          16.67,
+          32.67,
+          16.67
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ],
+      "previewHostNode": {
+        "id": "1",
+        "name": "host_rock",
+        "position": {
+          "x": 0,
+          "y": 16,
+          "z": 0
+        },
+        "orientation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "shape": {
+          "type": "box",
+          "offset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "stretch": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "settings": {
+            "isPiece": false,
+            "size": {
+              "x": 32,
+              "y": 32,
+              "z": 32
+            },
+            "isStaticBox": true
+          },
+          "textureLayout": {
+            "front": {
+              "offset": {
+                "x": 1,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "back": {
+              "offset": {
+                "x": 35,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "left": {
+              "offset": {
+                "x": 69,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "right": {
+              "offset": {
+                "x": 103,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "top": {
+              "offset": {
+                "x": 137,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "bottom": {
+              "offset": {
+                "x": 171,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            }
+          },
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "standard"
+        }
+      }
+    },
+    {
+      "sourceId": "containment_capsule",
+      "id": "SM_Containment_Capsule",
+      "block": false,
+      "model": "Items/StrangeMatter/containment_capsule.blockymodel",
+      "texture": "Items/StrangeMatter/containment_capsule.png",
+      "icon": "Icons/ItemsGenerated/SM_Containment_Capsule.png",
+      "nodes": 18,
+      "boundsModelUnits": {
+        "min": [
+          -6.0,
+          1.0,
+          -6.0
+        ],
+        "max": [
+          6.0,
+          21.0,
+          6.0
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "containment_capsule_echoing_shadow",
+      "id": "SM_Containment_Capsule_Echoing_Shadow",
+      "block": false,
+      "model": "Items/StrangeMatter/containment_capsule_echoing_shadow.blockymodel",
+      "texture": "Items/StrangeMatter/containment_capsule_echoing_shadow.png",
+      "icon": "Icons/ItemsGenerated/SM_Containment_Capsule_Echoing_Shadow.png",
+      "nodes": 18,
+      "boundsModelUnits": {
+        "min": [
+          -6.0,
+          1.0,
+          -6.0
+        ],
+        "max": [
+          6.0,
+          21.0,
+          6.0
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "containment_capsule_energetic",
+      "id": "SM_Containment_Capsule_Energetic",
+      "block": false,
+      "model": "Items/StrangeMatter/containment_capsule_energetic.blockymodel",
+      "texture": "Items/StrangeMatter/containment_capsule_energetic.png",
+      "icon": "Icons/ItemsGenerated/SM_Containment_Capsule_Energetic.png",
+      "nodes": 18,
+      "boundsModelUnits": {
+        "min": [
+          -6.0,
+          1.0,
+          -6.0
+        ],
+        "max": [
+          6.0,
+          21.0,
+          6.0
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "containment_capsule_gravity",
+      "id": "SM_Containment_Capsule_Gravity",
+      "block": false,
+      "model": "Items/StrangeMatter/containment_capsule_gravity.blockymodel",
+      "texture": "Items/StrangeMatter/containment_capsule_gravity.png",
+      "icon": "Icons/ItemsGenerated/SM_Containment_Capsule_Gravity.png",
+      "nodes": 18,
+      "boundsModelUnits": {
+        "min": [
+          -6.0,
+          1.0,
+          -6.0
+        ],
+        "max": [
+          6.0,
+          21.0,
+          6.0
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "containment_capsule_temporal_bloom",
+      "id": "SM_Containment_Capsule_Temporal_Bloom",
+      "block": false,
+      "model": "Items/StrangeMatter/containment_capsule_temporal_bloom.blockymodel",
+      "texture": "Items/StrangeMatter/containment_capsule_temporal_bloom.png",
+      "icon": "Icons/ItemsGenerated/SM_Containment_Capsule_Temporal_Bloom.png",
+      "nodes": 18,
+      "boundsModelUnits": {
+        "min": [
+          -6.0,
+          1.0,
+          -6.0
+        ],
+        "max": [
+          6.0,
+          21.0,
+          6.0
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "containment_capsule_thoughtwell",
+      "id": "SM_Containment_Capsule_Thoughtwell",
+      "block": false,
+      "model": "Items/StrangeMatter/containment_capsule_thoughtwell.blockymodel",
+      "texture": "Items/StrangeMatter/containment_capsule_thoughtwell.png",
+      "icon": "Icons/ItemsGenerated/SM_Containment_Capsule_Thoughtwell.png",
+      "nodes": 18,
+      "boundsModelUnits": {
+        "min": [
+          -6.0,
+          1.0,
+          -6.0
+        ],
+        "max": [
+          6.0,
+          21.0,
+          6.0
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "containment_capsule_warp_gate",
+      "id": "SM_Containment_Capsule_Warp_Gate",
+      "block": false,
+      "model": "Items/StrangeMatter/containment_capsule_warp_gate.blockymodel",
+      "texture": "Items/StrangeMatter/containment_capsule_warp_gate.png",
+      "icon": "Icons/ItemsGenerated/SM_Containment_Capsule_Warp_Gate.png",
+      "nodes": 18,
+      "boundsModelUnits": {
+        "min": [
+          -6.0,
+          1.0,
+          -6.0
+        ],
+        "max": [
+          6.0,
+          21.0,
+          6.0
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "echo_vacuum",
+      "id": "SM_Echo_Vacuum",
+      "block": false,
+      "model": "Items/StrangeMatter/echo_vacuum.blockymodel",
+      "texture": "Items/StrangeMatter/echo_vacuum.png",
+      "icon": "Icons/ItemsGenerated/SM_Echo_Vacuum.png",
+      "nodes": 18,
+      "boundsModelUnits": {
+        "min": [
+          -7.75,
+          -3.694,
+          -20.0
+        ],
+        "max": [
+          9.5,
+          26.0,
+          25.5
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "echoform_imprinter",
+      "id": "SM_Echoform_Imprinter",
+      "block": false,
+      "model": "Items/StrangeMatter/echoform_imprinter.blockymodel",
+      "texture": "Items/StrangeMatter/echoform_imprinter.png",
+      "icon": "Icons/ItemsGenerated/SM_Echoform_Imprinter.png",
+      "nodes": 8,
+      "boundsModelUnits": {
+        "min": [
+          -8.0,
+          -3.694,
+          -10.0
+        ],
+        "max": [
+          8.0,
+          30.0,
+          13.5
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "energetic_shard",
+      "id": "SM_Energetic_Shard",
+      "block": false,
+      "model": "Items/StrangeMatter/Shared/shard_1c8e23d7fc2c.blockymodel",
+      "texture": "Items/StrangeMatter/energetic_shard.png",
+      "icon": "Icons/ItemsGenerated/SM_Energetic_Shard.png",
+      "nodes": 9,
+      "boundsModelUnits": {
+        "min": [
+          -5.243,
+          0.48,
+          -4.055
+        ],
+        "max": [
+          5.243,
+          19.52,
+          4.055
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "energetic_shard_crystal",
+      "id": "SM_Energetic_Shard_Crystal",
+      "block": true,
+      "model": "Blocks/StrangeMatter/Shared/shard_crystal_84dcace58934.blockymodel",
+      "texture": "Blocks/StrangeMatter/energetic_shard_crystal.png",
+      "icon": "Icons/ItemsGenerated/SM_Energetic_Shard_Crystal.png",
+      "nodes": 63,
+      "boundsModelUnits": {
+        "min": [
+          -13.451,
+          -0.0,
+          -12.597
+        ],
+        "max": [
+          13.451,
+          26.0,
+          12.597
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "energetic_shard_lamp",
+      "id": "SM_Energetic_Shard_Lamp",
+      "block": true,
+      "model": "Blocks/StrangeMatter/Shared/shard_lamp_f9d17c298777.blockymodel",
+      "texture": "Blocks/StrangeMatter/energetic_shard_lamp.png",
+      "icon": "Icons/ItemsGenerated/SM_Energetic_Shard_Lamp.png",
+      "nodes": 18,
+      "boundsModelUnits": {
+        "min": [
+          -11.0,
+          0.0,
+          -11.0
+        ],
+        "max": [
+          11.0,
+          28.0,
+          11.0
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "energetic_shard_lantern",
+      "id": "SM_Energetic_Shard_Lantern",
+      "block": true,
+      "model": "Blocks/StrangeMatter/Shared/shard_lantern_abcc9021638d.blockymodel",
+      "texture": "Blocks/StrangeMatter/energetic_shard_lantern.png",
+      "icon": "Icons/ItemsGenerated/SM_Energetic_Shard_Lantern.png",
+      "nodes": 25,
+      "boundsModelUnits": {
+        "min": [
+          -9.5,
+          0.0,
+          -9.5
+        ],
+        "max": [
+          9.5,
+          35.7,
+          9.5
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "energetic_shard_ore",
+      "id": "SM_Energetic_Shard_Ore",
+      "block": true,
+      "model": "Blocks/StrangeMatter/energetic_shard_ore.blockymodel",
+      "texture": "Blocks/StrangeMatter/energetic_shard_ore.png",
+      "icon": "Icons/ItemsGenerated/SM_Energetic_Shard_Ore.png",
+      "nodes": 37,
+      "boundsModelUnits": {
+        "min": [
+          -16.67,
+          -0.67,
+          -16.67
+        ],
+        "max": [
+          16.67,
+          32.67,
+          16.67
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ],
+      "previewHostNode": {
+        "id": "1",
+        "name": "host_rock",
+        "position": {
+          "x": 0,
+          "y": 16,
+          "z": 0
+        },
+        "orientation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "shape": {
+          "type": "box",
+          "offset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "stretch": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "settings": {
+            "isPiece": false,
+            "size": {
+              "x": 32,
+              "y": 32,
+              "z": 32
+            },
+            "isStaticBox": true
+          },
+          "textureLayout": {
+            "front": {
+              "offset": {
+                "x": 1,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "back": {
+              "offset": {
+                "x": 35,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "left": {
+              "offset": {
+                "x": 69,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "right": {
+              "offset": {
+                "x": 103,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "top": {
+              "offset": {
+                "x": 137,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "bottom": {
+              "offset": {
+                "x": 171,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            }
+          },
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "standard"
+        }
+      }
+    },
+    {
+      "sourceId": "fancy_resonite_tile",
+      "id": "SM_Fancy_Resonite_Tile",
+      "block": true,
+      "model": "Blocks/StrangeMatter/fancy_resonite_tile.blockymodel",
+      "texture": "Blocks/StrangeMatter/fancy_resonite_tile.png",
+      "icon": "Icons/ItemsGenerated/SM_Fancy_Resonite_Tile.png",
+      "nodes": 13,
+      "boundsModelUnits": {
+        "min": [
+          -16.0,
+          0.0,
+          -16.0
+        ],
+        "max": [
+          16.0,
+          33.1,
+          16.0
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "field_scanner",
+      "id": "SM_Field_Scanner",
+      "block": false,
+      "model": "Items/StrangeMatter/field_scanner.blockymodel",
+      "texture": "Items/StrangeMatter/field_scanner.png",
+      "icon": "Icons/ItemsGenerated/SM_Field_Scanner.png",
+      "nodes": 9,
+      "boundsModelUnits": {
+        "min": [
+          -10.613,
+          -2.493,
+          -4.182
+        ],
+        "max": [
+          10.613,
+          31.107,
+          6.5
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "gravitic_shard",
+      "id": "SM_Gravitic_Shard",
+      "block": false,
+      "model": "Items/StrangeMatter/Shared/shard_1c8e23d7fc2c.blockymodel",
+      "texture": "Items/StrangeMatter/gravitic_shard.png",
+      "icon": "Icons/ItemsGenerated/SM_Gravitic_Shard.png",
+      "nodes": 9,
+      "boundsModelUnits": {
+        "min": [
+          -5.243,
+          0.48,
+          -4.055
+        ],
+        "max": [
+          5.243,
+          19.52,
+          4.055
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "gravitic_shard_crystal",
+      "id": "SM_Gravitic_Shard_Crystal",
+      "block": true,
+      "model": "Blocks/StrangeMatter/Shared/shard_crystal_84dcace58934.blockymodel",
+      "texture": "Blocks/StrangeMatter/gravitic_shard_crystal.png",
+      "icon": "Icons/ItemsGenerated/SM_Gravitic_Shard_Crystal.png",
+      "nodes": 63,
+      "boundsModelUnits": {
+        "min": [
+          -13.451,
+          -0.0,
+          -12.597
+        ],
+        "max": [
+          13.451,
+          26.0,
+          12.597
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "gravitic_shard_lamp",
+      "id": "SM_Gravitic_Shard_Lamp",
+      "block": true,
+      "model": "Blocks/StrangeMatter/Shared/shard_lamp_f9d17c298777.blockymodel",
+      "texture": "Blocks/StrangeMatter/gravitic_shard_lamp.png",
+      "icon": "Icons/ItemsGenerated/SM_Gravitic_Shard_Lamp.png",
+      "nodes": 18,
+      "boundsModelUnits": {
+        "min": [
+          -11.0,
+          0.0,
+          -11.0
+        ],
+        "max": [
+          11.0,
+          28.0,
+          11.0
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "gravitic_shard_lantern",
+      "id": "SM_Gravitic_Shard_Lantern",
+      "block": true,
+      "model": "Blocks/StrangeMatter/Shared/shard_lantern_abcc9021638d.blockymodel",
+      "texture": "Blocks/StrangeMatter/gravitic_shard_lantern.png",
+      "icon": "Icons/ItemsGenerated/SM_Gravitic_Shard_Lantern.png",
+      "nodes": 25,
+      "boundsModelUnits": {
+        "min": [
+          -9.5,
+          0.0,
+          -9.5
+        ],
+        "max": [
+          9.5,
+          35.7,
+          9.5
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "gravitic_shard_ore",
+      "id": "SM_Gravitic_Shard_Ore",
+      "block": true,
+      "model": "Blocks/StrangeMatter/gravitic_shard_ore.blockymodel",
+      "texture": "Blocks/StrangeMatter/gravitic_shard_ore.png",
+      "icon": "Icons/ItemsGenerated/SM_Gravitic_Shard_Ore.png",
+      "nodes": 37,
+      "boundsModelUnits": {
+        "min": [
+          -16.67,
+          -0.67,
+          -16.67
+        ],
+        "max": [
+          16.67,
+          32.67,
+          16.67
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ],
+      "previewHostNode": {
+        "id": "1",
+        "name": "host_rock",
+        "position": {
+          "x": 0,
+          "y": 16,
+          "z": 0
+        },
+        "orientation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "shape": {
+          "type": "box",
+          "offset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "stretch": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "settings": {
+            "isPiece": false,
+            "size": {
+              "x": 32,
+              "y": 32,
+              "z": 32
+            },
+            "isStaticBox": true
+          },
+          "textureLayout": {
+            "front": {
+              "offset": {
+                "x": 1,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "back": {
+              "offset": {
+                "x": 35,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "left": {
+              "offset": {
+                "x": 69,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "right": {
+              "offset": {
+                "x": 103,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "top": {
+              "offset": {
+                "x": 137,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "bottom": {
+              "offset": {
+                "x": 171,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            }
+          },
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "standard"
+        }
+      }
+    },
+    {
+      "sourceId": "graviton_hammer",
+      "id": "SM_Graviton_Hammer",
+      "block": false,
+      "model": "Items/StrangeMatter/graviton_hammer.blockymodel",
+      "texture": "Items/StrangeMatter/graviton_hammer.png",
+      "icon": "Icons/ItemsGenerated/SM_Graviton_Hammer.png",
+      "nodes": 10,
+      "boundsModelUnits": {
+        "min": [
+          -16.5,
+          -3.5,
+          -8.5
+        ],
+        "max": [
+          16.5,
+          37.5,
+          9.5
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "hoverboard",
+      "id": "SM_Hoverboard",
+      "block": false,
+      "model": "Items/StrangeMatter/hoverboard.blockymodel",
+      "texture": "Items/StrangeMatter/hoverboard.png",
+      "icon": "Icons/ItemsGenerated/SM_Hoverboard.png",
+      "nodes": 23,
+      "boundsModelUnits": {
+        "min": [
+          -7.5,
+          2.0,
+          -24.743
+        ],
+        "max": [
+          7.5,
+          10.817,
+          24.743
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "insight_shard",
+      "id": "SM_Insight_Shard",
+      "block": false,
+      "model": "Items/StrangeMatter/Shared/shard_1c8e23d7fc2c.blockymodel",
+      "texture": "Items/StrangeMatter/insight_shard.png",
+      "icon": "Icons/ItemsGenerated/SM_Insight_Shard.png",
+      "nodes": 9,
+      "boundsModelUnits": {
+        "min": [
+          -5.243,
+          0.48,
+          -4.055
+        ],
+        "max": [
+          5.243,
+          19.52,
+          4.055
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "insight_shard_crystal",
+      "id": "SM_Insight_Shard_Crystal",
+      "block": true,
+      "model": "Blocks/StrangeMatter/Shared/shard_crystal_84dcace58934.blockymodel",
+      "texture": "Blocks/StrangeMatter/insight_shard_crystal.png",
+      "icon": "Icons/ItemsGenerated/SM_Insight_Shard_Crystal.png",
+      "nodes": 63,
+      "boundsModelUnits": {
+        "min": [
+          -13.451,
+          -0.0,
+          -12.597
+        ],
+        "max": [
+          13.451,
+          26.0,
+          12.597
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "insight_shard_lamp",
+      "id": "SM_Insight_Shard_Lamp",
+      "block": true,
+      "model": "Blocks/StrangeMatter/Shared/shard_lamp_f9d17c298777.blockymodel",
+      "texture": "Blocks/StrangeMatter/insight_shard_lamp.png",
+      "icon": "Icons/ItemsGenerated/SM_Insight_Shard_Lamp.png",
+      "nodes": 18,
+      "boundsModelUnits": {
+        "min": [
+          -11.0,
+          0.0,
+          -11.0
+        ],
+        "max": [
+          11.0,
+          28.0,
+          11.0
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "insight_shard_lantern",
+      "id": "SM_Insight_Shard_Lantern",
+      "block": true,
+      "model": "Blocks/StrangeMatter/Shared/shard_lantern_abcc9021638d.blockymodel",
+      "texture": "Blocks/StrangeMatter/insight_shard_lantern.png",
+      "icon": "Icons/ItemsGenerated/SM_Insight_Shard_Lantern.png",
+      "nodes": 25,
+      "boundsModelUnits": {
+        "min": [
+          -9.5,
+          0.0,
+          -9.5
+        ],
+        "max": [
+          9.5,
+          35.7,
+          9.5
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "insight_shard_ore",
+      "id": "SM_Insight_Shard_Ore",
+      "block": true,
+      "model": "Blocks/StrangeMatter/insight_shard_ore.blockymodel",
+      "texture": "Blocks/StrangeMatter/insight_shard_ore.png",
+      "icon": "Icons/ItemsGenerated/SM_Insight_Shard_Ore.png",
+      "nodes": 37,
+      "boundsModelUnits": {
+        "min": [
+          -16.67,
+          -0.67,
+          -16.67
+        ],
+        "max": [
+          16.67,
+          32.67,
+          16.67
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ],
+      "previewHostNode": {
+        "id": "1",
+        "name": "host_rock",
+        "position": {
+          "x": 0,
+          "y": 16,
+          "z": 0
+        },
+        "orientation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "shape": {
+          "type": "box",
+          "offset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "stretch": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "settings": {
+            "isPiece": false,
+            "size": {
+              "x": 32,
+              "y": 32,
+              "z": 32
+            },
+            "isStaticBox": true
+          },
+          "textureLayout": {
+            "front": {
+              "offset": {
+                "x": 1,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "back": {
+              "offset": {
+                "x": 35,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "left": {
+              "offset": {
+                "x": 69,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "right": {
+              "offset": {
+                "x": 103,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "top": {
+              "offset": {
+                "x": 137,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "bottom": {
+              "offset": {
+                "x": 171,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            }
+          },
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "standard"
+        }
+      }
+    },
+    {
+      "sourceId": "laboratory_bench",
+      "id": "SM_Laboratory_Bench",
+      "block": true,
+      "model": "Blocks/StrangeMatter/laboratory_bench.blockymodel",
+      "texture": "Blocks/StrangeMatter/laboratory_bench.png",
+      "icon": "Icons/ItemsGenerated/SM_Laboratory_Bench.png",
+      "nodes": 33,
+      "boundsModelUnits": {
+        "min": [
+          -16.0,
+          0.0,
+          -15.0
+        ],
+        "max": [
+          16.0,
+          37.562,
+          15.0
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ]
+    },
+    {
+      "sourceId": "levitation_pad",
+      "id": "SM_Levitation_Pad",
+      "block": true,
+      "model": "Blocks/StrangeMatter/levitation_pad.blockymodel",
+      "texture": "Blocks/StrangeMatter/levitation_pad.png",
+      "icon": "Icons/ItemsGenerated/SM_Levitation_Pad.png",
+      "nodes": 35,
+      "boundsModelUnits": {
+        "min": [
+          -14.5,
+          0.0,
+          -14.0
+        ],
+        "max": [
+          14.5,
+          13.5,
+          14.0
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "paradoxical_energy_cell",
+      "id": "SM_Paradoxical_Energy_Cell",
+      "block": true,
+      "model": "Blocks/StrangeMatter/paradoxical_energy_cell.blockymodel",
+      "texture": "Blocks/StrangeMatter/paradoxical_energy_cell.png",
+      "icon": "Icons/ItemsGenerated/SM_Paradoxical_Energy_Cell.png",
+      "nodes": 56,
+      "boundsModelUnits": {
+        "min": [
+          -14.5,
+          0.0,
+          -13.5
+        ],
+        "max": [
+          14.5,
+          45.0,
+          14.0
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ]
+    },
+    {
+      "sourceId": "raw_resonite",
+      "id": "SM_Raw_Resonite",
+      "block": false,
+      "model": "Items/StrangeMatter/raw_resonite.blockymodel",
+      "texture": "Items/StrangeMatter/raw_resonite.png",
+      "icon": "Icons/ItemsGenerated/SM_Raw_Resonite.png",
+      "nodes": 10,
+      "boundsModelUnits": {
+        "min": [
+          -8.558,
+          0.124,
+          -4.055
+        ],
+        "max": [
+          5.243,
+          19.52,
+          5.255
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "reality_forge",
+      "id": "SM_Reality_Forge",
+      "block": true,
+      "model": "Blocks/StrangeMatter/reality_forge.blockymodel",
+      "texture": "Blocks/StrangeMatter/reality_forge.png",
+      "icon": "Icons/ItemsGenerated/SM_Reality_Forge.png",
+      "nodes": 28,
+      "boundsModelUnits": {
+        "min": [
+          -15.5,
+          0.0,
+          -14.5
+        ],
+        "max": [
+          15.5,
+          43.5,
+          15.5
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ]
+    },
+    {
+      "sourceId": "research_machine",
+      "id": "SM_Research_Machine",
+      "block": true,
+      "model": "Blocks/StrangeMatter/research_machine.blockymodel",
+      "texture": "Blocks/StrangeMatter/research_machine.png",
+      "icon": "Icons/ItemsGenerated/SM_Research_Machine.png",
+      "nodes": 37,
+      "boundsModelUnits": {
+        "min": [
+          -14.5,
+          0.0,
+          -13.5
+        ],
+        "max": [
+          14.5,
+          47.0,
+          16.5
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ]
+    },
+    {
+      "sourceId": "research_notes",
+      "id": "SM_Research_Notes",
+      "block": false,
+      "model": "Items/StrangeMatter/research_notes.blockymodel",
+      "texture": "Items/StrangeMatter/research_notes.png",
+      "icon": "Icons/ItemsGenerated/SM_Research_Notes.png",
+      "nodes": 3,
+      "boundsModelUnits": {
+        "min": [
+          -8.5,
+          0.5,
+          -1.5
+        ],
+        "max": [
+          8.5,
+          23.5,
+          2.5
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "research_tablet",
+      "id": "SM_Research_Tablet",
+      "block": false,
+      "model": "Items/StrangeMatter/research_tablet.blockymodel",
+      "texture": "Items/StrangeMatter/research_tablet.png",
+      "icon": "Icons/ItemsGenerated/SM_Research_Tablet.png",
+      "nodes": 3,
+      "boundsModelUnits": {
+        "min": [
+          -8.5,
+          0.5,
+          -1.5
+        ],
+        "max": [
+          8.5,
+          23.5,
+          2.5
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "resonance_condenser",
+      "id": "SM_Resonance_Condenser",
+      "block": true,
+      "model": "Blocks/StrangeMatter/resonance_condenser.blockymodel",
+      "texture": "Blocks/StrangeMatter/resonance_condenser.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonance_Condenser.png",
+      "nodes": 34,
+      "boundsModelUnits": {
+        "min": [
+          -14.5,
+          0.0,
+          -13.5
+        ],
+        "max": [
+          14.5,
+          43.0,
+          14.0
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ]
+    },
+    {
+      "sourceId": "resonant_burner",
+      "id": "SM_Resonant_Burner",
+      "block": true,
+      "model": "Blocks/StrangeMatter/resonant_burner.blockymodel",
+      "texture": "Blocks/StrangeMatter/resonant_burner.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonant_Burner.png",
+      "nodes": 35,
+      "boundsModelUnits": {
+        "min": [
+          -15.5,
+          0.0,
+          -13.5
+        ],
+        "max": [
+          14.5,
+          43.0,
+          14.0
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ]
+    },
+    {
+      "sourceId": "resonant_circuit",
+      "id": "SM_Resonant_Circuit",
+      "block": false,
+      "model": "Items/StrangeMatter/resonant_circuit.blockymodel",
+      "texture": "Items/StrangeMatter/resonant_circuit.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonant_Circuit.png",
+      "nodes": 3,
+      "boundsModelUnits": {
+        "min": [
+          -8.5,
+          0.5,
+          -1.5
+        ],
+        "max": [
+          8.5,
+          23.5,
+          2.5
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "resonant_coil",
+      "id": "SM_Resonant_Coil",
+      "block": false,
+      "model": "Items/StrangeMatter/resonant_coil.blockymodel",
+      "texture": "Items/StrangeMatter/resonant_coil.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonant_Coil.png",
+      "nodes": 42,
+      "boundsModelUnits": {
+        "min": [
+          -7.0,
+          0.0,
+          -7.0
+        ],
+        "max": [
+          8.0,
+          23.5,
+          7.0
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "resonant_conduit",
+      "id": "SM_Resonant_Conduit",
+      "block": true,
+      "model": "Blocks/StrangeMatter/resonant_conduit.blockymodel",
+      "texture": "Blocks/StrangeMatter/resonant_conduit.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonant_Conduit.png",
+      "nodes": 21,
+      "boundsModelUnits": {
+        "min": [
+          -16.0,
+          0.0,
+          -16.0
+        ],
+        "max": [
+          16.0,
+          32.0,
+          16.0
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "resonite_block",
+      "id": "SM_Resonite_Block",
+      "block": true,
+      "model": "Blocks/StrangeMatter/resonite_block.blockymodel",
+      "texture": "Blocks/StrangeMatter/resonite_block.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Block.png",
+      "nodes": 6,
+      "boundsModelUnits": {
+        "min": [
+          -16.0,
+          0.0,
+          -16.0
+        ],
+        "max": [
+          16.0,
+          32.45,
+          16.65
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "resonite_door",
+      "id": "SM_Resonite_Door",
+      "block": true,
+      "model": "Blocks/StrangeMatter/resonite_door.blockymodel",
+      "texture": "Blocks/StrangeMatter/resonite_door.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Door.png",
+      "nodes": 7,
+      "boundsModelUnits": {
+        "min": [
+          -16.0,
+          0.0,
+          -3.0
+        ],
+        "max": [
+          16.0,
+          64.0,
+          4.5
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ]
+    },
+    {
+      "sourceId": "resonite_ingot",
+      "id": "SM_Resonite_Ingot",
+      "block": false,
+      "model": "Items/StrangeMatter/resonite_ingot.blockymodel",
+      "texture": "Items/StrangeMatter/resonite_ingot.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Ingot.png",
+      "nodes": 3,
+      "boundsModelUnits": {
+        "min": [
+          -9.0,
+          1.0,
+          -4.5
+        ],
+        "max": [
+          9.0,
+          9.75,
+          4.5
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "resonite_nugget",
+      "id": "SM_Resonite_Nugget",
+      "block": false,
+      "model": "Items/StrangeMatter/resonite_nugget.blockymodel",
+      "texture": "Items/StrangeMatter/resonite_nugget.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Nugget.png",
+      "nodes": 9,
+      "boundsModelUnits": {
+        "min": [
+          -4.482,
+          5.371,
+          -4.055
+        ],
+        "max": [
+          4.482,
+          14.629,
+          4.055
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "resonite_ore",
+      "id": "SM_Resonite_Ore",
+      "block": true,
+      "model": "Blocks/StrangeMatter/resonite_ore.blockymodel",
+      "texture": "Blocks/StrangeMatter/resonite_ore.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Ore.png",
+      "nodes": 37,
+      "boundsModelUnits": {
+        "min": [
+          -16.67,
+          -0.67,
+          -16.67
+        ],
+        "max": [
+          16.67,
+          32.67,
+          16.67
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ],
+      "previewHostNode": {
+        "id": "1",
+        "name": "host_rock",
+        "position": {
+          "x": 0,
+          "y": 16,
+          "z": 0
+        },
+        "orientation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "shape": {
+          "type": "box",
+          "offset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "stretch": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "settings": {
+            "isPiece": false,
+            "size": {
+              "x": 32,
+              "y": 32,
+              "z": 32
+            },
+            "isStaticBox": true
+          },
+          "textureLayout": {
+            "front": {
+              "offset": {
+                "x": 1,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "back": {
+              "offset": {
+                "x": 35,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "left": {
+              "offset": {
+                "x": 69,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "right": {
+              "offset": {
+                "x": 103,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "top": {
+              "offset": {
+                "x": 137,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "bottom": {
+              "offset": {
+                "x": 171,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            }
+          },
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "standard"
+        }
+      }
+    },
+    {
+      "sourceId": "resonite_pillar",
+      "id": "SM_Resonite_Pillar",
+      "block": true,
+      "model": "Blocks/StrangeMatter/resonite_pillar.blockymodel",
+      "texture": "Blocks/StrangeMatter/resonite_pillar.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Pillar.png",
+      "nodes": 7,
+      "boundsModelUnits": {
+        "min": [
+          -16.0,
+          0.0,
+          -16.0
+        ],
+        "max": [
+          16.0,
+          32.0,
+          16.0
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ]
+    },
+    {
+      "sourceId": "resonite_tile",
+      "id": "SM_Resonite_Tile",
+      "block": true,
+      "model": "Blocks/StrangeMatter/resonite_tile.blockymodel",
+      "texture": "Blocks/StrangeMatter/resonite_tile.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Tile.png",
+      "nodes": 5,
+      "boundsModelUnits": {
+        "min": [
+          -16.0,
+          0.0,
+          -16.0
+        ],
+        "max": [
+          16.0,
+          32.45,
+          16.0
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "resonite_tile_slab",
+      "id": "SM_Resonite_Tile_Slab",
+      "block": true,
+      "model": "Blocks/StrangeMatter/resonite_tile_slab.blockymodel",
+      "texture": "Blocks/StrangeMatter/resonite_tile_slab.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Tile_Slab.png",
+      "nodes": 5,
+      "boundsModelUnits": {
+        "min": [
+          -16.0,
+          0.0,
+          -16.0
+        ],
+        "max": [
+          16.0,
+          16.45,
+          16.0
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "resonite_tile_stairs",
+      "id": "SM_Resonite_Tile_Stairs",
+      "block": true,
+      "model": "Blocks/StrangeMatter/resonite_tile_stairs.blockymodel",
+      "texture": "Blocks/StrangeMatter/resonite_tile_stairs.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Tile_Stairs.png",
+      "nodes": 4,
+      "boundsModelUnits": {
+        "min": [
+          -16.0,
+          0.0,
+          -16.0
+        ],
+        "max": [
+          16.0,
+          32.5,
+          16.0
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "resonite_trapdoor",
+      "id": "SM_Resonite_Trapdoor",
+      "block": true,
+      "model": "Blocks/StrangeMatter/resonite_trapdoor.blockymodel",
+      "texture": "Blocks/StrangeMatter/resonite_trapdoor.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Trapdoor.png",
+      "nodes": 3,
+      "boundsModelUnits": {
+        "min": [
+          -16.0,
+          0.0,
+          -16.0
+        ],
+        "max": [
+          16.0,
+          6.0,
+          16.0
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "rift_stabilizer",
+      "id": "SM_Rift_Stabilizer",
+      "block": true,
+      "model": "Blocks/StrangeMatter/rift_stabilizer.blockymodel",
+      "texture": "Blocks/StrangeMatter/rift_stabilizer.png",
+      "icon": "Icons/ItemsGenerated/SM_Rift_Stabilizer.png",
+      "nodes": 54,
+      "boundsModelUnits": {
+        "min": [
+          -16.0,
+          0.0,
+          -13.5
+        ],
+        "max": [
+          16.0,
+          47.0,
+          14.0
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ]
+    },
+    {
+      "sourceId": "shade_shard",
+      "id": "SM_Shade_Shard",
+      "block": false,
+      "model": "Items/StrangeMatter/Shared/shard_1c8e23d7fc2c.blockymodel",
+      "texture": "Items/StrangeMatter/shade_shard.png",
+      "icon": "Icons/ItemsGenerated/SM_Shade_Shard.png",
+      "nodes": 9,
+      "boundsModelUnits": {
+        "min": [
+          -5.243,
+          0.48,
+          -4.055
+        ],
+        "max": [
+          5.243,
+          19.52,
+          4.055
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "shade_shard_crystal",
+      "id": "SM_Shade_Shard_Crystal",
+      "block": true,
+      "model": "Blocks/StrangeMatter/Shared/shard_crystal_84dcace58934.blockymodel",
+      "texture": "Blocks/StrangeMatter/shade_shard_crystal.png",
+      "icon": "Icons/ItemsGenerated/SM_Shade_Shard_Crystal.png",
+      "nodes": 63,
+      "boundsModelUnits": {
+        "min": [
+          -13.451,
+          -0.0,
+          -12.597
+        ],
+        "max": [
+          13.451,
+          26.0,
+          12.597
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "shade_shard_lamp",
+      "id": "SM_Shade_Shard_Lamp",
+      "block": true,
+      "model": "Blocks/StrangeMatter/Shared/shard_lamp_94de2407eff5.blockymodel",
+      "texture": "Blocks/StrangeMatter/shade_shard_lamp.png",
+      "icon": "Icons/ItemsGenerated/SM_Shade_Shard_Lamp.png",
+      "nodes": 18,
+      "boundsModelUnits": {
+        "min": [
+          -11.0,
+          0.0,
+          -11.0
+        ],
+        "max": [
+          11.0,
+          28.0,
+          11.0
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "shade_shard_lantern",
+      "id": "SM_Shade_Shard_Lantern",
+      "block": true,
+      "model": "Blocks/StrangeMatter/Shared/shard_lantern_32a79ecdec17.blockymodel",
+      "texture": "Blocks/StrangeMatter/shade_shard_lantern.png",
+      "icon": "Icons/ItemsGenerated/SM_Shade_Shard_Lantern.png",
+      "nodes": 25,
+      "boundsModelUnits": {
+        "min": [
+          -9.5,
+          0.0,
+          -9.5
+        ],
+        "max": [
+          9.5,
+          35.7,
+          9.5
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "shade_shard_ore",
+      "id": "SM_Shade_Shard_Ore",
+      "block": true,
+      "model": "Blocks/StrangeMatter/shade_shard_ore.blockymodel",
+      "texture": "Blocks/StrangeMatter/shade_shard_ore.png",
+      "icon": "Icons/ItemsGenerated/SM_Shade_Shard_Ore.png",
+      "nodes": 37,
+      "boundsModelUnits": {
+        "min": [
+          -16.67,
+          -0.67,
+          -16.67
+        ],
+        "max": [
+          16.67,
+          32.67,
+          16.67
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ],
+      "previewHostNode": {
+        "id": "1",
+        "name": "host_rock",
+        "position": {
+          "x": 0,
+          "y": 16,
+          "z": 0
+        },
+        "orientation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "shape": {
+          "type": "box",
+          "offset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "stretch": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "settings": {
+            "isPiece": false,
+            "size": {
+              "x": 32,
+              "y": 32,
+              "z": 32
+            },
+            "isStaticBox": true
+          },
+          "textureLayout": {
+            "front": {
+              "offset": {
+                "x": 1,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "back": {
+              "offset": {
+                "x": 35,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "left": {
+              "offset": {
+                "x": 69,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "right": {
+              "offset": {
+                "x": 103,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "top": {
+              "offset": {
+                "x": 137,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "bottom": {
+              "offset": {
+                "x": 171,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            }
+          },
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "standard"
+        }
+      }
+    },
+    {
+      "sourceId": "spatial_shard",
+      "id": "SM_Spatial_Shard",
+      "block": false,
+      "model": "Items/StrangeMatter/Shared/shard_1c8e23d7fc2c.blockymodel",
+      "texture": "Items/StrangeMatter/spatial_shard.png",
+      "icon": "Icons/ItemsGenerated/SM_Spatial_Shard.png",
+      "nodes": 9,
+      "boundsModelUnits": {
+        "min": [
+          -5.243,
+          0.48,
+          -4.055
+        ],
+        "max": [
+          5.243,
+          19.52,
+          4.055
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "spatial_shard_crystal",
+      "id": "SM_Spatial_Shard_Crystal",
+      "block": true,
+      "model": "Blocks/StrangeMatter/Shared/shard_crystal_84dcace58934.blockymodel",
+      "texture": "Blocks/StrangeMatter/spatial_shard_crystal.png",
+      "icon": "Icons/ItemsGenerated/SM_Spatial_Shard_Crystal.png",
+      "nodes": 63,
+      "boundsModelUnits": {
+        "min": [
+          -13.451,
+          -0.0,
+          -12.597
+        ],
+        "max": [
+          13.451,
+          26.0,
+          12.597
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "spatial_shard_lamp",
+      "id": "SM_Spatial_Shard_Lamp",
+      "block": true,
+      "model": "Blocks/StrangeMatter/Shared/shard_lamp_94de2407eff5.blockymodel",
+      "texture": "Blocks/StrangeMatter/spatial_shard_lamp.png",
+      "icon": "Icons/ItemsGenerated/SM_Spatial_Shard_Lamp.png",
+      "nodes": 18,
+      "boundsModelUnits": {
+        "min": [
+          -11.0,
+          0.0,
+          -11.0
+        ],
+        "max": [
+          11.0,
+          28.0,
+          11.0
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "spatial_shard_lantern",
+      "id": "SM_Spatial_Shard_Lantern",
+      "block": true,
+      "model": "Blocks/StrangeMatter/Shared/shard_lantern_32a79ecdec17.blockymodel",
+      "texture": "Blocks/StrangeMatter/spatial_shard_lantern.png",
+      "icon": "Icons/ItemsGenerated/SM_Spatial_Shard_Lantern.png",
+      "nodes": 25,
+      "boundsModelUnits": {
+        "min": [
+          -9.5,
+          0.0,
+          -9.5
+        ],
+        "max": [
+          9.5,
+          35.7,
+          9.5
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "spatial_shard_ore",
+      "id": "SM_Spatial_Shard_Ore",
+      "block": true,
+      "model": "Blocks/StrangeMatter/spatial_shard_ore.blockymodel",
+      "texture": "Blocks/StrangeMatter/spatial_shard_ore.png",
+      "icon": "Icons/ItemsGenerated/SM_Spatial_Shard_Ore.png",
+      "nodes": 37,
+      "boundsModelUnits": {
+        "min": [
+          -16.67,
+          -0.67,
+          -16.67
+        ],
+        "max": [
+          16.67,
+          32.67,
+          16.67
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ],
+      "previewHostNode": {
+        "id": "1",
+        "name": "host_rock",
+        "position": {
+          "x": 0,
+          "y": 16,
+          "z": 0
+        },
+        "orientation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "shape": {
+          "type": "box",
+          "offset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "stretch": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "settings": {
+            "isPiece": false,
+            "size": {
+              "x": 32,
+              "y": 32,
+              "z": 32
+            },
+            "isStaticBox": true
+          },
+          "textureLayout": {
+            "front": {
+              "offset": {
+                "x": 1,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "back": {
+              "offset": {
+                "x": 35,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "left": {
+              "offset": {
+                "x": 69,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "right": {
+              "offset": {
+                "x": 103,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "top": {
+              "offset": {
+                "x": 137,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            },
+            "bottom": {
+              "offset": {
+                "x": 171,
+                "y": 1
+              },
+              "mirror": {
+                "x": false,
+                "y": false
+              },
+              "angle": 0
+            }
+          },
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "standard"
+        }
+      }
+    },
+    {
+      "sourceId": "stabilized_core",
+      "id": "SM_Stabilized_Core",
+      "block": false,
+      "model": "Items/StrangeMatter/stabilized_core.blockymodel",
+      "texture": "Items/StrangeMatter/stabilized_core.png",
+      "icon": "Icons/ItemsGenerated/SM_Stabilized_Core.png",
+      "nodes": 25,
+      "boundsModelUnits": {
+        "min": [
+          -11.75,
+          0.25,
+          -11.75
+        ],
+        "max": [
+          11.75,
+          23.75,
+          11.75
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "stasis_projector",
+      "id": "SM_Stasis_Projector",
+      "block": true,
+      "model": "Blocks/StrangeMatter/stasis_projector.blockymodel",
+      "texture": "Blocks/StrangeMatter/stasis_projector.png",
+      "icon": "Icons/ItemsGenerated/SM_Stasis_Projector.png",
+      "nodes": 36,
+      "boundsModelUnits": {
+        "min": [
+          -15.0,
+          0.0,
+          -15.0
+        ],
+        "max": [
+          15.0,
+          6.1,
+          15.0
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "time_dilation_block",
+      "id": "SM_Time_Dilation_Block",
+      "block": true,
+      "model": "Blocks/StrangeMatter/time_dilation_block.blockymodel",
+      "texture": "Blocks/StrangeMatter/time_dilation_block.png",
+      "icon": "Icons/ItemsGenerated/SM_Time_Dilation_Block.png",
+      "nodes": 1,
+      "boundsModelUnits": {
+        "min": [
+          -16.0,
+          0.0,
+          -16.0
+        ],
+        "max": [
+          16.0,
+          32.0,
+          16.0
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "tinfoil_hat",
+      "id": "SM_Tinfoil_Hat",
+      "block": false,
+      "model": "Items/StrangeMatter/tinfoil_hat.blockymodel",
+      "texture": "Items/StrangeMatter/tinfoil_hat.png",
+      "icon": "Icons/ItemsGenerated/SM_Tinfoil_Hat.png",
+      "nodes": 4,
+      "boundsModelUnits": {
+        "min": [
+          -11.0,
+          2.0,
+          -11.0
+        ],
+        "max": [
+          11.0,
+          20.5,
+          11.0
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "warp_gun",
+      "id": "SM_Warp_Gun",
+      "block": false,
+      "model": "Items/StrangeMatter/warp_gun.blockymodel",
+      "texture": "Items/StrangeMatter/warp_gun.png",
+      "icon": "Icons/ItemsGenerated/SM_Warp_Gun.png",
+      "nodes": 16,
+      "boundsModelUnits": {
+        "min": [
+          -6.0,
+          -3.694,
+          -10.0
+        ],
+        "max": [
+          9.5,
+          21.75,
+          25.5
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    }
+  ],
+  "anomalyCores": [
+    {
+      "sourceId": "anomaly_gravity",
+      "id": "SM_Anomaly_Gravity",
+      "block": false,
+      "model": "Items/StrangeMatter/anomaly_gravity.blockymodel",
+      "texture": "Items/StrangeMatter/anomaly_gravity.png",
+      "icon": "Icons/ItemsGenerated/SM_Anomaly_Gravity.png",
+      "nodes": 25,
+      "boundsModelUnits": {
+        "min": [
+          -21.817,
+          -14.476,
+          -23.538
+        ],
+        "max": [
+          25.93,
+          14.476,
+          24.958
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ]
+    },
+    {
+      "sourceId": "anomaly_energetic_rift",
+      "id": "SM_Anomaly_Energetic_Rift",
+      "block": false,
+      "model": "Items/StrangeMatter/anomaly_energetic_rift.blockymodel",
+      "texture": "Items/StrangeMatter/anomaly_energetic_rift.png",
+      "icon": "Icons/ItemsGenerated/SM_Anomaly_Energetic_Rift.png",
+      "nodes": 7,
+      "boundsModelUnits": {
+        "min": [
+          -6.523,
+          -19.137,
+          -1.5
+        ],
+        "max": [
+          6.523,
+          19.137,
+          1.5
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "anomaly_temporal_bloom",
+      "id": "SM_Anomaly_Temporal_Bloom",
+      "block": false,
+      "model": "Items/StrangeMatter/anomaly_temporal_bloom.blockymodel",
+      "texture": "Items/StrangeMatter/anomaly_temporal_bloom.png",
+      "icon": "Icons/ItemsGenerated/SM_Anomaly_Temporal_Bloom.png",
+      "nodes": 63,
+      "boundsModelUnits": {
+        "min": [
+          -18.258,
+          -16.762,
+          -16.0
+        ],
+        "max": [
+          16.976,
+          16.727,
+          16.0
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ]
+    },
+    {
+      "sourceId": "anomaly_echoing_shadow",
+      "id": "SM_Anomaly_Echoing_Shadow",
+      "block": false,
+      "model": "Items/StrangeMatter/anomaly_echoing_shadow.blockymodel",
+      "texture": "Items/StrangeMatter/anomaly_echoing_shadow.png",
+      "icon": "Icons/ItemsGenerated/SM_Anomaly_Echoing_Shadow.png",
+      "nodes": 25,
+      "boundsModelUnits": {
+        "min": [
+          -21.817,
+          -14.476,
+          -23.538
+        ],
+        "max": [
+          25.93,
+          14.476,
+          24.958
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ]
+    },
+    {
+      "sourceId": "anomaly_thoughtwell",
+      "id": "SM_Anomaly_Thoughtwell",
+      "block": false,
+      "model": "Items/StrangeMatter/anomaly_thoughtwell.blockymodel",
+      "texture": "Items/StrangeMatter/anomaly_thoughtwell.png",
+      "icon": "Icons/ItemsGenerated/SM_Anomaly_Thoughtwell.png",
+      "nodes": 19,
+      "boundsModelUnits": {
+        "min": [
+          -28.167,
+          -14.17,
+          -24.211
+        ],
+        "max": [
+          28.231,
+          14.157,
+          26.995
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "anomaly_warp_gate",
+      "id": "SM_Anomaly_Warp_Gate",
+      "block": false,
+      "model": "Items/StrangeMatter/anomaly_warp_gate.blockymodel",
+      "texture": "Items/StrangeMatter/anomaly_warp_gate.png",
+      "icon": "Icons/ItemsGenerated/SM_Anomaly_Warp_Gate.png",
+      "nodes": 20,
+      "boundsModelUnits": {
+        "min": [
+          -30.013,
+          -30.013,
+          -1.0
+        ],
+        "max": [
+          30.013,
+          30.013,
+          1.0
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "anomaly_warp_gate_cyan",
+      "id": "SM_Anomaly_Warp_Gate_Cyan",
+      "block": false,
+      "model": "Items/StrangeMatter/anomaly_warp_gate_cyan.blockymodel",
+      "texture": "Items/StrangeMatter/anomaly_warp_gate_cyan.png",
+      "icon": "Icons/ItemsGenerated/SM_Anomaly_Warp_Gate_Cyan.png",
+      "nodes": 20,
+      "boundsModelUnits": {
+        "min": [
+          -30.013,
+          -30.013,
+          -1.0
+        ],
+        "max": [
+          30.013,
+          30.013,
+          1.0
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    },
+    {
+      "sourceId": "anomaly_warp_gate_purple",
+      "id": "SM_Anomaly_Warp_Gate_Purple",
+      "block": false,
+      "model": "Items/StrangeMatter/anomaly_warp_gate_purple.blockymodel",
+      "texture": "Items/StrangeMatter/anomaly_warp_gate_purple.png",
+      "icon": "Icons/ItemsGenerated/SM_Anomaly_Warp_Gate_Purple.png",
+      "nodes": 20,
+      "boundsModelUnits": {
+        "min": [
+          -30.013,
+          -30.013,
+          -1.0
+        ],
+        "max": [
+          30.013,
+          30.013,
+          1.0
+        ]
+      },
+      "atlas": [
+        256,
+        32
+      ]
+    }
+  ]
+}

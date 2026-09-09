@@ -1,0 +1,64 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Echoform_Imprinter.name",
+    "Description": "server.items.SM_Echoform_Imprinter.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Echoform_Imprinter.png",
+  "MaxStack": 1,
+  "Categories": [
+    "Items",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Item",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "Model": "Items/StrangeMatter/echoform_imprinter.blockymodel",
+  "Texture": "Items/StrangeMatter/echoform_imprinter.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "imprint_start"
+        },
+        {
+          "Type": "Charging",
+          "AllowIndefiniteHold": false,
+          "Next": {
+            "0": {
+              "Type": "SM_Use",
+              "Action": "cancel"
+            },
+            "1.0": {
+              "Type": "SM_Use",
+              "Action": "imprint_complete"
+            }
+          }
+        }
+      ],
+      "RequireNewClick": true
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "imprint_revert"
+        }
+      ],
+      "RequireNewClick": true
+    },
+    "Use": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "imprint_revert"
+        }
+      ],
+      "RequireNewClick": true
+    }
+  }
+}

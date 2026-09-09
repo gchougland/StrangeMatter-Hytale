@@ -1,0 +1,11 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Burner_Plasma"
+    }
+  ],
+  "LifeSpan": 3.5,
+  "CullDistance": 96,
+  "BoundingRadius": 4,
+  "IsImportant": false
+}

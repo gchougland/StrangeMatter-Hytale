@@ -1,0 +1,860 @@
+[
+  {
+    "id": "anomaly_resonator",
+    "source": "src/main/resources/data/strangematter/recipes/anomaly_resonator.json",
+    "output": "SM_Anomaly_Resonator",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 4,
+      "resource:SM_Anomaly_Shards": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "raw_resonite",
+    "source": "src/main/resources/data/strangematter/recipes/blasting/raw_resonite.json",
+    "output": "SM_Resonite_Ingot",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Raw_Resonite": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 5.0,
+    "station": "furnace"
+  },
+  {
+    "id": "chrono_shard_crystal",
+    "source": "src/main/resources/data/strangematter/recipes/chrono_shard_crystal.json",
+    "output": "SM_Chrono_Shard_Crystal",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Chrono_Shard": 4
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "chrono_shard_from_crystal",
+    "source": "src/main/resources/data/strangematter/recipes/chrono_shard_from_crystal.json",
+    "output": "SM_Chrono_Shard",
+    "quantity": 4,
+    "ingredients": {
+      "SM_Chrono_Shard_Crystal": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "chrono_shard_lamp",
+    "source": "src/main/resources/data/strangematter/recipes/chrono_shard_lamp.json",
+    "output": "SM_Chrono_Shard_Lamp",
+    "quantity": 1,
+    "ingredients": {
+      "Ingredient_Fire_Essence": 4,
+      "SM_Chrono_Shard": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "chrono_shard_lantern",
+    "source": "src/main/resources/data/strangematter/recipes/chrono_shard_lantern.json",
+    "output": "SM_Chrono_Shard_Lantern",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Nugget": 2,
+      "SM_Chrono_Shard": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "energetic_shard_crystal",
+    "source": "src/main/resources/data/strangematter/recipes/energetic_shard_crystal.json",
+    "output": "SM_Energetic_Shard_Crystal",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Energetic_Shard": 4
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "energetic_shard_from_crystal",
+    "source": "src/main/resources/data/strangematter/recipes/energetic_shard_from_crystal.json",
+    "output": "SM_Energetic_Shard",
+    "quantity": 4,
+    "ingredients": {
+      "SM_Energetic_Shard_Crystal": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "energetic_shard_lamp",
+    "source": "src/main/resources/data/strangematter/recipes/energetic_shard_lamp.json",
+    "output": "SM_Energetic_Shard_Lamp",
+    "quantity": 1,
+    "ingredients": {
+      "Ingredient_Fire_Essence": 4,
+      "SM_Energetic_Shard": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "energetic_shard_lantern",
+    "source": "src/main/resources/data/strangematter/recipes/energetic_shard_lantern.json",
+    "output": "SM_Energetic_Shard_Lantern",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Nugget": 2,
+      "SM_Energetic_Shard": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "fancy_resonite_tile",
+    "source": "src/main/resources/data/strangematter/recipes/fancy_resonite_tile.json",
+    "output": "SM_Fancy_Resonite_Tile",
+    "quantity": 4,
+    "ingredients": {
+      "SM_Resonite_Tile": 4
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "field_scanner",
+    "source": "src/main/resources/data/strangematter/recipes/field_scanner.json",
+    "output": "SM_Field_Scanner",
+    "quantity": 1,
+    "ingredients": {
+      "Ingredient_Bar_Iron": 7,
+      "resource:SM_Anomaly_Shards": 1,
+      "Ingredient_Bar_Copper": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "gravitic_shard_crystal",
+    "source": "src/main/resources/data/strangematter/recipes/gravitic_shard_crystal.json",
+    "output": "SM_Gravitic_Shard_Crystal",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Gravitic_Shard": 4
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "gravitic_shard_from_crystal",
+    "source": "src/main/resources/data/strangematter/recipes/gravitic_shard_from_crystal.json",
+    "output": "SM_Gravitic_Shard",
+    "quantity": 4,
+    "ingredients": {
+      "SM_Gravitic_Shard_Crystal": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "gravitic_shard_lamp",
+    "source": "src/main/resources/data/strangematter/recipes/gravitic_shard_lamp.json",
+    "output": "SM_Gravitic_Shard_Lamp",
+    "quantity": 1,
+    "ingredients": {
+      "Ingredient_Fire_Essence": 4,
+      "SM_Gravitic_Shard": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "gravitic_shard_lantern",
+    "source": "src/main/resources/data/strangematter/recipes/gravitic_shard_lantern.json",
+    "output": "SM_Gravitic_Shard_Lantern",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Nugget": 2,
+      "SM_Gravitic_Shard": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "insight_shard_crystal",
+    "source": "src/main/resources/data/strangematter/recipes/insight_shard_crystal.json",
+    "output": "SM_Insight_Shard_Crystal",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Insight_Shard": 4
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "insight_shard_from_crystal",
+    "source": "src/main/resources/data/strangematter/recipes/insight_shard_from_crystal.json",
+    "output": "SM_Insight_Shard",
+    "quantity": 4,
+    "ingredients": {
+      "SM_Insight_Shard_Crystal": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "insight_shard_lamp",
+    "source": "src/main/resources/data/strangematter/recipes/insight_shard_lamp.json",
+    "output": "SM_Insight_Shard_Lamp",
+    "quantity": 1,
+    "ingredients": {
+      "Ingredient_Fire_Essence": 4,
+      "SM_Insight_Shard": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "insight_shard_lantern",
+    "source": "src/main/resources/data/strangematter/recipes/insight_shard_lantern.json",
+    "output": "SM_Insight_Shard_Lantern",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Nugget": 2,
+      "SM_Insight_Shard": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "chrono_blister",
+    "source": "src/main/resources/data/strangematter/recipes/reality_forge/chrono_blister.json",
+    "output": "SM_Chrono_Blister",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 2,
+      "SM_Chrono_Shard": 1,
+      "resource:Wood_Planks": 1
+    },
+    "shards": {
+      "chrono": 3,
+      "energetic": 1
+    },
+    "research": "chrono_blister",
+    "seconds": 5.0,
+    "station": "forge"
+  },
+  {
+    "id": "containment_capsule",
+    "source": "src/main/resources/data/strangematter/recipes/reality_forge/containment_capsule.json",
+    "output": "SM_Containment_Capsule",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 2,
+      "Rock_Crystal_White_Block": 1
+    },
+    "shards": {
+      "spatial": 1,
+      "energetic": 1
+    },
+    "research": "containment_basics",
+    "seconds": 5.0,
+    "station": "forge"
+  },
+  {
+    "id": "echo_vacuum",
+    "source": "src/main/resources/data/strangematter/recipes/reality_forge/echo_vacuum.json",
+    "output": "SM_Echo_Vacuum",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 1,
+      "SM_Energetic_Shard": 1,
+      "SM_Resonant_Circuit": 1,
+      "resource:Wood_Planks": 1
+    },
+    "shards": {
+      "spatial": 2,
+      "energetic": 2,
+      "chrono": 1
+    },
+    "research": "containment_basics",
+    "seconds": 5.0,
+    "station": "forge"
+  },
+  {
+    "id": "echoform_imprinter",
+    "source": "src/main/resources/data/strangematter/recipes/reality_forge/echoform_imprinter.json",
+    "output": "SM_Echoform_Imprinter",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Shade_Shard": 1,
+      "SM_Insight_Shard": 1,
+      "SM_Resonite_Ingot": 1,
+      "SM_Resonant_Circuit": 1
+    },
+    "shards": {
+      "shade": 3,
+      "insight": 3
+    },
+    "research": "echoform_imprinter",
+    "seconds": 5.0,
+    "station": "forge"
+  },
+  {
+    "id": "graviton_hammer",
+    "source": "src/main/resources/data/strangematter/recipes/reality_forge/graviton_hammer.json",
+    "output": "SM_Graviton_Hammer",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Block": 4,
+      "SM_Containment_Capsule_Gravity": 1,
+      "SM_Gravitic_Shard": 1,
+      "SM_Resonite_Ingot": 1
+    },
+    "shards": {
+      "gravitic": 6
+    },
+    "research": "containment_basics",
+    "seconds": 5.0,
+    "station": "forge"
+  },
+  {
+    "id": "hoverboard",
+    "source": "src/main/resources/data/strangematter/recipes/reality_forge/hoverboard.json",
+    "output": "SM_Hoverboard",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 4,
+      "SM_Resonant_Circuit": 1,
+      "SM_Containment_Capsule_Gravity": 1
+    },
+    "shards": {
+      "gravitic": 2,
+      "energetic": 2
+    },
+    "research": "hoverboard",
+    "seconds": 5.0,
+    "station": "forge"
+  },
+  {
+    "id": "levitation_pad",
+    "source": "src/main/resources/data/strangematter/recipes/reality_forge/levitation_pad.json",
+    "output": "SM_Levitation_Pad",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 8,
+      "SM_Gravitic_Shard": 1
+    },
+    "shards": {
+      "gravitic": 2
+    },
+    "research": "reality_forge",
+    "seconds": 5.0,
+    "station": "forge"
+  },
+  {
+    "id": "resonance_condenser",
+    "source": "src/main/resources/data/strangematter/recipes/reality_forge/resonance_condenser.json",
+    "output": "SM_Resonance_Condenser",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonant_Coil": 4,
+      "SM_Resonant_Circuit": 2,
+      "SM_Resonite_Ingot": 2,
+      "SM_Stabilized_Core": 1
+    },
+    "shards": {
+      "gravitic": 1,
+      "energetic": 1
+    },
+    "research": "resonance_condenser",
+    "seconds": 5.0,
+    "station": "forge"
+  },
+  {
+    "id": "rift_stabilizer",
+    "source": "src/main/resources/data/strangematter/recipes/reality_forge/rift_stabilizer.json",
+    "output": "SM_Rift_Stabilizer",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Energetic_Shard": 2,
+      "SM_Stabilized_Core": 1,
+      "SM_Resonant_Circuit": 2,
+      "SM_Resonant_Coil": 1,
+      "SM_Resonite_Ingot": 3
+    },
+    "shards": {
+      "energetic": 2
+    },
+    "research": "rift_stabilizer",
+    "seconds": 5.0,
+    "station": "forge"
+  },
+  {
+    "id": "stasis_projector",
+    "source": "src/main/resources/data/strangematter/recipes/reality_forge/stasis_projector.json",
+    "output": "SM_Stasis_Projector",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Gravitic_Shard": 1,
+      "SM_Resonite_Ingot": 3
+    },
+    "shards": {
+      "gravitic": 1,
+      "chrono": 1
+    },
+    "research": "stasis_projector",
+    "seconds": 5.0,
+    "station": "forge"
+  },
+  {
+    "id": "warp_gun",
+    "source": "src/main/resources/data/strangematter/recipes/reality_forge/warp_gun.json",
+    "output": "SM_Warp_Gun",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 2,
+      "SM_Containment_Capsule_Warp_Gate": 1,
+      "resource:Wood_Planks": 1
+    },
+    "shards": {
+      "spatial": 2,
+      "energetic": 2
+    },
+    "research": "warp_gun",
+    "seconds": 5.0,
+    "station": "forge"
+  },
+  {
+    "id": "reality_forge",
+    "source": "src/main/resources/data/strangematter/recipes/reality_forge.json",
+    "output": "SM_Reality_Forge",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonant_Coil": 2,
+      "resource:SM_Anomaly_Shards": 1,
+      "SM_Resonite_Ingot": 4,
+      "Bench_WorkBench": 1,
+      "SM_Stabilized_Core": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "research_machine",
+    "source": "src/main/resources/data/strangematter/recipes/research_machine.json",
+    "output": "SM_Research_Machine",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonant_Coil": 4,
+      "SM_Resonite_Ingot": 3,
+      "SM_Stabilized_Core": 1,
+      "SM_Resonant_Circuit": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "research_tablet",
+    "source": "src/main/resources/data/strangematter/recipes/research_tablet.json",
+    "output": "SM_Research_Tablet",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 4,
+      "Rock_Crystal_White_Block": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "resonant_burner",
+    "source": "src/main/resources/data/strangematter/recipes/resonant_burner.json",
+    "output": "SM_Resonant_Burner",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 6,
+      "SM_Resonant_Coil": 1,
+      "Bench_Furnace": 1,
+      "Ingredient_Bar_Copper": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "resonant_circuit",
+    "source": "src/main/resources/data/strangematter/recipes/resonant_circuit.json",
+    "output": "SM_Resonant_Circuit",
+    "quantity": 1,
+    "ingredients": {
+      "Ingredient_Bar_Copper": 5,
+      "SM_Energetic_Shard": 2,
+      "SM_Resonite_Ingot": 2
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "resonant_coil",
+    "source": "src/main/resources/data/strangematter/recipes/resonant_coil.json",
+    "output": "SM_Resonant_Coil",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Nugget": 8,
+      "Ingredient_Stick": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "resonant_conduit",
+    "source": "src/main/resources/data/strangematter/recipes/resonant_conduit.json",
+    "output": "SM_Resonant_Conduit",
+    "quantity": 8,
+    "ingredients": {
+      "SM_Resonite_Ingot": 6,
+      "SM_Resonite_Nugget": 2,
+      "SM_Energetic_Shard": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_block",
+    "source": "src/main/resources/data/strangematter/recipes/resonite_block.json",
+    "output": "SM_Resonite_Block",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 9
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_door",
+    "source": "src/main/resources/data/strangematter/recipes/resonite_door.json",
+    "output": "SM_Resonite_Door",
+    "quantity": 3,
+    "ingredients": {
+      "SM_Resonite_Ingot": 6
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_ingot_from_block",
+    "source": "src/main/resources/data/strangematter/recipes/resonite_ingot_from_block.json",
+    "output": "SM_Resonite_Ingot",
+    "quantity": 9,
+    "ingredients": {
+      "SM_Resonite_Block": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_ingot_from_nuggets",
+    "source": "src/main/resources/data/strangematter/recipes/resonite_ingot_from_nuggets.json",
+    "output": "SM_Resonite_Ingot",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Nugget": 9
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_nugget_from_ingot",
+    "source": "src/main/resources/data/strangematter/recipes/resonite_nugget_from_ingot.json",
+    "output": "SM_Resonite_Nugget",
+    "quantity": 9,
+    "ingredients": {
+      "SM_Resonite_Ingot": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_pillar",
+    "source": "src/main/resources/data/strangematter/recipes/resonite_pillar.json",
+    "output": "SM_Resonite_Pillar",
+    "quantity": 2,
+    "ingredients": {
+      "SM_Resonite_Tile": 2
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_tile",
+    "source": "src/main/resources/data/strangematter/recipes/resonite_tile.json",
+    "output": "SM_Resonite_Tile",
+    "quantity": 4,
+    "ingredients": {
+      "SM_Resonite_Ingot": 2,
+      "Rock_Stone": 2
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_tile_slab",
+    "source": "src/main/resources/data/strangematter/recipes/resonite_tile_slab.json",
+    "output": "SM_Resonite_Tile_Slab",
+    "quantity": 6,
+    "ingredients": {
+      "SM_Resonite_Tile": 3
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_tile_stairs",
+    "source": "src/main/resources/data/strangematter/recipes/resonite_tile_stairs.json",
+    "output": "SM_Resonite_Tile_Stairs",
+    "quantity": 4,
+    "ingredients": {
+      "SM_Resonite_Tile": 6
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_trapdoor",
+    "source": "src/main/resources/data/strangematter/recipes/resonite_trapdoor.json",
+    "output": "SM_Resonite_Trapdoor",
+    "quantity": 2,
+    "ingredients": {
+      "SM_Resonite_Ingot": 6
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "shade_shard_crystal",
+    "source": "src/main/resources/data/strangematter/recipes/shade_shard_crystal.json",
+    "output": "SM_Shade_Shard_Crystal",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Shade_Shard": 4
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "shade_shard_from_crystal",
+    "source": "src/main/resources/data/strangematter/recipes/shade_shard_from_crystal.json",
+    "output": "SM_Shade_Shard",
+    "quantity": 4,
+    "ingredients": {
+      "SM_Shade_Shard_Crystal": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "shade_shard_lamp",
+    "source": "src/main/resources/data/strangematter/recipes/shade_shard_lamp.json",
+    "output": "SM_Shade_Shard_Lamp",
+    "quantity": 1,
+    "ingredients": {
+      "Ingredient_Fire_Essence": 4,
+      "SM_Shade_Shard": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "shade_shard_lantern",
+    "source": "src/main/resources/data/strangematter/recipes/shade_shard_lantern.json",
+    "output": "SM_Shade_Shard_Lantern",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Nugget": 2,
+      "SM_Shade_Shard": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "raw_resonite",
+    "source": "src/main/resources/data/strangematter/recipes/smelting/raw_resonite.json",
+    "output": "SM_Resonite_Ingot",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Raw_Resonite": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 10.0,
+    "station": "furnace"
+  },
+  {
+    "id": "spatial_shard_crystal",
+    "source": "src/main/resources/data/strangematter/recipes/spatial_shard_crystal.json",
+    "output": "SM_Spatial_Shard_Crystal",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Spatial_Shard": 4
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "spatial_shard_from_crystal",
+    "source": "src/main/resources/data/strangematter/recipes/spatial_shard_from_crystal.json",
+    "output": "SM_Spatial_Shard",
+    "quantity": 4,
+    "ingredients": {
+      "SM_Spatial_Shard_Crystal": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "spatial_shard_lamp",
+    "source": "src/main/resources/data/strangematter/recipes/spatial_shard_lamp.json",
+    "output": "SM_Spatial_Shard_Lamp",
+    "quantity": 1,
+    "ingredients": {
+      "Ingredient_Fire_Essence": 4,
+      "SM_Spatial_Shard": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "spatial_shard_lantern",
+    "source": "src/main/resources/data/strangematter/recipes/spatial_shard_lantern.json",
+    "output": "SM_Spatial_Shard_Lantern",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Nugget": 2,
+      "SM_Spatial_Shard": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "stabilized_core",
+    "source": "src/main/resources/data/strangematter/recipes/stabilized_core.json",
+    "output": "SM_Stabilized_Core",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonant_Coil": 4,
+      "resource:SM_Anomaly_Shards": 2,
+      "SM_Resonite_Ingot": 2,
+      "Rock_Crystal_Red_Block": 1
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "tinfoil_hat",
+    "source": "src/main/resources/data/strangematter/recipes/tinfoil_hat.json",
+    "output": "SM_Tinfoil_Hat",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 5
+    },
+    "shards": {},
+    "research": "",
+    "seconds": 2.0,
+    "station": "workbench"
+  }
+]

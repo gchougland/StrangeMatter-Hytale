@@ -1,0 +1,67 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Paradoxical_Energy_Cell.name",
+    "Description": "server.items.SM_Paradoxical_Energy_Cell.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Paradoxical_Energy_Cell.png",
+  "MaxStack": 25,
+  "Categories": [
+    "Furniture.Benches",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/StrangeMatter/paradoxical_energy_cell.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/paradoxical_energy_cell.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Paradoxical_Energy_Cell",
+    "VariantRotation": "NESW",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#243950",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "SM_Use",
+            "Action": "machine"
+          }
+        ],
+        "RequireNewClick": true
+      }
+    },
+    "InteractionHint": "server.interactionHints.SM_Paradoxical_Energy_Cell"
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary",
+    "Use": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "machine"
+        }
+      ],
+      "RequireNewClick": true
+    }
+  }
+}

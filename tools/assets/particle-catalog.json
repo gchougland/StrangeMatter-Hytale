@@ -1,0 +1,73 @@
+{
+  "systems": [
+    {
+      "id": "SM_Gravity_Anomaly",
+      "layers": 5,
+      "emitterLifeSpan": 1.05,
+      "systemLifeSpan": 3.5
+    },
+    {
+      "id": "SM_Energetic_Rift",
+      "layers": 5,
+      "emitterLifeSpan": 1.05,
+      "systemLifeSpan": 3.5
+    },
+    {
+      "id": "SM_Temporal_Bloom",
+      "layers": 5,
+      "emitterLifeSpan": 1.05,
+      "systemLifeSpan": 3.5
+    },
+    {
+      "id": "SM_Echoing_Shadow",
+      "layers": 5,
+      "emitterLifeSpan": 1.05,
+      "systemLifeSpan": 3.5
+    },
+    {
+      "id": "SM_Thoughtwell",
+      "layers": 5,
+      "emitterLifeSpan": 1.05,
+      "systemLifeSpan": 3.5
+    },
+    {
+      "id": "SM_Warp_Gate",
+      "layers": 5,
+      "emitterLifeSpan": 1.05,
+      "systemLifeSpan": 3.5
+    },
+    {
+      "id": "SM_Anomaly_Capture",
+      "layers": 3,
+      "emitterLifeSpan": 1.05,
+      "systemLifeSpan": 3.5
+    },
+    {
+      "id": "SM_Anomaly_Scan",
+      "layers": 2,
+      "emitterLifeSpan": 1.05,
+      "systemLifeSpan": 3.5
+    },
+    {
+      "id": "SM_Rift_Discharge",
+      "layers": 3,
+      "emitterLifeSpan": 1.05,
+      "systemLifeSpan": 3.5
+    },
+    {
+      "id": "SM_Resonant_Burner_Active",
+      "layers": 1,
+      "emitterLifeSpan": 1.05,
+      "systemLifeSpan": 3.5
+    },
+    {
+      "id": "SM_Resonance_Transfer",
+      "layers": 1,
+      "emitterLifeSpan": 1.05,
+      "systemLifeSpan": 3.5
+    }
+  ],
+  "spawners": 40,
+  "textures": 18,
+  "validation": "PASS: finite emitters, particle budgets, every texture and spawner resolves"
+}

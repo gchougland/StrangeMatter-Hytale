@@ -1,0 +1,14 @@
+{
+  "icons": 3,
+  "size": [
+    64,
+    64
+  ],
+  "sourceFilesVerifiedUnchanged": 256,
+  "status": "PASS",
+  "itemIds": [
+    "SM_Anomalous_Dirt",
+    "SM_Field_Scanner",
+    "SM_Graviton_Hammer"
+  ]
+}

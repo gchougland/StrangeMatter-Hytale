@@ -1,0 +1,95 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Resonite_Trapdoor.name",
+    "Description": "server.items.SM_Resonite_Trapdoor.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Resonite_Trapdoor.png",
+  "MaxStack": 100,
+  "Categories": [
+    "Furniture.Doors",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/StrangeMatter/resonite_trapdoor.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/resonite_trapdoor.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Resonite_Trapdoor",
+    "VariantRotation": "NESW",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#243950",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "Interactions": {
+      "Use": "Door_Horizontal"
+    },
+    "CustomModelAnimation": "Blocks/StrangeMatter/Animations/resonite_trapdoor_Closed.blockyanim",
+    "IsDoor": true,
+    "State": {
+      "Definitions": {
+        "DoorBlocked": {},
+        "OpenDoorOut": {
+          "CustomModelAnimation": "Blocks/StrangeMatter/Animations/resonite_trapdoor_OpenDoorOut.blockyanim",
+          "HitboxType": "SM_Resonite_Trapdoor_Open_Out",
+          "InteractionHitboxType": "SM_Resonite_Trapdoor_Open_Out",
+          "InteractionSoundEventId": "SFX_Door_Wooden_Open",
+          "InteractionHint": "server.interactionHints.SM_Resonite_Trapdoor_Close",
+          "SoundOcclusionOpacity": 0
+        },
+        "CloseDoorOut": {
+          "CustomModelAnimation": "Blocks/StrangeMatter/Animations/resonite_trapdoor_CloseDoorOut.blockyanim",
+          "HitboxType": "SM_Resonite_Trapdoor",
+          "InteractionHitboxType": "SM_Resonite_Trapdoor",
+          "InteractionSoundEventId": "SFX_Door_Wooden_Close",
+          "InteractionHint": "server.interactionHints.SM_Resonite_Trapdoor_Open"
+        }
+      }
+    },
+    "InteractionHint": "server.interactionHints.SM_Resonite_Trapdoor_Open",
+    "MovementSettings": {
+      "IsClimbable": true
+    }
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "SM_Resonite_Ingot",
+        "Quantity": 6
+      }
+    ],
+    "OutputQuantity": 2,
+    "TimeSeconds": 2.0,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_All"
+        ]
+      }
+    ],
+    "KnowledgeRequired": true
+  }
+}

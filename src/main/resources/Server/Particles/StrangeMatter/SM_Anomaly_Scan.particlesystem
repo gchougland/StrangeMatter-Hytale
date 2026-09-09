@@ -1,0 +1,14 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Scan_Ring"
+    },
+    {
+      "SpawnerId": "SM_Scan_Glint"
+    }
+  ],
+  "LifeSpan": 3.5,
+  "CullDistance": 96,
+  "BoundingRadius": 4,
+  "IsImportant": false
+}

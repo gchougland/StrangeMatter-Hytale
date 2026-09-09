@@ -1,0 +1,156 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Graviton_Hammer.name",
+    "Description": "server.items.SM_Graviton_Hammer.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Graviton_Hammer.png",
+  "MaxStack": 1,
+  "Categories": [
+    "Items",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Pickaxe",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "Model": "Items/StrangeMatter/graviton_hammer.blockymodel",
+  "Texture": "Items/StrangeMatter/graviton_hammer.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0.13,
+          "Effects": {
+            "ItemAnimationId": "Mine",
+            "WorldSoundEventId": "SFX_Tool_T1_Swing",
+            "LocalSoundEventId": "SFX_Pickaxe_T1_Swing_Down_Local",
+            "CameraEffect": "Pickaxe_Mine"
+          },
+          "Next": {
+            "Type": "SM_Use",
+            "Action": "hammer0",
+            "Next": {
+              "Type": "Simple",
+              "RunTime": 0.57
+            }
+          }
+        }
+      ],
+      "Cooldown": {
+        "Id": "SM_Graviton_Hammer_Swing",
+        "Cooldown": 0.7,
+        "ClickBypass": false
+      },
+      "RequireNewClick": false
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "Charging",
+          "AllowIndefiniteHold": true,
+          "Next": {
+            "0": {
+              "Type": "SM_Use",
+              "Action": "cancel"
+            },
+            "1.0": {
+              "Type": "SM_Use",
+              "Action": "hammer1"
+            },
+            "2.0": {
+              "Type": "SM_Use",
+              "Action": "hammer2"
+            },
+            "3.0": {
+              "Type": "SM_Use",
+              "Action": "hammer3"
+            }
+          },
+          "Effects": {
+            "WorldSoundEventId": "SM_Graviton_Chargeup_SFX",
+            "ClearSoundEventOnFinish": true
+          }
+        }
+      ],
+      "RequireNewClick": true
+    }
+  },
+  "Tool": {
+    "Specs": [
+      {
+        "Power": 1,
+        "GatherType": "SoftBlocks"
+      },
+      {
+        "Power": 0.5,
+        "GatherType": "Soils"
+      },
+      {
+        "Power": 0.05,
+        "GatherType": "Woods"
+      },
+      {
+        "Power": 0.5,
+        "GatherType": "Rocks",
+        "Quality": 4
+      },
+      {
+        "Power": 0.5,
+        "GatherType": "Benches"
+      },
+      {
+        "Power": 0.17,
+        "GatherType": "VolcanicRocks"
+      },
+      {
+        "Power": 0.5,
+        "GatherType": "OreCopper"
+      },
+      {
+        "Power": 0.5,
+        "GatherType": "OreIron"
+      },
+      {
+        "Power": 0.5,
+        "GatherType": "OreSilver"
+      },
+      {
+        "Power": 0.5,
+        "GatherType": "OreGold"
+      },
+      {
+        "Power": 0.25,
+        "GatherType": "OreThorium"
+      },
+      {
+        "Power": 0.25,
+        "GatherType": "OreCobalt"
+      },
+      {
+        "Power": 0.125,
+        "GatherType": "OreAdamantite",
+        "Quality": 4
+      },
+      {
+        "Power": 0.084,
+        "GatherType": "OreMithril"
+      }
+    ],
+    "DurabilityLossBlockTypes": [
+      {
+        "BlockSets": [
+          "Stone",
+          "Rock",
+          "Ores",
+          "Soil",
+          "Wood"
+        ],
+        "DurabilityLossOnHit": 0.25
+      }
+    ]
+  }
+}

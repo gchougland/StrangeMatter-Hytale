@@ -1,0 +1,17 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Chrono_Muzzle_Ring"
+    },
+    {
+      "SpawnerId": "SM_Chrono_Muzzle_Core"
+    },
+    {
+      "SpawnerId": "SM_Chrono_Muzzle_Sparks"
+    }
+  ],
+  "LifeSpan": 1.2,
+  "CullDistance": 64,
+  "BoundingRadius": 2,
+  "IsImportant": false
+}

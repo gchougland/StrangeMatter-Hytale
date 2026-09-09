@@ -1,0 +1,14 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Condenser_Link_ECHOING_SHADOW_Mote"
+    },
+    {
+      "SpawnerId": "SM_Condenser_Link_ECHOING_SHADOW_Trail"
+    }
+  ],
+  "LifeSpan": 0.5,
+  "CullDistance": 64,
+  "BoundingRadius": 1,
+  "IsImportant": false
+}

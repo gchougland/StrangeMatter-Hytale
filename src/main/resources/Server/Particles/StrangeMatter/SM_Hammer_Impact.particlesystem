@@ -1,0 +1,17 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Hammer_Impact_Ring"
+    },
+    {
+      "SpawnerId": "SM_Hammer_Impact_Core"
+    },
+    {
+      "SpawnerId": "SM_Hammer_Impact_Sparks"
+    }
+  ],
+  "LifeSpan": 1.2,
+  "CullDistance": 64,
+  "BoundingRadius": 2.6,
+  "IsImportant": false
+}

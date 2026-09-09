@@ -1,0 +1,14 @@
+{
+  "models": 84,
+  "facesChecked": 8114,
+  "status": "PASS",
+  "checks": [
+    "All source registrations covered",
+    "Positive dimensions",
+    "Normalized quaternion orientations",
+    "Per-face UV bounds",
+    "Model/texture/icon path resolution",
+    "Model atlases at least32x32 in 32-pixel multiples",
+    "All item icons exactly64x64"
+  ]
+}

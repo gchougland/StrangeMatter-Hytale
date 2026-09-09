@@ -1,0 +1,113 @@
+{
+  "Shape": "Sphere",
+  "RenderMode": "BlendAdd",
+  "LifeSpan": 1.05,
+  "TotalParticles": {
+    "Min": 26,
+    "Max": 26
+  },
+  "MaxConcurrentParticles": 26,
+  "ParticleLifeSpan": {
+    "Min": 0.25,
+    "Max": 0.65
+  },
+  "SpawnRate": {
+    "Min": 26,
+    "Max": 26
+  },
+  "SpawnBurst": false,
+  "EmitOffset": {
+    "X": {
+      "Min": -0.24,
+      "Max": 0.24
+    },
+    "Y": {
+      "Min": -0.75,
+      "Max": 0.75
+    },
+    "Z": {
+      "Min": -0.24,
+      "Max": 0.24
+    }
+  },
+  "ParticleRotationInfluence": "Billboard",
+  "ParticleRotateWithSpawner": false,
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 1.4,
+      "Max": 3.2
+    },
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": -90,
+      "Max": 90
+    }
+  },
+  "Particle": {
+    "Texture": "Particles/StrangeMatter/spark.png",
+    "FrameSize": {
+      "Width": 128,
+      "Height": 128
+    },
+    "ScaleRatioConstraint": "None",
+    "UVOption": "None",
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#a2ffef",
+        "Scale": {
+          "X": {
+            "Min": 1,
+            "Max": 1
+          },
+          "Y": {
+            "Min": 1,
+            "Max": 1
+          }
+        }
+      },
+      "12": {
+        "Opacity": 1
+      },
+      "70": {
+        "Opacity": 0.8
+      },
+      "100": {
+        "Opacity": 0,
+        "Scale": {
+          "X": {
+            "Min": 1.1,
+            "Max": 1.1
+          },
+          "Y": {
+            "Min": 1.1,
+            "Max": 1.1
+          }
+        }
+      }
+    },
+    "InitialAnimationFrame": {
+      "Color": "#ffffff",
+      "Opacity": 1,
+      "Scale": {
+        "X": {
+          "Min": 0.025,
+          "Max": 0.025
+        },
+        "Y": {
+          "Min": 0.05500000000000001,
+          "Max": 0.05500000000000001
+        }
+      },
+      "FrameIndex": {
+        "Min": 0,
+        "Max": 0
+      }
+    }
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "Shape": "Sphere",
+  "RenderMode": "BlendLinear",
+  "LifeSpan": 1.05,
+  "TotalParticles": {
+    "Min": 9,
+    "Max": 9
+  },
+  "MaxConcurrentParticles": 9,
+  "ParticleLifeSpan": {
+    "Min": 1.2,
+    "Max": 1.8
+  },
+  "SpawnRate": {
+    "Min": 9,
+    "Max": 9
+  },
+  "SpawnBurst": true,
+  "EmitOffset": {
+    "X": {
+      "Min": -1.2,
+      "Max": 1.2
+    },
+    "Y": {
+      "Min": -0.8,
+      "Max": 0.8
+    },
+    "Z": {
+      "Min": -1.2,
+      "Max": 1.2
+    }
+  },
+  "ParticleRotationInfluence": "Billboard",
+  "ParticleRotateWithSpawner": false,
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 0,
+      "Max": 0
+    },
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": -90,
+      "Max": 90
+    }
+  },
+  "Particle": {
+    "Texture": "Particles/StrangeMatter/debris.png",
+    "FrameSize": {
+      "Width": 128,
+      "Height": 128
+    },
+    "ScaleRatioConstraint": "None",
+    "UVOption": "None",
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#302548",
+        "Scale": {
+          "X": {
+            "Min": 1,
+            "Max": 1
+          },
+          "Y": {
+            "Min": 1,
+            "Max": 1
+          }
+        }
+      },
+      "12": {
+        "Opacity": 0.8
+      },
+      "70": {
+        "Opacity": 0.6400000000000001
+      },
+      "100": {
+        "Opacity": 0,
+        "Scale": {
+          "X": {
+            "Min": 1.1,
+            "Max": 1.1
+          },
+          "Y": {
+            "Min": 1.1,
+            "Max": 1.1
+          }
+        }
+      }
+    },
+    "InitialAnimationFrame": {
+      "Color": "#ffffff",
+      "Opacity": 1,
+      "Scale": {
+        "X": {
+          "Min": 0.0325,
+          "Max": 0.0325
+        },
+        "Y": {
+          "Min": 0.0325,
+          "Max": 0.0325
+        }
+      },
+      "FrameIndex": {
+        "Min": 0,
+        "Max": 0
+      }
+    }
+  },
+  "Attractors": [
+    {
+      "Position": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "RadialAcceleration": -2.5,
+      "RadialTangentImpulse": 0.8,
+      "RadialAxis": {
+        "X": 0,
+        "Y": 1,
+        "Z": 0
+      }
+    }
+  ]
+}

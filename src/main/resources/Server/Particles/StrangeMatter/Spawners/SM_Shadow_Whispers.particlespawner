@@ -1,0 +1,129 @@
+{
+  "Shape": "Sphere",
+  "RenderMode": "BlendAdd",
+  "LifeSpan": 1.05,
+  "TotalParticles": {
+    "Min": 16,
+    "Max": 16
+  },
+  "MaxConcurrentParticles": 16,
+  "ParticleLifeSpan": {
+    "Min": 1.15,
+    "Max": 1.35
+  },
+  "SpawnRate": {
+    "Min": 16,
+    "Max": 16
+  },
+  "SpawnBurst": true,
+  "EmitOffset": {
+    "X": {
+      "Min": -1.15,
+      "Max": 1.15
+    },
+    "Y": {
+      "Min": -0.9,
+      "Max": 0.9
+    },
+    "Z": {
+      "Min": -1.15,
+      "Max": 1.15
+    }
+  },
+  "ParticleRotationInfluence": "Billboard",
+  "ParticleRotateWithSpawner": false,
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 0,
+      "Max": 0
+    },
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": -90,
+      "Max": 90
+    }
+  },
+  "Particle": {
+    "Texture": "Particles/StrangeMatter/star.png",
+    "FrameSize": {
+      "Width": 128,
+      "Height": 128
+    },
+    "ScaleRatioConstraint": "None",
+    "UVOption": "None",
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#9172cd",
+        "Scale": {
+          "X": {
+            "Min": 1,
+            "Max": 1
+          },
+          "Y": {
+            "Min": 1,
+            "Max": 1
+          }
+        }
+      },
+      "12": {
+        "Opacity": 0.65
+      },
+      "70": {
+        "Opacity": 0.52
+      },
+      "100": {
+        "Opacity": 0,
+        "Scale": {
+          "X": {
+            "Min": 1.1,
+            "Max": 1.1
+          },
+          "Y": {
+            "Min": 1.1,
+            "Max": 1.1
+          }
+        }
+      }
+    },
+    "InitialAnimationFrame": {
+      "Color": "#ffffff",
+      "Opacity": 1,
+      "Scale": {
+        "X": {
+          "Min": 0.01625,
+          "Max": 0.01625
+        },
+        "Y": {
+          "Min": 0.01625,
+          "Max": 0.01625
+        }
+      },
+      "FrameIndex": {
+        "Min": 0,
+        "Max": 0
+      }
+    }
+  },
+  "Attractors": [
+    {
+      "Position": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "RadialAcceleration": -2.5,
+      "RadialTangentImpulse": 0.8,
+      "RadialAxis": {
+        "X": 0,
+        "Y": 1,
+        "Z": 0
+      }
+    }
+  ]
+}

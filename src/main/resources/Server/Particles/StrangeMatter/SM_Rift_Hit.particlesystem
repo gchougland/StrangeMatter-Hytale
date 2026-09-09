@@ -1,0 +1,17 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Rift_Hit_Lightning"
+    },
+    {
+      "SpawnerId": "SM_Rift_Hit_Corona"
+    },
+    {
+      "SpawnerId": "SM_Rift_Hit_Sparks"
+    }
+  ],
+  "LifeSpan": 1.2,
+  "CullDistance": 64,
+  "BoundingRadius": 4,
+  "IsImportant": false
+}

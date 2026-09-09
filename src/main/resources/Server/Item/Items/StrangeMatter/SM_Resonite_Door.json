@@ -1,0 +1,107 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Resonite_Door.name",
+    "Description": "server.items.SM_Resonite_Door.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Resonite_Door.png",
+  "MaxStack": 100,
+  "Categories": [
+    "Furniture.Doors",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/StrangeMatter/resonite_door.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/resonite_door.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Resonite_Door",
+    "VariantRotation": "NESW",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#243950",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "Interactions": {
+      "Use": "Door"
+    },
+    "CustomModelAnimation": "Blocks/StrangeMatter/Animations/resonite_door_Closed.blockyanim",
+    "IsDoor": true,
+    "State": {
+      "Definitions": {
+        "DoorBlocked": {},
+        "OpenDoorIn": {
+          "CustomModelAnimation": "Blocks/StrangeMatter/Animations/resonite_door_OpenDoorIn.blockyanim",
+          "HitboxType": "SM_Resonite_Door_Open_In",
+          "InteractionHitboxType": "SM_Resonite_Door_Open_In",
+          "InteractionSoundEventId": "SFX_Door_Wooden_Open",
+          "InteractionHint": "server.interactionHints.SM_Resonite_Door_Close",
+          "SoundOcclusionOpacity": 0
+        },
+        "CloseDoorIn": {
+          "CustomModelAnimation": "Blocks/StrangeMatter/Animations/resonite_door_CloseDoorIn.blockyanim",
+          "HitboxType": "SM_Resonite_Door",
+          "InteractionHitboxType": "SM_Resonite_Door",
+          "InteractionSoundEventId": "SFX_Door_Wooden_Close",
+          "InteractionHint": "server.interactionHints.SM_Resonite_Door_Open"
+        },
+        "OpenDoorOut": {
+          "CustomModelAnimation": "Blocks/StrangeMatter/Animations/resonite_door_OpenDoorOut.blockyanim",
+          "HitboxType": "SM_Resonite_Door_Open_Out",
+          "InteractionHitboxType": "SM_Resonite_Door_Open_Out",
+          "InteractionSoundEventId": "SFX_Door_Wooden_Open",
+          "InteractionHint": "server.interactionHints.SM_Resonite_Door_Close",
+          "SoundOcclusionOpacity": 0
+        },
+        "CloseDoorOut": {
+          "CustomModelAnimation": "Blocks/StrangeMatter/Animations/resonite_door_CloseDoorOut.blockyanim",
+          "HitboxType": "SM_Resonite_Door",
+          "InteractionHitboxType": "SM_Resonite_Door",
+          "InteractionSoundEventId": "SFX_Door_Wooden_Close",
+          "InteractionHint": "server.interactionHints.SM_Resonite_Door_Open"
+        }
+      }
+    },
+    "InteractionHint": "server.interactionHints.SM_Resonite_Door_Open"
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "SM_Resonite_Ingot",
+        "Quantity": 6
+      }
+    ],
+    "OutputQuantity": 3,
+    "TimeSeconds": 2.0,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_All"
+        ]
+      }
+    ],
+    "KnowledgeRequired": true
+  }
+}

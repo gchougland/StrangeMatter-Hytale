@@ -1,0 +1,12 @@
+{
+  "Group": "Hexvane",
+  "Name": "StrangeMatter",
+  "Version": "0.4.0",
+  "Description": "Study, contain and harness six reality-bending anomalies through mad science.",
+  "Authors": [{ "Name": "Hexvane" }],
+  "ServerVersion": "*",
+  "Dependencies": {},
+  "OptionalDependencies": {},
+  "IncludesAssetPack": true,
+  "Main": "com.hexvane.strangematter.StrangeMatterPlugin"
+}

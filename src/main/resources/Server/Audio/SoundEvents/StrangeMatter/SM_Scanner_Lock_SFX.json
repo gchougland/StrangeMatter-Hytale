@@ -1,0 +1,10 @@
+{
+  "Parent": "SM_Field_Scanner_Scan_SFX",
+  "AudioCategory": "AudioCat_SFX",
+  "SpatialBlend": 1,
+  "StartAttenuationDistance": 1.5,
+  "MaxDistance": 24,
+  "Volume": -5,
+  "Pitch": 0,
+  "MaxInstance": 8
+}

@@ -1,0 +1,14 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Condenser_Receipt_Ring"
+    },
+    {
+      "SpawnerId": "SM_Condenser_Receipt_Core"
+    }
+  ],
+  "LifeSpan": 0.8,
+  "CullDistance": 64,
+  "BoundingRadius": 1,
+  "IsImportant": false
+}

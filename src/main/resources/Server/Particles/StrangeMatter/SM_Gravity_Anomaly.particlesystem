@@ -1,0 +1,23 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Gravity_Core"
+    },
+    {
+      "SpawnerId": "SM_Gravity_Aura"
+    },
+    {
+      "SpawnerId": "SM_Gravity_Orbit"
+    },
+    {
+      "SpawnerId": "SM_Gravity_Debris"
+    },
+    {
+      "SpawnerId": "SM_Gravity_Dust"
+    }
+  ],
+  "LifeSpan": 3.5,
+  "CullDistance": 96,
+  "BoundingRadius": 4,
+  "IsImportant": false
+}

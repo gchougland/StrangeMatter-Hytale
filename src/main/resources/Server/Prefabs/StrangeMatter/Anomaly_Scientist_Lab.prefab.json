@@ -1,0 +1,3531 @@
+{
+  "version": 8,
+  "blockIdVersion": 11,
+  "anchorX": 0,
+  "anchorY": 0,
+  "anchorZ": 0,
+  "blocks": [
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 1,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 2,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 3,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 4,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 5,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 6,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 1,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 2,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 3,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 4,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 5,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 6,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 1,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 2,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 3,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 4,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 5,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 6,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 3,
+      "y": 0,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 3,
+      "y": 0,
+      "z": 1,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 3,
+      "y": 0,
+      "z": 2,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 3,
+      "y": 0,
+      "z": 3,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 3,
+      "y": 0,
+      "z": 4,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 3,
+      "y": 0,
+      "z": 5,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 3,
+      "y": 0,
+      "z": 6,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 3,
+      "y": 0,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 4,
+      "y": 0,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 4,
+      "y": 0,
+      "z": 1,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 4,
+      "y": 0,
+      "z": 2,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 4,
+      "y": 0,
+      "z": 3,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 4,
+      "y": 0,
+      "z": 4,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 4,
+      "y": 0,
+      "z": 5,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 4,
+      "y": 0,
+      "z": 6,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 4,
+      "y": 0,
+      "z": 7,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 5,
+      "y": 0,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 5,
+      "y": 0,
+      "z": 1,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 5,
+      "y": 0,
+      "z": 2,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 5,
+      "y": 0,
+      "z": 3,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 5,
+      "y": 0,
+      "z": 4,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 5,
+      "y": 0,
+      "z": 5,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 5,
+      "y": 0,
+      "z": 6,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 5,
+      "y": 0,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 6,
+      "y": 0,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 6,
+      "y": 0,
+      "z": 1,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 6,
+      "y": 0,
+      "z": 2,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 6,
+      "y": 0,
+      "z": 3,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 6,
+      "y": 0,
+      "z": 4,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 6,
+      "y": 0,
+      "z": 5,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 6,
+      "y": 0,
+      "z": 6,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 6,
+      "y": 0,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 7,
+      "y": 0,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 7,
+      "y": 0,
+      "z": 1,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 7,
+      "y": 0,
+      "z": 2,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 7,
+      "y": 0,
+      "z": 3,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 7,
+      "y": 0,
+      "z": 4,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 7,
+      "y": 0,
+      "z": 5,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 7,
+      "y": 0,
+      "z": 6,
+      "name": "SM_Fancy_Resonite_Tile"
+    },
+    {
+      "x": 7,
+      "y": 0,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 0,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 0,
+      "z": 1,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 0,
+      "z": 2,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 0,
+      "z": 3,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 0,
+      "z": 4,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 0,
+      "z": 5,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 0,
+      "z": 6,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 0,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 1,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 2,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 3,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 4,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 5,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 6,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 0,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "name": "SM_Anomalous_Grass"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 7,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 0,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 7,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 3,
+      "y": 1,
+      "z": 0,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 4,
+      "y": 1,
+      "z": 0,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 5,
+      "y": 1,
+      "z": 0,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 5,
+      "y": 1,
+      "z": 7,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 6,
+      "y": 1,
+      "z": 0,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 6,
+      "y": 1,
+      "z": 7,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 7,
+      "y": 1,
+      "z": 0,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 7,
+      "y": 1,
+      "z": 1,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 7,
+      "y": 1,
+      "z": 7,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 8,
+      "y": 1,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 1,
+      "z": 1,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 8,
+      "y": 1,
+      "z": 2,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 8,
+      "y": 1,
+      "z": 3,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 8,
+      "y": 1,
+      "z": 4,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 8,
+      "y": 1,
+      "z": 5,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 8,
+      "y": 1,
+      "z": 6,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 8,
+      "y": 1,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 1,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 3,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 4,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 6,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 3,
+      "y": 2,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 4,
+      "y": 2,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 5,
+      "y": 2,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 7,
+      "y": 2,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 7,
+      "y": 2,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 2,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 2,
+      "z": 1,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 2,
+      "z": 3,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 2,
+      "z": 4,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 2,
+      "z": 6,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 2,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 1,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 3,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 4,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 6,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 3,
+      "y": 3,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 7,
+      "y": 3,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 7,
+      "y": 3,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 3,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 3,
+      "z": 1,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 3,
+      "z": 3,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 3,
+      "z": 4,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 3,
+      "z": 6,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 3,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 1,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 2,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 3,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 4,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 5,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 6,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "z": 0,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "z": 7,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 2,
+      "y": 4,
+      "z": 0,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 2,
+      "y": 4,
+      "z": 7,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "z": 0,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "z": 7,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 4,
+      "y": 4,
+      "z": 0,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 4,
+      "y": 4,
+      "z": 7,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "z": 0,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "z": 7,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 6,
+      "y": 4,
+      "z": 0,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 6,
+      "y": 4,
+      "z": 7,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 7,
+      "y": 4,
+      "z": 0,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 7,
+      "y": 4,
+      "z": 7,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 8,
+      "y": 4,
+      "z": 0,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 4,
+      "z": 1,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 8,
+      "y": 4,
+      "z": 2,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 8,
+      "y": 4,
+      "z": 3,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 8,
+      "y": 4,
+      "z": 4,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 8,
+      "y": 4,
+      "z": 5,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 8,
+      "y": 4,
+      "z": 6,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 8,
+      "y": 4,
+      "z": 7,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": 1,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": 2,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": 3,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": 4,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": 5,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": 6,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 5,
+      "z": 1,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 5,
+      "z": 2,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 5,
+      "z": 3,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 5,
+      "z": 4,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 5,
+      "z": 5,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "z": 2,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "z": 3,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "z": 4,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "z": 5,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 1,
+      "y": 6,
+      "z": 2,
+      "name": "SM_Lab_Lamp"
+    },
+    {
+      "x": 1,
+      "y": 6,
+      "z": 3,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 1,
+      "y": 6,
+      "z": 4,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 1,
+      "y": 6,
+      "z": 5,
+      "name": "SM_Lab_Lamp"
+    },
+    {
+      "x": 2,
+      "y": 6,
+      "z": 2,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 2,
+      "y": 6,
+      "z": 3,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 2,
+      "y": 6,
+      "z": 4,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 2,
+      "y": 6,
+      "z": 5,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 3,
+      "y": 6,
+      "z": 2,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 3,
+      "y": 6,
+      "z": 3,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 3,
+      "y": 6,
+      "z": 4,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 3,
+      "y": 6,
+      "z": 5,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "z": 2,
+      "name": "SM_Lab_Lamp"
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "z": 3,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "z": 4,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "z": 5,
+      "name": "SM_Lab_Lamp"
+    },
+    {
+      "x": 5,
+      "y": 6,
+      "z": 2,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 5,
+      "y": 6,
+      "z": 3,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 5,
+      "y": 6,
+      "z": 4,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 5,
+      "y": 6,
+      "z": 5,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 6,
+      "y": 6,
+      "z": 2,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 6,
+      "y": 6,
+      "z": 3,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 6,
+      "y": 6,
+      "z": 4,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 6,
+      "y": 6,
+      "z": 5,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 7,
+      "y": 6,
+      "z": 2,
+      "name": "SM_Lab_Lamp"
+    },
+    {
+      "x": 7,
+      "y": 6,
+      "z": 3,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 7,
+      "y": 6,
+      "z": 4,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 7,
+      "y": 6,
+      "z": 5,
+      "name": "SM_Lab_Lamp"
+    },
+    {
+      "x": 8,
+      "y": 6,
+      "z": 2,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 6,
+      "z": 3,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 6,
+      "z": 4,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 8,
+      "y": 6,
+      "z": 5,
+      "name": "SM_Resonite_Tile"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 2,
+      "name": "*SM_Resonite_Trapdoor_State_Definitions_OpenDoorOut",
+      "rotation": 2
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 1,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 33
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 1,
+      "z": 1,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 35
+    },
+    {
+      "x": 3,
+      "y": 1,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 1,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 1,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 1,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 1,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 1,
+      "z": 2,
+      "name": "SM_Research_Machine",
+      "rotation": 0,
+      "filler": 32
+    },
+    {
+      "x": 4,
+      "y": 1,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 1,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 1,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 1,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 1,
+      "z": 7,
+      "name": "SM_Resonite_Door"
+    },
+    {
+      "x": 5,
+      "y": 1,
+      "z": 1,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 33
+    },
+    {
+      "x": 5,
+      "y": 1,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 1,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 1,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 1,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 1,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 1,
+      "z": 1,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 35
+    },
+    {
+      "x": 6,
+      "y": 1,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 1,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 1,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 1,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 1,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 1,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 1,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 1,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 2,
+      "name": "SM_Lab_Cyan_Glass",
+      "rotation": 1
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 5,
+      "name": "SM_Lab_Cyan_Glass",
+      "rotation": 1
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 1,
+      "name": "Plant_Flower_Orchid_Blue"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": 0,
+      "name": "SM_Lab_Cyan_Glass"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": 7,
+      "name": "SM_Lab_Cyan_Glass"
+    },
+    {
+      "x": 3,
+      "y": 2,
+      "z": 0,
+      "name": "SM_Lab_Cyan_Glass"
+    },
+    {
+      "x": 3,
+      "y": 2,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 2,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 2,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 2,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 2,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 2,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 2,
+      "z": 1,
+      "name": "SM_Research_Machine",
+      "rotation": 0,
+      "filler": 1024
+    },
+    {
+      "x": 4,
+      "y": 2,
+      "z": 2,
+      "name": "SM_Research_Machine",
+      "rotation": 0,
+      "filler": 1056
+    },
+    {
+      "x": 4,
+      "y": 2,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 2,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 2,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 2,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 2,
+      "z": 0,
+      "name": "SM_Lab_Cyan_Glass"
+    },
+    {
+      "x": 5,
+      "y": 2,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 2,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 2,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 2,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 2,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 2,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 2,
+      "z": 0,
+      "name": "SM_Lab_Cyan_Glass"
+    },
+    {
+      "x": 6,
+      "y": 2,
+      "z": 2,
+      "name": "SM_Stasis_Projector",
+      "rotation": 0,
+      "filler": 32
+    },
+    {
+      "x": 6,
+      "y": 2,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 2,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 2,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 2,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 2,
+      "z": 7,
+      "name": "SM_Lab_Cyan_Glass"
+    },
+    {
+      "x": 7,
+      "y": 2,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 2,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 2,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 2,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 2,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 2,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 8,
+      "y": 2,
+      "z": 2,
+      "name": "SM_Lab_Cyan_Glass",
+      "rotation": 1
+    },
+    {
+      "x": 8,
+      "y": 2,
+      "z": 5,
+      "name": "SM_Lab_Cyan_Glass",
+      "rotation": 1
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 2,
+      "name": "SM_Lab_Cyan_Glass",
+      "rotation": 1
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 5,
+      "name": "SM_Lab_Cyan_Glass",
+      "rotation": 1
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 1,
+      "name": "Furniture_Temple_Emerald_Torch",
+      "rotation": 3
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 6,
+      "name": "Furniture_Temple_Emerald_Torch",
+      "rotation": 3
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "z": 0,
+      "name": "SM_Lab_Cyan_Glass"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "z": 7,
+      "name": "SM_Lab_Cyan_Glass"
+    },
+    {
+      "x": 3,
+      "y": 3,
+      "z": 0,
+      "name": "SM_Lab_Cyan_Glass"
+    },
+    {
+      "x": 3,
+      "y": 3,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 3,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 3,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 3,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 3,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 3,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "z": 0,
+      "name": "SM_Lab_Cyan_Glass"
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "z": 0,
+      "name": "SM_Lab_Cyan_Glass"
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "z": 1,
+      "name": "SM_Stasis_Projector",
+      "rotation": 0,
+      "filler": 1024
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "z": 2,
+      "name": "SM_Stasis_Projector",
+      "rotation": 0,
+      "filler": 1056
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "z": 7,
+      "name": "SM_Lab_Cyan_Glass"
+    },
+    {
+      "x": 7,
+      "y": 3,
+      "z": 1,
+      "name": "Furniture_Temple_Emerald_Torch",
+      "rotation": 1
+    },
+    {
+      "x": 7,
+      "y": 3,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 3,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 3,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 3,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 3,
+      "z": 6,
+      "name": "Furniture_Temple_Emerald_Torch",
+      "rotation": 1
+    },
+    {
+      "x": 8,
+      "y": 3,
+      "z": 2,
+      "name": "SM_Lab_Cyan_Glass",
+      "rotation": 1
+    },
+    {
+      "x": 8,
+      "y": 3,
+      "z": 5,
+      "name": "SM_Lab_Cyan_Glass",
+      "rotation": 1
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 4,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 4,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 4,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 4,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 4,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 4,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 4,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 4,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 4,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 4,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 4,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 4,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 4,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 4,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 4,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 4,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 4,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 4,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 4,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 4,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 4,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 4,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 4,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 4,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": 0,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 2
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": 7,
+      "name": "SM_Resonite_Tile_Stairs"
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "z": 0,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 2
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "z": 1,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 32
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "z": 6,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 34
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "z": 7,
+      "name": "SM_Resonite_Tile_Stairs"
+    },
+    {
+      "x": 2,
+      "y": 5,
+      "z": 0,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 2
+    },
+    {
+      "x": 2,
+      "y": 5,
+      "z": 1,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 32
+    },
+    {
+      "x": 2,
+      "y": 5,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 5,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 5,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 5,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 5,
+      "z": 6,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 34
+    },
+    {
+      "x": 2,
+      "y": 5,
+      "z": 7,
+      "name": "SM_Resonite_Tile_Stairs"
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "z": 0,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 2
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "z": 1,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 32
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "z": 6,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 34
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "z": 7,
+      "name": "SM_Resonite_Tile_Stairs"
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "z": 0,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 2
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "z": 1,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 32
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "z": 6,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 34
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "z": 7,
+      "name": "SM_Resonite_Tile_Stairs"
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "z": 0,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 2
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "z": 1,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 32
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "z": 6,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 34
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "z": 7,
+      "name": "SM_Resonite_Tile_Stairs"
+    },
+    {
+      "x": 6,
+      "y": 5,
+      "z": 0,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 2
+    },
+    {
+      "x": 6,
+      "y": 5,
+      "z": 1,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 32
+    },
+    {
+      "x": 6,
+      "y": 5,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 5,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 5,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 5,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 5,
+      "z": 6,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 34
+    },
+    {
+      "x": 6,
+      "y": 5,
+      "z": 7,
+      "name": "SM_Resonite_Tile_Stairs"
+    },
+    {
+      "x": 7,
+      "y": 5,
+      "z": 0,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 2
+    },
+    {
+      "x": 7,
+      "y": 5,
+      "z": 1,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 32
+    },
+    {
+      "x": 7,
+      "y": 5,
+      "z": 2,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 5,
+      "z": 3,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 5,
+      "z": 4,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 5,
+      "z": 5,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 5,
+      "z": 6,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 34
+    },
+    {
+      "x": 7,
+      "y": 5,
+      "z": 7,
+      "name": "SM_Resonite_Tile_Stairs"
+    },
+    {
+      "x": 8,
+      "y": 5,
+      "z": 0,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 2
+    },
+    {
+      "x": 8,
+      "y": 5,
+      "z": 7,
+      "name": "SM_Resonite_Tile_Stairs"
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "z": 0,
+      "name": "Empty"
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "z": 1,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 2
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "z": 6,
+      "name": "SM_Resonite_Tile_Stairs"
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "z": 7,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 6,
+      "z": 0,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 6,
+      "z": 1,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 2
+    },
+    {
+      "x": 1,
+      "y": 6,
+      "z": 6,
+      "name": "SM_Resonite_Tile_Stairs"
+    },
+    {
+      "x": 1,
+      "y": 6,
+      "z": 7,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 6,
+      "z": 0,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 6,
+      "z": 1,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 2
+    },
+    {
+      "x": 2,
+      "y": 6,
+      "z": 6,
+      "name": "SM_Resonite_Tile_Stairs"
+    },
+    {
+      "x": 2,
+      "y": 6,
+      "z": 7,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 6,
+      "z": 0,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 6,
+      "z": 1,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 2
+    },
+    {
+      "x": 3,
+      "y": 6,
+      "z": 6,
+      "name": "SM_Resonite_Tile_Stairs"
+    },
+    {
+      "x": 3,
+      "y": 6,
+      "z": 7,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "z": 0,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "z": 1,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 2
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "z": 6,
+      "name": "SM_Resonite_Tile_Stairs"
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "z": 7,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 6,
+      "z": 0,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 6,
+      "z": 1,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 2
+    },
+    {
+      "x": 5,
+      "y": 6,
+      "z": 6,
+      "name": "SM_Resonite_Tile_Stairs"
+    },
+    {
+      "x": 5,
+      "y": 6,
+      "z": 7,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 6,
+      "z": 0,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 6,
+      "z": 1,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 2
+    },
+    {
+      "x": 6,
+      "y": 6,
+      "z": 6,
+      "name": "SM_Resonite_Tile_Stairs"
+    },
+    {
+      "x": 6,
+      "y": 6,
+      "z": 7,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 6,
+      "z": 0,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 6,
+      "z": 1,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 2
+    },
+    {
+      "x": 7,
+      "y": 6,
+      "z": 6,
+      "name": "SM_Resonite_Tile_Stairs"
+    },
+    {
+      "x": 7,
+      "y": 6,
+      "z": 7,
+      "name": "Empty"
+    },
+    {
+      "x": 8,
+      "y": 6,
+      "z": 0,
+      "name": "Empty"
+    },
+    {
+      "x": 8,
+      "y": 6,
+      "z": 1,
+      "name": "SM_Resonite_Tile_Stairs",
+      "rotation": 2
+    },
+    {
+      "x": 8,
+      "y": 6,
+      "z": 6,
+      "name": "SM_Resonite_Tile_Stairs"
+    },
+    {
+      "x": 8,
+      "y": 6,
+      "z": 7,
+      "name": "Empty"
+    },
+    {
+      "x": 0,
+      "y": 7,
+      "z": 0,
+      "name": "Empty"
+    },
+    {
+      "x": 0,
+      "y": 7,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 0,
+      "y": 7,
+      "z": 2,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 0,
+      "y": 7,
+      "z": 3,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 0,
+      "y": 7,
+      "z": 4,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 0,
+      "y": 7,
+      "z": 5,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 0,
+      "y": 7,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 0,
+      "y": 7,
+      "z": 7,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 7,
+      "z": 0,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 7,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 7,
+      "z": 2,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 1,
+      "y": 7,
+      "z": 3,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 1,
+      "y": 7,
+      "z": 4,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 1,
+      "y": 7,
+      "z": 5,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 1,
+      "y": 7,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 1,
+      "y": 7,
+      "z": 7,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 7,
+      "z": 0,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 7,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 7,
+      "z": 2,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 2,
+      "y": 7,
+      "z": 3,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 2,
+      "y": 7,
+      "z": 4,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 2,
+      "y": 7,
+      "z": 5,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 2,
+      "y": 7,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 2,
+      "y": 7,
+      "z": 7,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 7,
+      "z": 0,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 7,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 7,
+      "z": 2,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 3,
+      "y": 7,
+      "z": 3,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 3,
+      "y": 7,
+      "z": 4,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 3,
+      "y": 7,
+      "z": 5,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 3,
+      "y": 7,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 7,
+      "z": 7,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 7,
+      "z": 0,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 7,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 7,
+      "z": 2,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 4,
+      "y": 7,
+      "z": 3,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 4,
+      "y": 7,
+      "z": 4,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 4,
+      "y": 7,
+      "z": 5,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 4,
+      "y": 7,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 4,
+      "y": 7,
+      "z": 7,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 7,
+      "z": 0,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 7,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 7,
+      "z": 2,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 5,
+      "y": 7,
+      "z": 3,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 5,
+      "y": 7,
+      "z": 4,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 5,
+      "y": 7,
+      "z": 5,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 5,
+      "y": 7,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 5,
+      "y": 7,
+      "z": 7,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 7,
+      "z": 0,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 7,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 7,
+      "z": 2,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 6,
+      "y": 7,
+      "z": 3,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 6,
+      "y": 7,
+      "z": 4,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 6,
+      "y": 7,
+      "z": 5,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 6,
+      "y": 7,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 6,
+      "y": 7,
+      "z": 7,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 7,
+      "z": 0,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 7,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 7,
+      "z": 2,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 7,
+      "y": 7,
+      "z": 3,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 7,
+      "y": 7,
+      "z": 4,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 7,
+      "y": 7,
+      "z": 5,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 7,
+      "y": 7,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 7,
+      "y": 7,
+      "z": 7,
+      "name": "Empty"
+    },
+    {
+      "x": 8,
+      "y": 7,
+      "z": 0,
+      "name": "Empty"
+    },
+    {
+      "x": 8,
+      "y": 7,
+      "z": 1,
+      "name": "Empty"
+    },
+    {
+      "x": 8,
+      "y": 7,
+      "z": 2,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 8,
+      "y": 7,
+      "z": 3,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 8,
+      "y": 7,
+      "z": 4,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 8,
+      "y": 7,
+      "z": 5,
+      "name": "SM_Resonite_Tile_Slab"
+    },
+    {
+      "x": 8,
+      "y": 7,
+      "z": 6,
+      "name": "Empty"
+    },
+    {
+      "x": 8,
+      "y": 7,
+      "z": 7,
+      "name": "Empty"
+    },
+    {
+      "x": 3,
+      "y": 1,
+      "z": 7,
+      "name": "SM_Resonite_Pillar"
+    },
+    {
+      "x": 4,
+      "y": 1,
+      "z": 1,
+      "name": "SM_Research_Machine"
+    },
+    {
+      "x": 6,
+      "y": 1,
+      "z": 4,
+      "name": "Furniture_Crude_Bed",
+      "rotation": 1
+    },
+    {
+      "x": 6,
+      "y": 2,
+      "z": 1,
+      "name": "SM_Stasis_Projector"
+    },
+    {
+      "x": 4,
+      "y": 2,
+      "z": 7,
+      "name": "SM_Resonite_Door",
+      "rotation": 0,
+      "filler": 1024
+    },
+    {
+      "x": 7,
+      "y": 1,
+      "z": 4,
+      "name": "Furniture_Crude_Bed",
+      "rotation": 1,
+      "filler": 1
+    }
+  ]
+}

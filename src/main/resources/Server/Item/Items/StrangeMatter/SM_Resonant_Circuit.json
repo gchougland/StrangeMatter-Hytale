@@ -1,0 +1,49 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Resonant_Circuit.name",
+    "Description": "server.items.SM_Resonant_Circuit.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Resonant_Circuit.png",
+  "MaxStack": 100,
+  "Categories": [
+    "Items",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Item",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "Model": "Items/StrangeMatter/resonant_circuit.blockymodel",
+  "Texture": "Items/StrangeMatter/resonant_circuit.png",
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "Ingredient_Bar_Copper",
+        "Quantity": 5
+      },
+      {
+        "ItemId": "SM_Energetic_Shard",
+        "Quantity": 2
+      },
+      {
+        "ItemId": "SM_Resonite_Ingot",
+        "Quantity": 2
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 2.0,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_All"
+        ]
+      }
+    ],
+    "KnowledgeRequired": true
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Shadow_Core"
+    },
+    {
+      "SpawnerId": "SM_Shadow_Echo"
+    },
+    {
+      "SpawnerId": "SM_Shadow_Veil"
+    },
+    {
+      "SpawnerId": "SM_Shadow_Fragments"
+    },
+    {
+      "SpawnerId": "SM_Shadow_Whispers"
+    }
+  ],
+  "LifeSpan": 3.5,
+  "CullDistance": 96,
+  "BoundingRadius": 4,
+  "IsImportant": false
+}

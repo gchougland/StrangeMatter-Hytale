@@ -1,0 +1,17 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Imprint_Revert_Ring"
+    },
+    {
+      "SpawnerId": "SM_Imprint_Revert_Core"
+    },
+    {
+      "SpawnerId": "SM_Imprint_Revert_Sparks"
+    }
+  ],
+  "LifeSpan": 1.2,
+  "CullDistance": 64,
+  "BoundingRadius": 3.2,
+  "IsImportant": false
+}

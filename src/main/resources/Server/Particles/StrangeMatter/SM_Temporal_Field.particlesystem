@@ -1,0 +1,14 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Temporal_Field_Glyphs"
+    },
+    {
+      "SpawnerId": "SM_Temporal_Field_Motes"
+    }
+  ],
+  "LifeSpan": 0.9,
+  "CullDistance": 64,
+  "BoundingRadius": 2,
+  "IsImportant": false
+}

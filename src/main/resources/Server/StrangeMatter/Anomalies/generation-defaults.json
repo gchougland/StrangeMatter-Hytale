@@ -1,0 +1,16 @@
+{
+  "terrainPatches": true,
+  "resoniteColumnChance": 0.25,
+  "shardColumnChance": 0.1,
+  "excludedWorlds": [],
+  "typeRarity": {
+    "GRAVITY": 500,
+    "TEMPORAL_BLOOM": 500,
+    "ENERGETIC_RIFT": 500,
+    "WARP_GATE": 500,
+    "ECHOING_SHADOW": 500,
+    "THOUGHTWELL": 500
+  },
+  "worldRarity": {},
+  "environmentRarity": {}
+}

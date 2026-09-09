@@ -1,0 +1,17 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Capsule_Impact_Ring"
+    },
+    {
+      "SpawnerId": "SM_Capsule_Impact_Core"
+    },
+    {
+      "SpawnerId": "SM_Capsule_Impact_Sparks"
+    }
+  ],
+  "LifeSpan": 1.2,
+  "CullDistance": 64,
+  "BoundingRadius": 3.2,
+  "IsImportant": false
+}

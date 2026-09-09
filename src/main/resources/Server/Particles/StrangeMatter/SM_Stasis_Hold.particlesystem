@@ -1,0 +1,14 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Stasis_Hold_Orbit"
+    },
+    {
+      "SpawnerId": "SM_Stasis_Hold_Motes"
+    }
+  ],
+  "LifeSpan": 1.2,
+  "CullDistance": 64,
+  "BoundingRadius": 2,
+  "IsImportant": false
+}

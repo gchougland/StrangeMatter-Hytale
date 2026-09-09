@@ -1,0 +1,120 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Field_Scanner.name",
+    "Description": "server.items.SM_Field_Scanner.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Field_Scanner.png",
+  "MaxStack": 1,
+  "Categories": [
+    "Items",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Item",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "Model": "Items/StrangeMatter/field_scanner.blockymodel",
+  "Texture": "Items/StrangeMatter/field_scanner.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "scan_start"
+        },
+        {
+          "Type": "Charging",
+          "AllowIndefiniteHold": false,
+          "Next": {
+            "0": {
+              "Type": "SM_Use",
+              "Action": "cancel"
+            },
+            "2.0": {
+              "Type": "SM_Use",
+              "Action": "scan_complete"
+            }
+          }
+        }
+      ],
+      "RequireNewClick": true
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "scan_start"
+        },
+        {
+          "Type": "Charging",
+          "AllowIndefiniteHold": false,
+          "Next": {
+            "0": {
+              "Type": "SM_Use",
+              "Action": "cancel"
+            },
+            "2.0": {
+              "Type": "SM_Use",
+              "Action": "scan_complete"
+            }
+          }
+        }
+      ],
+      "RequireNewClick": true
+    },
+    "Use": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "scan_start"
+        },
+        {
+          "Type": "Charging",
+          "AllowIndefiniteHold": false,
+          "Next": {
+            "0": {
+              "Type": "SM_Use",
+              "Action": "cancel"
+            },
+            "2.0": {
+              "Type": "SM_Use",
+              "Action": "scan_complete"
+            }
+          }
+        }
+      ],
+      "RequireNewClick": true
+    }
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "Ingredient_Bar_Iron",
+        "Quantity": 7
+      },
+      {
+        "ResourceTypeId": "SM_Anomaly_Shards",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Ingredient_Bar_Copper",
+        "Quantity": 1
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 2.0,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_All"
+        ]
+      }
+    ],
+    "KnowledgeRequired": true
+  }
+}

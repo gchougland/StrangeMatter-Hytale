@@ -1,0 +1,13 @@
+{
+  "Id": "SM_StrangeMatter",
+  "Name": "server.ui.itemcategory.SM_StrangeMatter",
+  "Icon": "Icons/ItemCategories/SM_StrangeMatter.png",
+  "Order": 5,
+  "Children": [
+    {
+      "Id": "All",
+      "Name": "server.ui.itemcategory.SM_StrangeMatter_All",
+      "Icon": "Icons/ItemCategories/SM_StrangeMatter_All.png"
+    }
+  ]
+}

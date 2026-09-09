@@ -1,0 +1,23 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Warp_Event_Horizon"
+    },
+    {
+      "SpawnerId": "SM_Warp_Vortex"
+    },
+    {
+      "SpawnerId": "SM_Warp_Rim"
+    },
+    {
+      "SpawnerId": "SM_Warp_Outer_Rim"
+    },
+    {
+      "SpawnerId": "SM_Warp_Infall"
+    }
+  ],
+  "LifeSpan": 3.5,
+  "CullDistance": 96,
+  "BoundingRadius": 5,
+  "IsImportant": false
+}

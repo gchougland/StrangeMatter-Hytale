@@ -1,0 +1,41 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Resonite_Nugget.name",
+    "Description": "server.items.SM_Resonite_Nugget.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Resonite_Nugget.png",
+  "MaxStack": 100,
+  "Categories": [
+    "Items",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Item",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "Model": "Items/StrangeMatter/resonite_nugget.blockymodel",
+  "Texture": "Items/StrangeMatter/resonite_nugget.png",
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "SM_Resonite_Ingot",
+        "Quantity": 1
+      }
+    ],
+    "OutputQuantity": 9,
+    "TimeSeconds": 2.0,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_All"
+        ]
+      }
+    ],
+    "KnowledgeRequired": true
+  }
+}

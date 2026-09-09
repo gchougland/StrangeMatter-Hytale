@@ -1,0 +1,65 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Tinfoil_Hat.name",
+    "Description": "server.items.SM_Tinfoil_Hat.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Tinfoil_Hat.png",
+  "MaxStack": 1,
+  "Categories": [
+    "Items.Armors",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "Model": "Items/StrangeMatter/tinfoil_hat_worn.blockymodel",
+  "Texture": "Items/StrangeMatter/tinfoil_hat.png",
+  "Armor": {
+    "ArmorSlot": "Head",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "Haircut",
+      "HeadAccessory"
+    ]
+  },
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    }
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "SM_Resonite_Ingot",
+        "Quantity": 5
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 2.0,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_All"
+        ]
+      }
+    ],
+    "KnowledgeRequired": true
+  }
+}

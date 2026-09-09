@@ -1,0 +1,43 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Lab_Lamp.name",
+    "Description": "server.items.SM_Lab_Lamp.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Lab_Lamp.png",
+  "MaxStack": 25,
+  "Categories": [
+    "Blocks",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Block",
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Solid",
+    "CustomModel": "Blocks/StrangeMatter/lab_lamp.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/lab_lamp.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "Full",
+    "VariantRotation": "NESW",
+    "BlockSoundSetId": "Stone",
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#5eeeff",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks"
+      }
+    },
+    "Light": {
+      "Color": "#5ff",
+      "Radius": 10
+    }
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  }
+}

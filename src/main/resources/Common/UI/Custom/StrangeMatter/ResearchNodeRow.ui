@@ -1,0 +1,11 @@
+$R = "ResearchStyle.ui";
+Group {
+  Anchor: (Height: 58, Bottom: 5);
+  Button #SelectNode {
+    Style: $R.@RowStyle;
+    LayoutMode: Top;
+    Padding: (Horizontal: 12, Vertical: 8);
+    Label #NodeName { Style: (FontSize: 15, TextColor: #d7e0f5); Anchor: (Height: 23); }
+    Label #NodeState { Style: (FontSize: 10, TextColor: #8197b9, RenderBold: true); Anchor: (Height: 15); }
+  }
+}

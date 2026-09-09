@@ -1,0 +1,45 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Time_Dilation_Block.name",
+    "Description": "server.items.SM_Time_Dilation_Block.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Time_Dilation_Block.png",
+  "MaxStack": 25,
+  "Categories": [
+    "Furniture.Benches",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "BlockType": {
+    "Material": "Empty",
+    "DrawType": "Model",
+    "Opacity": "Solid",
+    "CustomModel": "Blocks/StrangeMatter/time_dilation_block.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/time_dilation_block.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Time_Dilation_Block",
+    "VariantRotation": "None",
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#243950",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "Light": {
+      "Color": "#a72",
+      "Radius": 10
+    }
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  }
+}

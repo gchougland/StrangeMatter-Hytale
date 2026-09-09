@@ -1,0 +1,17 @@
+{
+  "Type": "Generic",
+  "Appearance": "SM_Hoverboard_Mount",
+  "MaxHealth": 40,
+  "BreathesInWater": true,
+  "DefaultPlayerAttitude": "Neutral",
+  "DefaultNPCAttitude": "Ignore",
+  "MotionControllerList": [
+    {
+      "Type": "Walk"
+    }
+  ],
+  "Instructions": [
+    {}
+  ],
+  "NameTranslationKey": "server.items.SM_Hoverboard.name"
+}

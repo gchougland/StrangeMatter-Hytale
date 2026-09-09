@@ -1,0 +1,32 @@
+$C = "../Common.ui";
+$R = "ResearchStyle.ui";
+$C.@PageOverlay {
+  LayoutMode: Middle;
+  Group { LayoutMode: Center;
+    Group { Anchor: (Width: 940, Height: 760); Background: #2d3b59; Padding: (Full: 2);
+      Group { Background: #0d1728; Padding: (Full: 28); LayoutMode: Top;
+        Group { Anchor: (Height: 38); LayoutMode: Left;
+          Label #Topic { FlexWeight: 1; Style: (FontSize: 15, TextColor: #72e8ed, RenderBold: true); }
+          $R.@Control #Close { Text: "CLOSE"; Anchor: (Width: 84, Height: 32); }
+        }
+        Label #Heading { Anchor: (Height: 64); Style: (FontSize: 27, TextColor: #d6c4f5, RenderBold: true, Wrap: true); }
+        Group { Anchor: (Height: 2, Bottom: 16); Background: #3b5370; }
+        Group { FlexWeight: 1; LayoutMode: TopScrolling; ScrollbarStyle: $C.@DefaultScrollbarStyle; Padding: (Right: 18);
+          Label #Body { Anchor: (Height: 420); Style: (FontSize: 17, TextColor: #c4d1e2, Wrap: true); }
+          Group #Recipe { Anchor: (Height: 146, Bottom: 20); Background: #14233b; Padding: (Full: 14); LayoutMode: Left;
+            ItemIcon #Output { Anchor: (Width: 70, Height: 70, Right: 18); }
+            Label #Ingredients { FlexWeight: 1; Style: (FontSize: 15, TextColor: #7fdce9, Wrap: true); }
+          }
+          Label #Edition { Anchor: (Height: 130); Style: (FontSize: 13, TextColor: #a697c8, Wrap: true); }
+        }
+        Label #PageNumber { Anchor: (Height: 35, Top: 14); Style: (FontSize: 12, TextColor: #839aba, HorizontalAlignment: Center); }
+        Group { Anchor: (Height: 38); LayoutMode: Left;
+          $R.@Control #Back { Text: "RESEARCH ARCHIVE"; Anchor: (Width: 230, Height: 38); }
+          Group { FlexWeight: 1; }
+          $R.@Control #Previous { Text: "PREVIOUS"; Anchor: (Width: 140, Height: 38, Right: 12); }
+          $R.@Control #Next { Text: "NEXT PAGE"; Anchor: (Width: 160, Height: 38); }
+        }
+      }
+    }
+  }
+}

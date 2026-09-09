@@ -1,0 +1,99 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Resonant_Burner.name",
+    "Description": "server.items.SM_Resonant_Burner.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Resonant_Burner.png",
+  "MaxStack": 25,
+  "Categories": [
+    "Furniture.Benches",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/StrangeMatter/resonant_burner.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/resonant_burner.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Resonant_Burner",
+    "VariantRotation": "NESW",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#243950",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "SM_Use",
+            "Action": "machine"
+          }
+        ],
+        "RequireNewClick": true
+      }
+    },
+    "InteractionHint": "server.interactionHints.SM_Resonant_Burner"
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary",
+    "Use": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "machine"
+        }
+      ],
+      "RequireNewClick": true
+    }
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "SM_Resonite_Ingot",
+        "Quantity": 6
+      },
+      {
+        "ItemId": "SM_Resonant_Coil",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Bench_Furnace",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Ingredient_Bar_Copper",
+        "Quantity": 1
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 2.0,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_All"
+        ]
+      }
+    ],
+    "KnowledgeRequired": true
+  }
+}

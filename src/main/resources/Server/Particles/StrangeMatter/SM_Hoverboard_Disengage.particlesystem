@@ -1,0 +1,17 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Hoverboard_Disengage_Ring"
+    },
+    {
+      "SpawnerId": "SM_Hoverboard_Disengage_Core"
+    },
+    {
+      "SpawnerId": "SM_Hoverboard_Disengage_Sparks"
+    }
+  ],
+  "LifeSpan": 1.2,
+  "CullDistance": 64,
+  "BoundingRadius": 2,
+  "IsImportant": false
+}

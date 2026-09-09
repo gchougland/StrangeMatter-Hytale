@@ -1,0 +1,15 @@
+{
+  "AudioCategory": "AudioCat_SFX",
+  "SpatialBlend": 1.0,
+  "StartAttenuationDistance": 1.5,
+  "MaxDistance": 18,
+  "MaxInstance": 8,
+  "Volume": -8,
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/StrangeMatter/thoughtwell_loop.ogg"
+      ]
+    }
+  ]
+}

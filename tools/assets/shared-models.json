@@ -1,0 +1,91 @@
+{
+  "comparison": "Exact parsed JSON, including geometry, UVs, names, attachments and LOD settings",
+  "aliases": {
+    "Items/StrangeMatter/gravitic_shard.blockymodel": "Items/StrangeMatter/Shared/shard_1c8e23d7fc2c.blockymodel",
+    "Items/StrangeMatter/chrono_shard.blockymodel": "Items/StrangeMatter/Shared/shard_1c8e23d7fc2c.blockymodel",
+    "Items/StrangeMatter/energetic_shard.blockymodel": "Items/StrangeMatter/Shared/shard_1c8e23d7fc2c.blockymodel",
+    "Items/StrangeMatter/spatial_shard.blockymodel": "Items/StrangeMatter/Shared/shard_1c8e23d7fc2c.blockymodel",
+    "Items/StrangeMatter/shade_shard.blockymodel": "Items/StrangeMatter/Shared/shard_1c8e23d7fc2c.blockymodel",
+    "Items/StrangeMatter/insight_shard.blockymodel": "Items/StrangeMatter/Shared/shard_1c8e23d7fc2c.blockymodel",
+    "Blocks/StrangeMatter/gravitic_shard_crystal.blockymodel": "Blocks/StrangeMatter/Shared/shard_crystal_84dcace58934.blockymodel",
+    "Blocks/StrangeMatter/chrono_shard_crystal.blockymodel": "Blocks/StrangeMatter/Shared/shard_crystal_84dcace58934.blockymodel",
+    "Blocks/StrangeMatter/energetic_shard_crystal.blockymodel": "Blocks/StrangeMatter/Shared/shard_crystal_84dcace58934.blockymodel",
+    "Blocks/StrangeMatter/spatial_shard_crystal.blockymodel": "Blocks/StrangeMatter/Shared/shard_crystal_84dcace58934.blockymodel",
+    "Blocks/StrangeMatter/shade_shard_crystal.blockymodel": "Blocks/StrangeMatter/Shared/shard_crystal_84dcace58934.blockymodel",
+    "Blocks/StrangeMatter/insight_shard_crystal.blockymodel": "Blocks/StrangeMatter/Shared/shard_crystal_84dcace58934.blockymodel",
+    "Blocks/StrangeMatter/gravitic_shard_lamp.blockymodel": "Blocks/StrangeMatter/Shared/shard_lamp_f9d17c298777.blockymodel",
+    "Blocks/StrangeMatter/chrono_shard_lamp.blockymodel": "Blocks/StrangeMatter/Shared/shard_lamp_f9d17c298777.blockymodel",
+    "Blocks/StrangeMatter/energetic_shard_lamp.blockymodel": "Blocks/StrangeMatter/Shared/shard_lamp_f9d17c298777.blockymodel",
+    "Blocks/StrangeMatter/insight_shard_lamp.blockymodel": "Blocks/StrangeMatter/Shared/shard_lamp_f9d17c298777.blockymodel",
+    "Blocks/StrangeMatter/spatial_shard_lamp.blockymodel": "Blocks/StrangeMatter/Shared/shard_lamp_94de2407eff5.blockymodel",
+    "Blocks/StrangeMatter/shade_shard_lamp.blockymodel": "Blocks/StrangeMatter/Shared/shard_lamp_94de2407eff5.blockymodel",
+    "Blocks/StrangeMatter/gravitic_shard_lantern.blockymodel": "Blocks/StrangeMatter/Shared/shard_lantern_abcc9021638d.blockymodel",
+    "Blocks/StrangeMatter/chrono_shard_lantern.blockymodel": "Blocks/StrangeMatter/Shared/shard_lantern_abcc9021638d.blockymodel",
+    "Blocks/StrangeMatter/energetic_shard_lantern.blockymodel": "Blocks/StrangeMatter/Shared/shard_lantern_abcc9021638d.blockymodel",
+    "Blocks/StrangeMatter/insight_shard_lantern.blockymodel": "Blocks/StrangeMatter/Shared/shard_lantern_abcc9021638d.blockymodel",
+    "Blocks/StrangeMatter/spatial_shard_lantern.blockymodel": "Blocks/StrangeMatter/Shared/shard_lantern_32a79ecdec17.blockymodel",
+    "Blocks/StrangeMatter/shade_shard_lantern.blockymodel": "Blocks/StrangeMatter/Shared/shard_lantern_32a79ecdec17.blockymodel"
+  },
+  "groups": [
+    {
+      "model": "Items/StrangeMatter/Shared/shard_1c8e23d7fc2c.blockymodel",
+      "semanticSha256": "1c8e23d7fc2c71d4487ec09656d66b67504dd027db0bcdcdc31a1d7ae1b3152c",
+      "items": [
+        "SM_Gravitic_Shard",
+        "SM_Chrono_Shard",
+        "SM_Energetic_Shard",
+        "SM_Spatial_Shard",
+        "SM_Shade_Shard",
+        "SM_Insight_Shard"
+      ]
+    },
+    {
+      "model": "Blocks/StrangeMatter/Shared/shard_crystal_84dcace58934.blockymodel",
+      "semanticSha256": "84dcace589349cca8d2eec5e6f3115558532f963270f5a84ba6b92c9e9272ff7",
+      "items": [
+        "SM_Gravitic_Shard_Crystal",
+        "SM_Chrono_Shard_Crystal",
+        "SM_Energetic_Shard_Crystal",
+        "SM_Spatial_Shard_Crystal",
+        "SM_Shade_Shard_Crystal",
+        "SM_Insight_Shard_Crystal"
+      ]
+    },
+    {
+      "model": "Blocks/StrangeMatter/Shared/shard_lamp_f9d17c298777.blockymodel",
+      "semanticSha256": "f9d17c29877794df8f9dc33b9da2bf346fd84a1fed4a8b2732f7c331b4973ba3",
+      "items": [
+        "SM_Gravitic_Shard_Lamp",
+        "SM_Chrono_Shard_Lamp",
+        "SM_Energetic_Shard_Lamp",
+        "SM_Insight_Shard_Lamp"
+      ]
+    },
+    {
+      "model": "Blocks/StrangeMatter/Shared/shard_lamp_94de2407eff5.blockymodel",
+      "semanticSha256": "94de2407eff5cd09bdf1459d73b10ab3e6ea3464c9c5dc4da00865c109db63ad",
+      "items": [
+        "SM_Spatial_Shard_Lamp",
+        "SM_Shade_Shard_Lamp"
+      ]
+    },
+    {
+      "model": "Blocks/StrangeMatter/Shared/shard_lantern_abcc9021638d.blockymodel",
+      "semanticSha256": "abcc9021638d9efb282b8bb15e4d6f130ac3383ef2791f08e0370af0d3fd2881",
+      "items": [
+        "SM_Gravitic_Shard_Lantern",
+        "SM_Chrono_Shard_Lantern",
+        "SM_Energetic_Shard_Lantern",
+        "SM_Insight_Shard_Lantern"
+      ]
+    },
+    {
+      "model": "Blocks/StrangeMatter/Shared/shard_lantern_32a79ecdec17.blockymodel",
+      "semanticSha256": "32a79ecdec17d33ba3d832abafed6f6dea2277df487f512400702a5a46beab5f",
+      "items": [
+        "SM_Spatial_Shard_Lantern",
+        "SM_Shade_Shard_Lantern"
+      ]
+    }
+  ]
+}

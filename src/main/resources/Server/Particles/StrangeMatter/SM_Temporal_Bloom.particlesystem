@@ -1,0 +1,23 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Temporal_Core"
+    },
+    {
+      "SpawnerId": "SM_Temporal_Ripple"
+    },
+    {
+      "SpawnerId": "SM_Temporal_Halo"
+    },
+    {
+      "SpawnerId": "SM_Temporal_Petals"
+    },
+    {
+      "SpawnerId": "SM_Temporal_Motes"
+    }
+  ],
+  "LifeSpan": 3.5,
+  "CullDistance": 96,
+  "BoundingRadius": 4,
+  "IsImportant": false
+}

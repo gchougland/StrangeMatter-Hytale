@@ -1,0 +1,37 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Resonite_Ingot.name",
+    "Description": "server.items.SM_Resonite_Ingot.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Resonite_Ingot.png",
+  "MaxStack": 100,
+  "Categories": [
+    "Items",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Item",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "Model": "Items/StrangeMatter/resonite_ingot.blockymodel",
+  "Texture": "Items/StrangeMatter/resonite_ingot.png",
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "SM_Raw_Resonite",
+        "Quantity": 1
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 5.0,
+    "BenchRequirement": [
+      {
+        "Type": "Processing",
+        "Id": "Furnace"
+      }
+    ]
+  }
+}

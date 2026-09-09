@@ -1,0 +1,68 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Anomalous_Grass.name",
+    "Description": "server.items.SM_Anomalous_Grass.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Anomalous_Grass.png",
+  "MaxStack": 100,
+  "Categories": [
+    "Blocks.Soils",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter",
+      "Soil"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Cube",
+    "Opacity": "Solid",
+    "HitboxType": "SM_Anomalous_Grass",
+    "VariantRotation": "None",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Soils",
+        "ItemId": "Soil_Dirt"
+      }
+    },
+    "BlockParticleSetId": "Grass_Earth",
+    "ParticleColor": "#497872",
+    "BlockSoundSetId": "Grass",
+    "PhysicalMaterialId": "Foliage",
+    "Light": {
+      "Color": "#132",
+      "Radius": 3
+    },
+    "Group": "Grass",
+    "RandomTickProcedure": {
+      "Type": "SM_Anomalous_Grass"
+    },
+    "Textures": [
+      {
+        "Up": "BlockTextures/StrangeMatter/Anomalous_Grass_Top.png",
+        "Sides": "BlockTextures/StrangeMatter/Anomalous_Grass_Side.png",
+        "Down": "BlockTextures/StrangeMatter/Anomalous_Grass_Soil.png",
+        "Weight": 1
+      }
+    ],
+    "TransitionTexture": "BlockTextures/Transition_Soil_Grass_GS.png",
+    "TransitionToGroups": [
+      "Stone",
+      "Dirt",
+      "Dirt_Dark",
+      "Sand",
+      "Gravel",
+      "Wood",
+      "Cobble"
+    ]
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "ItemSoundSetId": "ISS_Blocks_Soft"
+}

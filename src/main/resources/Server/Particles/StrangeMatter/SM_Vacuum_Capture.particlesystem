@@ -1,0 +1,17 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Vacuum_Capture_Ring"
+    },
+    {
+      "SpawnerId": "SM_Vacuum_Capture_Core"
+    },
+    {
+      "SpawnerId": "SM_Vacuum_Capture_Sparks"
+    }
+  ],
+  "LifeSpan": 1.2,
+  "CullDistance": 64,
+  "BoundingRadius": 3.4,
+  "IsImportant": false
+}

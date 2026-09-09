@@ -1,0 +1,46 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Shade_Shard.name",
+    "Description": "server.items.SM_Shade_Shard.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Shade_Shard.png",
+  "MaxStack": 100,
+  "Categories": [
+    "Items",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Item",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "ResourceTypes": [
+    {
+      "Id": "SM_Anomaly_Shards"
+    }
+  ],
+  "Model": "Items/StrangeMatter/Shared/shard_1c8e23d7fc2c.blockymodel",
+  "Texture": "Items/StrangeMatter/shade_shard.png",
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "SM_Shade_Shard_Crystal",
+        "Quantity": 1
+      }
+    ],
+    "OutputQuantity": 4,
+    "TimeSeconds": 2.0,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_Shards"
+        ]
+      }
+    ],
+    "KnowledgeRequired": true
+  }
+}

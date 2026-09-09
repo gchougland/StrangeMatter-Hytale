@@ -1,0 +1,7 @@
+$R = "ResearchStyle.ui";
+Group { Anchor: (Height: 36, Bottom: 4);
+  Button #InsertNote { Style: $R.@RowStyle; Padding: (Horizontal: 10); LayoutMode: Left;
+    Label #NoteName { Style: (FontSize: 14, TextColor: #bca4ef, VerticalAlignment: Center); FlexWeight: 1; }
+    Label { Text: "INSERT"; Style: (FontSize: 12, TextColor: #69e4ef, VerticalAlignment: Center); Anchor: (Width: 72); }
+  }
+}

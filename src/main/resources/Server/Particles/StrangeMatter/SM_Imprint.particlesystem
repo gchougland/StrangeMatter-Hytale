@@ -1,0 +1,17 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Imprint_Ring"
+    },
+    {
+      "SpawnerId": "SM_Imprint_Core"
+    },
+    {
+      "SpawnerId": "SM_Imprint_Sparks"
+    }
+  ],
+  "LifeSpan": 1.2,
+  "CullDistance": 64,
+  "BoundingRadius": 3.2,
+  "IsImportant": false
+}

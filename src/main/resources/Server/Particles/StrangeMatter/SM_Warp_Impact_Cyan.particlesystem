@@ -1,0 +1,17 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Warp_Impact_Cyan_Ring"
+    },
+    {
+      "SpawnerId": "SM_Warp_Impact_Cyan_Core"
+    },
+    {
+      "SpawnerId": "SM_Warp_Impact_Cyan_Sparks"
+    }
+  ],
+  "LifeSpan": 1.2,
+  "CullDistance": 64,
+  "BoundingRadius": 3.4,
+  "IsImportant": false
+}

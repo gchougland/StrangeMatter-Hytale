@@ -1,0 +1,39 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Lab_Cyan_Glass.name",
+    "Description": "server.items.SM_Lab_Cyan_Glass.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Lab_Cyan_Glass.png",
+  "MaxStack": 100,
+  "Categories": [
+    "Blocks",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Block",
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/StrangeMatter/lab_cyan_glass.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/lab_cyan_glass.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Lab_Cyan_Glass",
+    "VariantRotation": "NESW",
+    "BlockSoundSetId": "Glass",
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#5eeeff",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks"
+      }
+    }
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  }
+}

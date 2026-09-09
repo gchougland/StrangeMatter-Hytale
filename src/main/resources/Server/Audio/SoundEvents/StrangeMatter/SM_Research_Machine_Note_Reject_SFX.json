@@ -1,0 +1,15 @@
+{
+  "AudioCategory": "AudioCat_SFX",
+  "SpatialBlend": 1.0,
+  "StartAttenuationDistance": 1.5,
+  "MaxDistance": 24,
+  "MaxInstance": 8,
+  "Volume": -5,
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/StrangeMatter/research_machine_note_reject.ogg"
+      ]
+    }
+  ]
+}

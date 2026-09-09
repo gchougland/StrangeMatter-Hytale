@@ -1,0 +1,75 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Gravitic_Shard_Crystal.name",
+    "Description": "server.items.SM_Gravitic_Shard_Crystal.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Gravitic_Shard_Crystal.png",
+  "MaxStack": 100,
+  "Categories": [
+    "Blocks",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/StrangeMatter/Shared/shard_crystal_84dcace58934.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/gravitic_shard_crystal.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Gravitic_Shard_Crystal",
+    "VariantRotation": "DoublePipe",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks",
+        "ItemId": "SM_Gravitic_Shard_Crystal"
+      }
+    },
+    "BlockParticleSetId": "Crystal",
+    "ParticleColor": "#243950",
+    "BlockSoundSetId": "Crystal",
+    "PhysicalMaterialId": "Stone",
+    "Light": {
+      "Color": "#325",
+      "Radius": 5
+    },
+    "PlacementSettings": {
+      "RotationMode": "Default",
+      "AllowRotationKey": true
+    }
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "SM_Gravitic_Shard",
+        "Quantity": 4
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 2.0,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_Shards"
+        ]
+      }
+    ],
+    "KnowledgeRequired": true
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Capture_Implosion"
+    },
+    {
+      "SpawnerId": "SM_Capture_Flash"
+    },
+    {
+      "SpawnerId": "SM_Capture_Motes"
+    }
+  ],
+  "LifeSpan": 3.5,
+  "CullDistance": 96,
+  "BoundingRadius": 4,
+  "IsImportant": false
+}

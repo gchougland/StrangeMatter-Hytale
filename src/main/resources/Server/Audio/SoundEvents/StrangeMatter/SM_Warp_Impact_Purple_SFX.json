@@ -1,0 +1,10 @@
+{
+  "Parent": "SFX_Portal_Neutral_Open",
+  "AudioCategory": "AudioCat_SFX",
+  "SpatialBlend": 1,
+  "StartAttenuationDistance": 1.5,
+  "MaxDistance": 24,
+  "Volume": -5,
+  "Pitch": -2,
+  "MaxInstance": 8
+}

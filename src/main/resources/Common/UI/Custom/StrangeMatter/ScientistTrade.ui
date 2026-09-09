@@ -1,0 +1,21 @@
+$C = "../Common.ui";
+$R = "ResearchStyle.ui";
+$C.@PageOverlay {
+  LayoutMode: Middle;
+  Group { LayoutMode: Center;
+    Group {
+      Anchor: (Width: 900, Height: 780);
+      Background: #0b1528(0.98);
+      Padding: (Full: 28);
+      LayoutMode: Top;
+      Group { Anchor: (Height: 48); LayoutMode: Left;
+        Label { FlexWeight: 1; Text: "ANOMALY SCIENTIST"; Style: (FontSize: 24, TextColor: #64edff, RenderBold: true); }
+        $R.@Control #Close { Anchor: (Width: 90, Height: 32); Text: "CLOSE"; }
+      }
+      Label #Rank { Anchor: (Height: 34); Style: (FontSize: 14, TextColor: #bd93f9); }
+      Label #Message { Anchor: (Height: 54); Style: (FontSize: 13, TextColor: #d3ddf3, Wrap: true); }
+      Group #Offers { FlexWeight: 1; LayoutMode: TopScrolling; ScrollbarStyle: $C.@DefaultScrollbarStyle; }
+      Label { Anchor: (Height: 36); Text: "Stock is shared. The scientist restocks twice each game day while at the laboratory."; Style: (FontSize: 12, TextColor: #8297ba, Wrap: true); }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "Duration": 5,
+  "OverlapBehavior": "Overwrite",
+  "RemovalBehavior": "Duration",
+  "Debuff": true,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#193a65",
+    "EntityTopTint": "#53f2ee",
+    "ScreenEffect": "ScreenEffects/Snow.png",
+    "HorizontalSpeedMultiplier": 0.85,
+    "Particles": [ { "SystemId": "SM_Thoughtwell" } ]
+  }
+}

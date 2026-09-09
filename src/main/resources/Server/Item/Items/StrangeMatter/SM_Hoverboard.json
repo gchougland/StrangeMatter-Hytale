@@ -1,0 +1,50 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Hoverboard.name",
+    "Description": "server.items.SM_Hoverboard.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Hoverboard.png",
+  "MaxStack": 1,
+  "Categories": [
+    "Items",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Item",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "Model": "Items/StrangeMatter/hoverboard.blockymodel",
+  "Texture": "Items/StrangeMatter/hoverboard.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "primary"
+        }
+      ],
+      "RequireNewClick": true
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "secondary"
+        }
+      ],
+      "RequireNewClick": true
+    },
+    "Use": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "use"
+        }
+      ],
+      "RequireNewClick": true
+    }
+  }
+}

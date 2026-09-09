@@ -1,0 +1,45 @@
+{
+  "snapshot": "build\\art-preservation\\20260909T083748312884Z",
+  "rotations": {
+    "Items/StrangeMatter/field_scanner.blockymodel": {
+      "degreesY": 180,
+      "beforeSha256": "cf082cd0b2d89493bc5260d68dc32fd9fb964c61397aadab92bee502117f47a4",
+      "afterSha256": "28243326f4a9973d83c98b8ee07700a694256c7dd911f42524e199d0a5abf491"
+    },
+    "Items/StrangeMatter/graviton_hammer.blockymodel": {
+      "degreesY": 90,
+      "beforeSha256": "413daf75f64d5878fcaaa57c9caf7c9fdee03e927ad01ce25fdfbfd109372fdf",
+      "afterSha256": "3b6546dac6a2e5df8d7c892eb500bbd191c115f3b3af4b5381e53f0c60849399"
+    }
+  },
+  "lightColors": {
+    "gravitic": {
+      "crystal": "#325",
+      "lampAndLantern": "#96f"
+    },
+    "chrono": {
+      "crystal": "#542",
+      "lampAndLantern": "#fc6"
+    },
+    "energetic": {
+      "crystal": "#255",
+      "lampAndLantern": "#6ff"
+    },
+    "spatial": {
+      "crystal": "#525",
+      "lampAndLantern": "#f6f"
+    },
+    "shade": {
+      "crystal": "#235",
+      "lampAndLantern": "#69f"
+    },
+    "insight": {
+      "crystal": "#255",
+      "lampAndLantern": "#6ff"
+    }
+  },
+  "descriptions": 78,
+  "sharedModels": 6,
+  "aliases": 24,
+  "status": "PASS"
+}

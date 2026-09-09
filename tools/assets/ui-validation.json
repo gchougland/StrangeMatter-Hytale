@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "uiFiles": 13,
+  "selectors": 438,
+  "importedSymbolUses": 78,
+  "javaLiteralSelectorFamilies": 85,
+  "checks": [
+    "Native string escape rules",
+    "Native label alignment literals",
+    "String and delimiter balance",
+    "Unique selectors per template",
+    "Imported UI files and style symbols resolve",
+    "Java page selectors resolve",
+    "Every dynamic minigame selector range exists"
+  ],
+  "limitation": "Static comparison with supplied native UI assets; client UI parser and visual session still required."
+}

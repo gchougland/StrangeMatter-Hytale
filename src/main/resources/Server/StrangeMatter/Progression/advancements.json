@@ -1,0 +1,399 @@
+[
+  {
+    "id": "anomaly_collector",
+    "parent": "field_researcher",
+    "title": "Anomaly Collector",
+    "description": "Scan all six types of anomalies: Gravity, Temporal, Spatial, Energy, Shadow, and Cognitive",
+    "icon": "SM_Gravitic_Shard",
+    "toast": true,
+    "chat": true,
+    "criteria": {
+      "scan_gravity_anomaly": {
+        "trigger": "scan_anomaly",
+        "values": [
+          "gravity"
+        ]
+      },
+      "scan_temporal_anomaly": {
+        "trigger": "scan_anomaly",
+        "values": [
+          "time"
+        ]
+      },
+      "scan_spatial_anomaly": {
+        "trigger": "scan_anomaly",
+        "values": [
+          "space"
+        ]
+      },
+      "scan_energy_anomaly": {
+        "trigger": "scan_anomaly",
+        "values": [
+          "energy"
+        ]
+      },
+      "scan_shadow_anomaly": {
+        "trigger": "scan_anomaly",
+        "values": [
+          "shadow"
+        ]
+      },
+      "scan_cognitive_anomaly": {
+        "trigger": "scan_anomaly",
+        "values": [
+          "cognition"
+        ]
+      }
+    },
+    "requirements": [
+      [
+        "scan_gravity_anomaly",
+        "scan_temporal_anomaly",
+        "scan_spatial_anomaly",
+        "scan_energy_anomaly",
+        "scan_shadow_anomaly",
+        "scan_cognitive_anomaly"
+      ]
+    ]
+  },
+  {
+    "id": "anomaly_hunter",
+    "parent": "field_researcher",
+    "title": "Anomaly Hunter",
+    "description": "Craft an Anomaly Resonator to locate anomalies from a distance",
+    "icon": "SM_Anomaly_Resonator",
+    "toast": true,
+    "chat": true,
+    "criteria": {
+      "craft_anomaly_resonator": {
+        "trigger": "inventory_changed",
+        "values": [
+          "SM_Anomaly_Resonator"
+        ]
+      }
+    },
+    "requirements": [
+      [
+        "craft_anomaly_resonator"
+      ]
+    ]
+  },
+  {
+    "id": "anomaly_tamer",
+    "parent": "reality_extractor",
+    "title": "Anomaly Tamer",
+    "description": "Capture an anomaly in a Containment Capsule",
+    "icon": "SM_Containment_Capsule_Gravity",
+    "toast": true,
+    "chat": true,
+    "criteria": {
+      "contain_gravity_anomaly": {
+        "trigger": "inventory_changed",
+        "values": [
+          "SM_Containment_Capsule_Gravity"
+        ]
+      },
+      "contain_temporal_anomaly": {
+        "trigger": "inventory_changed",
+        "values": [
+          "SM_Containment_Capsule_Temporal_Bloom"
+        ]
+      },
+      "contain_spatial_anomaly": {
+        "trigger": "inventory_changed",
+        "values": [
+          "SM_Containment_Capsule_Warp_Gate"
+        ]
+      },
+      "contain_energy_anomaly": {
+        "trigger": "inventory_changed",
+        "values": [
+          "SM_Containment_Capsule_Energetic"
+        ]
+      },
+      "contain_shadow_anomaly": {
+        "trigger": "inventory_changed",
+        "values": [
+          "SM_Containment_Capsule_Echoing_Shadow"
+        ]
+      },
+      "contain_cognitive_anomaly": {
+        "trigger": "inventory_changed",
+        "values": [
+          "SM_Containment_Capsule_Thoughtwell"
+        ]
+      }
+    },
+    "requirements": [
+      [
+        "contain_gravity_anomaly",
+        "contain_temporal_anomaly",
+        "contain_spatial_anomaly",
+        "contain_energy_anomaly",
+        "contain_shadow_anomaly",
+        "contain_cognitive_anomaly"
+      ]
+    ]
+  },
+  {
+    "id": "energy_harvester",
+    "parent": "reality_forge",
+    "title": "Energy Harvester",
+    "description": "Craft a Resonance Condenser to harvest energy from anomalies",
+    "icon": "SM_Resonance_Condenser",
+    "toast": true,
+    "chat": true,
+    "criteria": {
+      "craft_resonance_condenser": {
+        "trigger": "inventory_changed",
+        "values": [
+          "SM_Resonance_Condenser"
+        ]
+      }
+    },
+    "requirements": [
+      [
+        "craft_resonance_condenser"
+      ]
+    ]
+  },
+  {
+    "id": "field_researcher",
+    "parent": "root",
+    "title": "Field Researcher",
+    "description": "Craft your first Field Scanner to detect and analyze anomalies",
+    "icon": "SM_Field_Scanner",
+    "toast": true,
+    "chat": true,
+    "criteria": {
+      "craft_field_scanner": {
+        "trigger": "inventory_changed",
+        "values": [
+          "SM_Field_Scanner"
+        ]
+      }
+    },
+    "requirements": [
+      [
+        "craft_field_scanner"
+      ]
+    ]
+  },
+  {
+    "id": "first_contact",
+    "parent": "root",
+    "title": "First Contact",
+    "description": "Experience the effects of an anomaly for the first time",
+    "icon": "SM_Field_Scanner",
+    "toast": true,
+    "chat": true,
+    "criteria": {
+      "anomaly_effect_applied": {
+        "trigger": "anomaly_effect_applied",
+        "values": []
+      }
+    },
+    "requirements": [
+      [
+        "anomaly_effect_applied"
+      ]
+    ]
+  },
+  {
+    "id": "knowledge_seeker",
+    "parent": "the_researcher",
+    "title": "Knowledge Seeker",
+    "description": "Complete research in all six anomaly categories to unlock advanced tools",
+    "icon": "SM_Research_Tablet",
+    "toast": true,
+    "chat": true,
+    "criteria": {
+      "complete_gravity_research": {
+        "trigger": "complete_research_category",
+        "values": [
+          "gravity"
+        ]
+      },
+      "complete_temporal_research": {
+        "trigger": "complete_research_category",
+        "values": [
+          "time"
+        ]
+      },
+      "complete_spatial_research": {
+        "trigger": "complete_research_category",
+        "values": [
+          "space"
+        ]
+      },
+      "complete_energy_research": {
+        "trigger": "complete_research_category",
+        "values": [
+          "energy"
+        ]
+      },
+      "complete_shadow_research": {
+        "trigger": "complete_research_category",
+        "values": [
+          "shadow"
+        ]
+      },
+      "complete_cognitive_research": {
+        "trigger": "complete_research_category",
+        "values": [
+          "cognition"
+        ]
+      }
+    },
+    "requirements": [
+      [
+        "complete_gravity_research"
+      ],
+      [
+        "complete_temporal_research"
+      ],
+      [
+        "complete_spatial_research"
+      ],
+      [
+        "complete_energy_research"
+      ],
+      [
+        "complete_shadow_research"
+      ],
+      [
+        "complete_cognitive_research"
+      ]
+    ]
+  },
+  {
+    "id": "portal_master",
+    "parent": "reality_extractor",
+    "title": "Portal Master",
+    "description": "Craft a Warp Gun to create teleportation gates",
+    "icon": "SM_Warp_Gun",
+    "toast": true,
+    "chat": true,
+    "criteria": {
+      "use_warp_gun": {
+        "trigger": "inventory_changed",
+        "values": [
+          "SM_Warp_Gun"
+        ]
+      }
+    },
+    "requirements": [
+      [
+        "use_warp_gun"
+      ]
+    ]
+  },
+  {
+    "id": "reality_extractor",
+    "parent": "reality_forge",
+    "title": "Reality Extractor",
+    "description": "Craft an Echo Vacuum to extract anomalies from the world",
+    "icon": "SM_Echo_Vacuum",
+    "toast": true,
+    "chat": true,
+    "criteria": {
+      "craft_echo_vacuum": {
+        "trigger": "inventory_changed",
+        "values": [
+          "SM_Echo_Vacuum"
+        ]
+      }
+    },
+    "requirements": [
+      [
+        "craft_echo_vacuum"
+      ]
+    ]
+  },
+  {
+    "id": "reality_forge",
+    "parent": "research_master",
+    "title": "Reality Forge",
+    "description": "Craft a Reality Forge to perform advanced anomalous crafting",
+    "icon": "SM_Reality_Forge",
+    "toast": true,
+    "chat": true,
+    "criteria": {
+      "craft_in_reality_forge": {
+        "trigger": "inventory_changed",
+        "values": [
+          "SM_Reality_Forge"
+        ]
+      }
+    },
+    "requirements": [
+      [
+        "craft_in_reality_forge"
+      ]
+    ]
+  },
+  {
+    "id": "research_master",
+    "parent": "the_researcher",
+    "title": "Research Master",
+    "description": "Craft a Research Machine to access the complete research tree",
+    "icon": "SM_Research_Machine",
+    "toast": true,
+    "chat": true,
+    "criteria": {
+      "complete_all_research": {
+        "trigger": "inventory_changed",
+        "values": [
+          "SM_Research_Machine"
+        ]
+      }
+    },
+    "requirements": [
+      [
+        "complete_all_research"
+      ]
+    ]
+  },
+  {
+    "id": "root",
+    "parent": "",
+    "title": "Strange Matter",
+    "description": "Discover the mysteries of reality-bending anomalies",
+    "icon": "SM_Field_Scanner",
+    "toast": false,
+    "chat": false,
+    "criteria": {
+      "impossible": {
+        "trigger": "joined",
+        "values": []
+      }
+    },
+    "requirements": [
+      [
+        "impossible"
+      ]
+    ]
+  },
+  {
+    "id": "the_researcher",
+    "parent": "first_contact",
+    "title": "The Researcher",
+    "description": "Complete your first research project to obtain Research Notes",
+    "icon": "SM_Research_Notes",
+    "toast": true,
+    "chat": true,
+    "criteria": {
+      "complete_research": {
+        "trigger": "inventory_changed",
+        "values": [
+          "SM_Research_Notes"
+        ]
+      }
+    },
+    "requirements": [
+      [
+        "complete_research"
+      ]
+    ]
+  }
+]

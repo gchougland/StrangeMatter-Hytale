@@ -1,0 +1,23 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Thoughtwell_Core"
+    },
+    {
+      "SpawnerId": "SM_Thoughtwell_Seal"
+    },
+    {
+      "SpawnerId": "SM_Thoughtwell_Aura"
+    },
+    {
+      "SpawnerId": "SM_Thoughtwell_Runes"
+    },
+    {
+      "SpawnerId": "SM_Thoughtwell_Ideas"
+    }
+  ],
+  "LifeSpan": 3.5,
+  "CullDistance": 96,
+  "BoundingRadius": 4,
+  "IsImportant": false
+}

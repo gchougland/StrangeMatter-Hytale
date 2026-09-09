@@ -1,0 +1,74 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Insight_Shard_Lantern.name",
+    "Description": "server.items.SM_Insight_Shard_Lantern.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Insight_Shard_Lantern.png",
+  "MaxStack": 25,
+  "Categories": [
+    "Blocks",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/StrangeMatter/Shared/shard_lantern_abcc9021638d.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/insight_shard_lantern.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Insight_Shard_Lantern",
+    "VariantRotation": "NESW",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#243950",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "Light": {
+      "Color": "#6ff",
+      "Radius": 15
+    }
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "SM_Resonite_Nugget",
+        "Quantity": 2
+      },
+      {
+        "ItemId": "SM_Insight_Shard",
+        "Quantity": 1
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 2.0,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_Shards"
+        ]
+      }
+    ],
+    "KnowledgeRequired": true
+  }
+}

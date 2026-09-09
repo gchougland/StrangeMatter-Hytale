@@ -1,0 +1,2650 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "name": "rough_ferrous_matrix0",
+      "position": {
+        "x": -4,
+        "y": 7,
+        "z": 1
+      },
+      "orientation": {
+        "x": 0.11893825351140405,
+        "y": 0.14393355086107956,
+        "z": -0.11893825351140405,
+        "w": 0.9751874264159864
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 13,
+            "y": 11,
+            "z": 12
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "top": {
+            "offset": {
+              "x": 1,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 16,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "front": {
+            "offset": {
+              "x": 57,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 72,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 87,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 101,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "2",
+      "name": "rough_ferrous_matrix1",
+      "position": {
+        "x": 5,
+        "y": 6,
+        "z": -2
+      },
+      "orientation": {
+        "x": -0.05359073164107083,
+        "y": -0.16569344370341976,
+        "z": 0.1334007040924294,
+        "w": 0.9756423362808322
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 11,
+            "y": 10,
+            "z": 12
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "top": {
+            "offset": {
+              "x": 31,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 44,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "front": {
+            "offset": {
+              "x": 115,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 128,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 141,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 155,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "3",
+      "name": "rough_ferrous_matrix2",
+      "position": {
+        "x": 1,
+        "y": 11,
+        "z": 2
+      },
+      "orientation": {
+        "x": 0.13290398245206478,
+        "y": 0.26555033360027114,
+        "z": 0.026160433509545743,
+        "w": 0.9545340137950866
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 10,
+            "y": 8,
+            "z": 10
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "top": {
+            "offset": {
+              "x": 169,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 181,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "front": {
+            "offset": {
+              "x": 193,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 205,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 217,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 229,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "4",
+      "name": "rough_ferrous_matrix3",
+      "position": {
+        "x": -5,
+        "y": 4,
+        "z": -4
+      },
+      "orientation": {
+        "x": -0.13916395029942363,
+        "y": 0.060137814096797595,
+        "z": 0.1391639502994236,
+        "w": 0.9785960521020806
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 9,
+            "y": 7,
+            "z": 8
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "top": {
+            "offset": {
+              "x": 241,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 1,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "front": {
+            "offset": {
+              "x": 12,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 23,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 34,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 44,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "5",
+      "name": "unrefined_resonite0_shaft",
+      "position": {
+        "x": -3,
+        "y": 13,
+        "z": 3
+      },
+      "orientation": {
+        "x": 0.04944482587720851,
+        "y": -0.15902729461884277,
+        "z": -0.16827542482363622,
+        "w": 0.9715703320710287
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1.0,
+          "y": 0.9742857142857143,
+          "z": 1.0
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 4,
+            "y": 7,
+            "z": 4
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 54,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 60,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 66,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 72,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "top": {
+            "offset": {
+              "x": 93,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 99,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "6",
+      "name": "unrefined_resonite0_point-1_0",
+      "position": {
+        "x": -4.0609953502927825,
+        "y": 8.86164163847627,
+        "z": 1.3890052953955072
+      },
+      "orientation": {
+        "x": 0.9200677001820564,
+        "y": -0.21540242148708683,
+        "z": 0.08490050559839345,
+        "w": 0.3160207715456974
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.44444444444444453,
+          "y": 0.48212780693735385,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 6
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 78,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "7",
+      "name": "unrefined_resonite0_point-1_1",
+      "position": {
+        "x": -3.4938610494015174,
+        "y": 8.47637518326903,
+        "z": 2.625908057638612
+      },
+      "orientation": {
+        "x": -0.501906478668036,
+        "y": 0.4406661776632821,
+        "z": -0.6845727648574965,
+        "w": -0.29199886326841734
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.48212780693735374,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 8,
+            "y": 6
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 89,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "8",
+      "name": "unrefined_resonite0_point-1_2",
+      "position": {
+        "x": -4.712301552376799,
+        "y": 8.77652667713157,
+        "z": 3.2780674104362446
+      },
+      "orientation": {
+        "x": -0.21026475100679767,
+        "y": -0.40779366344343826,
+        "z": 0.8832315828943257,
+        "w": 0.09692798108602543
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.48212780693735363,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 8,
+            "y": 6
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 99,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "9",
+      "name": "unrefined_resonite0_point-1_3",
+      "position": {
+        "x": -5.279435853268064,
+        "y": 9.161793132338813,
+        "z": 2.0411646481931385
+      },
+      "orientation": {
+        "x": 0.7992657412308509,
+        "y": 0.13604115182823806,
+        "z": -0.5645053183879156,
+        "w": 0.15492199784311725
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4821278069373538,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 8,
+            "y": 6
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 109,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "10",
+      "name": "unrefined_resonite0_point1_0",
+      "position": {
+        "x": -1.2876984476232014,
+        "y": 17.223473322868426,
+        "z": 2.7219325895637554
+      },
+      "orientation": {
+        "x": -0.40779366344343815,
+        "y": 0.21026475100679742,
+        "z": 0.09692798108602525,
+        "w": -0.8832315828943258
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.48212780693735363,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 8,
+            "y": 6
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 119,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "11",
+      "name": "unrefined_resonite0_point1_1",
+      "position": {
+        "x": -0.7205641467319367,
+        "y": 16.838206867661185,
+        "z": 3.9588353518068606
+      },
+      "orientation": {
+        "x": -0.13604115182823806,
+        "y": 0.7992657412308507,
+        "z": -0.15492199784311736,
+        "w": -0.5645053183879155
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.48212780693735374,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 8,
+            "y": 6
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 129,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "12",
+      "name": "unrefined_resonite0_point1_2",
+      "position": {
+        "x": -1.9390046497072175,
+        "y": 17.13835836152373,
+        "z": 4.610994704604493
+      },
+      "orientation": {
+        "x": -0.21540242148708688,
+        "y": -0.9200677001820569,
+        "z": 0.31602077154569747,
+        "w": -0.08490050559839353
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.48212780693735374,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 8,
+            "y": 6
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 139,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "13",
+      "name": "unrefined_resonite0_point1_3",
+      "position": {
+        "x": -2.5061389505984826,
+        "y": 17.523624816730972,
+        "z": 3.374091942361387
+      },
+      "orientation": {
+        "x": -0.4406661776632818,
+        "y": -0.5019064786680363,
+        "z": 0.29199886326841756,
+        "w": -0.6845727648574966
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.48212780693735363,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 8,
+            "y": 6
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 149,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "14",
+      "name": "unrefined_resonite1_shaft",
+      "position": {
+        "x": 5,
+        "y": 11,
+        "z": 0
+      },
+      "orientation": {
+        "x": 0.14832187341859843,
+        "y": 0.12956354248508625,
+        "z": 0.19592117878366103,
+        "w": 0.9606397878644904
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1.0,
+          "y": 0.93,
+          "z": 1.0
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 3,
+            "y": 6,
+            "z": 3
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 159,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 164,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 169,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 174,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "top": {
+            "offset": {
+              "x": 204,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 209,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "15",
+      "name": "unrefined_resonite1_point-1_0",
+      "position": {
+        "x": 6.001670916526445,
+        "y": 7.970852382645646,
+        "z": -1.9155795695458628
+      },
+      "orientation": {
+        "x": 0.9513026447527854,
+        "y": 0.2290057528869361,
+        "z": -0.05223203023003776,
+        "w": 0.1996283002209155
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999983,
+          "y": 0.45493296209441664,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 6,
+            "y": 5
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 179,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "16",
+      "name": "unrefined_resonite1_point-1_1",
+      "position": {
+        "x": 6.8991981221416765,
+        "y": 8.106343086537038,
+        "z": -1.3668654505918028
+      },
+      "orientation": {
+        "x": 0.8072215073444381,
+        "y": -0.17553699133316059,
+        "z": 0.5618393671026298,
+        "w": 0.04378045600483385
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.45493296209441647,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 6,
+            "y": 5
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 187,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "17",
+      "name": "unrefined_resonite1_point-1_2",
+      "position": {
+        "x": 6.462240787268699,
+        "y": 7.619553429509322,
+        "z": -0.5319378385729254
+      },
+      "orientation": {
+        "x": 0.19028095877297196,
+        "y": -0.4772525467284605,
+        "z": 0.8467928830616934,
+        "w": -0.13771338557200072
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999983,
+          "y": 0.45493296209441664,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 6,
+            "y": 5
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 195,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "18",
+      "name": "unrefined_resonite1_point-1_3",
+      "position": {
+        "x": 5.564713581653468,
+        "y": 7.484062725617933,
+        "z": -1.0806519575269857
+      },
+      "orientation": {
+        "x": -0.5381235947863453,
+        "y": -0.4994000329273276,
+        "z": 0.6357066126442313,
+        "w": -0.23853659360107282
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.42857142857142866,
+          "y": 0.45493296209441664,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 7,
+            "y": 5
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 203,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "19",
+      "name": "unrefined_resonite1_point1_0",
+      "position": {
+        "x": 3.5377592127313013,
+        "y": 14.380446570490678,
+        "z": 0.5319378385729254
+      },
+      "orientation": {
+        "x": -0.4772525467284604,
+        "y": -0.1902809587729718,
+        "z": -0.1377133855720008,
+        "w": -0.8467928830616933
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999983,
+          "y": 0.45493296209441664,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 6,
+            "y": 5
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 212,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "20",
+      "name": "unrefined_resonite1_point1_1",
+      "position": {
+        "x": 4.435286418346532,
+        "y": 14.515937274382066,
+        "z": 1.0806519575269857
+      },
+      "orientation": {
+        "x": -0.4994000329273273,
+        "y": 0.5381235947863453,
+        "z": -0.23853659360107266,
+        "w": -0.635706612644231
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.42857142857142866,
+          "y": 0.45493296209441664,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 7,
+            "y": 5
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 220,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "21",
+      "name": "unrefined_resonite1_point1_2",
+      "position": {
+        "x": 3.998329083473555,
+        "y": 14.029147617354354,
+        "z": 1.9155795695458628
+      },
+      "orientation": {
+        "x": 0.22900575288693606,
+        "y": -0.9513026447527849,
+        "z": 0.19962830022091538,
+        "w": 0.052232030230037654
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999983,
+          "y": 0.45493296209441664,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 6,
+            "y": 5
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 229,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "22",
+      "name": "unrefined_resonite1_point1_3",
+      "position": {
+        "x": 3.100801877858324,
+        "y": 13.893656913462962,
+        "z": 1.3668654505918028
+      },
+      "orientation": {
+        "x": -0.1755369913331606,
+        "y": -0.8072215073444382,
+        "z": 0.0437804560048338,
+        "w": -0.5618393671026303
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.45493296209441647,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 6,
+            "y": 5
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 237,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "23",
+      "name": "unrefined_resonite2_shaft",
+      "position": {
+        "x": 0,
+        "y": 10,
+        "z": 6
+      },
+      "orientation": {
+        "x": -0.31859906220246076,
+        "y": 0.09123428085349039,
+        "z": -0.05136334507496333,
+        "w": 0.9420895659880589
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1.0,
+          "y": 0.868,
+          "z": 1.0
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 4,
+            "y": 5,
+            "z": 4
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 245,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 251,
+              "y": 15
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 1,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 7,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "top": {
+            "offset": {
+              "x": 105,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 111,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "24",
+      "name": "unrefined_resonite2_point-1_0",
+      "position": {
+        "x": -0.3141844801432184,
+        "y": 7.164568451787034,
+        "z": 6.94807227985832
+      },
+      "orientation": {
+        "x": 0.6798639930528076,
+        "y": -0.002175701818411313,
+        "z": -0.10467642304616963,
+        "w": 0.7258257805631794
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4803706901966437,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 8,
+            "y": 5
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 13,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "25",
+      "name": "unrefined_resonite2_point-1_1",
+      "position": {
+        "x": 0.8685221006664192,
+        "y": 7.600581904975773,
+        "z": 7.589241066019973
+      },
+      "orientation": {
+        "x": -0.5204417125209894,
+        "y": 0.11764402134653029,
+        "z": -0.6195520209122515,
+        "w": -0.5757218091172004
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.4999999999999999,
+          "y": 0.48037069019664386,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 8,
+            "y": 5
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 23,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "26",
+      "name": "unrefined_resonite2_point-1_2",
+      "position": {
+        "x": 0.09507623035662993,
+        "y": 8.346419469324534,
+        "z": 8.508756054101756
+      },
+      "orientation": {
+        "x": 0.05615173521905477,
+        "y": -0.16419806870196185,
+        "z": 0.9808552936159353,
+        "w": 0.08836781004433955
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.48037069019664386,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 8,
+            "y": 5
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 33,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "27",
+      "name": "unrefined_resonite2_point-1_3",
+      "position": {
+        "x": -1.0876303504530076,
+        "y": 7.910406016135793,
+        "z": 7.867587267940104
+      },
+      "orientation": {
+        "x": -0.4410311670234191,
+        "y": -0.11456711432725297,
+        "z": 0.7675868380448486,
+        "w": -0.4507508536752862
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.4999999999999999,
+          "y": 0.48037069019664386,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 8,
+            "y": 5
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 43,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "28",
+      "name": "unrefined_resonite2_point1_0",
+      "position": {
+        "x": -0.09507623035662993,
+        "y": 11.653580530675466,
+        "z": 3.491243945898244
+      },
+      "orientation": {
+        "x": -0.16419806870196177,
+        "y": -0.05615173521905492,
+        "z": 0.08836781004433956,
+        "w": -0.9808552936159352
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.48037069019664386,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 8,
+            "y": 5
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 53,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "29",
+      "name": "unrefined_resonite2_point1_1",
+      "position": {
+        "x": 1.0876303504530074,
+        "y": 12.089593983864207,
+        "z": 4.132412732059896
+      },
+      "orientation": {
+        "x": -0.11456711432725318,
+        "y": 0.4410311670234188,
+        "z": -0.45075085367528606,
+        "w": -0.7675868380448482
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.48037069019664386,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 8,
+            "y": 5
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 63,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "30",
+      "name": "unrefined_resonite2_point1_2",
+      "position": {
+        "x": 0.3141844801432184,
+        "y": 12.835431548212966,
+        "z": 5.051927720141679
+      },
+      "orientation": {
+        "x": -0.0021757018184112376,
+        "y": -0.6798639930528075,
+        "z": 0.7258257805631795,
+        "w": 0.10467642304616956
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.48037069019664386,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 8,
+            "y": 5
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 73,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "31",
+      "name": "unrefined_resonite2_point1_3",
+      "position": {
+        "x": -0.8685221006664192,
+        "y": 12.399418095024227,
+        "z": 4.410758933980027
+      },
+      "orientation": {
+        "x": 0.11764402134653043,
+        "y": 0.520441712520989,
+        "z": -0.5757218091172004,
+        "w": 0.6195520209122516
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.4999999999999999,
+          "y": 0.48037069019664386,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 8,
+            "y": 5
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 83,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "32",
+      "name": "unrefined_resonite3_shaft",
+      "position": {
+        "x": -7,
+        "y": 8,
+        "z": -3
+      },
+      "orientation": {
+        "x": 0.031432315117852785,
+        "y": 0.09969056725402452,
+        "z": -0.29905850167122167,
+        "w": 0.9484923895029768
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1.0,
+          "y": 0.9299999999999999,
+          "z": 1.0
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 3,
+            "y": 4,
+            "z": 3
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 117,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 122,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 127,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 132,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "top": {
+            "offset": {
+              "x": 214,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 219,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "33",
+      "name": "unrefined_resonite3_point-1_0",
+      "position": {
+        "x": -8.521524205256751,
+        "y": 6.098900467398979,
+        "z": -3.7336107005503543
+      },
+      "orientation": {
+        "x": 0.863671302529171,
+        "y": -0.2236118386370134,
+        "z": -0.2221979798347401,
+        "w": 0.3933162653213059
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.4710095540432274,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 6,
+            "y": 4
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 137,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "34",
+      "name": "unrefined_resonite3_point-1_1",
+      "position": {
+        "x": -7.792852035264939,
+        "y": 5.588678721087084,
+        "z": -3.15593376811332
+      },
+      "orientation": {
+        "x": -0.5798899911196232,
+        "y": 0.47605623703350586,
+        "z": -0.4338373150145393,
+        "w": -0.49888199153883794
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.42857142857142866,
+          "y": 0.47100955404322725,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 7,
+            "y": 4
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 145,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "35",
+      "name": "unrefined_resonite3_point-1_2",
+      "position": {
+        "x": -8.26605727540933,
+        "y": 5.9200205973565225,
+        "z": -2.2663892994496457
+      },
+      "orientation": {
+        "x": -0.04358301240338577,
+        "y": -0.449633348228071,
+        "z": 0.8357365945918298,
+        "w": 0.31220941313661826
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.4710095540432273,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 6,
+            "y": 4
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 154,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "36",
+      "name": "unrefined_resonite3_point-1_3",
+      "position": {
+        "x": -8.994729445401143,
+        "y": 6.430242343668417,
+        "z": -2.8440662318866803
+      },
+      "orientation": {
+        "x": 0.6415256783495665,
+        "y": 0.15982134212585686,
+        "z": -0.7480727116287317,
+        "w": 0.057351205180487544
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.47100955404322736,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 6,
+            "y": 4
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 162,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "37",
+      "name": "unrefined_resonite3_point1_0",
+      "position": {
+        "x": -5.73394272459067,
+        "y": 10.079979402643477,
+        "z": -3.7336107005503543
+      },
+      "orientation": {
+        "x": -0.4496333482280713,
+        "y": 0.04358301240338558,
+        "z": 0.31220941313661826,
+        "w": -0.8357365945918297
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.42857142857142866,
+          "y": 0.47100955404322725,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 7,
+            "y": 4
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 170,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "38",
+      "name": "unrefined_resonite3_point1_1",
+      "position": {
+        "x": -5.005270554598857,
+        "y": 9.569757656331582,
+        "z": -3.1559337681133197
+      },
+      "orientation": {
+        "x": -0.15982134212585736,
+        "y": 0.6415256783495666,
+        "z": -0.05735120518048766,
+        "w": -0.7480727116287318
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.42857142857142866,
+          "y": 0.47100955404322736,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 7,
+            "y": 4
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 179,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "39",
+      "name": "unrefined_resonite3_point1_2",
+      "position": {
+        "x": -5.478475794743248,
+        "y": 9.901099532601021,
+        "z": -2.2663892994496457
+      },
+      "orientation": {
+        "x": -0.22361183863701342,
+        "y": -0.8636713025291709,
+        "z": 0.39331626532130604,
+        "w": 0.22219797983474
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.47100955404322736,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 6,
+            "y": 4
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 188,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "40",
+      "name": "unrefined_resonite3_point1_3",
+      "position": {
+        "x": -6.207147964735061,
+        "y": 10.411321278912915,
+        "z": -2.84406623188668
+      },
+      "orientation": {
+        "x": 0.4760562370335058,
+        "y": 0.5798899911196235,
+        "z": -0.4988819915388378,
+        "w": 0.433837315014539
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.4710095540432272,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 6,
+            "y": 4
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 196,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "41",
+      "name": "exposed_vein",
+      "position": {
+        "x": -4,
+        "y": 6,
+        "z": 7
+      },
+      "orientation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": -0.10452846326765347,
+        "w": 0.9945218953682733
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 0.8
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 8,
+            "y": 2,
+            "z": 1
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 224,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 234,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 244,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 247,
+              "y": 25
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "top": {
+            "offset": {
+              "x": 1,
+              "y": 32
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 11,
+              "y": 32
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    }
+  ],
+  "format": "prop"
+}

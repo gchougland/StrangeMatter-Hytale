@@ -1,0 +1,67 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Rift_Stabilizer.name",
+    "Description": "server.items.SM_Rift_Stabilizer.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Rift_Stabilizer.png",
+  "MaxStack": 25,
+  "Categories": [
+    "Furniture.Benches",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/StrangeMatter/rift_stabilizer.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/rift_stabilizer.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Rift_Stabilizer",
+    "VariantRotation": "NESW",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#243950",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "SM_Use",
+            "Action": "machine"
+          }
+        ],
+        "RequireNewClick": true
+      }
+    },
+    "InteractionHint": "server.interactionHints.SM_Rift_Stabilizer"
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary",
+    "Use": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "machine"
+        }
+      ],
+      "RequireNewClick": true
+    }
+  }
+}

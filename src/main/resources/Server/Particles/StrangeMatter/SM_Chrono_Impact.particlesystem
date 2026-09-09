@@ -1,0 +1,17 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Chrono_Impact_Ring"
+    },
+    {
+      "SpawnerId": "SM_Chrono_Impact_Core"
+    },
+    {
+      "SpawnerId": "SM_Chrono_Impact_Sparks"
+    }
+  ],
+  "LifeSpan": 1.2,
+  "CullDistance": 64,
+  "BoundingRadius": 4.0,
+  "IsImportant": false
+}

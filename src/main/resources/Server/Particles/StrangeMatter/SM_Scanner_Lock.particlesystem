@@ -1,0 +1,17 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Scanner_Lock_Ring"
+    },
+    {
+      "SpawnerId": "SM_Scanner_Lock_Core"
+    },
+    {
+      "SpawnerId": "SM_Scanner_Lock_Sparks"
+    }
+  ],
+  "LifeSpan": 1.2,
+  "CullDistance": 64,
+  "BoundingRadius": 2,
+  "IsImportant": false
+}

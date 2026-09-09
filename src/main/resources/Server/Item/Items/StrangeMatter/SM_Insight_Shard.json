@@ -1,0 +1,46 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Insight_Shard.name",
+    "Description": "server.items.SM_Insight_Shard.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Insight_Shard.png",
+  "MaxStack": 100,
+  "Categories": [
+    "Items",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Item",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "ResourceTypes": [
+    {
+      "Id": "SM_Anomaly_Shards"
+    }
+  ],
+  "Model": "Items/StrangeMatter/Shared/shard_1c8e23d7fc2c.blockymodel",
+  "Texture": "Items/StrangeMatter/insight_shard.png",
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "SM_Insight_Shard_Crystal",
+        "Quantity": 1
+      }
+    ],
+    "OutputQuantity": 4,
+    "TimeSeconds": 2.0,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_Shards"
+        ]
+      }
+    ],
+    "KnowledgeRequired": true
+  }
+}

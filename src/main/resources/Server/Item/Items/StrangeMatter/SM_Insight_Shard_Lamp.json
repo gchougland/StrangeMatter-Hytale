@@ -1,0 +1,78 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Insight_Shard_Lamp.name",
+    "Description": "server.items.SM_Insight_Shard_Lamp.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Insight_Shard_Lamp.png",
+  "MaxStack": 25,
+  "Categories": [
+    "Blocks",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/StrangeMatter/Shared/shard_lamp_f9d17c298777.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/insight_shard_lamp.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Insight_Shard_Lamp",
+    "VariantRotation": "NESW",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#243950",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "Light": {
+      "Color": "#6ff",
+      "Radius": 15
+    },
+    "InteractionHitboxType": "SM_Insight_Shard_Lamp",
+    "PlacementSettings": {
+      "AllowRotationKey": true
+    }
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "Ingredient_Fire_Essence",
+        "Quantity": 4
+      },
+      {
+        "ItemId": "SM_Insight_Shard",
+        "Quantity": 1
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 2.0,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_Shards"
+        ]
+      }
+    ],
+    "KnowledgeRequired": true
+  }
+}

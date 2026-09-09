@@ -1,0 +1,14 @@
+$R = "ResearchStyle.ui";
+Group {
+  Anchor: (Height: 58);
+  Padding: (Horizontal: 12, Vertical: 8);
+  Background: #14223a;
+  LayoutMode: Left;
+  Label #Input { Anchor: (Width: 260); Style: (FontSize: 14, TextColor: #bc93ed, VerticalAlignment: Center); }
+  Label { Anchor: (Width: 30); Text: ">"; Style: (FontSize: 18, TextColor: #6ce4ed, VerticalAlignment: Center); }
+  Group { FlexWeight: 1; LayoutMode: Top;
+    Label #Output { Anchor: (Height: 22); Style: (FontSize: 14, TextColor: #dcf2f5); }
+    Label #Stock { Anchor: (Height: 18); Style: (FontSize: 11, TextColor: #879dbd); }
+  }
+  $R.@Control #Trade { Anchor: (Width: 96, Height: 38); Text: "TRADE"; }
+}

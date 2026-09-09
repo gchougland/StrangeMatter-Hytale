@@ -1,0 +1,530 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "name": "shard_shaft",
+      "position": {
+        "x": 0,
+        "y": 10,
+        "z": 0
+      },
+      "orientation": {
+        "x": 0.009110255854363642,
+        "y": 0.08667829446963064,
+        "z": -0.10413070090691416,
+        "w": 0.9907374393020275
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1.0,
+          "y": 0.93,
+          "z": 1.0
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 7,
+            "y": 12,
+            "z": 7
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 1,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 10,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 19,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 28,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "top": {
+            "offset": {
+              "x": 165,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 174,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "2",
+      "name": "shard_point-1_0",
+      "position": {
+        "x": -1.8129199356856995,
+        "y": 2.932485091546326,
+        "z": -1.723413567771364
+      },
+      "orientation": {
+        "x": -0.9166502433649717,
+        "y": 0.062339624311469555,
+        "z": 0.12029173223556994,
+        "w": -0.3760265971117054
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.48935059006810233,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 14,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 37,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "3",
+      "name": "shard_point-1_1",
+      "position": {
+        "x": 0.17007662032618232,
+        "y": 2.510986161796945,
+        "z": -0.3038843109171283
+      },
+      "orientation": {
+        "x": 0.6760881188530986,
+        "y": -0.32184615367788194,
+        "z": 0.5581113501662553,
+        "w": 0.3575354943554993
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.48935059006810244,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 14,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 53,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "4",
+      "name": "shard_point-1_2",
+      "position": {
+        "x": -1.2184325164372305,
+        "y": 2.806122889754786,
+        "z": 1.723413567771364
+      },
+      "orientation": {
+        "x": -0.03948274367639306,
+        "y": 0.3928195712174065,
+        "z": -0.9095803729550478,
+        "w": -0.12960494803561107
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.48935059006810244,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 14,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 69,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "5",
+      "name": "shard_point-1_3",
+      "position": {
+        "x": -3.201429072449113,
+        "y": 3.2276218195041677,
+        "z": 0.30388431091712853
+      },
+      "orientation": {
+        "x": 0.6202510872662428,
+        "y": 0.23368461150335829,
+        "z": -0.7282295493351512,
+        "w": 0.17424641909287808
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.48935059006810233,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 14,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 85,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "6",
+      "name": "shard_point1_0",
+      "position": {
+        "x": 1.218432516437231,
+        "y": 17.193877110245214,
+        "z": -1.723413567771364
+      },
+      "orientation": {
+        "x": -0.3928195712174066,
+        "y": -0.03948274367639304,
+        "z": 0.12960494803561118,
+        "w": -0.9095803729550478
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.48935059006810233,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 14,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 101,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "7",
+      "name": "shard_point1_1",
+      "position": {
+        "x": 3.201429072449113,
+        "y": 16.77237818049583,
+        "z": -0.303884310917129
+      },
+      "orientation": {
+        "x": -0.233684611503358,
+        "y": 0.6202510872662431,
+        "z": -0.17424641909287816,
+        "w": -0.7282295493351513
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.48935059006810233,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 14,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 117,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "8",
+      "name": "shard_point1_2",
+      "position": {
+        "x": 1.8129199356856995,
+        "y": 17.067514908453674,
+        "z": 1.723413567771364
+      },
+      "orientation": {
+        "x": 0.062339624311469485,
+        "y": 0.9166502433649719,
+        "z": -0.3760265971117055,
+        "w": -0.12029173223556992
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.4999999999999999,
+          "y": 0.48935059006810233,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 14,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 133,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "9",
+      "name": "shard_point1_3",
+      "position": {
+        "x": -0.17007662032618232,
+        "y": 17.489013838203057,
+        "z": 0.30388431091712875
+      },
+      "orientation": {
+        "x": -0.32184615367788194,
+        "y": -0.6760881188530987,
+        "z": 0.3575354943554993,
+        "w": -0.5581113501662553
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.48935059006810233,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 14,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 149,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    }
+  ],
+  "format": "prop"
+}

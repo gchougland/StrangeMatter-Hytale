@@ -1,0 +1,98 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Containment_Capsule_Temporal_Bloom.name",
+    "Description": "server.items.SM_Containment_Capsule_Temporal_Bloom.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Containment_Capsule_Temporal_Bloom.png",
+  "MaxStack": 1,
+  "Categories": [
+    "Items",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Item",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "Model": "Items/StrangeMatter/containment_capsule_temporal_bloom.blockymodel",
+  "Texture": "Items/StrangeMatter/containment_capsule_temporal_bloom.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0.12,
+          "Effects": {
+            "ItemAnimationId": "Throw"
+          },
+          "Next": {
+            "Type": "SM_Use",
+            "Action": "capsule_throw",
+            "Next": {
+              "Type": "Simple",
+              "RunTime": 0.63
+            }
+          }
+        }
+      ],
+      "RequireNewClick": true,
+      "Cooldown": {
+        "Id": "SM_Capsule_Throw",
+        "Cooldown": 0.75,
+        "ClickBypass": false
+      }
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0.12,
+          "Effects": {
+            "ItemAnimationId": "Throw"
+          },
+          "Next": {
+            "Type": "SM_Use",
+            "Action": "capsule_throw",
+            "Next": {
+              "Type": "Simple",
+              "RunTime": 0.63
+            }
+          }
+        }
+      ],
+      "RequireNewClick": true,
+      "Cooldown": {
+        "Id": "SM_Capsule_Throw",
+        "Cooldown": 0.75,
+        "ClickBypass": false
+      }
+    },
+    "Use": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0.12,
+          "Effects": {
+            "ItemAnimationId": "Throw"
+          },
+          "Next": {
+            "Type": "SM_Use",
+            "Action": "capsule_throw",
+            "Next": {
+              "Type": "Simple",
+              "RunTime": 0.63
+            }
+          }
+        }
+      ],
+      "RequireNewClick": true,
+      "Cooldown": {
+        "Id": "SM_Capsule_Throw",
+        "Cooldown": 0.75,
+        "ClickBypass": false
+      }
+    }
+  }
+}

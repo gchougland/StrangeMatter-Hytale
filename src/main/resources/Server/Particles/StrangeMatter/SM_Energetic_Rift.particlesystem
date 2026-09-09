@@ -1,0 +1,23 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Energetic_Fissure"
+    },
+    {
+      "SpawnerId": "SM_Energetic_Glow"
+    },
+    {
+      "SpawnerId": "SM_Energetic_Corona"
+    },
+    {
+      "SpawnerId": "SM_Energetic_Sparks"
+    },
+    {
+      "SpawnerId": "SM_Energetic_Arcs"
+    }
+  ],
+  "LifeSpan": 3.5,
+  "CullDistance": 96,
+  "BoundingRadius": 4,
+  "IsImportant": false
+}

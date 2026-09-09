@@ -1,0 +1,54 @@
+{
+  "Parent": "Template_Soil",
+  "TranslationProperties": {
+    "Name": "server.items.SM_Anomalous_Dirt.name",
+    "Description": "server.items.SM_Anomalous_Dirt.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Anomalous_Dirt.png",
+  "MaxStack": 100,
+  "Categories": [
+    "Blocks.Soils",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter",
+      "Soil"
+    ],
+    "Family": [
+      "Dirt"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Cube",
+    "Opacity": "Solid",
+    "Group": "Dirt",
+    "HitboxType": "SM_Anomalous_Dirt",
+    "VariantRotation": "None",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Soils",
+        "ItemId": "SM_Anomalous_Dirt"
+      }
+    },
+    "BlockParticleSetId": "Dirt",
+    "BlockSoundSetId": "Dirt",
+    "PhysicalMaterialId": "Dirt",
+    "ParticleColor": "#497872",
+    "Textures": [
+      {
+        "All": "BlockTextures/StrangeMatter/Anomalous_Grass_Soil.png",
+        "Weight": 1
+      }
+    ],
+    "TransitionTexture": "BlockTextures/Transition_Soil_Dirt.png"
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "ItemSoundSetId": "ISS_Blocks_Soft"
+}

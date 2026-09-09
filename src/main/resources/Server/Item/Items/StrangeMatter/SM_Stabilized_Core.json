@@ -1,0 +1,53 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Stabilized_Core.name",
+    "Description": "server.items.SM_Stabilized_Core.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Stabilized_Core.png",
+  "MaxStack": 100,
+  "Categories": [
+    "Items",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Item",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "Model": "Items/StrangeMatter/stabilized_core.blockymodel",
+  "Texture": "Items/StrangeMatter/stabilized_core.png",
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "SM_Resonant_Coil",
+        "Quantity": 4
+      },
+      {
+        "ResourceTypeId": "SM_Anomaly_Shards",
+        "Quantity": 2
+      },
+      {
+        "ItemId": "SM_Resonite_Ingot",
+        "Quantity": 2
+      },
+      {
+        "ItemId": "Rock_Crystal_Red_Block",
+        "Quantity": 1
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 2.0,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_All"
+        ]
+      }
+    ],
+    "KnowledgeRequired": true
+  }
+}

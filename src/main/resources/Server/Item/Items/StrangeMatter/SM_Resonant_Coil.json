@@ -1,0 +1,45 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Resonant_Coil.name",
+    "Description": "server.items.SM_Resonant_Coil.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Resonant_Coil.png",
+  "MaxStack": 100,
+  "Categories": [
+    "Items",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Item",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "Model": "Items/StrangeMatter/resonant_coil.blockymodel",
+  "Texture": "Items/StrangeMatter/resonant_coil.png",
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "SM_Resonite_Nugget",
+        "Quantity": 8
+      },
+      {
+        "ItemId": "Ingredient_Stick",
+        "Quantity": 1
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 2.0,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_All"
+        ]
+      }
+    ],
+    "KnowledgeRequired": true
+  }
+}

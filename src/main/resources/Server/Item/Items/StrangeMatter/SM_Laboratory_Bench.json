@@ -1,0 +1,110 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Laboratory_Bench.name",
+    "Description": "server.items.SM_Laboratory_Bench.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Laboratory_Bench.png",
+  "MaxStack": 25,
+  "Categories": [
+    "Blocks",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/StrangeMatter/laboratory_bench.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/laboratory_bench.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Laboratory_Bench",
+    "VariantRotation": "NESW",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Benches"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#243950",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "InteractionHint": "server.interactionHints.SM_Laboratory_Bench",
+    "Bench": {
+      "Type": "Crafting",
+      "Id": "SM_Laboratory",
+      "Categories": [
+        {
+          "Id": "SM_Laboratory_All",
+          "Icon": "Icons/CraftingCategories/SM_Laboratory.png",
+          "Name": "server.benchCategories.sm.laboratory"
+        },
+        {
+          "Id": "SM_Laboratory_Shards",
+          "Icon": "Icons/CraftingCategories/SM_Laboratory_Shards.png",
+          "Name": "server.benchCategories.sm.shards"
+        }
+      ],
+      "LocalOpenSoundEventId": "SFX_Workbench_Open",
+      "LocalCloseSoundEventId": "SFX_Workbench_Close",
+      "CompletedSoundEventId": "SFX_Workbench_Craft",
+      "FailedSoundEventId": "SFX_Generic_Crafting_Failed"
+    },
+    "BlockEntity": {
+      "Components": {
+        "BenchBlock": {}
+      }
+    },
+    "State": {
+      "Definitions": {
+        "CraftCompleted": {},
+        "CraftCompletedInstant": {}
+      }
+    }
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "Bench_WorkBench",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Ingredient_Bar_Iron",
+        "Quantity": 4
+      },
+      {
+        "ItemId": "Ingredient_Bar_Copper",
+        "Quantity": 2
+      },
+      {
+        "ResourceTypeId": "Wood_Planks",
+        "Quantity": 6
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 3,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Workbench",
+        "Categories": [
+          "Workbench_Crafting"
+        ]
+      }
+    ],
+    "KnowledgeRequired": true
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Levitation_Range_Ring"
+    }
+  ],
+  "LifeSpan": 0.9,
+  "CullDistance": 64,
+  "BoundingRadius": 3,
+  "IsImportant": false
+}

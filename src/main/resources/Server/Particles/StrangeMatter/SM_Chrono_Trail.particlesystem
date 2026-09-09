@@ -1,0 +1,11 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Chrono_Trail_Trace"
+    }
+  ],
+  "LifeSpan": 0.5,
+  "CullDistance": 64,
+  "BoundingRadius": 1,
+  "IsImportant": false
+}

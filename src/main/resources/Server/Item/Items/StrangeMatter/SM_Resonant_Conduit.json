@@ -1,0 +1,420 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Resonant_Conduit.name",
+    "Description": "server.items.SM_Resonant_Conduit.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Resonant_Conduit.png",
+  "MaxStack": 25,
+  "Categories": [
+    "Furniture.Benches",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection00.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/resonant_conduit.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Resonant_Conduit_Connection00",
+    "VariantRotation": "None",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#243950",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "SM_Use",
+            "Action": "machine"
+          }
+        ],
+        "RequireNewClick": true
+      }
+    },
+    "InteractionHint": "server.interactionHints.SM_Resonant_Conduit",
+    "InteractionHitboxType": "SM_Resonant_Conduit_Connection00",
+    "State": {
+      "Definitions": {
+        "Connection00": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection00.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection00",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection00"
+        },
+        "Connection01": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection01.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection01",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection01"
+        },
+        "Connection02": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection02.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection02",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection02"
+        },
+        "Connection03": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection03.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection03",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection03"
+        },
+        "Connection04": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection04.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection04",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection04"
+        },
+        "Connection05": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection05.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection05",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection05"
+        },
+        "Connection06": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection06.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection06",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection06"
+        },
+        "Connection07": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection07.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection07",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection07"
+        },
+        "Connection08": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection08.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection08",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection08"
+        },
+        "Connection09": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection09.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection09",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection09"
+        },
+        "Connection10": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection10.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection10",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection10"
+        },
+        "Connection11": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection11.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection11",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection11"
+        },
+        "Connection12": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection12.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection12",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection12"
+        },
+        "Connection13": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection13.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection13",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection13"
+        },
+        "Connection14": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection14.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection14",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection14"
+        },
+        "Connection15": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection15.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection15",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection15"
+        },
+        "Connection16": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection16.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection16",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection16"
+        },
+        "Connection17": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection17.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection17",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection17"
+        },
+        "Connection18": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection18.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection18",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection18"
+        },
+        "Connection19": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection19.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection19",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection19"
+        },
+        "Connection20": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection20.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection20",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection20"
+        },
+        "Connection21": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection21.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection21",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection21"
+        },
+        "Connection22": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection22.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection22",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection22"
+        },
+        "Connection23": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection23.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection23",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection23"
+        },
+        "Connection24": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection24.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection24",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection24"
+        },
+        "Connection25": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection25.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection25",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection25"
+        },
+        "Connection26": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection26.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection26",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection26"
+        },
+        "Connection27": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection27.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection27",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection27"
+        },
+        "Connection28": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection28.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection28",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection28"
+        },
+        "Connection29": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection29.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection29",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection29"
+        },
+        "Connection30": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection30.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection30",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection30"
+        },
+        "Connection31": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection31.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection31",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection31"
+        },
+        "Connection32": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection32.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection32",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection32"
+        },
+        "Connection33": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection33.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection33",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection33"
+        },
+        "Connection34": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection34.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection34",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection34"
+        },
+        "Connection35": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection35.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection35",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection35"
+        },
+        "Connection36": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection36.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection36",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection36"
+        },
+        "Connection37": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection37.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection37",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection37"
+        },
+        "Connection38": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection38.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection38",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection38"
+        },
+        "Connection39": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection39.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection39",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection39"
+        },
+        "Connection40": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection40.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection40",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection40"
+        },
+        "Connection41": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection41.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection41",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection41"
+        },
+        "Connection42": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection42.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection42",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection42"
+        },
+        "Connection43": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection43.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection43",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection43"
+        },
+        "Connection44": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection44.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection44",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection44"
+        },
+        "Connection45": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection45.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection45",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection45"
+        },
+        "Connection46": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection46.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection46",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection46"
+        },
+        "Connection47": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection47.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection47",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection47"
+        },
+        "Connection48": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection48.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection48",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection48"
+        },
+        "Connection49": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection49.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection49",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection49"
+        },
+        "Connection50": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection50.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection50",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection50"
+        },
+        "Connection51": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection51.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection51",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection51"
+        },
+        "Connection52": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection52.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection52",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection52"
+        },
+        "Connection53": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection53.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection53",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection53"
+        },
+        "Connection54": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection54.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection54",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection54"
+        },
+        "Connection55": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection55.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection55",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection55"
+        },
+        "Connection56": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection56.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection56",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection56"
+        },
+        "Connection57": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection57.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection57",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection57"
+        },
+        "Connection58": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection58.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection58",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection58"
+        },
+        "Connection59": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection59.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection59",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection59"
+        },
+        "Connection60": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection60.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection60",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection60"
+        },
+        "Connection61": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection61.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection61",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection61"
+        },
+        "Connection62": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection62.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection62",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection62"
+        },
+        "Connection63": {
+          "CustomModel": "Blocks/StrangeMatter/resonant_conduit_connection63.blockymodel",
+          "HitboxType": "SM_Resonant_Conduit_Connection63",
+          "InteractionHitboxType": "SM_Resonant_Conduit_Connection63"
+        }
+      }
+    }
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary",
+    "Use": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "machine"
+        }
+      ],
+      "RequireNewClick": true
+    }
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "SM_Resonite_Ingot",
+        "Quantity": 6
+      },
+      {
+        "ItemId": "SM_Resonite_Nugget",
+        "Quantity": 2
+      },
+      {
+        "ItemId": "SM_Energetic_Shard",
+        "Quantity": 1
+      }
+    ],
+    "OutputQuantity": 8,
+    "TimeSeconds": 2.0,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_All"
+        ]
+      }
+    ],
+    "KnowledgeRequired": true
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Chrono_Blister.name",
+    "Description": "server.items.SM_Chrono_Blister.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Chrono_Blister.png",
+  "MaxStack": 1,
+  "Categories": [
+    "Items",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Item",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "Model": "Items/StrangeMatter/chrono_blister.blockymodel",
+  "Texture": "Items/StrangeMatter/chrono_blister.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "Charging",
+          "AllowIndefiniteHold": true,
+          "Next": {
+            "0": {
+              "Type": "SM_Use",
+              "Action": "cancel"
+            },
+            "1.0": {
+              "Type": "SM_Use",
+              "Action": "chrono_fire"
+            }
+          }
+        }
+      ],
+      "RequireNewClick": true
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "Charging",
+          "AllowIndefiniteHold": true,
+          "Next": {
+            "0": {
+              "Type": "SM_Use",
+              "Action": "cancel"
+            },
+            "1.0": {
+              "Type": "SM_Use",
+              "Action": "chrono_fire"
+            }
+          }
+        }
+      ],
+      "RequireNewClick": true
+    }
+  },
+  "MaxDurability": 100
+}

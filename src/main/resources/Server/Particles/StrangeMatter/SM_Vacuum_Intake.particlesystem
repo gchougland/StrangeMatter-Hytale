@@ -1,0 +1,17 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Vacuum_Intake_Ring"
+    },
+    {
+      "SpawnerId": "SM_Vacuum_Intake_Core"
+    },
+    {
+      "SpawnerId": "SM_Vacuum_Intake_Sparks"
+    }
+  ],
+  "LifeSpan": 1.2,
+  "CullDistance": 64,
+  "BoundingRadius": 2,
+  "IsImportant": false
+}

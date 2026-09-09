@@ -1,0 +1,14 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Stabilizer_Link_Filament"
+    },
+    {
+      "SpawnerId": "SM_Stabilizer_Link_Glow"
+    }
+  ],
+  "LifeSpan": 0.4,
+  "CullDistance": 64,
+  "BoundingRadius": 1,
+  "IsImportant": false
+}

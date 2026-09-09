@@ -1,0 +1,64 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Gravitic_Shard_Ore.name",
+    "Description": "server.items.SM_Gravitic_Shard_Ore.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Gravitic_Shard_Ore.png",
+  "MaxStack": 100,
+  "Categories": [
+    "Blocks.Ores",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "CubeWithModel",
+    "Opacity": "Solid",
+    "CustomModel": "Blocks/StrangeMatter/gravitic_shard_ore.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/gravitic_shard_ore.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Gravitic_Shard_Ore",
+    "VariantRotation": "None",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks",
+        "Quality": 3,
+        "DropList": {
+          "Container": {
+            "Type": "Single",
+            "Item": {
+              "ItemId": "SM_Gravitic_Shard",
+              "QuantityMin": 1,
+              "QuantityMax": 2
+            }
+          }
+        }
+      }
+    },
+    "BlockParticleSetId": "Ore",
+    "ParticleColor": "#243950",
+    "BlockSoundSetId": "Ore",
+    "PhysicalMaterialId": "Stone",
+    "Textures": [
+      {
+        "All": "BlockTextures/Rock_Stone.png",
+        "Weight": 1
+      }
+    ],
+    "Group": "Stone"
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  }
+}

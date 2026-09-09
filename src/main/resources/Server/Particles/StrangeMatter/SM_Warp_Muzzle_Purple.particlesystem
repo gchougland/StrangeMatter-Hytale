@@ -1,0 +1,17 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Warp_Muzzle_Purple_Ring"
+    },
+    {
+      "SpawnerId": "SM_Warp_Muzzle_Purple_Core"
+    },
+    {
+      "SpawnerId": "SM_Warp_Muzzle_Purple_Sparks"
+    }
+  ],
+  "LifeSpan": 1.2,
+  "CullDistance": 64,
+  "BoundingRadius": 2,
+  "IsImportant": false
+}

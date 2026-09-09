@@ -1,0 +1,17 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Capsule_Throw_Ring"
+    },
+    {
+      "SpawnerId": "SM_Capsule_Throw_Core"
+    },
+    {
+      "SpawnerId": "SM_Capsule_Throw_Sparks"
+    }
+  ],
+  "LifeSpan": 1.2,
+  "CullDistance": 64,
+  "BoundingRadius": 2,
+  "IsImportant": false
+}

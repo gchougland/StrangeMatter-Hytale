@@ -1,0 +1,3680 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "name": "time_petal0_shaft",
+      "position": {
+        "x": 0.0,
+        "y": 7.0,
+        "z": 13.0
+      },
+      "orientation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": -0.25881904510252074,
+        "w": 0.9659258262890683
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1.0,
+          "y": 0.9816666666666666,
+          "z": 1.0
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 6,
+            "y": 12,
+            "z": 6
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 185,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 193,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 201,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 209,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "top": {
+            "offset": {
+              "x": 64,
+              "y": 57
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 72,
+              "y": 57
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "2",
+      "name": "time_petal0_point-1_0",
+      "position": {
+        "x": -3.8474999999999997,
+        "y": 0.33593451787874384,
+        "z": 11.5
+      },
+      "orientation": {
+        "x": 0.9084566292813595,
+        "y": -0.2434202201746401,
+        "z": -0.08794256374424397,
+        "w": 0.32820611604138317
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4693836384025333,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 121,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "3",
+      "name": "time_petal0_point-1_1",
+      "position": {
+        "x": -2.5484618943233412,
+        "y": -0.41406548212125627,
+        "z": 13.0
+      },
+      "orientation": {
+        "x": 0.5801910598002374,
+        "y": -0.40420085864317135,
+        "z": 0.5801910598002376,
+        "w": 0.4042008586431712
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 135,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "4",
+      "name": "time_petal0_point-1_2",
+      "position": {
+        "x": -3.8474999999999993,
+        "y": 0.33593451787874384,
+        "z": 14.5
+      },
+      "orientation": {
+        "x": 0.08794256374424396,
+        "y": 0.32820611604138306,
+        "z": -0.9084566292813595,
+        "w": -0.24342022017464
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4693836384025333,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 149,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "5",
+      "name": "time_petal0_point-1_3",
+      "position": {
+        "x": -5.146538105676657,
+        "y": 1.0859345178787438,
+        "z": 13.0
+      },
+      "orientation": {
+        "x": -0.7045606261572079,
+        "y": -0.059952681916350614,
+        "z": 0.7045606261572082,
+        "w": -0.05995268191635056
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.46938363840253333,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 163,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "6",
+      "name": "time_petal0_point1_0",
+      "position": {
+        "x": 3.8474999999999993,
+        "y": 13.664065482121256,
+        "z": 11.5
+      },
+      "orientation": {
+        "x": 0.3282061160413834,
+        "y": -0.08794256374424358,
+        "z": -0.24342022017464007,
+        "w": 0.9084566292813595
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4693836384025333,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 177,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "7",
+      "name": "time_petal0_point1_1",
+      "position": {
+        "x": 5.146538105676657,
+        "y": 12.914065482121256,
+        "z": 13.0
+      },
+      "orientation": {
+        "x": -0.05995268191635056,
+        "y": 0.7045606261572077,
+        "z": -0.05995268191635049,
+        "w": -0.7045606261572082
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.46938363840253333,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 191,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "8",
+      "name": "time_petal0_point1_2",
+      "position": {
+        "x": 3.8475,
+        "y": 13.664065482121256,
+        "z": 14.5
+      },
+      "orientation": {
+        "x": -0.24342022017464013,
+        "y": -0.9084566292813594,
+        "z": 0.3282061160413833,
+        "w": 0.08794256374424388
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.46938363840253333,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 205,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "9",
+      "name": "time_petal0_point1_3",
+      "position": {
+        "x": 2.5484618943233412,
+        "y": 14.414065482121256,
+        "z": 13.0
+      },
+      "orientation": {
+        "x": 0.40420085864317123,
+        "y": 0.5801910598002379,
+        "z": -0.4042008586431714,
+        "w": 0.5801910598002379
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4693836384025333,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 219,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "10",
+      "name": "time_petal1_shaft",
+      "position": {
+        "x": 11.258330249197702,
+        "y": 3.500000000000001,
+        "z": 6.500000000000002
+      },
+      "orientation": {
+        "x": 0.07821723252011542,
+        "y": 0.49384417029756883,
+        "z": -0.1354762207522686,
+        "w": 0.8553631939770864
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1.0,
+          "y": 0.9816666666666666,
+          "z": 1.0
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 6,
+            "y": 12,
+            "z": 6
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 217,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 225,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 233,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 241,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "top": {
+            "offset": {
+              "x": 80,
+              "y": 57
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 88,
+              "y": 57
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "11",
+      "name": "time_petal1_point-1_0",
+      "position": {
+        "x": 7.644985822162983,
+        "y": -3.416955041896479,
+        "z": 5.750000000000002
+      },
+      "orientation": {
+        "x": -0.8310490477189751,
+        "y": -0.04038447378565835,
+        "z": 0.5104948238750979,
+        "w": -0.21707512376864632
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.4615384615384616,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 13,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 233,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "12",
+      "name": "time_petal1_point-1_1",
+      "position": {
+        "x": 9.593736864703846,
+        "y": -4.0501426386724155,
+        "z": 5.200961894323344
+      },
+      "orientation": {
+        "x": 0.8835147727639608,
+        "y": -0.22897377166611532,
+        "z": 0.1890805651457276,
+        "w": 0.3622446660490841
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 1,
+              "y": 33
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "13",
+      "name": "time_petal1_point-1_2",
+      "position": {
+        "x": 10.115903132801979,
+        "y": -4.219804743885931,
+        "z": 7.250000000000002
+      },
+      "orientation": {
+        "x": -0.4184295264808016,
+        "y": 0.36420228710359903,
+        "z": -0.7778951234853554,
+        "w": -0.29521619585528125
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 15,
+              "y": 33
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "14",
+      "name": "time_petal1_point-1_3",
+      "position": {
+        "x": 8.167152090261116,
+        "y": -3.5866171471099944,
+        "z": 7.79903810567666
+      },
+      "orientation": {
+        "x": -0.2917660615174592,
+        "y": -0.28608604220309386,
+        "z": 0.9110292685911553,
+        "w": 0.05525408196164631
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.46938363840253305,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 29,
+              "y": 33
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "15",
+      "name": "time_petal1_point1_0",
+      "position": {
+        "x": 12.400757365593424,
+        "y": 11.219804743885934,
+        "z": 5.750000000000002
+      },
+      "orientation": {
+        "x": 0.36420228710359903,
+        "y": 0.4184295264808017,
+        "z": -0.2952161958552811,
+        "w": 0.7778951234853553
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 43,
+              "y": 33
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "16",
+      "name": "time_petal1_point1_1",
+      "position": {
+        "x": 14.349508408134287,
+        "y": 10.586617147109997,
+        "z": 5.200961894323344
+      },
+      "orientation": {
+        "x": -0.286086042203094,
+        "y": 0.291766061517459,
+        "z": 0.05525408196164643,
+        "w": -0.9110292685911552
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 57,
+              "y": 33
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "17",
+      "name": "time_petal1_point1_2",
+      "position": {
+        "x": 14.87167467623242,
+        "y": 10.41695504189648,
+        "z": 7.250000000000002
+      },
+      "orientation": {
+        "x": 0.04038447378565826,
+        "y": -0.8310490477189751,
+        "z": 0.2170751237686461,
+        "w": 0.5104948238750977
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 71,
+              "y": 33
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "18",
+      "name": "time_petal1_point1_3",
+      "position": {
+        "x": 12.922923633691557,
+        "y": 11.050142638672417,
+        "z": 7.79903810567666
+      },
+      "orientation": {
+        "x": 0.2289737716661155,
+        "y": 0.8835147727639606,
+        "z": -0.36224466604908395,
+        "w": 0.1890805651457275
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.4693836384025333,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 85,
+              "y": 33
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "19",
+      "name": "time_petal2_shaft",
+      "position": {
+        "x": 11.258330249197703,
+        "y": -3.4999999999999982,
+        "z": -6.499999999999997
+      },
+      "orientation": {
+        "x": 0.04532426763774015,
+        "y": 0.8648385460668958,
+        "z": -0.026167978121471924,
+        "w": 0.499314767377287
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1.0,
+          "y": 0.9816666666666666,
+          "z": 1.0
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 6,
+            "y": 12,
+            "z": 6
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 249,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 1,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 9,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 17,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "top": {
+            "offset": {
+              "x": 96,
+              "y": 57
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 104,
+              "y": 57
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "20",
+      "name": "time_petal2_point-1_0",
+      "position": {
+        "x": 9.162061885339948,
+        "y": -11.017059527946358,
+        "z": -5.749999999999998
+      },
+      "orientation": {
+        "x": -0.485007750714783,
+        "y": -0.26924720297345195,
+        "z": 0.822275147096786,
+        "w": -0.12703152327087452
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.4999999999999998,
+          "y": 0.46938363840253305,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 99,
+              "y": 33
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "21",
+      "name": "time_petal2_point-1_1",
+      "position": {
+        "x": 9.708092302826905,
+        "y": -11.074449637408122,
+        "z": -7.7990381056766545
+      },
+      "orientation": {
+        "x": -0.9118141792119635,
+        "y": -0.04027709511835731,
+        "z": 0.2602636021506651,
+        "w": -0.31501669097430446
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 113,
+              "y": 33
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "22",
+      "name": "time_petal2_point-1_2",
+      "position": {
+        "x": 11.745905563366271,
+        "y": -11.288632441771368,
+        "z": -7.249999999999997
+      },
+      "orientation": {
+        "x": 0.8044922278908677,
+        "y": -0.21228678880408003,
+        "z": 0.4542068311432402,
+        "w": 0.31846935347888106
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 127,
+              "y": 33
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "23",
+      "name": "time_petal2_point-1_3",
+      "position": {
+        "x": 11.199875145879314,
+        "y": -11.231242332309602,
+        "z": -5.20096189432334
+      },
+      "orientation": {
+        "x": 0.22590964029504815,
+        "y": -0.3404959509577201,
+        "z": 0.9026090628759414,
+        "w": 0.13536698791572027
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.46938363840253305,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 141,
+              "y": 33
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "24",
+      "name": "time_petal2_point1_0",
+      "position": {
+        "x": 10.770754935029135,
+        "y": 4.2886324417713695,
+        "z": -5.749999999999997
+      },
+      "orientation": {
+        "x": 0.21228678880407986,
+        "y": 0.8044922278908673,
+        "z": -0.31846935347888083,
+        "w": 0.45420683114324
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.4999999999999998,
+          "y": 0.4693836384025333,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 155,
+              "y": 33
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "25",
+      "name": "time_petal2_point1_1",
+      "position": {
+        "x": 11.316785352516092,
+        "y": 4.231242332309606,
+        "z": -7.7990381056766545
+      },
+      "orientation": {
+        "x": 0.34049595095771973,
+        "y": 0.22590964029504845,
+        "z": -0.13536698791572022,
+        "w": 0.9026090628759411
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 169,
+              "y": 33
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "26",
+      "name": "time_petal2_point1_2",
+      "position": {
+        "x": 13.354598613055458,
+        "y": 4.01705952794636,
+        "z": -7.2499999999999964
+      },
+      "orientation": {
+        "x": -0.26924720297345195,
+        "y": 0.4850077507147832,
+        "z": -0.1270315232708746,
+        "w": -0.8222751470967861
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 183,
+              "y": 33
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "27",
+      "name": "time_petal2_point1_3",
+      "position": {
+        "x": 12.808568195568501,
+        "y": 4.074449637408125,
+        "z": -5.20096189432334
+      },
+      "orientation": {
+        "x": 0.04027709511835723,
+        "y": -0.9118141792119636,
+        "z": 0.31501669097430446,
+        "w": 0.26026360215066496
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 197,
+              "y": 33
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "28",
+      "name": "time_petal3_shaft",
+      "position": {
+        "x": 1.592040838891559e-15,
+        "y": -7.0,
+        "z": -13.0
+      },
+      "orientation": {
+        "x": -0.052335956242943835,
+        "y": 0.9986295347545738,
+        "z": 3.204653064661855e-18,
+        "w": 6.114842316355997e-17
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1.0,
+          "y": 0.9816666666666666,
+          "z": 1.0
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 6,
+            "y": 12,
+            "z": 6
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 25,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 33,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 41,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 49,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "top": {
+            "offset": {
+              "x": 112,
+              "y": 57
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 120,
+              "y": 57
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "29",
+      "name": "time_petal3_point-1_0",
+      "position": {
+        "x": 0.8043465248445953,
+        "y": -14.652845984858864,
+        "z": -11.5
+      },
+      "orientation": {
+        "x": 0.017782919205918343,
+        "y": -0.3393183120749542,
+        "z": 0.9392145818580226,
+        "w": -0.04922215050542925
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999983,
+          "y": 0.4693836384025333,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 211,
+              "y": 33
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "30",
+      "name": "time_petal3_point-1_1",
+      "position": {
+        "x": -0.6874363182078145,
+        "y": -14.809638679760344,
+        "z": -13.0
+      },
+      "orientation": {
+        "x": -0.6515505770612983,
+        "y": -0.2747395958559471,
+        "z": 0.6515505770612984,
+        "w": -0.2747395958559472
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 225,
+              "y": 33
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "31",
+      "name": "time_petal3_point-1_2",
+      "position": {
+        "x": 0.8043465248445958,
+        "y": -14.652845984858864,
+        "z": -14.5
+      },
+      "orientation": {
+        "x": -0.9392145818580229,
+        "y": -0.04922215050542922,
+        "z": -0.01778291920591836,
+        "w": -0.3393183120749542
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999983,
+          "y": 0.4693836384025333,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 239,
+              "y": 33
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "32",
+      "name": "time_petal3_point-1_3",
+      "position": {
+        "x": 2.296129367897005,
+        "y": -14.496053289957382,
+        "z": -13.0
+      },
+      "orientation": {
+        "x": 0.6766994225808929,
+        "y": -0.20512896304199957,
+        "z": 0.6766994225808931,
+        "w": 0.20512896304199946
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.46938363840253333,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 1,
+              "y": 45
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "33",
+      "name": "time_petal3_point1_0",
+      "position": {
+        "x": -0.8043465248445918,
+        "y": 0.652845984858863,
+        "z": -11.5
+      },
+      "orientation": {
+        "x": 0.04922215050542905,
+        "y": -0.939214581858023,
+        "z": 0.33931831207495416,
+        "w": -0.01778291920591831
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999983,
+          "y": 0.4693836384025333,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 15,
+              "y": 45
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "34",
+      "name": "time_petal3_point1_1",
+      "position": {
+        "x": -2.2961293678970014,
+        "y": 0.49605328995738285,
+        "z": -13.0
+      },
+      "orientation": {
+        "x": 0.2051289630419995,
+        "y": 0.6766994225808929,
+        "z": -0.20512896304199943,
+        "w": 0.6766994225808929
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4693836384025333,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 29,
+              "y": 45
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "35",
+      "name": "time_petal3_point1_2",
+      "position": {
+        "x": -0.8043465248445911,
+        "y": 0.652845984858863,
+        "z": -14.5
+      },
+      "orientation": {
+        "x": 0.3393183120749542,
+        "y": 0.017782919205918346,
+        "z": 0.04922215050542907,
+        "w": 0.9392145818580229
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999983,
+          "y": 0.4693836384025333,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 43,
+              "y": 45
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "36",
+      "name": "time_petal3_point1_3",
+      "position": {
+        "x": 0.687436318207818,
+        "y": 0.8096386797603434,
+        "z": -13.0
+      },
+      "orientation": {
+        "x": -0.27473959585594715,
+        "y": 0.6515505770612985,
+        "z": -0.27473959585594704,
+        "w": -0.6515505770612984
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 57,
+              "y": 45
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "37",
+      "name": "time_petal4_shaft",
+      "position": {
+        "x": -11.2583302491977,
+        "y": -3.500000000000003,
+        "z": -6.500000000000005
+      },
+      "orientation": {
+        "x": -0.1354762207522686,
+        "y": 0.8553631939770864,
+        "z": -0.07821723252011539,
+        "w": -0.49384417029756866
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1.0,
+          "y": 0.9816666666666666,
+          "z": 1.0
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 6,
+            "y": 12,
+            "z": 6
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 57,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 65,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 73,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 81,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "top": {
+            "offset": {
+              "x": 128,
+              "y": 57
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 136,
+              "y": 57
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "38",
+      "name": "time_petal4_point-1_0",
+      "position": {
+        "x": -7.644985822162983,
+        "y": -10.416955041896482,
+        "z": -5.750000000000005
+      },
+      "orientation": {
+        "x": -0.5104948238750975,
+        "y": 0.21707512376864635,
+        "z": -0.8310490477189747,
+        "w": -0.040384473785658286
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.46938363840253305,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 71,
+              "y": 45
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "39",
+      "name": "time_petal4_point-1_1",
+      "position": {
+        "x": -9.593736864703846,
+        "y": -11.050142638672419,
+        "z": -5.200961894323348
+      },
+      "orientation": {
+        "x": -0.1890805651457278,
+        "y": -0.36224466604908423,
+        "z": 0.8835147727639611,
+        "w": -0.2289737716661153
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 85,
+              "y": 45
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "40",
+      "name": "time_petal4_point-1_2",
+      "position": {
+        "x": -10.115903132801979,
+        "y": -11.219804743885934,
+        "z": -7.250000000000007
+      },
+      "orientation": {
+        "x": 0.7778951234853554,
+        "y": 0.29521619585528114,
+        "z": -0.41842952648080156,
+        "w": 0.3642022871035988
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 99,
+              "y": 45
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "41",
+      "name": "time_petal4_point-1_3",
+      "position": {
+        "x": -8.167152090261116,
+        "y": -10.586617147109997,
+        "z": -7.7990381056766624
+      },
+      "orientation": {
+        "x": 0.9110292685911554,
+        "y": 0.05525408196164622,
+        "z": 0.2917660615174592,
+        "w": 0.286086042203094
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.46938363840253305,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 113,
+              "y": 45
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "42",
+      "name": "time_petal4_point1_0",
+      "position": {
+        "x": -12.400757365593421,
+        "y": 4.219804743885928,
+        "z": -5.750000000000005
+      },
+      "orientation": {
+        "x": -0.2952161958552809,
+        "y": 0.7778951234853557,
+        "z": -0.36420228710359887,
+        "w": -0.4184295264808016
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 127,
+              "y": 45
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "43",
+      "name": "time_petal4_point1_1",
+      "position": {
+        "x": -14.349508408134284,
+        "y": 3.586617147109992,
+        "z": -5.200961894323347
+      },
+      "orientation": {
+        "x": 0.055254081961646176,
+        "y": -0.9110292685911554,
+        "z": 0.2860860422030938,
+        "w": -0.2917660615174591
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.46938363840253305,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 141,
+              "y": 45
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "44",
+      "name": "time_petal4_point1_2",
+      "position": {
+        "x": -14.871674676232416,
+        "y": 3.4169550418964767,
+        "z": -7.250000000000007
+      },
+      "orientation": {
+        "x": 0.21707512376864632,
+        "y": 0.5104948238750975,
+        "z": -0.04038447378565831,
+        "w": 0.831049047718975
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.49999999999999994,
+          "y": 0.469383638402533,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 155,
+              "y": 45
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "45",
+      "name": "time_petal4_point1_3",
+      "position": {
+        "x": -12.922923633691553,
+        "y": 4.050142638672414,
+        "z": -7.799038105676662
+      },
+      "orientation": {
+        "x": -0.3622446660490843,
+        "y": 0.1890805651457279,
+        "z": -0.22897377166611518,
+        "w": -0.8835147727639611
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 169,
+              "y": 45
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "46",
+      "name": "time_petal5_shaft",
+      "position": {
+        "x": -11.258330249197702,
+        "y": 3.500000000000001,
+        "z": 6.500000000000002
+      },
+      "orientation": {
+        "x": -0.12940952255126034,
+        "y": 0.4829629131445341,
+        "z": -0.2241438680420134,
+        "w": -0.8365163037378079
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1.0,
+          "y": 0.9816666666666666,
+          "z": 1.0
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 6,
+            "y": 12,
+            "z": 6
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 89,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 97,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 105,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 113,
+              "y": 19
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "top": {
+            "offset": {
+              "x": 144,
+              "y": 57
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 152,
+              "y": 57
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "47",
+      "name": "time_petal5_point-1_0",
+      "position": {
+        "x": -6.285830249197701,
+        "y": -2.514546429282926,
+        "z": 5.750000000000002
+      },
+      "orientation": {
+        "x": 0.8307178010661614,
+        "y": 0.04670503644534796,
+        "z": 0.5303888089171273,
+        "w": 0.1625247240819412
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.4615384615384616,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 13,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 183,
+              "y": 45
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "48",
+      "name": "time_petal5_point-1_1",
+      "position": {
+        "x": -6.761311196359372,
+        "y": -2.789065482121255,
+        "z": 7.799038105676662
+      },
+      "orientation": {
+        "x": 0.32007187085829425,
+        "y": -0.25402097488615283,
+        "z": 0.9002629306585316,
+        "w": -0.15017988375701807
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.4615384615384616,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 13,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 198,
+              "y": 45
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "49",
+      "name": "time_petal5_point-1_2",
+      "position": {
+        "x": -8.535830249197701,
+        "y": -3.813584534959583,
+        "z": 7.2500000000000036
+      },
+      "orientation": {
+        "x": -0.37806782036423187,
+        "y": -0.40594494425658123,
+        "z": 0.7427752373219174,
+        "w": -0.37491115248673096
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.4615384615384616,
+          "y": 0.46938363840253305,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 13,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 213,
+              "y": 45
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "50",
+      "name": "time_petal5_point-1_3",
+      "position": {
+        "x": -8.06034930203603,
+        "y": -3.5390654821212544,
+        "z": 5.200961894323344
+      },
+      "orientation": {
+        "x": -0.8547405099142261,
+        "y": -0.32007187085829425,
+        "z": 0.15017988375701827,
+        "w": -0.3800245527746448
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 228,
+              "y": 45
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "51",
+      "name": "time_petal5_point1_0",
+      "position": {
+        "x": -13.980830249197702,
+        "y": 10.813584534959585,
+        "z": 5.75
+      },
+      "orientation": {
+        "x": -0.4059449442565812,
+        "y": 0.37806782036423225,
+        "z": -0.3749111524867314,
+        "w": -0.7427752373219176
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.4615384615384616,
+          "y": 0.46938363840253305,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 13,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 242,
+              "y": 45
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "52",
+      "name": "time_petal5_point1_1",
+      "position": {
+        "x": -14.456311196359373,
+        "y": 10.539065482121256,
+        "z": 7.79903810567666
+      },
+      "orientation": {
+        "x": -0.32007187085829425,
+        "y": 0.8547405099142258,
+        "z": -0.3800245527746447,
+        "w": -0.15017988375701824
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.4615384615384616,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 13,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 1,
+              "y": 57
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "53",
+      "name": "time_petal5_point1_2",
+      "position": {
+        "x": -16.2308302491977,
+        "y": 9.514546429282927,
+        "z": 7.250000000000002
+      },
+      "orientation": {
+        "x": -0.04670503644534798,
+        "y": 0.8307178010661614,
+        "z": -0.16252472408194119,
+        "w": 0.5303888089171274
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.46938363840253317,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 16,
+              "y": 57
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "54",
+      "name": "time_petal5_point1_3",
+      "position": {
+        "x": -15.75534930203603,
+        "y": 9.789065482121256,
+        "z": 5.200961894323343
+      },
+      "orientation": {
+        "x": -0.25402097488615305,
+        "y": -0.32007187085829436,
+        "z": -0.1501798837570181,
+        "w": -0.9002629306585319
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4693836384025333,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 12,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 30,
+              "y": 57
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "55",
+      "name": "chronal_heart_shaft",
+      "position": {
+        "x": 0,
+        "y": 2,
+        "z": 0
+      },
+      "orientation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 1.0
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1.0,
+          "y": 0.96875,
+          "z": 1.0
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 8,
+            "y": 16,
+            "z": 8
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 1,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 11,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 21,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 31,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "top": {
+            "offset": {
+              "x": 44,
+              "y": 57
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 54,
+              "y": 57
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "56",
+      "name": "chronal_heart_point-1_0",
+      "position": {
+        "x": 0.0,
+        "y": -8.125,
+        "z": -2.0
+      },
+      "orientation": {
+        "x": 0.9393910788689263,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.34284748933231884
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4776823980143931,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 16,
+            "y": 13
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 41,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "57",
+      "name": "chronal_heart_point-1_1",
+      "position": {
+        "x": 2.0,
+        "y": -8.125,
+        "z": 0.0
+      },
+      "orientation": {
+        "x": -0.6642498020543646,
+        "y": 0.24242978461966547,
+        "z": -0.6642498020543647,
+        "w": -0.24242978461966522
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4776823980143931,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 16,
+            "y": 13
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 59,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "58",
+      "name": "chronal_heart_point-1_2",
+      "position": {
+        "x": 0.0,
+        "y": -8.125,
+        "z": 2.0
+      },
+      "orientation": {
+        "x": 0.0,
+        "y": -0.342847489332319,
+        "z": 0.9393910788689264,
+        "w": 0.0
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4776823980143931,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 16,
+            "y": 13
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 77,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "59",
+      "name": "chronal_heart_point-1_3",
+      "position": {
+        "x": -2.0,
+        "y": -8.125,
+        "z": 0.0
+      },
+      "orientation": {
+        "x": 0.6642498020543646,
+        "y": 0.24242978461966547,
+        "z": -0.6642498020543647,
+        "w": 0.24242978461966522
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4776823980143931,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 16,
+            "y": 13
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 95,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "60",
+      "name": "chronal_heart_point1_0",
+      "position": {
+        "x": 0.0,
+        "y": 12.125,
+        "z": -2.0
+      },
+      "orientation": {
+        "x": -0.34284748933231907,
+        "y": 0.0,
+        "z": -4.2667558818866917e-17,
+        "w": -0.9393910788689265
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4776823980143931,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 16,
+            "y": 13
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 113,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "61",
+      "name": "chronal_heart_point1_1",
+      "position": {
+        "x": 2.0,
+        "y": 12.125,
+        "z": 0.0
+      },
+      "orientation": {
+        "x": 0.2424297846196652,
+        "y": -0.6642498020543648,
+        "z": 0.24242978461966536,
+        "w": 0.6642498020543649
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4776823980143931,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 16,
+            "y": 13
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 131,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "62",
+      "name": "chronal_heart_point1_2",
+      "position": {
+        "x": 0.0,
+        "y": 12.125,
+        "z": 2.0
+      },
+      "orientation": {
+        "x": 0.0,
+        "y": -0.9393910788689264,
+        "z": 0.342847489332319,
+        "w": 0.0
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4776823980143931,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 16,
+            "y": 13
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 149,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "63",
+      "name": "chronal_heart_point1_3",
+      "position": {
+        "x": -2.0,
+        "y": 12.125,
+        "z": 0.0
+      },
+      "orientation": {
+        "x": 0.2424297846196652,
+        "y": 0.6642498020543648,
+        "z": -0.24242978461966536,
+        "w": 0.6642498020543649
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4776823980143931,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 16,
+            "y": 13
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 167,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    }
+  ],
+  "format": "prop"
+}

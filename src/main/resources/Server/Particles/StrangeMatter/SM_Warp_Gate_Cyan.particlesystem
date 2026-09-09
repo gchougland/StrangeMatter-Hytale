@@ -1,0 +1,23 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Warp_Event_Horizon_Cyan"
+    },
+    {
+      "SpawnerId": "SM_Warp_Vortex_Cyan"
+    },
+    {
+      "SpawnerId": "SM_Warp_Rim_Cyan"
+    },
+    {
+      "SpawnerId": "SM_Warp_Outer_Rim_Cyan"
+    },
+    {
+      "SpawnerId": "SM_Warp_Infall_Cyan"
+    }
+  ],
+  "LifeSpan": 3.5,
+  "CullDistance": 96,
+  "BoundingRadius": 5,
+  "IsImportant": false
+}

@@ -1,0 +1,93 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Echo_Vacuum.name",
+    "Description": "server.items.SM_Echo_Vacuum.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Echo_Vacuum.png",
+  "MaxStack": 1,
+  "Categories": [
+    "Items",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Item",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "Model": "Items/StrangeMatter/echo_vacuum.blockymodel",
+  "Texture": "Items/StrangeMatter/echo_vacuum.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "vacuum_start"
+        },
+        {
+          "Type": "Charging",
+          "AllowIndefiniteHold": false,
+          "Next": {
+            "0": {
+              "Type": "SM_Use",
+              "Action": "cancel"
+            },
+            "2.0": {
+              "Type": "SM_Use",
+              "Action": "vacuum_complete"
+            }
+          }
+        }
+      ],
+      "RequireNewClick": true
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "vacuum_start"
+        },
+        {
+          "Type": "Charging",
+          "AllowIndefiniteHold": false,
+          "Next": {
+            "0": {
+              "Type": "SM_Use",
+              "Action": "cancel"
+            },
+            "2.0": {
+              "Type": "SM_Use",
+              "Action": "vacuum_complete"
+            }
+          }
+        }
+      ],
+      "RequireNewClick": true
+    },
+    "Use": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "vacuum_start"
+        },
+        {
+          "Type": "Charging",
+          "AllowIndefiniteHold": false,
+          "Next": {
+            "0": {
+              "Type": "SM_Use",
+              "Action": "cancel"
+            },
+            "2.0": {
+              "Type": "SM_Use",
+              "Action": "vacuum_complete"
+            }
+          }
+        }
+      ],
+      "RequireNewClick": true
+    }
+  },
+  "MaxDurability": 200
+}

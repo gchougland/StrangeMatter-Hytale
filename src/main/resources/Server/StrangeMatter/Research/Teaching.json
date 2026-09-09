@@ -1,0 +1,300 @@
+{
+  "research": [
+    {
+      "title": "Introduction to Research",
+      "content": "The Research Machine is your gateway to unlocking new technologies and understanding the strange anomalies that appear throughout the world.\n\nBy studying anomalies and completing research, you can gain access to powerful tools, advanced machines, and exotic materials that defy normal physics.\n\nThis research will teach you the fundamentals of using the research system and guide you through your journey into anomaly study."
+    },
+    {
+      "title": "The Field Scanner",
+      "content": "The Field Scanner is your primary tool for detecting and analyzing anomalies.\n\nTo use: Hold it and right-click while looking at an anomaly. The scanner will analyze it and automatically add research points to your tablet!\n\nDifferent anomalies provide different types and amounts of research points based on their nature and power level.",
+      "recipe": "field_scanner"
+    },
+    {
+      "title": "The Research Tablet",
+      "content": "The Research Tablet tracks your accumulated research points and unlocked technologies.\n\nRight-click while holding it to open the research interface and view all available research nodes.\n\nClick any locked node to view its requirements. If you have enough points, spend them to receive research notes for that technology!",
+      "recipe": "research_tablet"
+    },
+    {
+      "title": "Using the Research Machine",
+      "content": "To use the Research\nMachine:\n\n1. Place research notes\n   in the machine's\n   input slot\n2. Click 'Begin\n   Research' to start\n   the process\n3. Complete the\n   minigames that\n   appear to stabilize\n   the research\n4. Successfully\n   completing research\n   unlocks new\n   technologies",
+      "recipe": "research_machine"
+    },
+    {
+      "title": "Research Minigames",
+      "content": "During research,\nyou'll encounter\nvarious minigames\nthat represent\nstabilizing different\ntypes of anomaly\nenergy:\n\n• Energy: Adjust waves\n• Cognition: Memorize\n• Space: Correct space\n• Gravity: Balance\n• Time: Synchronize\n• Shadow: Align\n\nEach minigame becomes\nunstable over time."
+    },
+    {
+      "title": "Understanding Instability",
+      "content": "Instability is a critical\nconcept in anomaly study:\n\n• All minigames stable:\n  Instability decreases\n• Any minigame unstable:\n  Instability increases\n\nIf the experiment becomes\ntoo unstable then the\nresearch fails.\nReduce instability to zero\nto successfully complete\nthe research."
+    }
+  ],
+  "field_scanner": [
+    {
+      "title": "Field Scanner",
+      "content": "The Field Scanner is an\nessential tool for\ndetecting and analyzing\nanomaly phenomena in the\nworld around you.\n\nThis handheld device can\nidentify different types\nof anomalies and provide\nvaluable data for your\nresearch.",
+      "recipe": "field_scanner"
+    }
+  ],
+  "anomaly_resonator": [
+    {
+      "title": "Anomaly Resonator",
+      "content": "BREAKTHROUGH! My most\nadvanced detection device!\nThis compass locates\nanomalies and syncs with\ntheir energy signatures.\n\nUnlike the Field Scanner,\nthe Resonator provides\nprecise directional\nguidance and resonance\nlinks with anomalies.\n\nConstruct with materials\nshown in recipe.",
+      "recipe": "anomaly_resonator"
+    },
+    {
+      "title": "How It Works",
+      "content": "The Resonator operates on advanced resonant detection:\n\n• Compass needle points to nearest anomalies\n• Synchronization mode creates energy links\n• Tracks multiple anomaly sources\n\nUsage:\n\n1. Hold and observe needle direction\n2. Follow needle to locate sources\n3. Right-click near anomalies to sync\n4. Monitor readings for type identification\n5. Use data for research projects"
+    }
+  ],
+  "anomaly_shards": [
+    {
+      "title": "Anomaly Shards",
+      "content": "FASCINATING! These\ncrystalline formations\nare the physical\nmanifestation of\nanomaly energy!\n\nEach shard contains\npure, concentrated\nanomaly essence that\ncan be harvested and\nstudied. They form\nbeneath active\nanomalies like\ncrystalline tears\nin reality itself!"
+    },
+    {
+      "title": "Formation Process",
+      "content": "My research has revealed that anomaly shards form through a process I call 'Reality Crystallization'!\n\nWhen anomalies remain active in an area, their energy seeps into the rock below, slowly crystallizing into pure anomaly matter.\n\nIt's like watching reality itself crystallize!"
+    },
+    {
+      "title": "Shard Categories",
+      "content": "Each type of anomaly produces its own unique shard variety:\n\n• Gravitics: Red-orange gravity-distorting crystals\n• Chrono: Golden yellow time-frozen gems\n• Spatial: Blue dimension-bending shards\n• Energetic: Cyan blue energy-condensed crystals\n• Shade: Purple shadow-crystallized matter\n• Insight: Green thought-crystallized fragments"
+    },
+    {
+      "title": "Collection Methods",
+      "content": "To harvest these precious specimens:\n\n1. Locate active anomalies\n2. Dig down beneath the anomaly site\n3. Look for crystallized deposits in the rock\n4. Mine carefully - these are delicate specimens!\n\nEach shard type has unique properties that make them valuable for advanced research."
+    }
+  ],
+  "anomaly_types": [
+    {
+      "title": "Anomaly Types",
+      "content": "EUREKA! After years of meticulous study, I have identified the six fundamental types of anomaly phenomena that permeate our reality! Each type represents a different aspect of dimensional instability, and understanding their properties is crucial to mastering anomaly science.\n\nThese six types form the foundation of all anomaly research. Every strange occurrence, every dimensional rift, every temporal distortion can be classified into one of these fundamental categories. They are the building blocks of reality itself, twisted and warped by forces beyond normal comprehension!\n\nMastering these types opens the door to advanced anomaly manipulation and containment techniques."
+    },
+    {
+      "title": "The Six Fundamental Types",
+      "content": "The six fundamental anomaly types I have catalogued:\n\n• GRAVITY: Distorts gravitational fields, causes floating objects and anti-gravity zones\n• TIME: Manipulates temporal flow, creates time loops and temporal echoes\n• SPACE: Warps dimensional space, creates teleportation effects\n• ENERGY: Disrupts electromagnetic fields, causes energy storms\n• SHADOW: Creates dimensional voids and shadow portals\n• COGNITION: Affects mental perception, causes hallucinations and thought-forms"
+    },
+    {
+      "title": "Type Interactions",
+      "content": "FASCINATING DISCOVERY! The anomaly types interact in complex ways:\n\n• Gravity + Space = Dimensional rifts to other realities\n• Time + Energy = Temporal energy storms\n• Shadow + Cognition = Shadow entities\n• Space + Time = Warp gates for instant travel\n• Gravity + Energy = Gravitational energy wells\n• Cognition + Time = Memory loops across timelines\n\nUnderstanding these interactions is key to creating stable containment systems and advanced research equipment!"
+    },
+    {
+      "title": "Research Applications",
+      "content": "The practical applications of anomaly type knowledge:\n\n• GRAVITY: Anti-gravity technology and energy generation\n• TIME: Temporal research facilities and time-dilated chambers\n• SPACE: Teleportation networks and dimensional storage\n• ENERGY: Unlimited power sources and electromagnetic weapons\n• SHADOW: Dimensional travel and stealth technology\n• COGNITION: Mind-machine interfaces and enhanced learning\n\nEach type requires specialized equipment and containment procedures. This knowledge is the foundation of all advanced anomaly technology!"
+    }
+  ],
+  "resonite": [
+    {
+      "title": "Resonite",
+      "content": "FASCINATING DISCOVERY! This\ncrystalline ore is the key\nto unlocking anomaly\nenergy!\n\nResonite spawns naturally\nin the world, but is most\neasily found underneath\nanomalies where reality\nbecomes thin.\n\nThis precious material\nholds the power to\nchannel and amplify\nanomaly frequencies!"
+    },
+    {
+      "title": "Resonant Coil",
+      "content": "My first breakthrough in\nresonite applications!\n\nThe Resonant Coil is a\nfundamental component\nthat can channel and\namplify anomaly energy.\n\nIt serves as the\nfoundation for more\ncomplex devices and\ncan be used to create\nresonance circuits.",
+      "recipe": "resonant_coil"
+    },
+    {
+      "title": "Resonant Circuit",
+      "content": "BREAKTHROUGH ACHIEVEMENT!\nThe Resonant Circuit\nrepresents the pinnacle\nof resonite technology!\n\nThis advanced component\ncan process multiple\nanomaly frequencies\nsimultaneously and\nstabilize complex\nenergy patterns.\n\nEssential for advanced\nresearch equipment!",
+      "recipe": "resonant_circuit"
+    }
+  ],
+  "resonant_energy": [
+    {
+      "title": "Resonant Energy",
+      "content": "The discovery of resonant energy has revolutionized my understanding of anomaly-based power generation.\n\nThis form of energy harnesses the natural frequencies present in anomaly phenomena to create stable, usable power.\n\nIt represents the foundation for all advanced anomaly technology."
+    },
+    {
+      "title": "Resonant Burner",
+      "content": "The Resonant Burner is\nmy first practical\napplication of resonant\nenergy principles.\n\nThis device converts\nconventional fuel into\nresonant energy through\ncareful frequency\nmodulation and\nstabilization.\n\nWhile primitive compared\nto future machines, it\npaves the way for the\nadvanced power systems\nneeded for anomalous\nenergy generation.",
+      "recipe": "resonant_burner"
+    }
+  ],
+  "reality_forge": [
+    {
+      "title": "Reality Forge",
+      "content": "The Reality Forge represents\nthe pinnacle of anomaly\nmanipulation technology.\n\nThis remarkable device\ninfuses normal items with\nthe concentrated energy\nfrom anomaly shards,\ntransforming them into\npowerful anomalous\nartifacts.\n\nThrough careful\nfrequency alignment, it\ncan channel the unique\nproperties of each\nanomaly type into\nordinary materials.",
+      "recipe": "reality_forge"
+    },
+    {
+      "title": "Using the Reality Forge",
+      "content": "The Reality Forge operates\non principles of resonant\nfrequency manipulation.\n\nPlace your target item\nin the main slot, then\nselect the appropriate\nanomaly shard type.\n\nThe forge will carefully\ninfuse the item with\nanomaly energy, creating\nnew properties and\ncapabilities.\n\nEach shard type produces\ndifferent effects on the\ninfused item."
+    }
+  ],
+  "reality_forge_category": [
+    {
+      "title": "Reality Forge",
+      "content": "The Reality Forge represents\nthe pinnacle of anomaly\nmanipulation technology.\n\nThis remarkable device\ninfuses normal items with\nthe concentrated energy\nfrom anomaly shards,\ntransforming them into\npowerful anomalous\nartifacts.\n\nThrough careful\nfrequency alignment, it\ncan channel the unique\nproperties of each\nanomaly type into\nordinary materials.",
+      "recipe": "reality_forge"
+    },
+    {
+      "title": "Using the Reality Forge",
+      "content": "The Reality Forge operates\non principles of resonant\nfrequency manipulation.\n\nPlace your target item\nin the main slot, then\nselect the appropriate\nanomaly shard type.\n\nThe forge will carefully\ninfuse the item with\nanomaly energy, creating\nnew properties and\ncapabilities.\n\nEach shard type produces\ndifferent effects on the\ninfused item."
+    }
+  ],
+  "resonance_condenser": [
+    {
+      "title": "Resonance Condenser",
+      "content": "The Resonance Condenser\nrepresents a breakthrough\nin anomaly energy\nmanipulation.\n\nThis advanced device\ncondenses the energies\nfrom nearby anomalies\nin a sped-up manner to\nform anomaly shards\nthrough accelerated\ncrystallization.\n\nIt dramatically reduces\nthe time required for\nshard formation.",
+      "recipe": "resonance_condenser"
+    },
+    {
+      "title": "How It Works",
+      "content": "The condenser operates\nby creating a localized\nresonance field that\namplifies the natural\ncrystallization process.\n\nWhen placed near active\nanomalies, it draws in\nambient anomaly energy\nand accelerates the\nformation of shards\nbeneath the anomaly.\n\nThe process is\nsignificantly faster\nthan natural formation\nbut requires precise\ncalibration."
+    }
+  ],
+  "containment_basics": [
+    {
+      "title": "Containment Basics",
+      "content": "BREAKTHROUGH! At last I\nhave developed the\nfundamental tools for\nanomaly containment!\n\nThe Echo Vacuum is my\nmost sophisticated\ndevice for capturing\nand containing\nanomalous entities.\n\nThis revolutionary\ntool can safely\ncontain anomalies\nfor further study\nand analysis.",
+      "recipe": "echo_vacuum"
+    },
+    {
+      "title": "Containment Capsules",
+      "content": "The containment capsule\nrepresents the pinnacle\nof anomaly containment\ntechnology.\n\nThese specialized\ncontainers can safely\nhold captured anomalies\nfor extended periods\nwithout degradation.\n\nEssential for\ntransporting and\nstoring anomalous\nentities for detailed\nscientific analysis.",
+      "recipe": "containment_capsule"
+    }
+  ],
+  "echoform_imprinter": [
+    {
+      "title": "Identity Transference",
+      "content": "UNPRECEDENTED BREAKTHROUGH!\nI have done the IMPOSSIBLE!\n\nThe Echoform Imprinter\nscans a living being's\nechoform - their shadow-\ncognitive imprint!\n\nI can TEMPORARILY mimic\ntheir physical form!\n\nThe scientific potential\nis EXTRAORDINARY!",
+      "recipe": "echoform_imprinter"
+    },
+    {
+      "title": "Operational Protocols",
+      "content": "Operating the Echoform Imprinter requires precise technique:\n\nTO SCAN:\nHold right-click on any creature for ONE SECOND.\n\nTO REVERT:\nShift + right-click to return to normal.\n\nFEATURES:\n• Works on ANY living entity\n• Scan PLAYERS to copy appearance\n• Perfect mimicry with animations\n• Completely reversible\n\nIdeal for infiltration and research!"
+    },
+    {
+      "title": "Shadow-Cognitive Theory",
+      "content": "Every entity casts TWO imprints:\n\nPHYSICAL SHADOW:\nCast by blocking light.\n\nCOGNITIVE ECHOFORM:\nA PERFECT template of physical structure in reality itself!\n\nAPPLICATIONS:\n• Infiltration and espionage\n• Understanding alien biology\n• Deception and disguise\n• Safe anomaly interaction\n\nThe implications are STAGGERING!"
+    }
+  ],
+  "warp_gun": [
+    {
+      "title": "Warp Gun",
+      "content": "REVOLUTIONARY DISCOVERY!\nI have created the\nultimate portable\nteleportation device!\n\nThe Warp Gun allows\ninstantaneous travel\nthrough personal warp\ngates that I can\ncreate anywhere.\n\nThis breakthrough\nrepresents the\npinnacle of spatial\nanomaly manipulation!",
+      "recipe": "warp_gun"
+    },
+    {
+      "title": "Teleportation Mechanics",
+      "content": "The Warp Gun operates through paired spatial anomalies that create stable wormholes.\n\nLeft click fires a primary warp gate that anchors to the target location.\n\nRight click fires a secondary warp gate that connects to the primary.\n\nYou can then teleport instantly between the two gates!"
+    }
+  ],
+  "chrono_blister": [
+    {
+      "title": "Chrono Blister",
+      "content": "BREAKTHROUGH IN TEMPORAL\nMANIPULATION!\n\nI have successfully\nharnessed temporal\nanomaly energy to\ncreate a device that\ncan slow time itself!\n\nThe Chrono Blister\nfires projectiles that\nspawn fields of time\ndilation, creating\nzones where all\nmovement slows\nproportionally.",
+      "recipe": "chrono_blister"
+    },
+    {
+      "title": "Time Dilation Mechanics",
+      "content": "The Chrono Blister creates time dilation blocks that slow all movement uniformly.\n\nWhen a projectile hits, it spawns a blob of time dilation blocks in a small radius.\n\nThese blocks are walkable-through but slow ALL movement - including gravity, horizontal movement, and projectiles.\n\nArrows still land in the same place, they just take longer to get there.\n\nThe blocks slowly decay over time, eventually disappearing like leaves."
+    }
+  ],
+  "stasis_projector": [
+    {
+      "title": "Stasis Projector",
+      "content": "EXTRAORDINARY BREAKTHROUGH!\nI have achieved what I\nthought impossible - the\ncomplete suspension of\nmatter in space-time!\n\nBy combining gravitational\nfield manipulation with\ntemporal distortion, I\nhave created a device\nthat can FREEZE objects\nin a localized stasis\nfield!\n\nThe Stasis Projector\nrepresents the pinnacle\nof gravitational and\ntemporal anomaly\ncontrol technology!",
+      "recipe": "stasis_projector"
+    },
+    {
+      "title": "How It Works",
+      "content": "The Stasis Projector operates on a revolutionary principle:\n\nBy creating a localized gravitational well combined with temporal distortion, objects within the field experience ZERO time flow while maintaining physical presence!\n\nShift right-click to activate/deactivate the field.\n\nWhen active:\n• Captures one item OR entity within range\n• Suspends target above projector\n• Prevents item pickup and entity AI\n• Items never despawn\n• Mobs cannot attack or move\n\nPerfect for displaying rare artifacts or containing dangerous specimens!"
+    },
+    {
+      "title": "Scientific Applications",
+      "content": "The applications of this technology are LIMITLESS!\n\nMUSEUM DISPLAYS: Showcase rare items in suspended animation with no risk of theft or decay! The stasis field keeps artifacts perfectly preserved and visible.\n\nSPECIMEN CONTAINMENT: Safely contain dangerous mobs for study without risk of escape or aggression!"
+    }
+  ],
+  "rift_stabilizer": [
+    {
+      "title": "Rift Stabilizer",
+      "content": "EUREKA! UNPRECEDENTED\nBREAKTHROUGH!\n\nI have achieved DIRECT\nenergy extraction from\nEnergetic Rift anomalies!\n\nThe Rift Stabilizer\ncreates a resonance\nfield that SIPHONS raw\nanomaly energy and\nconverts it into stable,\nusable power!\n\nNo fuel! No combustion!\nJust pure, limitless\nenergy drawn from the\nvery fabric of reality\nitself!",
+      "recipe": "rift_stabilizer"
+    },
+    {
+      "title": "Power Generation Theory",
+      "content": "The Rift Stabilizer operates on revolutionary principles I've discovered through years of study!\n\nBy creating a focused resonance field pointed directly at an Energetic Rift, the device establishes a stable energy channel - a brilliant lightning bridge of pure anomaly power!\n\nCRITICAL OPERATIONAL REQUIREMENTS:\n• Must be within range of Energetic Rift\n• Front face MUST point toward the rift\n• Each rift supports limited stabilizers\n• Generates constant power every tick\n• Energy output through back face only\n\nThe visible electrical beam confirms proper alignment and active power generation!"
+    },
+    {
+      "title": "Installation & Operation",
+      "content": "INSTALLATION PROTOCOLS FOR OPTIMAL RESULTS:\n\n1. Locate an active Energetic Rift anomaly\n2. Place stabilizer within detection range\n3. FRONT FACE (intake) must point at rift!\n4. BACK FACE (output) connects to machines\n\nWhen properly aligned, you'll witness a magnificent electrical beam connecting the rift directly to the stabilizer!\n\nRight-click the block to check current power generation status and stored energy levels.\n\nThe device requires NO fuel and operates continuously as long as the rift remains active and within range!"
+    }
+  ],
+  "levitation_pad": [
+    {
+      "title": "Levitation Pad",
+      "content": "REVOLUTIONARY BREAKTHROUGH!\nI have mastered the art\nof controlled levitation!\n\nThe Levitation Pad\ncreates a powerful\nanti-gravity field that\ncan lift players,\nmobs, and items\nup to 16 blocks high!\n\nThis device represents\nthe pinnacle of\ngravitational anomaly\nmanipulation technology!",
+      "recipe": "levitation_pad"
+    },
+    {
+      "title": "Levitation Mechanics",
+      "content": "The Levitation Pad operates through advanced gravitational field manipulation:\n\nUP MODE (Default):\n• Lifts entities upward within 16 blocks\n• Stops at first solid block encountered\n• Prevents fall damage during descent\n• Works on players, mobs, and items\n\nDOWN MODE (Right-click to toggle):\n• Slowly lowers entities to ground level\n• Provides controlled descent\n• Eliminates fall damage completely\n• Perfect for safe transportation\n\nThe visible levitation beam shows the active field range and current mode."
+    }
+  ],
+  "hoverboard": [
+    {
+      "title": "Hoverboard",
+      "content": "BREAKTHROUGH! I have created\nthe ultimate personal\ntransportation device!\n\nThe Hoverboard uses\nadvanced anti-gravity\ntechnology to hover\nsmoothly above any\nsurface.\n\nThis revolutionary\nvehicle provides\nunprecedented mobility\nand freedom of\ntravel across any\ntype of terrain!",
+      "recipe": "hoverboard"
+    }
+  ],
+  "graviton_hammer": [
+    {
+      "title": "Graviton Hammer",
+      "content": "After months of research\ninto gravitational\nanomaly manipulation,\nI have finally created\nthe ultimate mining\ntool.\n\nThe Graviton Hammer\nharnesses gravitational\nfields to mine in\n3x3 patterns, making\nit incredibly efficient\nfor large-scale\nexcavation.\n",
+      "recipe": "graviton_hammer"
+    },
+    {
+      "title": "Mining Mechanics",
+      "content": "The Graviton Hammer operates through two distinct modes:\n\n• Left-click mining creates 3x3 patterns. The orientation depends on the block face - horizontal planes for top/bottom faces, perpendicular planes for cardinal faces.\n\n• Right-click charging accumulates gravitational energy. The longer I hold, the deeper the resulting tunnel becomes.\n\nThree charge levels provide increasingly powerful tunnel mining. The tool has infinite durability, cannot be enchanted, but equals diamond mining level with iron pickaxe speed."
+    }
+  ],
+  "gravity_anomalies": [
+    {
+      "title": "Gravity Anomalies",
+      "content": "FASCINATING! Gravity\nanomalies represent\nlocalized distortions\nin the gravitational\nfield.\n\nThese entities manifest\nas floating geometric\nshapes that rotate\ncontinuously, creating\npockets of altered\ngravity.\n\nThey can affect\nnearby entities and\nterrain, making them\nvaluable for research\ninto spatial\nmanipulation."
+    }
+  ],
+  "temporal_anomalies": [
+    {
+      "title": "Temporal Anomalies",
+      "content": "BREAKTHROUGH! Temporal\nanomalies are rare\nmanifestations of\ntime distortion\nphenomena.\n\nThese temporal blooms\ncreate localized\nregions where time\nflows differently,\nallowing for\naccelerated or\nslowed processes.\n\nThey represent the\nultimate frontier in\nanomaly research -\nthe manipulation of\ntime itself!"
+    }
+  ],
+  "spatial_anomalies": [
+    {
+      "title": "Spatial Anomalies",
+      "content": "REVOLUTIONARY! Spatial\nanomalies manifest as\nwarp gates that create\nstable wormholes\nbetween locations.\n\nThese warp gate\nanomalies can connect\ndistant points in\nspace, enabling\ninstantaneous\ntravel.\n\nThey represent the\npinnacle of spatial\nmanipulation\ntechnology and are\nessential for advanced\nteleportation systems."
+    }
+  ],
+  "energy_anomalies": [
+    {
+      "title": "Energy Anomalies",
+      "content": "INCREDIBLE! Energy\nanomalies manifest as\nenergetic rifts that\nchannel raw anomaly\nenergy.\n\nThese rifts create\nlocalized energy\nfields that can\npower advanced\ntechnology or\nprovide research\nopportunities.\n\nThey are the key to\nunderstanding how\nto harness anomaly\nenergy for practical\napplications."
+    }
+  ],
+  "shadow_anomalies": [
+    {
+      "title": "Shadow Anomalies",
+      "content": "MYSTERIOUS! Shadow\nanomalies take the\nform of echoing\nshadows that seem\nto exist between\nrealities.\n\nThese entities create\nlocalized regions\nof shadow energy\nthat can affect\nvisibility and\nperception.\n\nThey represent the\nmost enigmatic type\nof anomaly and\nrequire careful\nstudy to understand\ntheir properties."
+    }
+  ],
+  "cognitive_anomalies": [
+    {
+      "title": "Cognitive Anomalies",
+      "content": "ASTOUNDING! Cognitive\nanomalies manifest as\nthoughtwells that\nchannel mental\nenergies.\n\nThese entities create\nlocalized regions\nwhere thoughts and\nmemories can be\namplified or\nmanipulated.\n\nThey represent the\nintersection between\nanomaly physics\nand consciousness,\nopening new\npossibilities for\nmind-machine\ninterfaces."
+    }
+  ],
+  "tinfoil_hat": [
+    {
+      "title": "Tinfoil Hat Protection",
+      "content": "The Tinfoil Hat is a unique piece of protective equipment crafted from resonite ingots. When worn, it provides protection against two specific anomaly effects:\n\n• Energetic Rift Electric Sparks: The hat's conductive properties redirect electrical energy, preventing damage from energetic rifts.\n\n• Thoughtwell Nausea: The resonite material creates a cognitive barrier that shields the wearer's mind from the disorienting effects of thoughtwells.\n\nThe hat provides minimal physical protection (1 armor point) but excels at protecting against these specific anomaly hazards."
+    },
+    {
+      "title": "Crafting the Tinfoil Hat",
+      "content": "The Tinfoil Hat is crafted using 5 resonite ingots arranged in a helmet pattern in a standard crafting table:\n\n",
+      "recipe": "tinfoil_hat"
+    }
+  ]
+}

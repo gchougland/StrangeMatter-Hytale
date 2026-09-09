@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "unchangedModelOrTextureFiles": 220,
+  "exactAliases": 24,
+  "rootOnlyRotations": 2,
+  "untouchedIcons": 84,
+  "sharedModels": 6,
+  "tooltips": 78,
+  "errors": []
+}

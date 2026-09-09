@@ -1,0 +1,3680 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "name": "central_bloom_shaft",
+      "position": {
+        "x": 0,
+        "y": 13,
+        "z": 0
+      },
+      "orientation": {
+        "x": 0.0,
+        "y": 0.10452846326765347,
+        "z": 0.0,
+        "w": 0.9945218953682733
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1.0,
+          "y": 0.9482352941176471,
+          "z": 1.0
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 7,
+            "y": 17,
+            "z": 7
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 1,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 10,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 19,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 28,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "top": {
+            "offset": {
+              "x": 111,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 120,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "2",
+      "name": "central_bloom_point-1_0",
+      "position": {
+        "x": -0.3638454589310789,
+        "y": 2.4699999999999998,
+        "z": -1.71175830128416
+      },
+      "orientation": {
+        "x": 0.9476597531495137,
+        "y": 0.03170853729395323,
+        "z": -0.0996030536468394,
+        "w": 0.3016865801249798
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.46666666666666673,
+          "y": 0.46570935904337557,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 15,
+            "y": 13
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 93,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "3",
+      "name": "central_bloom_point-1_1",
+      "position": {
+        "x": 1.71175830128416,
+        "y": 2.4699999999999998,
+        "z": -0.3638454589310789
+      },
+      "orientation": {
+        "x": 0.7405266323701584,
+        "y": -0.1909033048572909,
+        "z": 0.5996666430490233,
+        "w": 0.23574594834141266
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.46666666666666673,
+          "y": 0.46570935904337557,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 15,
+            "y": 13
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 110,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "4",
+      "name": "central_bloom_point-1_2",
+      "position": {
+        "x": 0.3638454589310789,
+        "y": 2.4699999999999998,
+        "z": 1.71175830128416
+      },
+      "orientation": {
+        "x": 0.09960305364683927,
+        "y": -0.3016865801249802,
+        "z": 0.9476597531495137,
+        "w": 0.03170853729395321
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.46666666666666673,
+          "y": 0.46570935904337557,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 15,
+            "y": 13
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 127,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "5",
+      "name": "central_bloom_point-1_3",
+      "position": {
+        "x": -1.71175830128416,
+        "y": 2.4699999999999998,
+        "z": 0.3638454589310789
+      },
+      "orientation": {
+        "x": 0.5996666430490233,
+        "y": 0.2357459483414125,
+        "z": -0.7405266323701583,
+        "w": 0.19090330485729093
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.46666666666666673,
+          "y": 0.46570935904337557,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 15,
+            "y": 13
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 144,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "6",
+      "name": "central_bloom_point1_0",
+      "position": {
+        "x": -0.3638454589310789,
+        "y": 23.53,
+        "z": -1.7117583012841602
+      },
+      "orientation": {
+        "x": -0.30168658012497945,
+        "y": -0.09960305364683975,
+        "z": 0.03170853729395338,
+        "w": -0.9476597531495137
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.46666666666666673,
+          "y": 0.46570935904337546,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 15,
+            "y": 13
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 161,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "7",
+      "name": "central_bloom_point1_1",
+      "position": {
+        "x": 1.7117583012841602,
+        "y": 23.53,
+        "z": -0.3638454589310789
+      },
+      "orientation": {
+        "x": -0.2357459483414128,
+        "y": 0.5996666430490227,
+        "z": -0.190903304857291,
+        "w": -0.7405266323701583
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.46666666666666673,
+          "y": 0.46570935904337546,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 15,
+            "y": 13
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 178,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "8",
+      "name": "central_bloom_point1_2",
+      "position": {
+        "x": 0.3638454589310789,
+        "y": 23.53,
+        "z": 1.7117583012841602
+      },
+      "orientation": {
+        "x": -0.031708537293953225,
+        "y": 0.9476597531495135,
+        "z": -0.3016865801249795,
+        "w": -0.09960305364683913
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.46666666666666673,
+          "y": 0.46570935904337546,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 15,
+            "y": 13
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 195,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "9",
+      "name": "central_bloom_point1_3",
+      "position": {
+        "x": -1.7117583012841602,
+        "y": 23.53,
+        "z": 0.3638454589310789
+      },
+      "orientation": {
+        "x": 0.19090330485729098,
+        "y": 0.7405266323701583,
+        "z": -0.2357459483414127,
+        "w": 0.5996666430490232
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.46666666666666673,
+          "y": 0.46570935904337546,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 15,
+            "y": 13
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 212,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "10",
+      "name": "bloom_spike0_shaft",
+      "position": {
+        "x": 0.0,
+        "y": 8.536834057955494,
+        "z": 5.433212723495475
+      },
+      "orientation": {
+        "x": -0.3398239978754146,
+        "y": 2.220446049250313e-16,
+        "z": 2.4490899870416053e-17,
+        "w": -0.9404890485635492
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.9,
+          "y": 0.9581818181818181,
+          "z": 0.9
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 5,
+            "y": 11,
+            "z": 5
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 29,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 36,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 43,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 50,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "top": {
+            "offset": {
+              "x": 129,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 136,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "11",
+      "name": "bloom_spike0_point-1_0",
+      "position": {
+        "x": 0.0,
+        "y": 3.9611001550035922,
+        "z": 0.1671412039112079
+      },
+      "orientation": {
+        "x": 0.9990965261267257,
+        "y": 0.0,
+        "z": 0.0,
+        "w": -0.04249860564193434
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.49205246163391975,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 8
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 188,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "12",
+      "name": "bloom_spike0_point-1_1",
+      "position": {
+        "x": 1.125,
+        "y": 3.241998471011544,
+        "z": 1.0323104174641404
+      },
+      "orientation": {
+        "x": 0.7064679286841303,
+        "y": -0.428464917306561,
+        "z": 0.5625102795838336,
+        "w": -0.03005105224038472
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.49205246163391975,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 8
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 199,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "13",
+      "name": "bloom_spike0_point-1_2",
+      "position": {
+        "x": 0.0,
+        "y": 2.522896787019496,
+        "z": 1.8974796310170734
+      },
+      "orientation": {
+        "x": -0.0,
+        "y": 0.6059408970560046,
+        "z": -0.7955096663617384,
+        "w": 0.0
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.49205246163391975,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 8
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 210,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "14",
+      "name": "bloom_spike0_point-1_3",
+      "position": {
+        "x": -1.125,
+        "y": 3.241998471011544,
+        "z": 1.0323104174641404
+      },
+      "orientation": {
+        "x": -0.7064679286841303,
+        "y": -0.428464917306561,
+        "z": 0.5625102795838336,
+        "w": 0.03005105224038472
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.49205246163391975,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 8
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 221,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "15",
+      "name": "bloom_spike0_point1_0",
+      "position": {
+        "x": 0.0,
+        "y": 14.550771328891491,
+        "z": 8.968945815973877
+      },
+      "orientation": {
+        "x": 0.6059408970560047,
+        "y": -2.220446049250313e-16,
+        "z": -4.325222281973051e-17,
+        "w": 0.7955096663617385
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.49205246163391975,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 8
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 232,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "16",
+      "name": "bloom_spike0_point1_1",
+      "position": {
+        "x": 1.125,
+        "y": 13.831669644899442,
+        "z": 9.83411502952681
+      },
+      "orientation": {
+        "x": 0.4284649173065606,
+        "y": -0.7064679286841306,
+        "z": -0.030051052240384634,
+        "w": 0.5625102795838333
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.49205246163391975,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 8
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 243,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "17",
+      "name": "bloom_spike0_point1_2",
+      "position": {
+        "x": 0.0,
+        "y": 13.112567960907395,
+        "z": 10.699284243079742
+      },
+      "orientation": {
+        "x": 0.0,
+        "y": -0.9990965261267257,
+        "z": -0.0424986056419344,
+        "w": 0.0
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.49205246163391975,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 8
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 1,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "18",
+      "name": "bloom_spike0_point1_3",
+      "position": {
+        "x": -1.125,
+        "y": 13.831669644899442,
+        "z": 9.83411502952681
+      },
+      "orientation": {
+        "x": -0.4284649173065606,
+        "y": -0.7064679286841306,
+        "z": -0.030051052240384634,
+        "w": -0.5625102795838333
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.49205246163391975,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 8
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 12,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "19",
+      "name": "bloom_spike1_shaft",
+      "position": {
+        "x": 5.2588649771486145,
+        "y": 9.305873358891434,
+        "z": 3.0362071101886485
+      },
+      "orientation": {
+        "x": 0.15412217313213833,
+        "y": -0.049701163506055246,
+        "z": -0.3028641696884213,
+        "w": 0.9391748744584867
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.9,
+          "y": 0.9816666666666666,
+          "z": 0.9
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 5,
+            "y": 12,
+            "z": 5
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 229,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 236,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 243,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 250,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "top": {
+            "offset": {
+              "x": 143,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 150,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "20",
+      "name": "bloom_spike1_point-1_0",
+      "position": {
+        "x": 1.2092357236413172,
+        "y": 3.6799296229052523,
+        "z": -0.4891169867782925
+      },
+      "orientation": {
+        "x": -0.9453382784919528,
+        "y": 0.3048517380271999,
+        "z": 0.03552926619996606,
+        "w": -0.11017544319383697
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4726416438029875,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 9
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 12,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "21",
+      "name": "bloom_spike1_point-1_1",
+      "position": {
+        "x": 1.9122412960546824,
+        "y": 2.7308853809777185,
+        "z": 0.5768793509358434
+      },
+      "orientation": {
+        "x": 0.5757557547226257,
+        "y": -0.5030213066208777,
+        "z": 0.5833744364281875,
+        "w": 0.2741334399727605
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4726416438029875,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 9
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 23,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "22",
+      "name": "bloom_spike1_point-1_2",
+      "position": {
+        "x": 0.7891329676751546,
+        "y": 3.0963022534734925,
+        "z": 1.6428756886499793
+      },
+      "orientation": {
+        "x": -0.1310966815488584,
+        "y": -0.40652781595868026,
+        "z": 0.8605453061384697,
+        "w": 0.27750778551563177
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4726416438029875,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 9
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 34,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "23",
+      "name": "bloom_spike1_point-1_3",
+      "position": {
+        "x": 0.08612739526178892,
+        "y": 4.045346495401026,
+        "z": 0.5768793509358434
+      },
+      "orientation": {
+        "x": -0.7611544597511278,
+        "y": -0.07189584418980177,
+        "z": 0.6336204065493436,
+        "w": 0.11832183396756982
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4726416438029875,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 9
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 45,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "24",
+      "name": "bloom_spike1_point1_0",
+      "position": {
+        "x": 9.728596986622074,
+        "y": 15.515444464309375,
+        "z": 4.429538531727317
+      },
+      "orientation": {
+        "x": 0.4065278159586807,
+        "y": -0.13109668154885823,
+        "z": -0.2775077855156317,
+        "w": 0.8605453061384697
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4726416438029875,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 9
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 56,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "25",
+      "name": "bloom_spike1_point1_1",
+      "position": {
+        "x": 10.43160255903544,
+        "y": 14.56640022238184,
+        "z": 5.495534869441453
+      },
+      "orientation": {
+        "x": -0.07189584418980198,
+        "y": 0.7611544597511278,
+        "z": 0.11832183396756998,
+        "w": -0.6336204065493437
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4726416438029875,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 9
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 67,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "26",
+      "name": "bloom_spike1_point1_2",
+      "position": {
+        "x": 9.308494230655912,
+        "y": 14.931817094877616,
+        "z": 6.561531207155589
+      },
+      "orientation": {
+        "x": -0.30485173802719995,
+        "y": -0.945338278491953,
+        "z": 0.110175443193837,
+        "w": 0.0355292661999661
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4726416438029875,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 9
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 78,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "27",
+      "name": "bloom_spike1_point1_3",
+      "position": {
+        "x": 8.605488658242546,
+        "y": 15.88086133680515,
+        "z": 5.495534869441453
+      },
+      "orientation": {
+        "x": 0.503021306620878,
+        "y": 0.5757557547226253,
+        "z": -0.2741334399727604,
+        "w": 0.5833744364281875
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4726416438029875,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 9
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 89,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "28",
+      "name": "bloom_spike2_shaft",
+      "position": {
+        "x": 5.812429711585311,
+        "y": 10.074912659827374,
+        "z": -3.3558078586295563
+      },
+      "orientation": {
+        "x": -0.15412217313213816,
+        "y": 0.04970116350605569,
+        "z": -0.30286416968842134,
+        "w": 0.9391748744584868
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.9,
+          "y": 0.9299999999999999,
+          "z": 0.9
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 5,
+            "y": 14,
+            "z": 5
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 37,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 44,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 51,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 58,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "top": {
+            "offset": {
+              "x": 157,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 164,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "29",
+      "name": "bloom_spike2_point-1_0",
+      "position": {
+        "x": 0.8943102672181285,
+        "y": 3.2424197206513226,
+        "z": -1.703599830853752
+      },
+      "orientation": {
+        "x": 0.8692593414856937,
+        "y": -0.2803178788772055,
+        "z": -0.12497518840432705,
+        "w": 0.38754520549859156
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4580676805887968,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 85,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "30",
+      "name": "bloom_spike2_point-1_1",
+      "position": {
+        "x": 2.0174185955976562,
+        "y": 2.8770028481555476,
+        "z": -0.6376034931396162
+      },
+      "orientation": {
+        "x": 0.5942727749878949,
+        "y": -0.2614324338868951,
+        "z": 0.5816329723455276,
+        "w": 0.49009798704000773
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4580676805887968,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 96,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "31",
+      "name": "bloom_spike2_point-1_2",
+      "position": {
+        "x": 1.314413023184291,
+        "y": 3.8260470900830805,
+        "z": 0.42839284457451976
+      },
+      "orientation": {
+        "x": -0.02883072334871837,
+        "y": -0.08940341476984959,
+        "z": 0.9475284262187482,
+        "w": 0.30555801466514054
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4580676805887968,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 107,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "32",
+      "name": "bloom_spike2_point-1_3",
+      "position": {
+        "x": 0.19130469480476275,
+        "y": 4.1914639625788555,
+        "z": -0.6376034931396162
+      },
+      "orientation": {
+        "x": 0.6350455749606791,
+        "y": -0.13499691219690724,
+        "z": -0.7583745787470597,
+        "w": 0.057973698608769
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4580676805887968,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 118,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "33",
+      "name": "bloom_spike2_point1_0",
+      "position": {
+        "x": 10.310446399986333,
+        "y": 16.32377822957167,
+        "z": -7.140008561833632
+      },
+      "orientation": {
+        "x": 0.08940341476984924,
+        "y": -0.02883072334871839,
+        "z": -0.3055580146651406,
+        "w": 0.9475284262187482
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4580676805887968,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 129,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "34",
+      "name": "bloom_spike2_point1_1",
+      "position": {
+        "x": 11.43355472836586,
+        "y": 15.958361357075894,
+        "z": -6.074012224119496
+      },
+      "orientation": {
+        "x": 0.1349969121969073,
+        "y": 0.6350455749606794,
+        "z": -0.057973698608768914,
+        "w": -0.75837457874706
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4580676805887968,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 140,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "35",
+      "name": "bloom_spike2_point1_2",
+      "position": {
+        "x": 10.730549155952495,
+        "y": 16.907405599003425,
+        "z": -5.00801588640536
+      },
+      "orientation": {
+        "x": 0.28031787887720544,
+        "y": 0.8692593414856935,
+        "z": -0.3875452054985915,
+        "w": -0.124975188404327
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4580676805887968,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 151,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "36",
+      "name": "bloom_spike2_point1_3",
+      "position": {
+        "x": 9.607440827572967,
+        "y": 17.2728224714992,
+        "z": -6.074012224119496
+      },
+      "orientation": {
+        "x": -0.26143243388689513,
+        "y": -0.5942727749878949,
+        "z": 0.49009798704000757,
+        "w": -0.5816329723455278
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4580676805887968,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 162,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "37",
+      "name": "bloom_spike3_shaft",
+      "position": {
+        "x": 6.653766570915406e-16,
+        "y": 8.536834057955494,
+        "z": -5.433212723495475
+      },
+      "orientation": {
+        "x": 0.3398239978754146,
+        "y": 2.220446049250313e-16,
+        "z": 7.235653739588056e-17,
+        "w": -0.9404890485635492
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.9,
+          "y": 0.9581818181818181,
+          "z": 0.9
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 5,
+            "y": 11,
+            "z": 5
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 57,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 64,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 71,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 78,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "top": {
+            "offset": {
+              "x": 171,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 178,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "38",
+      "name": "bloom_spike3_point-1_0",
+      "position": {
+        "x": 5.3225049475978123e-17,
+        "y": 2.522896787019496,
+        "z": -1.8974796310170734
+      },
+      "orientation": {
+        "x": -0.7955096663617384,
+        "y": 0.0,
+        "z": 3.083900592424361e-17,
+        "w": -0.6059408970560047
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.49205246163391975,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 8
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 23,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "39",
+      "name": "bloom_spike3_point-1_1",
+      "position": {
+        "x": 1.1250000000000002,
+        "y": 3.241998471011544,
+        "z": -1.0323104174641404
+      },
+      "orientation": {
+        "x": 0.5625102795838333,
+        "y": 0.030051052240384846,
+        "z": 0.7064679286841307,
+        "w": 0.42846491730656067
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.49205246163391975,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 8
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 34,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "40",
+      "name": "bloom_spike3_point-1_2",
+      "position": {
+        "x": 1.9961808021880746e-16,
+        "y": 3.9611001550035922,
+        "z": -0.1671412039112079
+      },
+      "orientation": {
+        "x": 0.0,
+        "y": -0.04249860564193448,
+        "z": -0.9990965261267262,
+        "w": -4.163336342344337e-17
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.49205246163391975,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 8
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 45,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "41",
+      "name": "bloom_spike3_point-1_3",
+      "position": {
+        "x": -1.1249999999999998,
+        "y": 3.241998471011544,
+        "z": -1.0323104174641404
+      },
+      "orientation": {
+        "x": 0.5625102795838332,
+        "y": -0.030051052240384735,
+        "z": -0.7064679286841307,
+        "w": 0.42846491730656044
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.49205246163391975,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 8
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 56,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "42",
+      "name": "bloom_spike3_point1_0",
+      "position": {
+        "x": 1.1311352339642739e-15,
+        "y": 13.112567960907395,
+        "z": -10.699284243079742
+      },
+      "orientation": {
+        "x": -0.0424986056419344,
+        "y": -2.220446049250313e-16,
+        "z": -1.8644568127609237e-17,
+        "w": 0.9990965261267258
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.49205246163391975,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 8
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 67,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "43",
+      "name": "bloom_spike3_point1_1",
+      "position": {
+        "x": 1.125000000000001,
+        "y": 13.831669644899442,
+        "z": -9.83411502952681
+      },
+      "orientation": {
+        "x": -0.030051052240384797,
+        "y": -0.5625102795838329,
+        "z": 0.42846491730656056,
+        "w": 0.7064679286841304
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.49205246163391975,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 8
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 78,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "44",
+      "name": "bloom_spike3_point1_2",
+      "position": {
+        "x": 1.277528264707103e-15,
+        "y": 14.550771328891491,
+        "z": -8.968945815973877
+      },
+      "orientation": {
+        "x": -4.0486997053534825e-17,
+        "y": -0.7955096663617383,
+        "z": 0.605940897056005,
+        "w": -1.1102230246251565e-16
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.49205246163391975,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 8
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 89,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "45",
+      "name": "bloom_spike3_point1_3",
+      "position": {
+        "x": -1.124999999999999,
+        "y": 13.831669644899442,
+        "z": -9.83411502952681
+      },
+      "orientation": {
+        "x": 0.03005105224038472,
+        "y": -0.5625102795838328,
+        "z": 0.4284649173065606,
+        "w": -0.7064679286841304
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.49205246163391975,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 8
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 100,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "46",
+      "name": "bloom_spike4_shaft",
+      "position": {
+        "x": -5.258864977148614,
+        "y": 9.305873358891434,
+        "z": -3.0362071101886503
+      },
+      "orientation": {
+        "x": 0.15412217313213855,
+        "y": 0.049701163506055246,
+        "z": -0.3028641696884215,
+        "w": -0.939174874458487
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.9,
+          "y": 0.9816666666666666,
+          "z": 0.9
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 5,
+            "y": 12,
+            "z": 5
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 1,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 8,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 15,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 22,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "top": {
+            "offset": {
+              "x": 185,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 192,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "47",
+      "name": "bloom_spike4_point-1_0",
+      "position": {
+        "x": -0.7891329676751546,
+        "y": 3.0963022534734925,
+        "z": -1.6428756886499793
+      },
+      "orientation": {
+        "x": 0.8605453061384697,
+        "y": 0.2775077855156317,
+        "z": 0.13109668154885837,
+        "w": 0.4065278159586808
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4726416438029875,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 9
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 100,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "48",
+      "name": "bloom_spike4_point-1_1",
+      "position": {
+        "x": -0.08612739526178892,
+        "y": 4.045346495401026,
+        "z": -0.5768793509358434
+      },
+      "orientation": {
+        "x": -0.6336204065493434,
+        "y": -0.11832183396756979,
+        "z": -0.761154459751128,
+        "w": -0.07189584418980187
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4726416438029875,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 9
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 111,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "49",
+      "name": "bloom_spike4_point-1_2",
+      "position": {
+        "x": -1.2092357236413172,
+        "y": 3.6799296229052523,
+        "z": 0.4891169867782925
+      },
+      "orientation": {
+        "x": 0.035529266199966034,
+        "y": -0.11017544319383699,
+        "z": 0.9453382784919531,
+        "w": -0.3048517380272
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4726416438029875,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 9
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 122,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "50",
+      "name": "bloom_spike4_point-1_3",
+      "position": {
+        "x": -1.9122412960546828,
+        "y": 2.7308853809777185,
+        "z": -0.5768793509358434
+      },
+      "orientation": {
+        "x": 0.5833744364281875,
+        "y": 0.2741334399727604,
+        "z": -0.5757557547226257,
+        "w": 0.5030213066208777
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4726416438029875,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 9
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 133,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "51",
+      "name": "bloom_spike4_point1_0",
+      "position": {
+        "x": -9.30849423065591,
+        "y": 14.931817094877616,
+        "z": -6.561531207155593
+      },
+      "orientation": {
+        "x": -0.11017544319383679,
+        "y": -0.035529266199966214,
+        "z": -0.3048517380271999,
+        "w": -0.9453382784919527
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4726416438029875,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 9
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 144,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "52",
+      "name": "bloom_spike4_point1_1",
+      "position": {
+        "x": -8.605488658242544,
+        "y": 15.88086133680515,
+        "z": -5.495534869441457
+      },
+      "orientation": {
+        "x": -0.2741334399727603,
+        "y": 0.5833744364281872,
+        "z": -0.5030213066208779,
+        "w": -0.5757557547226261
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4726416438029875,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 9
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 155,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "53",
+      "name": "bloom_spike4_point1_2",
+      "position": {
+        "x": -9.728596986622073,
+        "y": 15.515444464309375,
+        "z": -4.429538531727321
+      },
+      "orientation": {
+        "x": 0.2775077855156317,
+        "y": -0.8605453061384692,
+        "z": 0.40652781595868054,
+        "w": -0.13109668154885823
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4726416438029875,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 9
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 166,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "54",
+      "name": "bloom_spike4_point1_3",
+      "position": {
+        "x": -10.431602559035438,
+        "y": 14.56640022238184,
+        "z": -5.495534869441457
+      },
+      "orientation": {
+        "x": 0.11832183396756966,
+        "y": -0.6336204065493435,
+        "z": 0.07189584418980177,
+        "w": -0.761154459751128
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4726416438029875,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 9
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 177,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "55",
+      "name": "bloom_spike5_shaft",
+      "position": {
+        "x": -5.812429711585311,
+        "y": 10.074912659827374,
+        "z": 3.3558078586295585
+      },
+      "orientation": {
+        "x": 0.15412217313213833,
+        "y": 0.049701163506055246,
+        "z": 0.3028641696884213,
+        "w": 0.9391748744584867
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.9,
+          "y": 0.9299999999999999,
+          "z": 0.9
+        },
+        "settings": {
+          "isPiece": false,
+          "size": {
+            "x": 5,
+            "y": 14,
+            "z": 5
+          },
+          "isStaticBox": true
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 65,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "back": {
+            "offset": {
+              "x": 72,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "left": {
+            "offset": {
+              "x": 79,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 86,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "top": {
+            "offset": {
+              "x": 199,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          },
+          "bottom": {
+            "offset": {
+              "x": 206,
+              "y": 46
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "56",
+      "name": "bloom_spike5_point-1_0",
+      "position": {
+        "x": -1.314413023184291,
+        "y": 3.8260470900830814,
+        "z": -0.42839284457451976
+      },
+      "orientation": {
+        "x": -0.9475284262187482,
+        "y": -0.3055580146651406,
+        "z": -0.028830723348718307,
+        "w": -0.08940341476984903
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4580676805887968,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 173,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "57",
+      "name": "bloom_spike5_point-1_1",
+      "position": {
+        "x": -0.19130469480476275,
+        "y": 4.1914639625788555,
+        "z": 0.6376034931396162
+      },
+      "orientation": {
+        "x": 0.7583745787470604,
+        "y": -0.057973698608768665,
+        "z": 0.6350455749606786,
+        "w": -0.13499691219690702
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4580676805887968,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 184,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "58",
+      "name": "bloom_spike5_point-1_2",
+      "position": {
+        "x": -0.8943102672181285,
+        "y": 3.2424197206513217,
+        "z": 1.703599830853752
+      },
+      "orientation": {
+        "x": -0.12497518840432709,
+        "y": 0.3875452054985915,
+        "z": -0.8692593414856934,
+        "w": 0.28031787887720516
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4580676805887968,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 195,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "59",
+      "name": "bloom_spike5_point-1_3",
+      "position": {
+        "x": -2.0174185955976562,
+        "y": 2.8770028481555476,
+        "z": 0.6376034931396162
+      },
+      "orientation": {
+        "x": -0.5816329723455284,
+        "y": -0.49009798704000807,
+        "z": 0.5942727749878945,
+        "w": -0.26143243388689513
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4580676805887968,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 206,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "60",
+      "name": "bloom_spike5_point1_0",
+      "position": {
+        "x": -10.730549155952495,
+        "y": 16.907405599003425,
+        "z": 5.008015886405365
+      },
+      "orientation": {
+        "x": 0.3875452054985916,
+        "y": 0.12497518840432731,
+        "z": 0.28031787887720544,
+        "w": 0.8692593414856936
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4580676805887968,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 217,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "61",
+      "name": "bloom_spike5_point1_1",
+      "position": {
+        "x": -9.607440827572967,
+        "y": 17.2728224714992,
+        "z": 6.074012224119501
+      },
+      "orientation": {
+        "x": 0.4900979870400078,
+        "y": -0.581632972345528,
+        "z": 0.26143243388689497,
+        "w": 0.5942727749878942
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4580676805887968,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 228,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "62",
+      "name": "bloom_spike5_point1_2",
+      "position": {
+        "x": -10.310446399986333,
+        "y": 16.323778229571666,
+        "z": 7.140008561833637
+      },
+      "orientation": {
+        "x": 0.30555801466514054,
+        "y": -0.9475284262187483,
+        "z": 0.08940341476984912,
+        "w": -0.028830723348718255
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4580676805887968,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 239,
+              "y": 20
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    },
+    {
+      "id": "63",
+      "name": "bloom_spike5_point1_3",
+      "position": {
+        "x": -11.43355472836586,
+        "y": 15.958361357075894,
+        "z": 6.074012224119501
+      },
+      "orientation": {
+        "x": 0.05797369860876857,
+        "y": 0.7583745787470608,
+        "z": 0.1349969121969072,
+        "w": 0.6350455749606785
+      },
+      "shape": {
+        "type": "quad",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.5,
+          "y": 0.4580676805887968,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 9,
+            "y": 10
+          },
+          "normal": "+Z"
+        },
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 1,
+              "y": 34
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 0
+          }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": true,
+        "shadingMode": "standard"
+      }
+    }
+  ],
+  "format": "prop"
+}

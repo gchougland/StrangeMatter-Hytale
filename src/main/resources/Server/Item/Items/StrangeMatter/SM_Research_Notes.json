@@ -1,0 +1,50 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Research_Notes.name",
+    "Description": "server.items.SM_Research_Notes.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Research_Notes.png",
+  "MaxStack": 25,
+  "Categories": [
+    "Items",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Item",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "Model": "Items/StrangeMatter/research_notes.blockymodel",
+  "Texture": "Items/StrangeMatter/research_notes.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "primary"
+        }
+      ],
+      "RequireNewClick": true
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "secondary"
+        }
+      ],
+      "RequireNewClick": true
+    },
+    "Use": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "use"
+        }
+      ],
+      "RequireNewClick": true
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "items": [
+    {
+      "sourceId": "lab_cyan_glass",
+      "id": "SM_Lab_Cyan_Glass",
+      "block": true,
+      "model": "Blocks/StrangeMatter/lab_cyan_glass.blockymodel",
+      "texture": "Blocks/StrangeMatter/lab_cyan_glass.png",
+      "icon": "Icons/ItemsGenerated/SM_Lab_Cyan_Glass.png",
+      "nodes": 5,
+      "boundsModelUnits": {
+        "min": [
+          -16.0,
+          0.0,
+          -1.0
+        ],
+        "max": [
+          16.0,
+          32.0,
+          1.0
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "lab_lamp",
+      "id": "SM_Lab_Lamp",
+      "block": true,
+      "model": "Blocks/StrangeMatter/lab_lamp.blockymodel",
+      "texture": "Blocks/StrangeMatter/lab_lamp.png",
+      "icon": "Icons/ItemsGenerated/SM_Lab_Lamp.png",
+      "nodes": 3,
+      "boundsModelUnits": {
+        "min": [
+          -16.0,
+          0.0,
+          -16.0
+        ],
+        "max": [
+          16.0,
+          32.0,
+          16.0
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ]
+    }
+  ]
+}

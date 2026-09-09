@@ -1,0 +1,18 @@
+Group {
+  Anchor: (Right: 34, Bottom: 176, Width: 376, Height: 214);
+  HitTestVisible: false;
+  Background: #263955;
+  Padding: (Full: 1);
+  Group {
+    Background: #101b2e;
+    Group #GadgetAccent { Anchor: (Left: 0, Top: 0, Width: 3, Bottom: 0); Background: #67e8ef; }
+    ItemIcon #GadgetIcon { Anchor: (Left: 14, Top: 10, Width: 46, Height: 46); ItemId: "SM_Research_Tablet"; }
+    Label #GadgetTitle { Anchor: (Left: 70, Top: 15, Width: 286, Height: 36); Text: "STRANGE MATTER / INSTRUMENT"; Style: (FontSize: 12, TextColor: #6ee8ef, RenderBold: true, Wrap: true); }
+    Group { Anchor: (Left: 16, Top: 63, Width: 340, Height: 1); Background: #29425c; }
+    Label #GadgetStatus { Anchor: (Left: 16, Top: 73, Width: 340, Height: 58); Style: (FontSize: 16, TextColor: #c1a5ef, RenderBold: true, Wrap: true); }
+    Label #GadgetDetail { Anchor: (Left: 16, Top: 137, Width: 340, Height: 54); Style: (FontSize: 12, TextColor: #adc0d5, Wrap: true); }
+    Group #GadgetProgress { Anchor: (Left: 16, Top: 198, Width: 340, Height: 5); Background: #293a55; Visible: false;
+      Group #GadgetProgressFill { Anchor: (Left: 0, Top: 0, Width: 1, Height: 5); Background: #67e8ef; }
+    }
+  }
+}

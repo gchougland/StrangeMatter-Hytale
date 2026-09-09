@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "recipes": 49,
+  "embedded": 46,
+  "standalone": 3,
+  "materialsChecked": 337,
+  "resourceTypesUsed": [
+    "SM_Anomaly_Shards",
+    "Wood_Planks"
+  ],
+  "auditedCatalogRecipes": 59,
+  "sourceAnyShardRecipes": 4,
+  "sourceAnyShardMembers": [
+    "SM_Chrono_Shard",
+    "SM_Energetic_Shard",
+    "SM_Gravitic_Shard",
+    "SM_Insight_Shard",
+    "SM_Shade_Shard",
+    "SM_Spatial_Shard"
+  ],
+  "sourceSemantics": "Minecraft checkout",
+  "nativeAssets": "C:\\Users\\gchou\\Documents\\HytaleModding\\HytaleSourceCode\\hytale-shared-source\\HytaleAssets",
+  "errors": [],
+  "checks": [
+    "All recipe ItemId references",
+    "Resource type definitions, icons and members",
+    "Standalone explicit primary outputs",
+    "Native bench IDs, types and categories",
+    "Positive material quantities",
+    "Original six-shard tag semantics and recipe quantities"
+  ]
+}

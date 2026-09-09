@@ -1,0 +1,21 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Raw_Resonite.name",
+    "Description": "server.items.SM_Raw_Resonite.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Raw_Resonite.png",
+  "MaxStack": 100,
+  "Categories": [
+    "Items",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Item",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "Model": "Items/StrangeMatter/raw_resonite.blockymodel",
+  "Texture": "Items/StrangeMatter/raw_resonite.png"
+}

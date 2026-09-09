@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "items": 77,
+  "hitboxAssets": 113,
+  "spawners": 118,
+  "checks": [
+    "Item model/texture/icon references",
+    "All item icons exactly64x64",
+    "Model texture dimensions at least32x32 in 32-pixel multiples",
+    "Door animation target nodes, time bounds and quaternions",
+    "Explicit native shape:none hinge and closed placement pose",
+    "Door state-hitbox references",
+    "Particle graph and texture references",
+    "Nonzero initial opacity",
+    "Finite emitters",
+    "3-digit ColorLight and bounded radius",
+    "Positive hitbox volumes",
+    "Model bounds use x/32+.5, y/32, z/32+.5",
+    "Full-cube building collision excludes ornamental overhang",
+    "Open hatch stays within one native cell",
+    "Ore drop ranges and native iron quality",
+    "Native CubeWithModel ores with ordinary stone host",
+    "Native grass Cube without till interactions",
+    "Pedestal-free crystal blooms",
+    "Six-face crystals / three-axis pillars / double slabs",
+    "Crystal 5 vs lamp 15 emitted brightness",
+    "64 conduit masks contain exactly their active arms",
+    "All registered items in Strange Matter creative tab",
+    "Only laboratory bench craftable in vanilla Workbench"
+  ]
+}

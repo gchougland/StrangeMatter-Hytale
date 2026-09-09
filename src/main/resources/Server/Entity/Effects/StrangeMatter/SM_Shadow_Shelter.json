@@ -1,0 +1,8 @@
+{
+  "Duration": 2,
+  "OverlapBehavior": "Overwrite",
+  "RemovalBehavior": "Duration",
+  "DamageResistance": {
+    "Fire": [ { "Amount": 1.0, "CalculationType": "Percent" } ]
+  }
+}

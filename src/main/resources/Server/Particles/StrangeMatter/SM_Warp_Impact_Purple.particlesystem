@@ -1,0 +1,17 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Warp_Impact_Purple_Ring"
+    },
+    {
+      "SpawnerId": "SM_Warp_Impact_Purple_Core"
+    },
+    {
+      "SpawnerId": "SM_Warp_Impact_Purple_Sparks"
+    }
+  ],
+  "LifeSpan": 1.2,
+  "CullDistance": 64,
+  "BoundingRadius": 3.4,
+  "IsImportant": false
+}
