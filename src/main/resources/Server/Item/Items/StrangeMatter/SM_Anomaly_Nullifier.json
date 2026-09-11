@@ -7,7 +7,8 @@
   "MaxStack": 25,
   "Categories": [
     "Furniture.Benches",
-    "SM_StrangeMatter.All"
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Machines"
   ],
   "PlayerAnimationsId": "Block",
   "Quality": "Uncommon",
@@ -79,5 +80,6 @@
       ],
       "RequireNewClick": true
     }
-  }
+  },
+  "SubCategory": "SM_FieldControl"
 }

@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.equipment;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.hexvane.strangematter.anomaly.AnomalyService;
 import com.hexvane.strangematter.anomaly.AnomalyType;
 import com.hexvane.strangematter.effects.GadgetEffects;
@@ -133,7 +135,7 @@ final class WarpProjectiles {
             &&loaded(shot.world,impact)&&loaded(shot.world,new Vector3d(impact).add(0,1,0));
     }
     private static boolean loaded(World world,Vector3d point){
-        return point.y>=0&&point.y<ChunkUtil.HEIGHT&&world.getChunkIfInMemory(ChunkUtil.indexChunkFromBlock((int)Math.floor(point.x),(int)Math.floor(point.z)))!=null;
+        return point.y>=0&&point.y<ChunkUtil.HEIGHT&&WorldAccess.inMemory(world,ChunkUtil.indexChunkFromBlock((int)Math.floor(point.x),(int)Math.floor(point.z)))!=null;
     }
     private void openPortal(Shot shot,Store<EntityStore> store,Vector3d impact){
         var found=findGun(shot,store);if(found==null)return;

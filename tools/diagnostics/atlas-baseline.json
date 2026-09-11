@@ -1,0 +1,497 @@
+{
+  "atlases": [
+    {
+      "name": "Model/Entity",
+      "width": 8192,
+      "predictedHeight": 8192,
+      "textureCount": 2132,
+      "unreadableCount": 0,
+      "sourceError": false,
+      "estimated": false,
+      "packs": [
+        {
+          "pack": "Hytale:Hytale",
+          "count": 2081,
+          "paddedArea": 32329728
+        },
+        {
+          "pack": "Hexvane:Strange Matter",
+          "count": 51,
+          "paddedArea": 828416
+        }
+      ],
+      "largest": [
+        {
+          "name": "NPC/Elemental/Dragon_Frost/Models/Texture.png",
+          "pack": "Hytale:Hytale",
+          "width": 768,
+          "height": 512
+        },
+        {
+          "name": "NPC/Elemental/Dragon_Void/Models/Texture.png",
+          "pack": "Hytale:Hytale",
+          "width": 704,
+          "height": 544
+        },
+        {
+          "name": "NPC/Elemental/Dragon_Fire/Models/Texture.png",
+          "pack": "Hytale:Hytale",
+          "width": 672,
+          "height": 512
+        },
+        {
+          "name": "NPC/Swimming_Wildlife/Whale_Humpback/Models/Texture.png",
+          "pack": "Hytale:Hytale",
+          "width": 608,
+          "height": 544
+        },
+        {
+          "name": "NPC/Intelligent/Goblin_Duke/Models/Model_Textures/Vapid.png",
+          "pack": "Hytale:Hytale",
+          "width": 512,
+          "height": 512
+        },
+        {
+          "name": "NPC/Intelligent/Goblin_Duke/Models/Model_Textures/Moldy.png",
+          "pack": "Hytale:Hytale",
+          "width": 512,
+          "height": 512
+        },
+        {
+          "name": "NPC/Beast/Scarak_Broodmother/Models/Model_Default.png",
+          "pack": "Hytale:Hytale",
+          "width": 384,
+          "height": 608
+        },
+        {
+          "name": "NPC/Beast/Scarak_Broodmother/Models/Model_Red.png",
+          "pack": "Hytale:Hytale",
+          "width": 384,
+          "height": 608
+        },
+        {
+          "name": "NPC/Boss/Golem_Guardian/Models/Texture.png",
+          "pack": "Hytale:Hytale",
+          "width": 448,
+          "height": 448
+        },
+        {
+          "name": "NPC/Intelligent/Goblin_Ogre/Model_Textures/Muddy.png",
+          "pack": "Hytale:Hytale",
+          "width": 416,
+          "height": 480
+        }
+      ]
+    },
+    {
+      "name": "Blocks",
+      "width": 8192,
+      "predictedHeight": 4096,
+      "textureCount": 2343,
+      "unreadableCount": 0,
+      "sourceError": false,
+      "estimated": true,
+      "packs": [
+        {
+          "pack": "Hytale:Hytale",
+          "count": 2286,
+          "paddedArea": 14759936
+        },
+        {
+          "pack": "Hexvane:Strange Matter",
+          "count": 57,
+          "paddedArea": 1967104
+        }
+      ],
+      "largest": [
+        {
+          "name": "Blocks/StrangeMatter/Roofs/Resonite_Roof.png",
+          "pack": "Hexvane:Strange Matter",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "Blocks/StrangeMatter/reality_forge.png",
+          "pack": "Hexvane:Strange Matter",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "Blocks/StrangeMatter/Automation/automation_working.png",
+          "pack": "Hexvane:Strange Matter",
+          "width": 512,
+          "height": 128
+        },
+        {
+          "name": "Blocks/StrangeMatter/Furniture/resonite_furniture.png",
+          "pack": "Hexvane:Strange Matter",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "Blocks/StrangeMatter/Automation/automation.png",
+          "pack": "Hexvane:Strange Matter",
+          "width": 512,
+          "height": 128
+        },
+        {
+          "name": "Blocks/StrangeMatter/reality_forge_working.png",
+          "pack": "Hexvane:Strange Matter",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "Blocks/Miscellaneous/ArcadeMachine_Texture.png",
+          "pack": "Hytale:Hytale",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "name": "Blocks/Structures/Roofs/Metal_Roofs/Slate_Roof.png",
+          "pack": "Hytale:Hytale",
+          "width": 160,
+          "height": 352
+        },
+        {
+          "name": "Blocks/Structures/Roofs/Metal_Roofs/Metal_Bronze.png",
+          "pack": "Hytale:Hytale",
+          "width": 160,
+          "height": 352
+        },
+        {
+          "name": "Blocks/Structures/Roofs/Metal_Roofs/Metal_Copper.png",
+          "pack": "Hytale:Hytale",
+          "width": 160,
+          "height": 352
+        }
+      ]
+    },
+    {
+      "name": "Item Icons",
+      "width": 8192,
+      "predictedHeight": 2048,
+      "textureCount": 3569,
+      "unreadableCount": 0,
+      "sourceError": false,
+      "estimated": false,
+      "packs": [
+        {
+          "pack": "Hytale:Hytale",
+          "count": 3454,
+          "paddedArea": 14145604
+        },
+        {
+          "pack": "Hexvane:Strange Matter",
+          "count": 115,
+          "paddedArea": 471040
+        }
+      ],
+      "largest": [
+        {
+          "name": "Icons/ItemsGenerated/Wood_Aspen_Branch_Corner.png",
+          "pack": "Hytale:Hytale",
+          "width": 64,
+          "height": 64
+        },
+        {
+          "name": "Icons/ItemsGenerated/Furniture_Jungle_Brazier.png",
+          "pack": "Hytale:Hytale",
+          "width": 64,
+          "height": 64
+        },
+        {
+          "name": "Icons/ItemsGenerated/Wood_Fig_Blue_Branch_Long.png",
+          "pack": "Hytale:Hytale",
+          "width": 64,
+          "height": 64
+        },
+        {
+          "name": "Icons/ItemsGenerated/Prototype_Rock_Peachstone_Brick_Pipe_Corner.png",
+          "pack": "Hytale:Hytale",
+          "width": 64,
+          "height": 64
+        },
+        {
+          "name": "Icons/ItemsGenerated/Plant_Leaves_Fig_Blue.png",
+          "pack": "Hytale:Hytale",
+          "width": 64,
+          "height": 64
+        },
+        {
+          "name": "Icons/ItemsGenerated/Potion_Mana_Large.png",
+          "pack": "Hytale:Hytale",
+          "width": 64,
+          "height": 64
+        },
+        {
+          "name": "Icons/ItemsGenerated/Weapon_Kunai.png",
+          "pack": "Hytale:Hytale",
+          "width": 64,
+          "height": 64
+        },
+        {
+          "name": "Icons/ItemsGenerated/Rock_Sandstone_Red_Stairs.png",
+          "pack": "Hytale:Hytale",
+          "width": 64,
+          "height": 64
+        },
+        {
+          "name": "Icons/ItemsGenerated/Wood_Blackwood_Fence_Gate.png",
+          "pack": "Hytale:Hytale",
+          "width": 64,
+          "height": 64
+        },
+        {
+          "name": "Icons/ItemsGenerated/Metal_Zinc_Fence.png",
+          "pack": "Hytale:Hytale",
+          "width": 64,
+          "height": 64
+        }
+      ]
+    },
+    {
+      "name": "FX/Particles",
+      "width": 8192,
+      "predictedHeight": 4096,
+      "textureCount": 377,
+      "unreadableCount": 0,
+      "sourceError": false,
+      "estimated": true,
+      "packs": [
+        {
+          "pack": "Hytale:Hytale",
+          "count": 360,
+          "paddedArea": 14124640
+        },
+        {
+          "pack": "Hexvane:Strange Matter",
+          "count": 17,
+          "paddedArea": 287300
+        }
+      ],
+      "largest": [
+        {
+          "name": "Particles/Textures/Smoke/Smoke_Tall.png",
+          "pack": "Hytale:Hytale",
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "name": "Particles/Textures/Rnd/Fire_Trail.png",
+          "pack": "Hytale:Hytale",
+          "width": 768,
+          "height": 768
+        },
+        {
+          "name": "Particles/Textures/Rnd/Totem_Heal_Circle2.png",
+          "pack": "Hytale:Hytale",
+          "width": 704,
+          "height": 704
+        },
+        {
+          "name": "Particles/Textures/Rnd/Totem_Heal_Circle3.png",
+          "pack": "Hytale:Hytale",
+          "width": 704,
+          "height": 704
+        },
+        {
+          "name": "Particles/Textures/Rnd/Totem_Slow_Circle1.png",
+          "pack": "Hytale:Hytale",
+          "width": 704,
+          "height": 704
+        },
+        {
+          "name": "Particles/Textures/Rnd/Totem_Heal_Circle1.png",
+          "pack": "Hytale:Hytale",
+          "width": 704,
+          "height": 704
+        },
+        {
+          "name": "Particles/Textures/Rnd/Totem_Slow_Circle3.png",
+          "pack": "Hytale:Hytale",
+          "width": 704,
+          "height": 704
+        },
+        {
+          "name": "Particles/Textures/Rnd/Totem_Slow_Circle2.png",
+          "pack": "Hytale:Hytale",
+          "width": 704,
+          "height": 704
+        },
+        {
+          "name": "Particles/Textures/Explosion/Explosion_Medium.png",
+          "pack": "Hytale:Hytale",
+          "width": 512,
+          "height": 512
+        },
+        {
+          "name": "Trails/Swipe.png",
+          "pack": "Hytale:Hytale",
+          "width": 512,
+          "height": 512
+        }
+      ]
+    },
+    {
+      "name": "Custom UI",
+      "width": 8192,
+      "predictedHeight": 4096,
+      "textureCount": 206,
+      "unreadableCount": 0,
+      "sourceError": false,
+      "estimated": false,
+      "packs": [
+        {
+          "pack": "Hytale:Hytale",
+          "count": 187,
+          "paddedArea": 17200754
+        },
+        {
+          "pack": "Hexvane:Strange Matter",
+          "count": 19,
+          "paddedArea": 428892
+        }
+      ],
+      "largest": [
+        {
+          "name": "UI/Custom/Pages/Memories/MemoriesUnlocked/BackgroundModal@2x.png",
+          "pack": "Hytale:Hytale",
+          "width": 3840,
+          "height": 1074
+        },
+        {
+          "name": "UI/Custom/Pages/Memories/MemoriesRunes@2x.png",
+          "pack": "Hytale:Hytale",
+          "width": 2110,
+          "height": 1169
+        },
+        {
+          "name": "UI/Custom/Pages/RespawnPageBackgroundInner@2x.png",
+          "pack": "Hytale:Hytale",
+          "width": 1699,
+          "height": 429
+        },
+        {
+          "name": "UI/Custom/Pages/Memories/ContainerBackground@2x.png",
+          "pack": "Hytale:Hytale",
+          "width": 2105,
+          "height": 323
+        },
+        {
+          "name": "UI/Custom/Pages/Memories/MemoriesProgress/ContainerBackground@2x.png",
+          "pack": "Hytale:Hytale",
+          "width": 2105,
+          "height": 323
+        },
+        {
+          "name": "UI/Custom/Pages/PortalBanner.png",
+          "pack": "Hytale:Hytale",
+          "width": 1032,
+          "height": 504
+        },
+        {
+          "name": "UI/Custom/Pages/RespawnPageBackground.png",
+          "pack": "Hytale:Hytale",
+          "width": 960,
+          "height": 540
+        },
+        {
+          "name": "UI/Custom/Pages/Memories/MemoriesUnlocked/ModalStatue@2x.png",
+          "pack": "Hytale:Hytale",
+          "width": 571,
+          "height": 785
+        },
+        {
+          "name": "UI/Custom/Pages/Portals/CursedBG@2x.png",
+          "pack": "Hytale:Hytale",
+          "width": 1139,
+          "height": 300
+        },
+        {
+          "name": "UI/Custom/Pages/Portals/CurseBG@2x.png",
+          "pack": "Hytale:Hytale",
+          "width": 1139,
+          "height": 300
+        }
+      ]
+    },
+    {
+      "name": "World Map",
+      "width": 2048,
+      "predictedHeight": 256,
+      "textureCount": 21,
+      "unreadableCount": 0,
+      "sourceError": false,
+      "estimated": false,
+      "packs": [
+        {
+          "pack": "Hytale:Hytale",
+          "count": 21,
+          "paddedArea": 64126
+        }
+      ],
+      "largest": [
+        {
+          "name": "UI/WorldMap/CompassBackground.png",
+          "pack": "Hytale:Hytale",
+          "width": 500,
+          "height": 21
+        },
+        {
+          "name": "UI/WorldMap/MapMarkers/Coordinate.png",
+          "pack": "Hytale:Hytale",
+          "width": 64,
+          "height": 64
+        },
+        {
+          "name": "UI/WorldMap/MapMarkers/UserF.png",
+          "pack": "Hytale:Hytale",
+          "width": 64,
+          "height": 64
+        },
+        {
+          "name": "UI/WorldMap/MapMarkers/UserD.png",
+          "pack": "Hytale:Hytale",
+          "width": 64,
+          "height": 64
+        },
+        {
+          "name": "UI/WorldMap/MapMarkers/Home.png",
+          "pack": "Hytale:Hytale",
+          "width": 64,
+          "height": 64
+        },
+        {
+          "name": "UI/WorldMap/MapMarkers/UserC.png",
+          "pack": "Hytale:Hytale",
+          "width": 64,
+          "height": 64
+        },
+        {
+          "name": "UI/WorldMap/MapMarkers/Spawn.png",
+          "pack": "Hytale:Hytale",
+          "width": 64,
+          "height": 64
+        },
+        {
+          "name": "UI/WorldMap/MapMarkers/UserA.png",
+          "pack": "Hytale:Hytale",
+          "width": 64,
+          "height": 64
+        },
+        {
+          "name": "UI/WorldMap/MapMarkers/UserE.png",
+          "pack": "Hytale:Hytale",
+          "width": 64,
+          "height": 64
+        },
+        {
+          "name": "UI/WorldMap/MapMarkers/Player.png",
+          "pack": "Hytale:Hytale",
+          "width": 64,
+          "height": 64
+        }
+      ]
+    }
+  ]
+}

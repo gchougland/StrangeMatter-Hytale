@@ -1,0 +1,23 @@
+@SlotStyle = ItemGridStyle(
+  SlotSize: 42,
+  SlotIconSize: 36,
+  SlotSpacing: 4,
+  SlotBackground: "../Common/BlockSelectorSlotBackground.png"
+);
+
+Group #InventoryCell {
+  Anchor: (Width: 46, Height: 42);
+  ItemGrid #Slot {
+    Anchor: (Width: 46, Height: 42);
+    SlotsPerRow: 1;
+    Style: @SlotStyle;
+    AreItemsDraggable: true;
+    IsCreativeSource: false;
+    RenderEmptySlots: true;
+    DisplayItemQuantity: true;
+  }
+  TextField #DisplayRevision {
+    Visible: false;
+    Value: "0";
+  }
+}

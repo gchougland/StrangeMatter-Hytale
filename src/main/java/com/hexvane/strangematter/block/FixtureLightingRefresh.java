@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.block;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.hypixel.hytale.component.AddReason;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Ref;
@@ -10,11 +12,12 @@ import com.hypixel.hytale.component.system.RefSystem;
 import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import com.hypixel.hytale.server.core.universe.world.World;
-import com.hypixel.hytale.server.core.universe.world.chunk.ChunkColumn;
+import com.hypixel.hytale.server.core.universe.world.chunk.BlockChunk;
 import com.hypixel.hytale.server.core.universe.world.chunk.WorldChunk;
 import com.hypixel.hytale.server.core.universe.world.chunk.section.BlockSection;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
 import java.util.BitSet;
+import java.util.ArrayList;
 import javax.annotation.Nonnull;
 
 /** Refreshes saved fixture lighting after load without changing or loading blocks.
@@ -23,7 +26,7 @@ import javax.annotation.Nonnull;
  */
 public final class FixtureLightingRefresh extends RefSystem<ChunkStore> {
     private static final Query<ChunkStore> QUERY = Query.and(
-        WorldChunk.getComponentType(), ChunkColumn.getComponentType());
+        WorldChunk.getComponentType(), BlockChunk.getComponentType());
     private static final String[] FAMILIES = {
         "Gravitic", "Chrono", "Energetic", "Spatial", "Shade", "Insight"
     };
@@ -82,11 +85,10 @@ public final class FixtureLightingRefresh extends RefSystem<ChunkStore> {
     /** Returns the number of source-column sections handed to native lighting. */
     private static int refreshOwnFixtures(WorldChunk chunk) {
         var world = chunk.getWorld();
-        var blocks = chunk.getBlockChunk();
         var ids = fixtureIndexes();
         var affected = new BitSet(ChunkUtil.HEIGHT_SECTIONS);
         for (int y = 0; y < ChunkUtil.HEIGHT_SECTIONS; y++) {
-            if (!containsFixture(blocks.getSectionAtIndex(y), ids)) continue;
+            if (!containsFixture(WorldAccess.section(chunk,y*ChunkUtil.SIZE), ids)) continue;
             // RGB travels at most 15 blocks, less than one 32-block section.
             // Include vertical spill; the native API includes all eight loaded
             // horizontal neighbors, invalidates packet caches, and queues flood work.
@@ -100,13 +102,29 @@ public final class FixtureLightingRefresh extends RefSystem<ChunkStore> {
     }
 
     static int[] fixtureIndexes() {
-        int[] ids = new int[FAMILIES.length * 2];
-        int i = 0;
+        var ids = new ArrayList<Integer>();
         // Resolve against the current map, including when assets have been reloaded.
-        for (var family : FAMILIES) for (var kind : new String[]{"Lamp", "Lantern"}) {
-            ids[i++] = BlockType.getAssetMap().getIndex("SM_" + family + "_Shard_" + kind);
+        for (var name : fixtureIds()) {
+            int id = BlockType.getAssetMap().getIndex(name);
+            if (id <= 0) continue;
+            ids.add(id);
+            var base = BlockType.getAssetMap().getAsset(id);
+            // An Off fixture can also arrive with stale saved light. Invalidate its
+            // cache using the actual state; never replace it with the lit base.
+            for (var state : new String[]{"On", "Off"}) {
+                var variant = base.getBlockForState(state);
+                if (variant != null) ids.add(BlockType.getAssetMap().getIndex(variant.getId()));
+            }
         }
-        return ids;
+        return ids.stream().mapToInt(Integer::intValue).distinct().toArray();
+    }
+
+    static String[] fixtureIds() {
+        var names = new ArrayList<String>();
+        for (var family : FAMILIES) for (var kind : new String[]{"Lamp", "Lantern"})
+            names.add("SM_" + family + "_Shard_" + kind);
+        names.add("SM_Lab_Lamp");
+        return names.toArray(String[]::new);
     }
 
     static boolean containsFixture(BlockSection section, int[] ids) {

@@ -159,7 +159,7 @@ public final class NativeMobilityRevisionVerification {
     private static int countBoards(com.hypixel.hytale.server.core.inventory.container.ItemContainer inventory){int count=0;for(short i=0;i<inventory.getCapacity();i++){var item=inventory.getItemStack(i);if(!ItemStack.isEmpty(item)&&HoverboardLedger.ITEM.equals(item.getItemId()))count+=item.getQuantity();}return count;}
     private static ItemStack board(com.hypixel.hytale.server.core.inventory.container.ItemContainer inventory){for(short i=0;i<inventory.getCapacity();i++){var item=inventory.getItemStack(i);if(!ItemStack.isEmpty(item)&&HoverboardLedger.ITEM.equals(item.getItemId()))return item;}throw new AssertionError("Board absent");}
     private static void assertPayload(ItemStack expected,ItemStack actual){
-        var a=ItemStack.CODEC.encode(expected).asDocument();var b=org.bson.BsonDocument.parse(ItemStack.CODEC.encode(actual).asDocument().toJson());
+        var a=ItemStack.CODEC.encode(expected,new com.hypixel.hytale.codec.ExtraInfo()).asDocument();var b=org.bson.BsonDocument.parse(ItemStack.CODEC.encode(actual,new com.hypixel.hytale.codec.ExtraInfo()).asDocument().toJson());
         b.getDocument("Metadata").remove(HoverboardLedger.TOKEN);
         require(a.equals(b),"Board return preserves every original BSON field, metadata and durability");
     }

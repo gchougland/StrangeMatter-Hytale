@@ -1,0 +1,96 @@
+$C = "../Common.ui";
+$B = "SharedButtons.ui";
+@Small = LabelStyle(FontSize: 13, TextColor: #a9bbd5, Wrap: true);
+@Number = LabelStyle(FontSize: 17, TextColor: #aeeeff, HorizontalAlignment: Center, VerticalAlignment: Center);
+$C.@PageOverlay {}
+Group {
+  Anchor: (Width: 1120, Height: 820); Background: #0b1528;
+  Label #Title { Anchor: (Left: 26, Top: 20, Width: 880, Height: 36); Style: (FontSize: 26, TextColor: #64edff, RenderBold: true); }
+  $B.@CancelTextButton #Close { @Text = "CLOSE"; Anchor: (Right: 26, Top: 20, Width: 144, Height: 40); }
+  Label { Anchor: (Left: 26, Top: 66, Width: 1068, Height: 24); Text: "Connected inventories start on SEND. Choose TAKE on the source. Tubes join automatically."; Style: @Small; }
+  $B.@SecondaryTextButton #Face0 { @Text = "East"; Anchor: (Left: 26, Top: 104, Width: 168, Height: 42); }
+  $B.@SecondaryTextButton #Face1 { @Text = "West"; Anchor: (Left: 206, Top: 104, Width: 168, Height: 42); }
+  $B.@SecondaryTextButton #Face2 { @Text = "Up"; Anchor: (Left: 386, Top: 104, Width: 168, Height: 42); }
+  $B.@SecondaryTextButton #Face3 { @Text = "Down"; Anchor: (Left: 566, Top: 104, Width: 168, Height: 42); }
+  $B.@SecondaryTextButton #Face4 { @Text = "South"; Anchor: (Left: 746, Top: 104, Width: 168, Height: 42); }
+  $B.@SecondaryTextButton #Face5 { @Text = "North"; Anchor: (Left: 926, Top: 104, Width: 168, Height: 42); }
+  Group #ConnectionPanel { Anchor: (Left: 26, Top: 164, Width: 340, Height: 570); Background: #132137;
+    Label #Selected { Anchor: (Left: 18, Top: 18, Width: 304, Height: 30); Style: (FontSize: 20, TextColor: #bf9ff4, RenderBold: true); }
+    Label #Neighbor { Anchor: (Left: 18, Top: 58, Width: 304, Height: 62); Style: @Small; }
+    $B.@CancelTextButton #Off { @Text = "OFF"; Anchor: (Left: 18, Top: 138, Width: 94, Height: 42); }
+    $B.@TextButton #Take { @Text = "TAKE"; Anchor: (Left: 123, Top: 138, Width: 94, Height: 42); }
+    $B.@SecondaryTextButton #Send { @Text = "SEND"; Anchor: (Left: 228, Top: 138, Width: 94, Height: 42); }
+    Label #ModeHelp { Anchor: (Left: 18, Top: 198, Width: 304, Height: 55); Style: (FontSize: 14, TextColor: #81e8ef, Wrap: true); }
+    Label { Anchor: (Left: 18, Top: 272, Width: 304, Height: 22); Text: "CONTAINER SECTION"; Style: (FontSize: 13, TextColor: #93a9c6, RenderBold: true); }
+    $B.@SecondaryTextButton #Section { @Text = "Storage"; Anchor: (Left: 18, Top: 304, Width: 304, Height: 42); }
+    Group { Anchor: (Left: 18, Top: 370, Width: 304, Height: 1); Background: #36516b; HitTestVisible: false; }
+    Label { Anchor: (Left: 18, Top: 388, Width: 304, Height: 22); Text: "YOUR HELD ITEM"; Style: (FontSize: 13, TextColor: #93a9c6, RenderBold: true); }
+    ItemIcon #HeldIcon { Anchor: (Left: 18, Top: 422, Width: 48, Height: 48); Visible: false; HitTestVisible: false; }
+    Label #HeldName { Anchor: (Left: 80, Top: 422, Width: 242, Height: 48); Style: (FontSize: 14, TextColor: #d3e4ee, Wrap: true, VerticalAlignment: Center); HitTestVisible: false; }
+    Label { Anchor: (Left: 18, Top: 488, Width: 304, Height: 58); Text: "Samples copy the item you are holding. Your item is never consumed."; Style: @Small; }
+  }
+  Group #FilterPanel { Anchor: (Left: 382, Top: 164, Width: 712, Height: 570); Background: #132137;
+    Label { Anchor: (Left: 16, Top: 18, Width: 680, Height: 24); Text: "ITEM FILTER"; Style: (FontSize: 18, TextColor: #bf9ff4, RenderBold: true); }
+    $B.@SecondaryTextButton #Match { @Text = "Same item"; Anchor: (Left: 16, Top: 54, Width: 328, Height: 42); }
+    $B.@SecondaryTextButton #Filter { @Text = "Allow matching items"; Anchor: (Left: 356, Top: 54, Width: 340, Height: 42); }
+    Label #FilterHelp { Anchor: (Left: 16, Top: 108, Width: 680, Height: 32); Style: @Small; }
+    Group #SamplesGroup { Anchor: (Left: 16, Top: 148, Width: 680, Height: 152);
+      Button #Sample0 { Anchor: (Left: 0, Top: 0, Width: 128, Height: 104); Style: $B.@RowStyle; TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+        ItemIcon #Icon0 { Anchor: (Left: 40, Top: 8, Width: 48, Height: 48); Visible: false; HitTestVisible: false; }
+        Label #SamplePrompt0 { Anchor: (Left: 8, Top: 20, Width: 112, Height: 30); Text: "COPY"; Style: (FontSize: 16, TextColor: #74cdd9, RenderBold: true, HorizontalAlignment: Center); HitTestVisible: false; }
+        Label #SampleLabel0 { Anchor: (Left: 8, Top: 64, Width: 112, Height: 32); Style: (FontSize: 12, TextColor: #c0d2e5, Wrap: true, HorizontalAlignment: Center); HitTestVisible: false; }
+      }
+      $B.@SecondaryTextButton #Clear0 { @Text = "CLEAR"; Anchor: (Left: 0, Top: 112, Width: 128, Height: 40); }
+      Button #Sample1 { Anchor: (Left: 138, Top: 0, Width: 128, Height: 104); Style: $B.@RowStyle; TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+        ItemIcon #Icon1 { Anchor: (Left: 40, Top: 8, Width: 48, Height: 48); Visible: false; HitTestVisible: false; }
+        Label #SamplePrompt1 { Anchor: (Left: 8, Top: 20, Width: 112, Height: 30); Text: "COPY"; Style: (FontSize: 16, TextColor: #74cdd9, RenderBold: true, HorizontalAlignment: Center); HitTestVisible: false; }
+        Label #SampleLabel1 { Anchor: (Left: 8, Top: 64, Width: 112, Height: 32); Style: (FontSize: 12, TextColor: #c0d2e5, Wrap: true, HorizontalAlignment: Center); HitTestVisible: false; }
+      }
+      $B.@SecondaryTextButton #Clear1 { @Text = "CLEAR"; Anchor: (Left: 138, Top: 112, Width: 128, Height: 40); }
+      Button #Sample2 { Anchor: (Left: 276, Top: 0, Width: 128, Height: 104); Style: $B.@RowStyle; TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+        ItemIcon #Icon2 { Anchor: (Left: 40, Top: 8, Width: 48, Height: 48); Visible: false; HitTestVisible: false; }
+        Label #SamplePrompt2 { Anchor: (Left: 8, Top: 20, Width: 112, Height: 30); Text: "COPY"; Style: (FontSize: 16, TextColor: #74cdd9, RenderBold: true, HorizontalAlignment: Center); HitTestVisible: false; }
+        Label #SampleLabel2 { Anchor: (Left: 8, Top: 64, Width: 112, Height: 32); Style: (FontSize: 12, TextColor: #c0d2e5, Wrap: true, HorizontalAlignment: Center); HitTestVisible: false; }
+      }
+      $B.@SecondaryTextButton #Clear2 { @Text = "CLEAR"; Anchor: (Left: 276, Top: 112, Width: 128, Height: 40); }
+      Button #Sample3 { Anchor: (Left: 414, Top: 0, Width: 128, Height: 104); Style: $B.@RowStyle; TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+        ItemIcon #Icon3 { Anchor: (Left: 40, Top: 8, Width: 48, Height: 48); Visible: false; HitTestVisible: false; }
+        Label #SamplePrompt3 { Anchor: (Left: 8, Top: 20, Width: 112, Height: 30); Text: "COPY"; Style: (FontSize: 16, TextColor: #74cdd9, RenderBold: true, HorizontalAlignment: Center); HitTestVisible: false; }
+        Label #SampleLabel3 { Anchor: (Left: 8, Top: 64, Width: 112, Height: 32); Style: (FontSize: 12, TextColor: #c0d2e5, Wrap: true, HorizontalAlignment: Center); HitTestVisible: false; }
+      }
+      $B.@SecondaryTextButton #Clear3 { @Text = "CLEAR"; Anchor: (Left: 414, Top: 112, Width: 128, Height: 40); }
+      Button #Sample4 { Anchor: (Left: 552, Top: 0, Width: 128, Height: 104); Style: $B.@RowStyle; TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+        ItemIcon #Icon4 { Anchor: (Left: 40, Top: 8, Width: 48, Height: 48); Visible: false; HitTestVisible: false; }
+        Label #SamplePrompt4 { Anchor: (Left: 8, Top: 20, Width: 112, Height: 30); Text: "COPY"; Style: (FontSize: 16, TextColor: #74cdd9, RenderBold: true, HorizontalAlignment: Center); HitTestVisible: false; }
+        Label #SampleLabel4 { Anchor: (Left: 8, Top: 64, Width: 112, Height: 32); Style: (FontSize: 12, TextColor: #c0d2e5, Wrap: true, HorizontalAlignment: Center); HitTestVisible: false; }
+      }
+      $B.@SecondaryTextButton #Clear4 { @Text = "CLEAR"; Anchor: (Left: 552, Top: 112, Width: 128, Height: 40); }
+    }
+    Group #ResourceGroup { Anchor: (Left: 16, Top: 148, Width: 680, Height: 152); Visible: false;
+      $B.@SecondaryTextButton #Resource { @Text = "COPY HELD RESOURCE FAMILY"; Anchor: (Left: 0, Top: 12, Width: 680, Height: 48); }
+      Label { Anchor: (Left: 12, Top: 82, Width: 656, Height: 52); Text: "Press again to cycle through your held item's resource families. This replaces the five item samples."; Style: @Small; HitTestVisible: false; }
+    }
+    Group { Anchor: (Left: 16, Top: 318, Width: 680, Height: 1); Background: #36516b; HitTestVisible: false; }
+    Label { Anchor: (Left: 16, Top: 332, Width: 360, Height: 24); Text: "TRANSFER LIMITS"; Style: (FontSize: 18, TextColor: #bf9ff4, RenderBold: true); }
+    $B.@SecondaryTextButton #Step { @Text = "Stock step: 1"; Anchor: (Left: 440, Top: 328, Width: 256, Height: 36); }
+    Label { Anchor: (Left: 16, Top: 376, Width: 290, Height: 40); Text: "Leave in source"; Style: (FontSize: 14, TextColor: #bdd0e4, VerticalAlignment: Center); TextTooltipStyle: $C.@DefaultTextTooltipStyle; TooltipText: "Keep this many matching items in the source container."; }
+    $B.@SecondaryTextButton #LeaveMinus { @Text = "LESS"; Anchor: (Left: 320, Top: 376, Width: 88, Height: 40); TooltipText: "Keep this many matching items in the source container."; }
+    Label #LeaveValue { Anchor: (Left: 420, Top: 376, Width: 164, Height: 40); Style: @Number; HitTestVisible: false; }
+    $B.@SecondaryTextButton #LeavePlus { @Text = "MORE"; Anchor: (Left: 596, Top: 376, Width: 100, Height: 40); TooltipText: "Keep this many matching items in the source container."; }
+    Label { Anchor: (Left: 16, Top: 420, Width: 290, Height: 40); Text: "Fill destination to"; Style: (FontSize: 14, TextColor: #bdd0e4, VerticalAlignment: Center); TextTooltipStyle: $C.@DefaultTextTooltipStyle; TooltipText: "Stop at this many matching items, including items already travelling here. Zero means unlimited."; }
+    $B.@SecondaryTextButton #FillMinus { @Text = "LESS"; Anchor: (Left: 320, Top: 420, Width: 88, Height: 40); TooltipText: "Stop at this many matching items, including items already travelling here. Zero means unlimited."; }
+    Label #FillValue { Anchor: (Left: 420, Top: 420, Width: 164, Height: 40); Style: @Number; HitTestVisible: false; }
+    $B.@SecondaryTextButton #FillPlus { @Text = "MORE"; Anchor: (Left: 596, Top: 420, Width: 100, Height: 40); TooltipText: "Stop at this many matching items, including items already travelling here. Zero means unlimited."; }
+    Label { Anchor: (Left: 16, Top: 464, Width: 290, Height: 40); Text: "Destination priority"; Style: (FontSize: 14, TextColor: #bdd0e4, VerticalAlignment: Center); TextTooltipStyle: $C.@DefaultTextTooltipStyle; TooltipText: "Higher priorities receive items first."; }
+    $B.@SecondaryTextButton #PriorityMinus { @Text = "LESS"; Anchor: (Left: 320, Top: 464, Width: 88, Height: 40); TooltipText: "Higher priorities receive items first."; }
+    Label #PriorityValue { Anchor: (Left: 420, Top: 464, Width: 164, Height: 40); Style: @Number; HitTestVisible: false; }
+    $B.@SecondaryTextButton #PriorityPlus { @Text = "MORE"; Anchor: (Left: 596, Top: 464, Width: 100, Height: 40); TooltipText: "Higher priorities receive items first."; }
+    Label { Anchor: (Left: 16, Top: 508, Width: 290, Height: 40); Text: "Items per batch"; Style: (FontSize: 14, TextColor: #bdd0e4, VerticalAlignment: Center); TextTooltipStyle: $C.@DefaultTextTooltipStyle; TooltipText: "One batch each second. Shared links carry up to five items."; }
+    $B.@SecondaryTextButton #BatchMinus { @Text = "LESS"; Anchor: (Left: 320, Top: 508, Width: 88, Height: 40); TooltipText: "One batch each second. Shared links carry up to five items."; }
+    Label #BatchValue { Anchor: (Left: 420, Top: 508, Width: 164, Height: 40); Style: @Number; HitTestVisible: false; }
+    $B.@SecondaryTextButton #BatchPlus { @Text = "MORE"; Anchor: (Left: 596, Top: 508, Width: 100, Height: 40); TooltipText: "One batch each second. Shared links carry up to five items."; }
+  }
+  Label #Message { Anchor: (Left: 26, Top: 750, Width: 740, Height: 26); Style: @Small; }
+  Label #Status { Anchor: (Left: 26, Top: 782, Width: 740, Height: 24); Style: (FontSize: 12, TextColor: #79e4eb); }
+  $B.@TextButton #Apply { @Text = "APPLY CONNECTION"; Anchor: (Left: 794, Top: 756, Width: 300, Height: 48); }
+}

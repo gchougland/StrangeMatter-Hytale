@@ -35,6 +35,7 @@ public final class LivePageTransport implements AutoCloseable {
     private static final Pattern OWNED_ACTION_PROPERTY = Pattern.compile("\"(?:Action|action)\"\\s*:\\s*\"SM:");
     private final Map<PlayerRef, Connection> connections = Collections.synchronizedMap(new WeakHashMap<>());
     private final PacketFilter inbound, outbound;
+    private final MachineWindowLifecycle inventoryWindows = new MachineWindowLifecycle();
     private boolean closed;
 
     public LivePageTransport() {
@@ -111,7 +112,7 @@ public final class LivePageTransport implements AutoCloseable {
             var json = JsonParser.parseString(raw).getAsJsonObject();
             var action = json.has("Action") ? json.get("Action") : json.get("action");
             var nonce = json.has(NONCE_KEY) ? json.get(NONCE_KEY) : json.get("smPageNonce");
-            var value = json.has("Value") ? json.get("Value") : json.get("value");
+            var value = json.has("Value") ? json.get("Value") : json.has("@Value") ? json.get("@Value") : json.get("value");
             if (action != null && action.isJsonPrimitive() && action.getAsJsonPrimitive().isString()) data.action = action.getAsString();
             boolean encoded = data.action != null && data.action.startsWith("SM:");
             if (nonce == null && !encoded) return false;
@@ -226,6 +227,11 @@ public final class LivePageTransport implements AutoCloseable {
             events.addEventBinding(CustomUIEventBindingType.Activating, selector,
                     EventData.of("Action", "SM:" + nonce + ":" + action).append("Value", value).append(NONCE_KEY, nonce), false);
         }
+        /** Dynamic values retain the same scoped envelope and server-side validation as buttons. */
+        public void bindValue(UIEventBuilder events, CustomUIEventBindingType type, String selector, String action, String valueSelector) {
+            events.addEventBinding(type, selector,
+                    EventData.of("Action", "SM:" + nonce + ":" + action).append("@Value", valueSelector).append(NONCE_KEY, nonce), false);
+        }
         /** Native fallback remains validated and rate limited when another adapter forwards Data. */
         public void receiveFromNative(String raw) {
             if (isClosed() || !current.getAsBoolean()) return;
@@ -317,5 +323,6 @@ public final class LivePageTransport implements AutoCloseable {
         }
         PacketAdapters.deregisterInbound(inbound);
         PacketAdapters.deregisterOutbound(outbound);
+        inventoryWindows.close();
     }
 }

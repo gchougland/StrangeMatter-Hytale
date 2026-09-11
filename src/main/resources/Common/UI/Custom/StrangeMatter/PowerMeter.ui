@@ -1,0 +1,15 @@
+Group #ChargePanel {
+  Anchor: (Height: 70);
+  LayoutMode: Top;
+  Background: #0a1422;
+  Padding: (Horizontal: 12, Vertical: 8);
+  Group { LayoutMode: Left; Anchor: (Height: 23);
+    Label { Text: "CHARGE"; Anchor: (Width: 78); Style: (FontSize: 12, TextColor: #69ebf4, RenderBold: true); }
+    Label #ChargeValue { FlexWeight: 1; Style: (FontSize: 12, TextColor: #d3edf5); }
+    Label #ChargeWarning { Text: "! LOW"; Anchor: (Width: 60); Style: (FontSize: 12, TextColor: #f5bc71, RenderBold: true); }
+  }
+  Group { Anchor: (Height: 12); Background: #31495f; Padding: (Full: 2);
+    ProgressBar #ChargeFill { BarTexturePath: "PowerMeterFill.png"; Background: #142436; Value: 0; }
+  }
+  Label #ChargeState { Anchor: (Height: 19); Style: (FontSize: 11, TextColor: #a1bdce); }
+}

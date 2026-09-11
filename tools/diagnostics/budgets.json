@@ -1,0 +1,64 @@
+{
+  "sourceUniquePixelLimits": {
+    "Blocks": 1595392,
+    "BlockTextures": 5120,
+    "Icons": 626688,
+    "Items": 413696,
+    "NPC": 151552,
+    "Particles": 376832,
+    "UI": 483328
+  },
+  "nativePaddedPixelLimits": {
+    "Model/Entity": 953344,
+    "Blocks": 2263040,
+    "Item Icons": 541696,
+    "FX/Particles": 330752,
+    "Custom UI": 493568,
+    "World Map": 0
+  },
+  "referenceSourceFootprint": {
+    "Blocks": {
+      "files": 55,
+      "pixels": 1386496,
+      "uniquePixels": 1386496
+    },
+    "BlockTextures": {
+      "files": 4,
+      "pixels": 4096,
+      "uniquePixels": 4096
+    },
+    "Icons": {
+      "files": 138,
+      "pixels": 552768,
+      "uniquePixels": 544576
+    },
+    "Items": {
+      "files": 50,
+      "pixels": 359424,
+      "uniquePixels": 359424
+    },
+    "NPC": {
+      "files": 1,
+      "pixels": 131072,
+      "uniquePixels": 131072
+    },
+    "Particles": {
+      "files": 20,
+      "pixels": 327680,
+      "uniquePixels": 327680
+    },
+    "UI": {
+      "files": 20,
+      "pixels": 423936,
+      "uniquePixels": 419840
+    }
+  },
+  "referenceNativePaddedPixels": {
+    "Model/Entity": 828416,
+    "Blocks": 1967104,
+    "Item Icons": 471040,
+    "FX/Particles": 287300,
+    "Custom UI": 428892,
+    "World Map": 0
+  }
+}

@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.anomaly;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hypixel.hytale.component.AddReason;
@@ -107,10 +109,10 @@ final class GravityTerrain {
     private List<Cell> findBlock(World world,AnomalyRecord a,int x,int z){
         for(int y=Math.min(ChunkUtil.HEIGHT-5,(int)Math.floor(a.terrainReferenceY())+1);y>=Math.max(2,(int)Math.floor(a.terrainReferenceY())-7);y--){
             var source=chunk(world,x,z);if(source==null)return List.of();
-            var block=source.getBlockType(x,y,z);
+            var block=WorldAccess.blockType(source,x,y,z);
             if(block==null||!natural(block.getId())||placed.getOrDefault(world.getName(),Set.of()).contains(new Placed(x,y,z))
-                    ||block.getBlockEntity()!=null||source.getFiller(x,y,z)!=0||source.getRotationIndex(x,y,z)!=0
-                    ||source.getFluidId(x,y,z)!=0||reserved(world.getName(),x,y,z))continue;
+                    ||block.getBlockEntity()!=null||WorldAccess.filler(source,x,y,z)!=0||WorldAccess.rotation(source,x,y,z)!=0
+                    ||WorldAccess.fluid(source,x,y,z)!=0||reserved(world.getName(),x,y,z))continue;
             boolean clear=true;for(int above=1;above<=4;above++)if(!empty(world,x,y+above,z)){clear=false;break;}
             if(clear&&!nearConstruction(world,x,y,z))return List.of(new Cell(x,y,z,block.getId()));
         }
@@ -125,7 +127,7 @@ final class GravityTerrain {
         for(int dx=-2;dx<=3;dx++)for(int dy=-2;dy<=3;dy++)for(int dz=-2;dz<=3;dz++){
             if(edits.contains(new Placed(x+dx,y+dy,z+dz)))return true;
             var source=chunk(world,x+dx,z+dz);if(source==null||y+dy<1||y+dy>=ChunkUtil.HEIGHT)continue;
-            var block=source.getBlockType(x+dx,y+dy,z+dz);if(block==null)continue;String id=block.getId();
+            var block=WorldAccess.blockType(source,x+dx,y+dy,z+dz);if(block==null)continue;String id=block.getId();
             if(id.startsWith("SM_")&&!natural(id)&&!id.endsWith("_Ore"))return true;
             for(String part:id.split("_"))if(Set.of("Planks","Brick","Bricks","Stairs","Half","Quarter","ThreeQuarter","Wall","Fence","Roof","Beam","Pillar","Tile","Tiles","Smooth","Ornate","Furniture","Door","Trapdoor","Lantern","Lamp","Workbench","Chest").contains(part))return true;
         }
@@ -161,8 +163,8 @@ final class GravityTerrain {
         try{
             for(var c:receipt.cells()){
                 var source=chunk(world,c.x(),c.z());
-                if(source==null||!c.block().equals(source.getBlockType(c.x(),c.y(),c.z()).getId()))throw new IllegalStateException("Terrain changed before lift");
-                source.setBlock(c.x(),c.y(),c.z(),"Empty");
+                if(source==null||!c.block().equals(WorldAccess.blockType(source,c.x(),c.y(),c.z()).getId()))throw new IllegalStateException("Terrain changed before lift");
+                WorldAccess.set(source,c.x(),c.y(),c.z(),"Empty");
                 if(!empty(world,c.x(),c.y(),c.z()))throw new IllegalStateException("Terrain could not be lifted");
                 m.parts.add(spawnBlock(world,c));
             }
@@ -261,7 +263,7 @@ final class GravityTerrain {
             // Validate the entire patch before restoring any cell. A blocked return cannot
             // replenish the other cells repeatedly while somebody mines the restored surface.
             for(var c:r.cells()){
-                var source=chunk(world,c.x(),c.z());var block=source==null?null:source.getBlockType(c.x(),c.y(),c.z());
+                var source=chunk(world,c.x(),c.z());var block=source==null?null:WorldAccess.blockType(source,c.x(),c.y(),c.z());
                 if(source==null||(block==null||!c.block().equals(block.getId()))&&!empty(world,c.x(),c.y(),c.z())){complete=false;break;}
             }
             if(!complete)continue;
@@ -269,13 +271,13 @@ final class GravityTerrain {
             for(var c:r.cells()){
                 var source=chunk(world,c.x(),c.z());
                 if(source==null){complete=false;continue;}
-                var block=source.getBlockType(c.x(),c.y(),c.z());
+                var block=WorldAccess.blockType(source,c.x(),c.y(),c.z());
                 if(block!=null&&c.block().equals(block.getId()))continue;
                 // Never overwrite a construction occupying the old hole. Keep the receipt and
                 // retry when the source cell becomes empty, including after a server restart.
                 if(!empty(world,c.x(),c.y(),c.z())){complete=false;continue;}
-                source.setBlock(c.x(),c.y(),c.z(),c.block());
-                if(!c.block().equals(source.getBlockType(c.x(),c.y(),c.z()).getId()))complete=false;
+                WorldAccess.set(source,c.x(),c.y(),c.z(),c.block());
+                if(!c.block().equals(WorldAccess.blockType(source,c.x(),c.y(),c.z()).getId()))complete=false;
             }
             if(complete){restoredInMemory.add(r.id());restored.add(r.id());}
         }
@@ -285,10 +287,10 @@ final class GravityTerrain {
             for(var id:restored)saving.put(id,future);
         }
     }
-    private static WorldChunk chunk(World world,int x,int z){return world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock(x,z));}
+    private static WorldChunk chunk(World world,int x,int z){return WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock(x,z));}
     private static boolean empty(World world,int x,int y,int z){
         if(y<1||y>=ChunkUtil.HEIGHT)return false;var chunk=chunk(world,x,z);
-        return chunk!=null&&chunk.getBlock(x,y,z)==0&&chunk.getFluidId(x,y,z)==0;
+        return chunk!=null&&WorldAccess.block(chunk,x,y,z)==0&&WorldAccess.fluid(chunk,x,y,z)==0;
     }
     synchronized List<Receipt> receipts(){return List.copyOf(receipts.values());}
     synchronized List<Ref<EntityStore>> parts(){return moving.values().stream().flatMap(m->m.parts.stream()).toList();}

@@ -1,19 +1,9 @@
 $C = "../Common.ui";
+$B = "SharedButtons.ui";
 
 @Label = LabelStyle(FontSize: 14, TextColor: #d3ddf3, Wrap: true);
 @Caption = LabelStyle(FontSize: 11, TextColor: #8197b9, Wrap: true);
-@ControlLabel = LabelStyle(FontSize: 12, TextColor: #87eef7, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-@ControlStyle = TextButtonStyle(
-  Default: (Background: #1c2a43, LabelStyle: @ControlLabel),
-  Hovered: (Background: #2d4564, LabelStyle: @ControlLabel),
-  Pressed: (Background: #474278, LabelStyle: @ControlLabel),
-  Disabled: (Background: #101a2a, LabelStyle: (FontSize: 12, TextColor: #56627b, HorizontalAlignment: Center, VerticalAlignment: Center)),
-  Sounds: $C.@ButtonSounds
-);
-@Control = TextButton { Style: @ControlStyle; };
-@RowStyle = ButtonStyle(
-  Default: (Background: #152138),
-  Hovered: (Background: #233a56),
-  Pressed: (Background: #38365c),
-  Sounds: $C.@ButtonSounds
-);
+@ControlLabel = $B.@SmallLabel;
+@ControlStyle = $B.@ControlStyle;
+@Control = TextButton { Style: @ControlStyle; Padding: (Horizontal: 5); TextTooltipStyle: $C.@DefaultTextTooltipStyle; };
+@RowStyle = $B.@RowStyle;

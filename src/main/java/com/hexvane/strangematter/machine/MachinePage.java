@@ -3,6 +3,8 @@ package com.hexvane.strangematter.machine;
 import com.hexvane.strangematter.research.ResearchPageData;
 import com.hexvane.strangematter.util.InventoryOps;
 import com.hexvane.strangematter.ui.LivePageTransport;
+import com.hexvane.strangematter.ui.MachineInventoryPanel;
+import com.hexvane.strangematter.ui.PowerMeter;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.protocol.packets.interface_.*;
 import com.hypixel.hytale.server.core.entity.entities.Player;
@@ -22,22 +24,47 @@ public final class MachinePage extends InteractiveCustomUIPage<ResearchPageData>
     private boolean initialized;
     private volatile boolean dismissed;
     private LivePageTransport.Lease input;
+    private MachineInventoryPanel inventoryPanel;
+    private Ref<EntityStore> inventoryOwner;
+    private Store<EntityStore> inventoryStore;
+    private com.hexvane.strangematter.automation.FactoryComponent inventoryComponent;
+    private com.hypixel.hytale.server.core.inventory.container.ItemContainer inventoryInput, inventoryOutput;
+    private boolean recovering;
     private String boundRecipe;
     private java.util.List<ForgeRecipe> visibleRecipes=java.util.List.of();
     private boolean forge(){return machine.id.equals("SM_Reality_Forge");}
     public MachinePage(PlayerRef player,MachineService service,MachineState machine){super(player,CustomPageLifetime.CanDismissOrCloseThroughInteraction,ResearchPageData.CODEC);this.service=service;this.machine=machine;recipeIndex=service.selectedRecipeIndex(machine,player.getUuid());}
+    public static void open(PlayerRef player,MachineService service,MachineState machine,Store<EntityStore> store){open(player,service,machine,store,false);}
+    private static void open(PlayerRef player,MachineService service,MachineState machine,Store<EntityStore> store,boolean recovery){
+        var ref=player.getReference();var entity=store.getComponent(ref,Player.getComponentType());if(entity==null)return;
+        var page=new MachinePage(player,service,machine);page.inventoryOwner=ref;page.inventoryStore=store;page.recovering=recovery;
+        var factory=service.factory();var world=store.getExternalData().getWorld();
+        var component=factory==null?null:factory.component(world,machine);
+        if(component!=null){
+            page.inventoryComponent=component;page.inventoryInput=component.input;page.inventoryOutput=recovery?component.recovery:component.output;
+            page.inventoryPanel=new MachineInventoryPanel(ref,store,component.input,recovery?component.recovery:component.output,
+                ()->!page.dismissed&&page.inventoryCurrent()&&service.canUse(store,player,machine)&&factory.access(component,player.getUuid()),()->!factory.blocked(world,machine));
+            page.inventoryPanel.setPage(page);
+            entity.getPageManager().openCustomPageWithWindows(ref,store,page,page.inventoryPanel.windows());
+        }else entity.getPageManager().openCustomPage(ref,store,page);
+    }
     @Override public void build(Ref<EntityStore> ref,UICommandBuilder cmd,UIEventBuilder events,Store<EntityStore> store){
         if(!initialized){
             input=service.research.pages().attach(playerRef,this,ref,store,data->handleDataEvent(ref,store,data));
             initialized=true;cmd.append(forge()?"StrangeMatter/RealityForge.ui":"StrangeMatter/Machine.ui");
-            for(String id:forge()?new String[]{"Close","Collect","Toggle"}:new String[]{"Close","Fuel","FuelMax","Collect","Toggle"})input.bind(events,"#"+id,id,"");
+            for(String id:forge()?new String[]{"Close","Collect","Toggle"}:new String[]{"Close","Recovery","Toggle"})input.bind(events,"#"+id,id,"");
+            if(!forge()){
+                PowerMeter.append(cmd,"#PowerMeter");
+                if(inventoryPanel!=null){MachineInventoryPanel.append(cmd,"#InventoryHost");inventoryPanel.build(cmd,events);}
+                cmd.set("#InventoryHost.Visible",inventoryPanel!=null);
+            }
             if(forge()){
                 refreshRecipes(cmd,events);
                 boundRecipe=selectedRecipeId();bindRecipe(events,boundRecipe);
             }
             refreshLater(ref,store);
         }
-        draw(cmd,store.getComponent(ref,Player.getComponentType()));
+        draw(cmd,store.getComponent(ref,Player.getComponentType()),events);
     }
     private void bindRecipe(UIEventBuilder events,String recipeId){input.bind(events,"#Craft","Craft",recipeId);}
     private ForgeRecipe selectedRecipe(){return recipeIndex>=0&&recipeIndex<service.recipes.size()?service.recipes.get(recipeIndex):null;}
@@ -55,24 +82,28 @@ public final class MachinePage extends InteractiveCustomUIPage<ResearchPageData>
             input.bind(events,row+" #SelectRecipe","SelectRecipe",recipe.id);
         }
     }
-    private void draw(UICommandBuilder cmd,Player player){
+    private void draw(UICommandBuilder cmd,Player player,UIEventBuilder events){
         if(forge()){drawForge(cmd,player);return;}
         boolean burner=machine.id.equals("SM_Resonant_Burner");
         cmd.set("#Title.Text",InventoryOps.label(machine.id).toUpperCase());
         cmd.set("#State.Text",machine.active?"OPERATING":machine.enabled?"STANDBY":"DISABLED");
-        cmd.set("#Power.Text",service.capacity(machine)>0?"RESONANT ENERGY   "+machine.energy+" / "+service.capacity(machine)+" RE":"SELF-CONTAINED INSTRUMENT");
+        String status=machine.active?"Working":!machine.enabled?"Paused":machine.energy<service.consumption(machine,machine.factoryTier)?"Waiting for power":"Ready";
+        int generated=machine.active?switch(machine.id){case "SM_Resonant_Burner"->service.config.burnerGeneration*20;case "SM_Rift_Stabilizer"->service.config.riftGeneration*20;default->0;}:0;
+        PowerMeter.draw(cmd,"#PowerMeter",machine.energy,service.capacity(machine),machine.incomingRate+generated,machine.active?service.consumption(machine,machine.factoryTier)*20:0,Math.max(0,service.config.condenserTicksPerShard-machine.progress)*(long)service.consumption(machine,machine.factoryTier),status,machine.id.equals("SM_Paradoxical_Energy_Cell"));
+        if(inventoryPanel!=null){inventoryPanel.draw(cmd,events);cmd.set("#MachineInputLabel.Text",burner?"FUEL":"INGREDIENTS");cmd.set("#MachineOutputLabel.Text",recovering?"RECOVERED ITEMS":"FINISHED ITEMS");}
+        boolean recovery=false;
+        if(service.factory()!=null&&inventoryStore!=null){var c=service.factory().component(inventoryStore.getExternalData().getWorld(),machine);if(c!=null)for(short i=0;i<c.recovery.getCapacity();i++)if(!com.hypixel.hytale.server.core.inventory.ItemStack.isEmpty(c.recovery.getItemStack(i))){recovery=true;break;}}
+        cmd.set("#Recovery.Visible",recovering||recovery);cmd.set("#Recovery.Text",recovering?"SHOW OUTPUT":"RECOVERED ITEMS");
         int duration=service.config.condenserTicksPerShard;
         cmd.set("#Progress.Text",burner?"Burning: "+fuelTime(machine.fuelTicks)+"  |  Queued: "+fuelTime(machine.queuedFuelTicks):"Cycle: "+(machine.progress*100/Math.max(1,duration))+"%"+(machine.lastAnomaly.isEmpty()?"":"  |  "+machine.lastAnomaly));
         cmd.set("#FuelCapacity.Visible",burner);
         if(burner){
             cmd.set("#FuelCapacityText.Text","FUEL CAPACITY   "+fuelTime(FurnaceFuel.storedTicks(machine))+" / 26m 40s  (includes burning fuel)");
             anchor(cmd,"#FuelFill",0,0,(int)Math.min(738,738*FurnaceFuel.storedTicks(machine)/FurnaceFuel.MAX_FUEL_TICKS),6);
-            cmd.set("#Fuel.Disabled",FurnaceFuel.remainingCapacity(machine)==0);cmd.set("#FuelMax.Disabled",FurnaceFuel.remainingCapacity(machine)==0);
+
         }
-        cmd.set("#Output.Text",!machine.recoveredFuel.isEmpty()?"Recovered items: "+machine.recoveredFuel.size()+" - collect to return old non-fuel.":machine.outputQuantity>0?"Output tray: "+machine.outputQuantity+" x "+InventoryOps.label(machine.output):"Output tray empty");
-        cmd.set("#Fuel.Visible",burner);cmd.set("#FuelMax.Visible",burner);cmd.set("#Collect.Disabled",machine.outputQuantity==0&&machine.recoveredFuel.isEmpty());
         cmd.set("#Toggle.Text",machine.id.equals("SM_Levitation_Pad")?(machine.ascending?"MODE: ASCEND":"MODE: DESCEND"):(machine.enabled?"DISABLE":"ENABLE"));
-        cmd.set("#ForgePanel.Visible",false);
+
         cmd.set("#Message.Text",message.isEmpty()?help():message);
     }
     private void drawForge(UICommandBuilder cmd,Player player){
@@ -128,10 +159,16 @@ public final class MachinePage extends InteractiveCustomUIPage<ResearchPageData>
         var anchor=new Anchor();anchor.setLeft(Value.of(x));anchor.setTop(Value.of(y));anchor.setWidth(Value.of(width));anchor.setHeight(Value.of(height));cmd.setObject(selector+".Anchor",anchor);
     }
     private static String fuelTime(long ticks){long seconds=Math.max(0,ticks+19)/20;return seconds/60+"m "+seconds%60+"s";}
+    private boolean inventoryCurrent(){
+        if(inventoryComponent==null||inventoryStore==null)return false;
+        var world=inventoryStore.getExternalData().getWorld();
+        return com.hexvane.strangematter.automation.FactoryPickup.component(world,machine.block())==inventoryComponent
+            &&inventoryComponent.input==inventoryInput&&(recovering?inventoryComponent.recovery:inventoryComponent.output)==inventoryOutput;
+    }
     private String help(){return switch(machine.id){
         case "SM_Resonant_Conduit"->"Connect machine faces. Up to 500 RE/t per conduit; distance reduces throughput by 5% per block, to a 10% floor. Energy is conserved.";
-        case "SM_Resonant_Burner"->"Load One adds one whole furnace fuel item. Load Max fills available capacity from your inventory; fuel burns in order at 20 RE/t. Collect returns non-fuel rescued from an older queue.";
-        case "SM_Resonance_Condenser"->"Needs resonant power and an anomaly within 10 blocks. Consumes 2 RE/t; produces a shard every 75 powered seconds.";
+        case "SM_Resonant_Burner"->"Place furnace fuel in the slots. The burner stores up to 26 minutes and 40 seconds of fuel and makes 400 RE each second while burning.";
+        case "SM_Resonance_Condenser"->"Connect power and keep an anomaly within 10 blocks. The condenser uses 40 RE each second and makes one shard every 75 seconds.";
         case "SM_Reality_Forge"->"Select a discovered recipe. Crafting reserves the listed materials and shards from your inventory. Collect the finished output here.";
         case "SM_Stasis_Projector"->"Suspends a nearby specimen above the lens. Disable the field to release it.";
         case "SM_Levitation_Pad"->"Ascend or descend through a clear shaft. The lift stops below a solid ceiling.";
@@ -144,8 +181,7 @@ public final class MachinePage extends InteractiveCustomUIPage<ResearchPageData>
         if(!service.canUse(store,playerRef,machine)){dispose();close();return;}
         var player=store.getComponent(ref,Player.getComponentType());if(player==null)return;
         switch(data.action==null?"":data.action){
-            case "Fuel"->message=service.fuel(player,machine);
-            case "FuelMax"->message=service.fuelMax(player,machine);
+            case "Recovery"->{dispose();open(playerRef,service,machine,store,!recovering);return;}
             case "Collect"->message=service.collect(player,machine);
             case "Toggle"->{service.toggle(machine);message="";}
             case "SelectRecipe"->{
@@ -172,6 +208,10 @@ public final class MachinePage extends InteractiveCustomUIPage<ResearchPageData>
                 if(!ref.isValid()){dispose();return;}
                 if(!service.canUse(store,playerRef,machine)){dispose();close();return;}
                 var player=store.getComponent(ref,Player.getComponentType());if(player==null||player.getPageManager().getCustomPage()!=this){dispose();return;}
+                if(inventoryPanel!=null&&!inventoryCurrent()){dispose();close();return;}
+                if(inventoryPanel!=null&&!inventoryPanel.isOpen()&&service.factory()!=null&&!service.factory().blocked(world,machine)){
+                    dispose();open(playerRef,service,machine,store,recovering);return;
+                }
                 renderFrame(player);
                 refreshLater(ref,store);
             }); } catch(RuntimeException stopped){dispose();}
@@ -179,13 +219,13 @@ public final class MachinePage extends InteractiveCustomUIPage<ResearchPageData>
     }
     private void renderFrame(Player player){
         if(!input.ready())return;
-        UICommandBuilder cmd=new UICommandBuilder();UIEventBuilder events=new UIEventBuilder();if(forge())refreshRecipes(cmd,events);draw(cmd,player);
+        UICommandBuilder cmd=new UICommandBuilder();UIEventBuilder events=new UIEventBuilder();if(forge())refreshRecipes(cmd,events);draw(cmd,player,events);
         String renderedRecipe=selectedRecipeId();
         // Recipe text and its matching transaction ID change in the SAME packet.
         // Progress/power animation leaves every existing row binding alone.
         if(forge()&&!renderedRecipe.equals(boundRecipe))bindRecipe(events,renderedRecipe);
         if(input.send(cmd,events))boundRecipe=renderedRecipe;
     }
-    private void dispose(){dismissed=true;if(input!=null)input.close();}
+    private void dispose(){dismissed=true;if(inventoryPanel!=null)inventoryPanel.close(inventoryOwner,inventoryStore);if(input!=null)input.close();}
     @Override public void onDismiss(Ref<EntityStore> ref,Store<EntityStore> store){dispose();super.onDismiss(ref,store);}
 }

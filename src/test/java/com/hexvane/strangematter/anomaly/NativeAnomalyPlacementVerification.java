@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.anomaly;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.google.gson.JsonParser;
 import com.hexvane.strangematter.equipment.NativePlayerFixture;
 import com.hypixel.hytale.component.Holder;
@@ -9,7 +11,6 @@ import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.universe.world.World;
-import com.hypixel.hytale.server.core.universe.world.chunk.ChunkColumn;
 import com.hypixel.hytale.server.core.universe.world.chunk.WorldChunk;
 import com.hypixel.hytale.server.core.universe.world.events.ChunkPreLoadProcessEvent;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
@@ -70,21 +71,19 @@ public final class NativeAnomalyPlacementVerification {
     }
     @SuppressWarnings("unchecked")
     private static void verifyGenerated(World world)throws Exception {
-        var chunk=world.getChunkIfLoaded(ChunkUtil.indexChunk(0,0));require(chunk!=null,"Placement geology fixture chunk loaded");
+        var chunk=WorldAccess.loaded(world,ChunkUtil.indexChunk(0,0));require(chunk!=null,"Placement geology fixture chunk loaded");
         for(var type:AnomalyType.values()){
             geology(chunk);
             var service=new AnomalyService(Files.createTempDirectory("sm-placement-generation-"));service.rarity=1;
             for(var other:AnomalyType.values())service.generationSettings.typeRarity.put(other.name(),other==type?1:0);
             service.generationSettings.resoniteColumnChance=1;service.generationSettings.shardColumnChance=1;
-            var holder=ChunkStore.REGISTRY.newHolder();
-            holder.addComponent(ChunkColumn.getComponentType(),new ChunkColumn((Holder<ChunkStore>[])new Holder<?>[ChunkUtil.HEIGHT_SECTIONS]));
-            service.onChunkPreLoad(new ChunkPreLoadProcessEvent(holder,chunk,true,System.nanoTime()));
+            service.generate(com.hexvane.strangematter.worldgen.GenerationColumn.loaded(chunk));
             require(!service.all().isEmpty(),"Fresh preload creates a real "+type+" field");
             for(var field:service.all())require(field.type==type&&field.y==(type==AnomalyType.WARP_GATE?203.5:203)&&field.placementLift==1,
                     "Fresh "+type+" field is exactly one block above its previous surface-relative height");
             int resonite=0,shards=0;
             for(int x=0;x<32;x++)for(int z=0;z<32;z++)for(int y=194;y<=199;y++){
-                String id=chunk.getBlockType(x,y,z).getId();if(id.equals("SM_Resonite_Ore"))resonite++;if(id.equals(HytaleAnomalyEffects.shardOre(type)))shards++;
+                String id=WorldAccess.blockType(chunk,x,y,z).getId();if(id.equals("SM_Resonite_Ore"))resonite++;if(id.equals(HytaleAnomalyEffects.shardOre(type)))shards++;
             }
             require(resonite>0&&shards>0,"Raised "+type+" generation preserves resonite and matching shard geology");
         }
@@ -99,7 +98,7 @@ public final class NativeAnomalyPlacementVerification {
                 require(effects.entities(world,gate).contains(player.ref()),"Raised gate retains ground activation for the real native player spatial entry");
             }
             new HytaleAnomalyEffects().terrainGenerated(chunk,boundary,new Random(31),new AnomalyGenerationSettings());
-            require("SM_Anomalous_Grass".equals(chunk.getBlockType(16,200,16).getId()),"One-block lift retains the previous eight-block terrain conversion boundary");
+            require("SM_Anomalous_Grass".equals(WorldAccess.blockType(chunk,16,200,16).getId()),"One-block lift retains the previous eight-block terrain conversion boundary");
             // The old downward search included y=200 from center207. Raising the real center
             // to208 must retain that last row while leaving collider/restoration behavior intact.
             var floating=service.spawnRaised(AnomalyType.GRAVITY,world,new Vector3d(16,207,16),true);
@@ -112,9 +111,9 @@ public final class NativeAnomalyPlacementVerification {
         for(int x=0;x<32;x++)for(int z=0;z<32;z++){
             for(int y=201;y<ChunkUtil.HEIGHT;y++)set(chunk,x,y,z,"Empty");
             set(chunk,x,200,z,"Soil_Dirt");for(int y=194;y<=199;y++)set(chunk,x,y,z,"Rock_Stone");
-            chunk.getBlockChunk().updateHeight(x,z);
+            WorldAccess.column(chunk).updateHeight(x,z);
         }
     }
-    private static void set(WorldChunk chunk,int x,int y,int z,String id){int block=BlockType.getAssetMap().getIndex(id);require(block>=0,"Native placement asset "+id);chunk.getBlockChunk().getSectionAtBlockY(y).set(x,y,z,block,0,0);}
+    private static void set(WorldChunk chunk,int x,int y,int z,String id){int block=BlockType.getAssetMap().getIndex(id);require(block>=0,"Native placement asset "+id);WorldAccess.section(chunk,y).set(x,y,z,block,0,0);}
     private static void require(boolean value,String message){if(!value)throw new AssertionError(message);}
 }

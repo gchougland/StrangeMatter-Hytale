@@ -7,7 +7,8 @@
   "MaxStack": 100,
   "Categories": [
     "Blocks.Soils",
-    "SM_StrangeMatter.All"
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Nature"
   ],
   "PlayerAnimationsId": "Block",
   "Quality": "Uncommon",
@@ -64,5 +65,6 @@
     "Primary": "Block_Primary",
     "Secondary": "Block_Secondary"
   },
-  "ItemSoundSetId": "ISS_Blocks_Soft"
+  "ItemSoundSetId": "ISS_Blocks_Soft",
+  "SubCategory": "SM_AnomalousTerrain"
 }

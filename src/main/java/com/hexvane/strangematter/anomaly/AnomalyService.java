@@ -1,12 +1,14 @@
 package com.hexvane.strangematter.anomaly;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.events.ChunkPreLoadProcessEvent;
-import com.hypixel.hytale.server.core.universe.world.chunk.ChunkColumn;
+import com.hexvane.strangematter.worldgen.GenerationColumn;
 import com.hypixel.hytale.server.core.universe.world.chunk.section.FluidSection;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import org.joml.Vector3d;
@@ -109,12 +111,17 @@ public final class AnomalyService {
     }
     public synchronized Optional<CapturedAnomaly> capture(UUID id) {
         AnomalyRecord a=records.get(id);
-        if(a==null || !a.active()) return Optional.empty();
+        if(!capturable(a)) return Optional.empty();
         a.contained=true;a.capsuleNonce=UUID.randomUUID();dirty=true;
         World world=worlds.get(a.world);
         if(world!=null) { effects.removeCore(world,a.id);stopGravity(world,a);effects.particle(world,"SM_Anomaly_Capture",a.position()); }
         save();
         return Optional.of(new CapturedAnomaly(a.id,a.type,a.id+":"+a.capsuleNonce));
+    }
+    /** Gun-created endpoints remain owned by their gun; relocated ordinary gates keep channel zero. */
+    public synchronized boolean canCapture(UUID id) { return capturable(records.get(id)); }
+    private static boolean capturable(AnomalyRecord a) {
+        return a!=null && a.active() && (a.type!=AnomalyType.WARP_GATE || a.portalChannel==0);
     }
     /** Single-use bearer token; caller consumes the capsule only when this succeeds. */
     public synchronized Optional<AnomalyRecord> release(String token,World world,Vector3d position) {
@@ -208,7 +215,7 @@ public final class AnomalyService {
                 a.primary=0;a.secondary=0;
             }
             boolean nearby=playerPositions.stream().anyMatch(p->a.distanceSquared(p)<128*128);
-            if(!a.active() || !nearby || world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock((int)Math.floor(a.x),(int)Math.floor(a.z)))==null) {effects.removeCore(world,a.id);continue;}
+            if(!a.active() || !nearby || WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock((int)Math.floor(a.x),(int)Math.floor(a.z)))==null) {effects.removeCore(world,a.id);continue;}
             effects.core(world,a);a.age+=dt;a.particles-=dt;a.primary-=dt;a.secondary-=dt;a.sound-=dt;
             if(a.particles<=0) {
                 effects.particle(world,a.particleId(),a.position());a.particles=1;
@@ -317,14 +324,14 @@ public final class AnomalyService {
             int cx=Math.floorDiv((int)Math.floor(transform.getPosition().x),16),cz=Math.floorDiv((int)Math.floor(transform.getPosition().z),16);
             for(int dx=-4;dx<=4;dx++)for(int dz=-4;dz<=4;dz++) {
                 int sx=cx+dx,sz=cz+dz;long cell=((long)sx<<32)^(sz&0xffffffffL);
-                if(seen.contains(cell) || world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock(sx*16,sz*16))==null)continue;
+                if(seen.contains(cell) || WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock(sx*16,sz*16))==null)continue;
                 seen.add(cell);dirty=true;
                 for(AnomalyType type:AnomalyType.values()) {
                     long seed=world.getWorldConfig().getSeed() ^ mix(cell) ^ mix(type.ordinal()+91871L);
                     Random rng=new Random(seed);
                     int x=sx*16+rng.nextInt(16),z=sz*16+rng.nextInt(16);
-                    var chunk=world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock(x,z));
-                    var environment=com.hypixel.hytale.server.core.asset.type.environment.config.Environment.getAssetMap().getAsset(chunk.getBlockChunk().getEnvironment(x,chunk.getHeight(x,z),z));
+                    var chunk=WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock(x,z));
+                    var environment=com.hypixel.hytale.server.core.asset.type.environment.config.Environment.getAssetMap().getAsset(WorldAccess.column(chunk).getEnvironment(x,chunk.getHeight(x,z),z));
                     int effectiveRarity=generationSettings.rarity(worldName,environment==null?"":environment.getId(),type,rarity);
                     if(effectiveRarity<=0 || rng.nextInt(effectiveRarity)!=0)continue;
                     Vector3d surface=HytaleAnomalyEffects.safeSurface(world,x,z);
@@ -335,13 +342,11 @@ public final class AnomalyService {
             }
         }
     }
-    /** Register this global pre-load hook. It writes raw generation holders before players can ever edit the chunk. */
-    public synchronized void onChunkPreLoad(ChunkPreLoadProcessEvent event) {
-        if(!naturalGeneration || !event.isNewlyGenerated())return;
-        var chunk=event.getChunk();var world=chunk.getWorld();String worldName=world.getName();
+    /** Fresh section holders only, before publication and player edits. */
+    public synchronized void generate(GenerationColumn terrain) {
+        if(!naturalGeneration)return;
+        var chunk=terrain.chunk;var world=chunk.getWorld();String worldName=world.getName();
         if(worldName.toLowerCase(Locale.ROOT).contains("instance"))return;
-        var column=event.getHolder().getComponent(ChunkColumn.getComponentType());
-        var holders=column==null?null:column.getSectionHolders();if(holders==null)return;
         var seen=surveyed.computeIfAbsent(worldName,k->new HashSet<>());
         // Four original Minecraft footprints fit inside one native Hytale chunk.
         for(int localX=0;localX<2;localX++)for(int localZ=0;localZ<2;localZ++) {
@@ -349,13 +354,11 @@ public final class AnomalyService {
             if(!seen.add(cell))continue;dirty=true;
             for(AnomalyType type:AnomalyType.values()) {
                 long seed=world.getWorldConfig().getSeed()^mix(cell)^mix(type.ordinal()+91871L);Random rng=new Random(seed);
-                int x=sx*16+rng.nextInt(16),z=sz*16+rng.nextInt(16),y=chunk.getHeight(x,z)+1;
-                if(y<2 || y>315 || chunk.getBlock(x,y,z)!=0 || chunk.getBlock(x,y+1,z)!=0)continue;
-                var holder=holders[ChunkUtil.indexSection(y)];
-                var fluid=holder==null?null:holder.getComponent(FluidSection.getComponentType());
-                if(fluid!=null && fluid.getFluidId(x,y,z)!=0)continue;
-                var ground=chunk.getBlockType(x,y-1,z);if(ground==null || ground.getId().contains("Leaves"))continue;
-                var environment=com.hypixel.hytale.server.core.asset.type.environment.config.Environment.getAssetMap().getAsset(chunk.getBlockChunk().getEnvironment(x,y,z));
+                int x=sx*16+rng.nextInt(16),z=sz*16+rng.nextInt(16),y=terrain.height(x,z)+1;
+                if(y<2 || y>315 || terrain.block(x,y,z)!=0 || terrain.block(x,y+1,z)!=0)continue;
+                if(terrain.fluid(x,y,z)!=0||terrain.fluid(x,y+1,z)!=0)continue;
+                var ground=terrain.type(x,y-1,z);if(ground==null || ground.getId().contains("Leaves"))continue;
+                var environment=com.hypixel.hytale.server.core.asset.type.environment.config.Environment.getAssetMap().getAsset(terrain.environment(x,y,z));
                 int effective=generationSettings.rarity(worldName,environment==null?"":environment.getId(),type,rarity);
                 if(effective<=0 || rng.nextInt(effective)!=0)continue;
                 Vector3d position=new Vector3d(x+.5,y+(type==AnomalyType.WARP_GATE?1.5:1),z+.5);
@@ -363,7 +366,7 @@ public final class AnomalyService {
                 // No live entities or world-store accesses are needed in this asynchronous pre-load event.
                 var anomaly=raisedRecord(type,worldName,position,true);
                 records.put(anomaly.id,anomaly);
-                if(generationSettings.terrainPatches)effects.terrainGenerated(chunk,anomaly,rng,generationSettings);
+                if(generationSettings.terrainPatches)effects.terrainGenerated(terrain,anomaly,rng,generationSettings);
             }
         }
     }

@@ -7,7 +7,8 @@
   "MaxStack": 100,
   "Categories": [
     "Furniture.Doors",
-    "SM_StrangeMatter.All"
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Building"
   ],
   "PlayerAnimationsId": "Block",
   "Quality": "Uncommon",
@@ -91,5 +92,6 @@
       }
     ],
     "KnowledgeRequired": true
-  }
+  },
+  "SubCategory": "SM_Entrances"
 }

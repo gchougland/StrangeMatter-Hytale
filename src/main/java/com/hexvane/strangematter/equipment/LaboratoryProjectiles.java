@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.equipment;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hexvane.strangematter.anomaly.AnomalyService;
@@ -67,8 +69,8 @@ final class LaboratoryProjectiles {
         this.anomalies=anomalies;this.fields=fields;file=directory.resolve("capsule-flights.json");
         for(Shot shot:readFlights(file)){shots.computeIfAbsent(shot.world,k->new ArrayList<>()).add(shot);activeTokens.add(shot.token);}
     }
-    static String encodeCapsule(ItemStack capsule){return ItemStack.CODEC.encode(capsule).asDocument().toJson(BSON_JSON);}
-    static ItemStack decodeCapsule(String encoded){return ItemStack.CODEC.decode(BsonDocument.parse(encoded));}
+    static String encodeCapsule(ItemStack capsule){return ItemStack.CODEC.encode(capsule,new com.hypixel.hytale.codec.ExtraInfo()).asDocument().toJson(BSON_JSON);}
+    static ItemStack decodeCapsule(String encoded){return ItemStack.CODEC.decode(BsonDocument.parse(encoded),new com.hypixel.hytale.codec.ExtraInfo());}
     static List<Shot> readFlights(Path file) {
         if(!Files.exists(file))return List.of();
         try(Reader reader=Files.newBufferedReader(file,StandardCharsets.UTF_8)) {
@@ -134,7 +136,7 @@ final class LaboratoryProjectiles {
         var muzzle=EquipmentQueries.handheldOrigin(eye,direction);var result=new Vector3d(eye);
         for(int i=1;i<=8;i++){
             var point=new Vector3d(eye).lerp(muzzle,i/8.0);var pos=block(point);
-            if(pos.y<0||pos.y>=ChunkUtil.HEIGHT||world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock(pos.x,pos.z))==null)break;
+            if(pos.y<0||pos.y>=ChunkUtil.HEIGHT||WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock(pos.x,pos.z))==null)break;
             var block=world.getBlockType(pos.x,pos.y,pos.z);if(block==null||block.getMaterial()!=BlockMaterial.Empty)break;
             result.set(point);
         }
@@ -249,12 +251,12 @@ final class LaboratoryProjectiles {
         for(Shot shot:new ArrayList<>(list)) {
             if(shot.phase!=Phase.FLIGHT||!shot.reconciled||shot.inventorySave!=null)continue;
             var origin=block(shot.position);
-            if(world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock(origin.x,origin.z))==null)continue;
+            if(WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock(origin.x,origin.z))==null)continue;
             visual(world,shot);shot.age+=dt;boolean done=false;
             int steps=Math.max(1,(int)Math.ceil(shot.velocity.length()*Math.min(dt,.25)/.15));double step=Math.min(dt,.25)/steps;
             for(int i=0;i<steps&&!done;i++) {
                 var next=new Vector3d(shot.velocity).mul(step).add(shot.position);var pos=block(next);
-                if(shot.age>10||pos.y<0||pos.y>=ChunkUtil.HEIGHT||world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock(pos.x,pos.z))==null){refund(shot);done=true;break;}
+                if(shot.age>10||pos.y<0||pos.y>=ChunkUtil.HEIGHT||WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock(pos.x,pos.z))==null){refund(shot);done=true;break;}
                 var type=world.getBlockType(pos.x,pos.y,pos.z);
                 if(type!=null&&type.getMaterial()!=BlockMaterial.Empty) {
                     var impact=shot.chrono()?block(shot.position):new Vector3i(pos).add(0,1,0);

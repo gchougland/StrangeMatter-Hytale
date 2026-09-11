@@ -7,7 +7,8 @@
   "MaxStack": 25,
   "Categories": [
     "Furniture.Containers",
-    "SM_StrangeMatter.All"
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Decorations"
   ],
   "PlayerAnimationsId": "Block",
   "ItemSoundSetId": "ISS_Blocks_Stone",
@@ -89,5 +90,6 @@
     "Primary": "Block_Primary",
     "Secondary": "Block_Secondary"
   },
-  "Variant": true
+  "Variant": true,
+  "SubCategory": "SM_Furniture"
 }

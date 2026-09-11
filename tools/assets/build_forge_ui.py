@@ -14,7 +14,8 @@ def render():
       Label #MaterialCount{i} {{ Anchor: (Left: 235, Top: 2, Width: 103, Height: 33); Style: (FontSize: 12, TextColor: #67e8ef, RenderBold: true, HorizontalAlignment: End, VerticalAlignment: Center); }}
     }}''')
     motes = '\n'.join(f'Group #ForgeMote{i} {{ Anchor: (Left: 0, Top: 0, Width: 7, Height: 7); Background: #67e8ef; HitTestVisible: false; }}' for i in range(8))
-    layout = '''$C = "../Common.ui";
+    layout = '''$B = "SharedButtons.ui";
+$C = "../Common.ui";
 $C.@PageOverlay {}
 Group {
   Anchor: (Width: 1140, Height: 754); Background: #101a2a;
@@ -56,10 +57,10 @@ Group {
   }
   Label #Requirements { Anchor: (Left: 318, Top: 532, Width: 796, Height: 58); Style: (FontSize: 13, TextColor: #f0a6bd, Wrap: true); }
   Label #Message { Anchor: (Left: 318, Top: 591, Width: 796, Height: 37); Style: (FontSize: 13, TextColor: #96acc7, Wrap: true); }
-  $C.@TextButton #Toggle { @Text = "PAUSE"; Anchor: (Left: 318, Top: 637, Width: 122, Height: 42); }
-  $C.@TextButton #Craft { @Text = "CRAFT"; Anchor: (Left: 452, Top: 637, Width: 320, Height: 42); }
-  $C.@TextButton #Collect { @Text = "COLLECT OUTPUT"; Anchor: (Left: 784, Top: 637, Width: 330, Height: 42); }
-  $C.@CancelTextButton #Close { @Text = "CLOSE INSTRUMENT"; Anchor: (Left: 26, Top: 695, Width: 1088, Height: 36); }
+  $B.@TextButton #Toggle { @Text = "PAUSE"; Anchor: (Left: 318, Top: 637, Width: 122, Height: 42); }
+  $B.@TextButton #Craft { @Text = "CRAFT"; Anchor: (Left: 452, Top: 637, Width: 320, Height: 42); }
+  $B.@TextButton #Collect { @Text = "COLLECT OUTPUT"; Anchor: (Left: 784, Top: 637, Width: 330, Height: 42); }
+  $B.@CancelTextButton #Close { @Text = "CLOSE INSTRUMENT"; Anchor: (Left: 26, Top: 695, Width: 1088, Height: 36); }
 }
 '''.replace('SLOTS', '\n'.join(slots)).replace('MOTES', motes)
     return layout

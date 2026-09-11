@@ -193,8 +193,9 @@ def research():
 
 
 if __name__ == '__main__':
+    from preview_machine_inventories import factory, research
     OUT.mkdir(parents=True, exist_ok=True)
-    forge()
+    factory()
     research()
     print(OUT / 'reality-forge-selection-preview.png')
     print(OUT / 'research-note-selection-preview.png')

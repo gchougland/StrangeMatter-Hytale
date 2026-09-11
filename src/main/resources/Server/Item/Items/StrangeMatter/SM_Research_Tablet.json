@@ -7,7 +7,9 @@
   "MaxStack": 1,
   "Categories": [
     "Items",
-    "SM_StrangeMatter.All"
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Gadgets",
+    "SM_StrangeMatter.Research"
   ],
   "PlayerAnimationsId": "Item",
   "Quality": "Uncommon",
@@ -70,5 +72,6 @@
       }
     ],
     "KnowledgeRequired": true
-  }
+  },
+  "SubCategory": "SM_ResearchEquipment"
 }

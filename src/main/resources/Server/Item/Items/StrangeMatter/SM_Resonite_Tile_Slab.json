@@ -7,7 +7,8 @@
   "MaxStack": 100,
   "Categories": [
     "Blocks",
-    "SM_StrangeMatter.All"
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Building"
   ],
   "PlayerAnimationsId": "Block",
   "Quality": "Uncommon",
@@ -125,5 +126,6 @@
       }
     ],
     "KnowledgeRequired": true
-  }
+  },
+  "SubCategory": "SM_Masonry"
 }

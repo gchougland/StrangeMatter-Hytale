@@ -1,5 +1,8 @@
 package com.hexvane.strangematter.machine;
 
+import com.hexvane.strangematter.util.WorldAccess;
+import com.hexvane.strangematter.automation.FactoryService;
+
 import com.google.gson.GsonBuilder;
 import com.hexvane.strangematter.StrangeMatterConfig;
 import com.hexvane.strangematter.anomaly.*;
@@ -25,7 +28,16 @@ import static com.hypixel.hytale.server.core.universe.world.SetBlockSettings.*;
 
 /** Persistent laboratory machines. All inventory and world operations run on their world thread. */
 public final class MachineService implements AutoCloseable {
-    public static final Set<String> IDS=Set.of("SM_Research_Machine","SM_Resonant_Burner","SM_Resonance_Condenser","SM_Reality_Forge","SM_Paradoxical_Energy_Cell","SM_Resonant_Conduit","SM_Rift_Stabilizer","SM_Stasis_Projector","SM_Levitation_Pad","SM_Time_Dilation_Block","SM_Anomaly_Nullifier");
+    public static final Set<String> IDS=Set.of("SM_Research_Machine","SM_Resonant_Burner","SM_Resonance_Condenser","SM_Reality_Forge","SM_Paradoxical_Energy_Cell","SM_Resonant_Conduit","SM_Rift_Stabilizer","SM_Stasis_Projector","SM_Levitation_Pad","SM_Time_Dilation_Block","SM_Anomaly_Nullifier","SM_Resonant_Separator","SM_Flux_Furnace","SM_Pattern_Assembler");
+    private FactoryService factory;
+    public void setFactory(FactoryService value){factory=Objects.requireNonNull(value);}
+    public FactoryService factory(){return factory;}
+    public synchronized void markDirty(){dirty=true;}
+    public boolean hasContents(World world,MachineState state){return state.hasContents()||factory!=null&&factory.hasContents(world,state);}
+    public static Vector3i origin(World world,Vector3i position){
+        var base=com.hypixel.hytale.server.core.modules.interaction.interaction.config.client.SimpleBlockInteraction.resolveBaseBlockPosition(world,new com.hypixel.hytale.protocol.BlockPosition(position.x,position.y,position.z));
+        return base==null?new Vector3i(position):new Vector3i(base.x,base.y,base.z);
+    }
     private final Map<String,MachineState> machines=new LinkedHashMap<>();
     private final Set<String> welcomed=new HashSet<>();
     private final Set<String> spentCapsules=new HashSet<>();
@@ -78,8 +90,8 @@ public final class MachineService implements AutoCloseable {
         for(var site:nullifierSites){
             if(!site.world.equals(world.getName())||position.distanceSquared(site.x+.5,site.y+.5,site.z+.5)>radius*radius)continue;
             // A saved registry entry alone is insufficient: unloaded or replaced blocks cannot suppress anything.
-            var chunk=world.getChunkIfInMemory(ChunkUtil.indexChunkFromBlock(site.x,site.z));
-            if(chunk!=null&&"SM_Anomaly_Nullifier".equals(baseId(chunk.getBlockType(site.x,site.y,site.z))))return true;
+            var chunk=WorldAccess.inMemory(world,ChunkUtil.indexChunkFromBlock(site.x,site.z));
+            if(chunk!=null&&"SM_Anomaly_Nullifier".equals(baseId(WorldAccess.blockType(chunk,site.x,site.y,site.z))))return true;
         }
         return false;
     }
@@ -87,7 +99,7 @@ public final class MachineService implements AutoCloseable {
     public boolean grounded(World world,org.joml.Vector3d position,double radius){
         for(var site:groundingSites){
             if(!site.world.equals(world.getName())||position.distanceSquared(site.x+.5,site.y+.5,site.z+.5)>radius*radius)continue;
-            if(world.getChunkIfInMemory(ChunkUtil.indexChunkFromBlock(site.x,site.z))!=null&&"SM_Rift_Stabilizer".equals(baseId(world.getBlockType(site.x,site.y,site.z))))return true;
+            if(WorldAccess.inMemory(world,ChunkUtil.indexChunkFromBlock(site.x,site.z))!=null&&"SM_Rift_Stabilizer".equals(baseId(world.getBlockType(site.x,site.y,site.z))))return true;
         }
         return false;
     }
@@ -113,7 +125,7 @@ public final class MachineService implements AutoCloseable {
     }
     public synchronized boolean valid(World world,MachineState state) {
         if(!state.world.equals(world.getName())||machines.get(state.key())!=state)return false;
-        var chunk=world.getChunkIfInMemory(ChunkUtil.indexChunkFromBlock(state.x,state.z));
+        var chunk=WorldAccess.inMemory(world,ChunkUtil.indexChunkFromBlock(state.x,state.z));
         if(chunk==null)return false;
         var type=world.getBlockType(state.x,state.y,state.z);
         return type!=null&&state.id.equals(baseId(type));
@@ -134,13 +146,15 @@ public final class MachineService implements AutoCloseable {
             return;
         }
         if(state.id.equals("SM_Research_Machine")){research.openMachine(player,store,pos);return;}
+        if(factory!=null){factory.claim(world,state,player.getUuid());if(FactoryService.owns(state.id)){factory.open(player,player.getReference(),store,state);return;}}
         var ref=player.getReference();var entity=store.getComponent(ref,Player.getComponentType());
-        if(entity!=null)entity.getPageManager().openCustomPage(ref,store,new MachinePage(player,this,state));
+        if(entity!=null)MachinePage.open(player,this,state,store);
     }
     public synchronized void removed(World world,Vector3i pos) {machines.remove(MachineState.key(world.getName(),pos.x,pos.y,pos.z));refreshGroundingSites();dirty=true;routes.clear();refreshConnections(world,pos);}
     private static final int[][] FACES={{1,0,0},{-1,0,0},{0,1,0},{0,-1,0},{0,0,1},{0,0,-1}};
     // Ports are physical: toggling a machine's power does not remove its cable socket.
-    private static final Set<String> NETWORK_PORTS=Set.of("SM_Resonant_Conduit","SM_Resonant_Burner","SM_Rift_Stabilizer","SM_Paradoxical_Energy_Cell","SM_Resonance_Condenser");
+    private static final Set<String> NETWORK_PORTS=Set.of("SM_Resonant_Conduit","SM_Resonant_Burner","SM_Rift_Stabilizer","SM_Paradoxical_Energy_Cell","SM_Resonance_Condenser","SM_Reality_Forge","SM_Resonant_Separator","SM_Flux_Furnace","SM_Pattern_Assembler");
+    public static boolean consumesPower(String id){return id.equals("SM_Resonance_Condenser")||FactoryService.owns(id);}
     public static int connectionMask(java.util.function.IntPredicate connected) {
         int mask=0;for(int i=0;i<FACES.length;i++)if(connected.test(i))mask|=1<<i;return mask;
     }
@@ -149,17 +163,17 @@ public final class MachineService implements AutoCloseable {
         for(var face:FACES)updateConduit(world,changed.x+face[0],changed.y+face[1],changed.z+face[2]);
     }
     private void updateConduit(World world,int x,int y,int z) {
-        var chunk=world.getChunkIfInMemory(ChunkUtil.indexChunkFromBlock(x,z));if(chunk==null)return;
+        var chunk=WorldAccess.inMemory(world,ChunkUtil.indexChunkFromBlock(x,z));if(chunk==null)return;
         var type=world.getBlockType(x,y,z);if(!"SM_Resonant_Conduit".equals(baseId(type)))return;
         int mask=connectionMask(i->{var d=FACES[i];int nx=x+d[0],ny=y+d[1],nz=z+d[2];
-            return world.getChunkIfInMemory(ChunkUtil.indexChunkFromBlock(nx,nz))!=null
+            return WorldAccess.inMemory(world,ChunkUtil.indexChunkFromBlock(nx,nz))!=null
                 && NETWORK_PORTS.contains(baseId(world.getBlockType(nx,ny,nz)));});
         String state=String.format(java.util.Locale.ROOT,"Connection%02d",mask);
-        if(!state.equals(type.getCurrentInteractionState())||chunk.getRotationIndex(x,y,z)!=0) {
+        if(!state.equals(type.getCurrentInteractionState())||WorldAccess.rotation(chunk,x,y,z)!=0) {
             var shape=type.getBlockForState(state);
             if(shape!=null) {
                 // Arms are world-axis masks; clear old item yaw rather than rotate connections away from their neighbors.
-                chunk.setBlock(x,y,z,BlockType.getAssetMap().getIndex(shape.getId()),shape,0,0,
+                WorldAccess.set(chunk,x,y,z,BlockType.getAssetMap().getIndex(shape.getId()),shape,0,0,
                     NO_UPDATE_STATE|NO_SEND_PARTICLES|NO_UPDATE_NEIGHBOR_CONNECTIONS|FORCE_CHANGED);
             }
         }
@@ -216,6 +230,7 @@ public final class MachineService implements AutoCloseable {
             if(!InventoryOps.give(inventory(player),item))return "Make room in your inventory.";
             state.recoveredFuel.removeFirst();dirty=true;return "Recovered "+InventoryOps.label(item.getItemId())+" from the old fuel queue.";
         }
+        if(factory!=null&&(state.id.equals("SM_Resonant_Burner")||state.id.equals("SM_Resonance_Condenser")||FactoryService.owns(state.id)))return factory.collect(player,state);
         if(state.outputQuantity<=0)return "The output tray is empty.";
         int max=new ItemStack(state.output,1).getItem().getMaxStack();
         int amount=Math.min(state.outputQuantity,Math.max(1,max));
@@ -275,7 +290,7 @@ public final class MachineService implements AutoCloseable {
         if(!stack.getItemId().startsWith("SM_Containment_Capsule_"))return true;
         String token=stack.getFromMetadataOrNull("SMAnomaly",com.hypixel.hytale.codec.Codec.STRING);
         if(token==null)return creative;
-        if(capsuleReserved.test(token)||spentCapsules.contains(token))return false;
+        if(capsuleReserved.test(token)||spentCapsules.contains(token)||factory!=null&&factory.isCapsuleReserved(token))return false;
         for(var machine:machines.values())for(var input:machine.reservedInputs){
             if(input.itemId().startsWith("SM_Containment_Capsule_")&&token.equals(input.toItemStack().getFromMetadataOrNull("SMAnomaly",com.hypixel.hytale.codec.Codec.STRING)))return false;
         }
@@ -294,7 +309,17 @@ public final class MachineService implements AutoCloseable {
         var ref=player.getReference();
         return InventoryComponent.getCombined(ref.getStore(),ref,InventoryComponent.BACKPACK_STORAGE_HOTBAR);
     }
-    public int capacity(MachineState m){return switch(m.id){case "SM_Resonant_Burner"->config.burnerCapacity;case "SM_Rift_Stabilizer"->config.riftCapacity;case "SM_Resonance_Condenser"->config.condenserCapacity;case "SM_Paradoxical_Energy_Cell"->Integer.MAX_VALUE;default->0;};}
+    public int capacity(MachineState m){return switch(m.id){case "SM_Resonant_Burner"->config.burnerCapacity;case "SM_Rift_Stabilizer"->config.riftCapacity;case "SM_Resonance_Condenser"->config.condenserCapacity;case "SM_Paradoxical_Energy_Cell"->Integer.MAX_VALUE;case "SM_Reality_Forge"->config.forgeCapacity;case "SM_Resonant_Separator"->config.separatorCapacity;case "SM_Flux_Furnace"->config.fluxCapacity;case "SM_Pattern_Assembler"->config.assemblerCapacity+(Math.clamp(m.factoryTier,1,3)-1)*config.assemblerTierCapacity;default->0;};}
+    public int consumption(MachineState m,int tier){return switch(m.id){case "SM_Resonance_Condenser"->config.condenserConsumption;case "SM_Reality_Forge"->config.forgeConsumption;case "SM_Resonant_Separator"->config.separatorConsumption;case "SM_Flux_Furnace"->config.fluxConsumption;case "SM_Pattern_Assembler"->config.assemblerConsumption+(Math.clamp(tier,1,3)-1)*config.assemblerTierConsumption;default->0;};}
+    /** Idempotent replay of capsule receipts co-saved with the completed native factory job. */
+    public synchronized void consumeFactoryCapsules(List<ItemStack> inputs){
+        var tokens=new ArrayList<String>();
+        for(var input:inputs){String token=input.getFromMetadataOrNull("SMAnomaly",com.hypixel.hytale.codec.Codec.STRING);if(token!=null){tokens.add(token);if(spentCapsules.add(token))dirty=true;}}
+        if(tokens.isEmpty())return;
+        save();for(String token:tokens)anomalies.consumeCapsule(token);
+    }
+    public int outputQuantity(World world,MachineState m){return factory!=null?factory.outputQuantity(world,m):m.outputQuantity;}
+    public String outputItemId(World world,MachineState m){return factory!=null?factory.outputItemId(world,m):m.output;}
     public synchronized void tick(World world,double dt) {
         String wn=world.getName();double elapsed=accumulated.getOrDefault(wn,0d)+Math.min(dt,.5);
         int count=Math.min(10,(int)(elapsed*20));accumulated.put(wn,elapsed-count*.05);
@@ -304,11 +329,12 @@ public final class MachineService implements AutoCloseable {
         int tick=worldTicks.merge(world.getName(),1,Integer::sum);
         List<MachineState> loaded=new ArrayList<>();
         for(var m:inWorld(world)) {
-            if(world.getChunkIfInMemory(ChunkUtil.indexChunkFromBlock(m.x,m.z))==null)continue;
+            if(WorldAccess.inMemory(world,ChunkUtil.indexChunkFromBlock(m.x,m.z))==null)continue;
             if(!valid(world,m)){removed(world,m.block());continue;}
             if(m.id.equals("SM_Resonant_Conduit")&&!m.enabled){m.enabled=true;dirty=true;routes.clear();}
-            loaded.add(m);m.active=false;
-            recoverInvalidFuel(m);
+            loaded.add(m);m.active=false;m.receivedThisTick=0;
+            if(factory!=null){var component=factory.register(world,m);if(component!=null)m.factoryTier=component.tier();}
+            if(factory==null||!factory.blocked(world,m))recoverInvalidFuel(m);
             if(tick%10==1&&m.id.equals("SM_Resonant_Conduit"))updateConduit(world,m.x,m.y,m.z);
         }
         Map<UUID,Integer> riftUsers=new HashMap<>();
@@ -316,12 +342,12 @@ public final class MachineService implements AutoCloseable {
             if(!m.enabled)continue;
             switch(m.id) {
                 case "SM_Resonant_Burner" -> {
-                    if(consumeFuelTick(m)){m.energy=(int)Math.min(config.burnerCapacity,(long)m.energy+config.burnerGeneration);m.active=true;dirty=true;}
+                    if((factory==null||!factory.blocked(world,m))&&consumeFuelTick(m)){m.energy=(int)Math.min(config.burnerCapacity,(long)m.energy+config.burnerGeneration);m.active=true;dirty=true;}
                 }
                 case "SM_Paradoxical_Energy_Cell" -> {m.energy=Integer.MAX_VALUE;m.active=true;}
                 case "SM_Anomaly_Nullifier" -> {
                     var anomaly=anomalies.nearest(world,m.center(),config.nullifierRadius);
-                    m.active=anomaly.isPresent()&&world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock((int)Math.floor(anomaly.get().x),(int)Math.floor(anomaly.get().z)))!=null;
+                    m.active=anomaly.isPresent()&&WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock((int)Math.floor(anomaly.get().x),(int)Math.floor(anomaly.get().z)))!=null;
                     if(m.active&&tick%20==0)ParticleUtil.spawnParticleEffect("SM_Nullifier_Field",new org.joml.Vector3d(m.x+.5,m.y+.65,m.z+.5),world.getEntityStore().getStore());
                 }
                 case "SM_Rift_Stabilizer" -> {
@@ -333,7 +359,18 @@ public final class MachineService implements AutoCloseable {
                 }
             }
         }
-        var nodes=new HashMap<ResonantNetwork.Position,MachineState>();for(var m:loaded)nodes.put(new ResonantNetwork.Position(m.x,m.y,m.z),m);
+        var nodes=new HashMap<ResonantNetwork.Position,MachineState>();
+        for(var m:loaded){
+            nodes.put(new ResonantNetwork.Position(m.x,m.y,m.z),m);
+            if(!NETWORK_PORTS.contains(m.id)||m.id.equals("SM_Resonant_Conduit"))continue;
+            var chunk=WorldAccess.inMemory(world,ChunkUtil.indexChunkFromBlock(m.x,m.z));
+            int id=WorldAccess.block(chunk,m.x,m.y,m.z),rotation=WorldAccess.rotation(chunk,m.x,m.y,m.z);
+            var footprint=com.hypixel.hytale.server.core.util.FillerBlockUtil.multiCellFootprint(id,rotation);
+            if(footprint!=null)com.hypixel.hytale.server.core.util.FillerBlockUtil.forEachFillerBlock(footprint,(dx,dy,dz)->{
+                var at=new Vector3i(m.x+dx,m.y+dy,m.z+dz);
+                if(WorldAccess.inMemory(world,ChunkUtil.indexChunkFromBlock(at.x,at.z))!=null&&origin(world,at).equals(m.block()))nodes.put(new ResonantNetwork.Position(at.x,at.y,at.z),m);
+            });
+        }
         var used=new HashMap<ResonantNetwork.Position,Integer>();
         for(var source:loaded)if(source.enabled&&Set.of("SM_Resonant_Burner","SM_Rift_Stabilizer","SM_Paradoxical_Energy_Cell").contains(source.id)) {
             if(tick%20==1||!routes.containsKey(source.key()))routes.put(source.key(),ResonantNetwork.routes(source,nodes,config.maxNetworkSize));
@@ -342,22 +379,22 @@ public final class MachineService implements AutoCloseable {
             for(int i=0;i<consumers.size();i++) {
                 var route=consumers.get((i+tick)%consumers.size());
                 if(!nodes.containsValue(route.consumer())||!route.consumer().enabled||route.wires().stream().anyMatch(p->!nodes.containsKey(p)||!nodes.get(p).enabled))continue;
-                int spent=ResonantNetwork.transfer(source,route,budget,config.condenserCapacity,config.conduitTransfer,config.conduitDistancePenalty,used);budget-=spent;if(spent>0)dirty=true;
+                int spent=ResonantNetwork.transfer(source,route,budget,capacity(route.consumer()),config.conduitTransfer,config.conduitDistancePenalty,used);budget-=spent;if(spent>0){dirty=true;route.consumer().receivedThisTick+=spent;}
             }
         }
         for(var m:loaded) {
             if(!m.enabled)continue;
             if(m.id.equals("SM_Resonance_Condenser")) {
                 var anomaly=anomalies.nearest(world,m.center(),config.condenserRadius);
-                if(anomaly.isPresent()&&m.energy>=config.condenserConsumption&&m.outputQuantity<new ItemStack(shard(anomaly.get().type),1).getItem().getMaxStack()) {
+                if(anomaly.isPresent()&&m.energy>=config.condenserConsumption&&(factory!=null?factory.outputHasRoom(world,m,shard(anomaly.get().type),1):m.outputQuantity<new ItemStack(shard(anomaly.get().type),1).getItem().getMaxStack())) {
                     String output=shard(anomaly.get().type);
-                    if(m.outputQuantity==0||m.output.equals(output)){
+                    if(factory!=null||m.outputQuantity==0||m.output.equals(output)){
                         m.energy-=config.condenserConsumption;m.active=true;m.progress++;m.lastAnomaly=anomaly.get().type.displayName;dirty=true;
                         if(tick%5==0)com.hexvane.strangematter.effects.MachineLinks.condenser(world,anomaly.get().type,anomaly.get().position(),m.center().add(0,.7,0),tick);
-                        if(m.progress>=config.condenserTicksPerShard){m.progress=0;m.output=output;m.outputQuantity++;}
+                        if(m.progress>=config.condenserTicksPerShard){if(factory!=null){if(factory.acceptOutput(world,m,new ItemStack(output,1)))m.progress=0;}else{m.progress=0;m.output=output;m.outputQuantity++;}}
                     }
                 }
-            } else if(m.id.equals("SM_Reality_Forge")&&!m.recipe.isEmpty()) {
+            } else if(factory==null&&m.id.equals("SM_Reality_Forge")&&!m.recipe.isEmpty()) {
                 m.active=true;m.progress++;dirty=true;
                 if(m.progress>=config.forgeCraftTicks){
                     var recipe=recipes.stream().filter(r->r.id.equals(m.recipe)).findFirst().orElseThrow();
@@ -369,9 +406,13 @@ public final class MachineService implements AutoCloseable {
                     for(String token:consumedTokens)anomalies.consumeCapsule(token);
                 }
             }
-            if(m.active&&tick%10==0&&Set.of("SM_Reality_Forge","SM_Resonance_Condenser","SM_Rift_Stabilizer","SM_Resonant_Burner").contains(m.id)) {
+        }
+        for(var m:loaded){if(m.receivedLastSecond==null)m.receivedLastSecond=new int[20];int sample=Math.floorMod(tick,20);m.incomingRate=Math.max(0,m.incomingRate-m.receivedLastSecond[sample]+m.receivedThisTick);m.receivedLastSecond[sample]=m.receivedThisTick;}
+        if(factory!=null)factory.tick20(world,loaded);
+        // Powered factory jobs determine their active state above. Present only that completed tick.
+        if(tick%10==0)for(var m:loaded) {
+            if(m.active&&Set.of("SM_Reality_Forge","SM_Resonance_Condenser","SM_Rift_Stabilizer","SM_Resonant_Burner").contains(m.id)) {
                 String particle=m.id.equals("SM_Resonant_Burner")?"SM_Resonant_Burner_Active":"SM_Resonance_Transfer";
-                // A small instrument-scale burst, separate from the anomaly's own full field.
                 ParticleUtil.spawnParticleEffect(particle,m.center().add(0,.6,0),0,0,0,1f,1f,world.getEntityStore().getStore());
             }
         }
@@ -381,7 +422,7 @@ public final class MachineService implements AutoCloseable {
         if(tick%200==0&&dirty)save();
     }
     /** Called during orderly world/plugin cleanup; unloading itself also removes client loops. */
-    public synchronized void cleanupPresentation(World world){for(var machine:inWorld(world))MachineWorkEffects.stop(world,machine);}
+    public synchronized void cleanupPresentation(World world){for(var machine:inWorld(world))MachineWorkEffects.stop(world,machine);if(factory!=null)factory.cleanup(world);}
     public static String shard(AnomalyType type){return "SM_"+switch(type){case GRAVITY->"Gravitic";case TEMPORAL_BLOOM->"Chrono";case ENERGETIC_RIFT->"Energetic";case WARP_GATE->"Spatial";case ECHOING_SHADOW->"Shade";case THOUGHTWELL->"Insight";}+"_Shard";}
     static boolean consumeFuelTick(MachineState state){
         if(state.fuelTicks<=0&&state.queuedFuelTicks>0){

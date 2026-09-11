@@ -9,6 +9,6 @@
     "Catalog extension scrolling",
     "Node child hit testing"
   ],
-  "geometryVerification": "ResearchTreeLayoutVerification executes the production router against all 26 nodes and custom catalog cases.",
+  "geometryVerification": "ResearchTreeLayoutVerification executes the production router against all 30 nodes and custom catalog cases.",
   "limitation": "Static markup and geometry checks. Does not run the native client renderer."
 }

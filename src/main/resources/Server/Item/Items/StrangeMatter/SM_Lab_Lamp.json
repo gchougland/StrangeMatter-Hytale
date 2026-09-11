@@ -7,13 +7,14 @@
   "MaxStack": 25,
   "Categories": [
     "Blocks",
-    "SM_StrangeMatter.All"
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Decorations"
   ],
   "PlayerAnimationsId": "Block",
   "BlockType": {
     "Material": "Solid",
     "DrawType": "Model",
-    "Opacity": "Solid",
+    "Opacity": "Transparent",
     "CustomModel": "Blocks/StrangeMatter/lab_lamp.blockymodel",
     "CustomModelTexture": [
       {
@@ -34,10 +35,47 @@
     "Light": {
       "Color": "#5ff",
       "Radius": 10
+    },
+    "InteractionHint": "server.interactionHints.turnoff",
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "ChangeState",
+            "Changes": {
+              "default": "Off",
+              "On": "Off",
+              "Off": "On"
+            }
+          }
+        ]
+      }
+    },
+    "State": {
+      "Definitions": {
+        "On": {
+          "CustomModel": "Blocks/StrangeMatter/lab_lamp.blockymodel",
+          "Light": {
+            "Color": "#5ff",
+            "Radius": 10
+          },
+          "InteractionHint": "server.interactionHints.turnoff",
+          "InteractionSoundEventId": "SFX_Torch_Ignite"
+        },
+        "Off": {
+          "CustomModel": "Blocks/StrangeMatter/lab_lamp_SwitchedOff.blockymodel",
+          "InteractionHint": "server.interactionHints.turnon",
+          "Light": null,
+          "Particles": null,
+          "AmbientSoundEventId": null,
+          "InteractionSoundEventId": "SFX_Torch_Off"
+        }
+      }
     }
   },
   "Interactions": {
     "Primary": "Block_Primary",
     "Secondary": "Block_Secondary"
-  }
+  },
+  "SubCategory": "SM_StandingLamps"
 }

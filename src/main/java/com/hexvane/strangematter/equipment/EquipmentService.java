@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.equipment;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.hexvane.strangematter.anomaly.*;
 import com.hexvane.strangematter.machine.MachineService;
 import com.hexvane.strangematter.research.*;
@@ -43,11 +45,13 @@ public final class EquipmentService {
     private final LaboratoryProjectiles projectiles;
     private final WarpProjectiles warpProjectiles;
     private final MobilityTools mobility;
+    private com.hexvane.strangematter.automation.TubeService tubes;
     private final Map<String,Double> hudTime=new ConcurrentHashMap<>();
     private record Acquisition(String world,String item,String subject,UUID anomaly,ResearchType discipline,int amount,long began){}
     private record Aim(Vector3d eye,Vector3d direction,Vector3i block,Vector3i air,double distance){}
     public EquipmentService(ResearchService research,AnomalyService anomalies,MachineService machines){this.research=research;this.anomalies=anomalies;this.machines=machines;fields=new LaboratoryFields(machines);projectiles=new LaboratoryProjectiles(anomalies,fields,machines.dataDirectory());warpProjectiles=new WarpProjectiles(anomalies);mobility=new MobilityTools(research.hud(),machines.dataDirectory());}
     public boolean capsuleInFlight(String token){return projectiles.inFlight(token);}
+    public void setTubeService(com.hexvane.strangematter.automation.TubeService tubes){this.tubes=tubes;}
     public void interact(InteractionContext context,String action){
         var ref=context.getEntity();if(ref==null||!ref.isValid())return;var store=ref.getStore();var world=store.getExternalData().getWorld();
         var held=context.getHeldItem();var contextContainer=context.getHeldItemContainer();short slot=context.getHeldItemSlot();int sectionId=context.getHeldItemSectionId();
@@ -97,11 +101,14 @@ public final class EquipmentService {
     private boolean openBlock(PlayerRef player,Store<EntityStore> store,Vector3i target){
         if(target==null||target.y<0||target.y>=ChunkUtil.HEIGHT)return false;
         var world=store.getExternalData().getWorld();
-        if(world.getChunkIfInMemory(ChunkUtil.indexChunkFromBlock(target.x,target.z))==null)return false;
+        if(WorldAccess.inMemory(world,ChunkUtil.indexChunkFromBlock(target.x,target.z))==null)return false;
+        var origin=com.hypixel.hytale.server.core.modules.interaction.interaction.config.client.SimpleBlockInteraction.resolveBaseBlockPosition(world,new com.hypixel.hytale.protocol.BlockPosition(target.x,target.y,target.z));
+        if(origin!=null)target=new Vector3i(origin.x,origin.y,origin.z);
         var transform=store.getComponent(player.getReference(),TransformComponent.getComponentType());
         if(transform==null||transform.getPosition().distanceSquared(new Vector3d(target).add(.5,.5,.5))>64)return false;
         var type=world.getBlockType(target.x,target.y,target.z);if(type==null)return false;
         String base=type.getDefaultStateKey();if(base==null)base=type.getId();
+        if(base.equals("SM_Gravitic_Tube")){if(tubes!=null)tubes.open(player,store,target);return true;}
         if(MachineService.IDS.contains(base)||MachineService.IDS.contains(type.getId())){machines.open(player,store,target);return true;}
         if(Set.of("SM_Resonite_Door","SM_Resonite_Trapdoor").contains(base)){fields.toggleDoor(world,target,type);return true;}
         return false;
@@ -111,7 +118,7 @@ public final class EquipmentService {
         var eye=new Vector3d(t.getPosition()).add(0,ModelComponent.getEyeHeight(ref,store),0);var direction=h.getDirection().normalize();var world=store.getExternalData().getWorld();Vector3i previous=null;
         for(double d=0;d<=range;d+=.15){var point=new Vector3d(direction).mul(d).add(eye);var pos=new Vector3i((int)Math.floor(point.x),(int)Math.floor(point.y),(int)Math.floor(point.z));
             if(pos.equals(previous))continue;
-            if(pos.y<0||pos.y>=ChunkUtil.HEIGHT||world.getChunkIfInMemory(ChunkUtil.indexChunkFromBlock(pos.x,pos.z))==null)return new Aim(eye,direction,null,previous,d);
+            if(pos.y<0||pos.y>=ChunkUtil.HEIGHT||WorldAccess.inMemory(world,ChunkUtil.indexChunkFromBlock(pos.x,pos.z))==null)return new Aim(eye,direction,null,previous,d);
             var type=world.getBlockType(pos.x,pos.y,pos.z);if(type!=null&&type.getMaterial()!=BlockMaterial.Empty)return new Aim(eye,direction,pos,previous,d);
             previous=pos;
         }
@@ -119,9 +126,11 @@ public final class EquipmentService {
     }
     private Optional<AnomalyRecord> targeted(World world,Aim aim,double range){return anomalies.inView(world,aim.eye,aim.direction,Math.min(range,aim.distance+.1));}
     private void begin(PlayerRef p,Store<EntityStore> store,Aim aim,String item,boolean vacuum){
+        acquisitions.remove(p.getUuid());
         var world=store.getExternalData().getWorld();var anomaly=targeted(world,aim,vacuum?8:12);
         if(anomaly.isPresent()){
             var a=anomaly.get();if(!vacuum&&!a.scannable()){say(p,"Transported or artificial anomalies do not grant new observations.");return;}
+            if(vacuum&&!anomalies.canCapture(a.id)){say(p,"Warp Gun portals cannot be contained. Use the gun to clear or replace them.");return;}
             if(vacuum&&InventoryOps.count(inventory(p,store),"SM_Containment_Capsule")==0){say(p,"Carry an empty containment capsule.");return;}
             acquisitions.put(p.getUuid(),new Acquisition(world.getName(),item,"anomaly:"+a.id,a.id,ResearchType.fromName(a.type.researchType),10,System.nanoTime()));
             GadgetEffects.use(world,vacuum?"SM_Vacuum_Intake":"SM_Scanner_Lock",EquipmentQueries.handheldOrigin(aim.eye,aim.direction));
@@ -145,12 +154,13 @@ public final class EquipmentService {
     }
     private void completeCapture(PlayerRef p,Store<EntityStore> store,Aim aim){
         var a=ready(p,store,aim,"SM_Echo_Vacuum");if(a==null||a.anomaly==null)return;var inventory=inventory(p,store);
+        if(!anomalies.canCapture(a.anomaly)){say(p,"Warp Gun portals cannot be contained. Use the gun to clear or replace them.");return;}
         if(InventoryOps.count(inventory,"SM_Containment_Capsule")==0){say(p,"The empty capsule is missing.");return;}
         // A singleton capsule frees its own slot; a stack needs one free slot for its unique token.
         short slot=-1;boolean freeSlot=false;for(short i=0;i<inventory.getCapacity();i++){var s=inventory.getItemStack(i);if(s==null||s.isEmpty()){freeSlot=true;continue;}if("SM_Containment_Capsule".equals(s.getItemId())&&(slot<0||s.getQuantity()==1))slot=i;}
         if(slot<0)return;var empty=inventory.getItemStack(slot);
         if(empty.getQuantity()>1&&!freeSlot){say(p,"Make room for the filled capsule.");return;}
-        var captured=anomalies.capture(a.anomaly);if(captured.isEmpty()){say(p,"Another researcher has already captured this anomaly.");return;}
+        var captured=anomalies.capture(a.anomaly);if(captured.isEmpty()){say(p,"This anomaly is no longer available for containment.");return;}
         var token=captured.get();var full=new ItemStack(token.itemId(),1).withMetadata("SMAnomaly",Codec.STRING,token.token());
         if(empty.getQuantity()==1){if(!inventory.setItemStackForSlot(slot,full,false).succeeded()){anomalies.cancelCapture(token.token());return;}}
         else {
@@ -214,7 +224,7 @@ public final class EquipmentService {
         int radius=action.equals("hammer0")&&movement!=null&&movement.getMovementStates().crouching?0:1;
         var world=store.getExternalData().getWorld();var targets=new ArrayList<Vector3i>();
         for(var pos:hammerCells(aim.block,axis,sign,radius,depth)){
-            if(pos.y<0||pos.y>=ChunkUtil.HEIGHT||world.getChunkIfInMemory(ChunkUtil.indexChunkFromBlock(pos.x,pos.z))==null)continue;
+            if(pos.y<0||pos.y>=ChunkUtil.HEIGHT||WorldAccess.inMemory(world,ChunkUtil.indexChunkFromBlock(pos.x,pos.z))==null)continue;
             var type=world.getBlockType(pos.x,pos.y,pos.z);if(type==null||type.getMaterial()==BlockMaterial.Empty)continue;
             if(type.getGathering()==null||type.getId().contains("Bedrock")||MachineService.IDS.contains(type.getId())||(type.getDefaultStateKey()!=null&&MachineService.IDS.contains(type.getDefaultStateKey())))continue;
             if(type.getGathering().getBreaking()!=null||type.getGathering().getSoft()!=null)targets.add(pos);
@@ -250,7 +260,7 @@ public final class EquipmentService {
             boolean blocked=false;
             for(double d=.2;d<distance-.2;d+=.2) {
                 Vector3d point=new Vector3d(delta).mul(d).add(aim.eye);int x=(int)Math.floor(point.x),y=(int)Math.floor(point.y),z=(int)Math.floor(point.z);
-                if(y<0||y>=ChunkUtil.HEIGHT||world.getChunkIfInMemory(ChunkUtil.indexChunkFromBlock(x,z))==null){blocked=true;break;}
+                if(y<0||y>=ChunkUtil.HEIGHT||WorldAccess.inMemory(world,ChunkUtil.indexChunkFromBlock(x,z))==null){blocked=true;break;}
                 var block=world.getBlockType(x,y,z);if(block!=null&&block.getMaterial()==BlockMaterial.Solid&&!block.getId().equals("Empty")){blocked=true;break;}
             }
             if(!blocked&&damageHammerTarget(attacker,target,store,action))GadgetEffects.use(world,"SM_Hammer_Impact",center);
@@ -276,7 +286,8 @@ public final class EquipmentService {
                 discipline=target.map(t->ResearchType.fromName(t.type.researchType)).orElse(null);
                 status=target.map(t->t.type.displayName+(vacuum?"":" / "+(t.scannable()?"Natural field":"Transported field"))).orElse("No research subject in range");
                 detail=vacuum?"Hold primary for 2s to extract. Carry an empty containment capsule.":"Hold primary for 2s to record a natural field. Each identity grants observations once.";
-                if(a!=null){progress=Math.min(1,(System.nanoTime()-a.began)/2_000_000_000d);status=(vacuum?"Extracting ":"Analyzing ")+target.map(t->t.type.displayName).orElse("field");}
+                if(vacuum&&target.isPresent()&&!anomalies.canCapture(target.get().id)){status="Warp Gun portal";detail="Controlled by its Warp Gun. Use the gun to clear or replace it.";}
+                else if(a!=null){progress=Math.min(1,(System.nanoTime()-a.began)/2_000_000_000d);status=(vacuum?"Extracting ":"Analyzing ")+target.map(t->t.type.displayName).orElse("field");}
             }
             case "SM_Anomaly_Resonator"->{
                 int f=frequencies.getOrDefault(p.getUuid(),0);AnomalyType type=f==0?null:AnomalyType.values()[f-1];
@@ -316,7 +327,7 @@ public final class EquipmentService {
             var ref=p.getReference();if(ref==null||!ref.isValid()||ref.getStore()!=store){acquisitions.remove(p.getUuid());return;}
             var held=InventoryComponent.getItemInHand(store,ref);var aim=aim(ref,store,12);var a=acquisitions.get(p.getUuid());
             if(a!=null){
-                if(held==null||!a.item.equals(held.getItemId())||aim==null||!stillAimed(a,world,aim)||System.nanoTime()-a.began>5_000_000_000L)acquisitions.remove(p.getUuid());
+                if(held==null||!a.item.equals(held.getItemId())||aim==null||!stillAimed(a,world,aim)||(a.item.equals("SM_Echo_Vacuum")&&!anomalies.canCapture(a.anomaly))||System.nanoTime()-a.began>5_000_000_000L)acquisitions.remove(p.getUuid());
                 else if(present&&a.anomaly!=null)anomalies.get(a.anomaly).ifPresent(r->GadgetEffects.beam(world,a.item.equals("SM_Echo_Vacuum")?"SM_Vacuum_Intake":"SM_Scanner_Lock",EquipmentQueries.handheldOrigin(aim.eye,aim.direction),r.position()));
             }
             if(present){heldReadout(p,store,held,aim);research.refreshNotes(store,ref);}

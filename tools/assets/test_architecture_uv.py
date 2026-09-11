@@ -1,7 +1,9 @@
 """Native signed UV regressions, independent of any historical artwork."""
 import unittest
+import copy
+import math
 
-from validate_architecture_set import check_model_uvs, uv_bounds
+from validate_architecture_set import check_model_uvs, uv_bounds, model_bounds, bounds_equal
 
 
 def shape(kind='box',normal='+Z'):
@@ -20,6 +22,20 @@ def model(value,face,uv):
 
 
 class NativeArchitectureUVTest(unittest.TestCase):
+    def test_editor_quaternion_rounding_preserves_stair_collision(self):
+        value = model(shape(), 'front', layout())
+        node = value['nodes'][0]['children'][0]
+        node['shape']['settings']['size'] = dict(x=16, y=16, z=32)
+        node['shape']['stretch'] = dict(x=1, y=1, z=1)
+        node['orientation'] = dict(x=0, y=math.sqrt(.5), z=0, w=math.sqrt(.5))
+        exact = model_bounds(value)
+        rounded = copy.deepcopy(value)
+        actual = rounded['nodes'][0]['children'][0]
+        actual['orientation'] = dict(x=0, y=.70711, z=0, w=.70711)
+        self.assertTrue(bounds_equal(exact, model_bounds(rounded), 1e-5))
+        actual['position'] = dict(x=.01, y=0, z=0)
+        self.assertFalse(bounds_equal(exact, model_bounds(rounded), 1e-5))
+
     def test_cardinal_rotation_moves_origin(self):
         expected={0:(16,12,22,15),90:(13,12,16,18),
                   180:(10,9,16,12),270:(16,6,19,12),-90:(16,6,19,12)}

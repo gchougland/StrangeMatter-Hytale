@@ -61,7 +61,7 @@ def main():
         raise AssertionError('Failed to reject broken tablet layout: ' + new)
     report = {'status': 'PASS', 'templates': len(text), 'rejectedRegressions': len(mutations),
               'checks': ['Native icon buttons and tooltips', 'Category tab and point chip bounds', 'Details and six discipline costs fit', 'Catalog extension scrolling', 'Node child hit testing'],
-              'geometryVerification': 'ResearchTreeLayoutVerification executes the production router against all 26 nodes and custom catalog cases.',
+              'geometryVerification': 'ResearchTreeLayoutVerification executes the production router against all 30 nodes and custom catalog cases.',
               'limitation': 'Static markup and geometry checks. Does not run the native client renderer.'}
     (ROOT / 'tools/assets/tablet-ui-validation.json').write_text(json.dumps(report, indent=2) + '\n')
     print(json.dumps(report))

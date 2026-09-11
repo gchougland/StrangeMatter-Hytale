@@ -1,5 +1,6 @@
+$B = "SharedButtons.ui";
 $C = "../Common.ui";
-@NodeStyle = ButtonStyle(Default: (Background: #000000(0)), Hovered: (Background: #446674(0.18)), Pressed: (Background: #74628f(0.25)));
+@NodeStyle = ButtonStyle(...$B.@TreeNodeStyle, Default: (Background: #000000(0)));
 Group #Node {
  Anchor: (Width: 128, Height: 68);
  Button #SelectNode { Anchor: (Left: 0, Top: 0, Width: 128, Height: 68); Style: @NodeStyle; TextTooltipStyle: $C.@DefaultTextTooltipStyle;

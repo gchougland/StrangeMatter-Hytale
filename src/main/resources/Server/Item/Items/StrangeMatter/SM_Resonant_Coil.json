@@ -7,7 +7,8 @@
   "MaxStack": 100,
   "Categories": [
     "Items",
-    "SM_StrangeMatter.All"
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Materials"
   ],
   "PlayerAnimationsId": "Item",
   "Quality": "Uncommon",
@@ -27,6 +28,10 @@
       {
         "ItemId": "Ingredient_Stick",
         "Quantity": 1
+      },
+      {
+        "ItemId": "Ingredient_Bar_Copper",
+        "Quantity": 1
       }
     ],
     "OutputQuantity": 1,
@@ -41,5 +46,6 @@
       }
     ],
     "KnowledgeRequired": true
-  }
+  },
+  "SubCategory": "SM_Components"
 }

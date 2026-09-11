@@ -1,0 +1,68 @@
+[
+  {
+    "id": "Copper",
+    "ore": "Ore_Copper",
+    "bar": "Ingredient_Bar_Copper",
+    "concentrate": "SM_Copper_Concentrate"
+  },
+  {
+    "id": "Iron",
+    "ore": "Ore_Iron",
+    "bar": "Ingredient_Bar_Iron",
+    "concentrate": "SM_Iron_Concentrate"
+  },
+  {
+    "id": "Gold",
+    "ore": "Ore_Gold",
+    "bar": "Ingredient_Bar_Gold",
+    "concentrate": "SM_Gold_Concentrate"
+  },
+  {
+    "id": "Thorium",
+    "ore": "Ore_Thorium",
+    "bar": "Ingredient_Bar_Thorium",
+    "concentrate": "SM_Thorium_Concentrate"
+  },
+  {
+    "id": "Cobalt",
+    "ore": "Ore_Cobalt",
+    "bar": "Ingredient_Bar_Cobalt",
+    "concentrate": "SM_Cobalt_Concentrate"
+  },
+  {
+    "id": "Adamantite",
+    "ore": "Ore_Adamantite",
+    "bar": "Ingredient_Bar_Adamantite",
+    "concentrate": "SM_Adamantite_Concentrate"
+  },
+  {
+    "id": "Mithril",
+    "ore": "Ore_Mithril",
+    "bar": "Ingredient_Bar_Mithril",
+    "concentrate": "SM_Mithril_Concentrate"
+  },
+  {
+    "id": "Silver",
+    "ore": "Ore_Silver",
+    "bar": "Ingredient_Bar_Silver",
+    "concentrate": "SM_Silver_Concentrate"
+  },
+  {
+    "id": "Onyxium",
+    "ore": "Ore_Onyxium",
+    "bar": "Ingredient_Bar_Onyxium",
+    "concentrate": "SM_Onyxium_Concentrate"
+  },
+  {
+    "id": "Prisma",
+    "ore": "Ore_Prisma",
+    "bar": "Ingredient_Bar_Prisma",
+    "concentrate": "SM_Prisma_Concentrate"
+  },
+  {
+    "id": "Resonite",
+    "ore": "SM_Raw_Resonite",
+    "bar": "SM_Resonite_Ingot",
+    "concentrate": "SM_Resonite_Concentrate"
+  }
+]

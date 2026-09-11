@@ -35,7 +35,7 @@ public final class ResearchNoteVerification {
                     .withMetadata("OtherMod", new BsonDocument("Marker", new BsonString("preserve")));
             ItemStack refreshed = research.refreshNoteDescription(legacy);
             require(title.equals(refreshed.getDisplayName().getRawText()), "Existing untitled notes receive the actual research title");
-            require(token.equals(ResearchService.noteToken(refreshed)) && refreshed.getMetadata().containsKey("OtherMod"), "Refresh preserves both the minted token and unrelated metadata");
+            require(token.equals(ResearchService.noteToken(refreshed)) && com.hexvane.strangematter.util.StackData.metadata(refreshed).containsKey("OtherMod"), "Refresh preserves both the minted token and unrelated metadata");
             require(refreshed.equals(research.refreshNoteDescription(refreshed)), "Refreshing an already titled note causes no inventory mutation");
         }
         System.out.println("PASS: native research-note title/description, client packet metadata round trip, legacy-note migration and token preservation.");

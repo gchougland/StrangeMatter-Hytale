@@ -10,6 +10,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parent/'assets'))
 import build_assets as art
 from content_policy import FAMILIES, family_light
 from block_support import apply as apply_block_support
+from fixture_toggles import apply_all as apply_fixture_toggles
 ROOT=art.ROOT;RES=ROOT/'src/main/resources';COMMON=art.COMMON
 ITEMS=RES/'Server/Item/Items/StrangeMatter';HIT=RES/'Server/Item/Block/Hitboxes/StrangeMatter'
 VANILLA=ROOT.parent/'HytaleSourceCode/hytale-shared-source/HytaleAssets'
@@ -238,7 +239,7 @@ def validate():
                     if face!='Weight' and not(COMMON/path).exists() and not(VANILLA/'Common'/path).exists():missing.append((p.name,face,path))
             for key in ('HitboxType','InteractionHitboxType'):
                 if state.get(key,'').startswith('SM_') and state[key] not in hitboxes:missing.append((p.name,key,state[key]))
-            if 'Light' in state:
+            if state.get('Light') is not None:
                 assert re.fullmatch('#[0-9a-fA-F]{3}',state['Light']['Color']);assert 0<=state['Light'].get('Radius',0)<=15
     spawners={p.stem:p for p in (RES/'Server/Particles').rglob('*.particlespawner')}
     for p in (RES/'Server/Particles').rglob('*.particlesystem'):
@@ -318,7 +319,11 @@ def main():
         write(p,item)
     import build_lab_details
     build_lab_details.main()
-    doors();hat();conduit_states();creative_library();validate()
+    doors();hat();conduit_states();creative_library()
+    import automation_content
+    automation_content.apply(RES)
+    apply_fixture_toggles(RES)
+    validate()
     previews=[]
     for source in ('resonite_door','resonite_trapdoor'):
         for suffix,label in [('', ' closed'),('_open_out',' open')]:

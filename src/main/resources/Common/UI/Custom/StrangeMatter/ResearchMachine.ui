@@ -5,7 +5,7 @@ $G = "CognitionGlyphs.ui";
 $C.@PageOverlay {
  LayoutMode: Middle;
  Group { LayoutMode: Center;
-  Group { Anchor: (Width: 1032, Height: 760); Background: #2b3858; Padding: (Full: 2);
+  Group { Anchor: (Width: 1036, Height: 850); Background: #2b3858; Padding: (Full: 2);
    Group { Background: #0b1323; Padding: (Full: 24);
     Label #ResearchName { Anchor: (Left: 0, Top: 0, Width: 865, Height: 30); Text: "RESEARCH MACHINE"; Style: (FontSize: 22, TextColor: #75e9f1, RenderBold: true); }
     $R.@Control #Close { Text: "CLOSE"; Anchor: (Right: 0, Top: 0, Width: 83, Height: 30); }
@@ -145,7 +145,7 @@ $R.@Control #EnergyAmpMinus { Text: "A -"; Anchor: (Left: 17, Top: 109, Width: 5
 $R.@Control #EnergyAmpPlus { Text: "A +"; Anchor: (Left: 75, Top: 109, Width: 54, Height: 28); }
 $R.@Control #EnergyPeriodMinus { Text: "P -"; Anchor: (Left: 157, Top: 109, Width: 54, Height: 28); }
 $R.@Control #EnergyPeriodPlus { Text: "P +"; Anchor: (Left: 215, Top: 109, Width: 54, Height: 28); }
-Label #EnergyLock { Anchor: (Left: 0, Top: 145, Width: 288, Height: 25); Text: "Match cyan to purple; hold 5 seconds"; Style: (FontSize: 11, TextColor: #8197b9, Wrap: true, HorizontalAlignment: Center); }
+Label #EnergyLock { Anchor: (Left: 0, Top: 145, Width: 288, Height: 25); Text: "Match cyan to purple"; Style: (FontSize: 11, TextColor: #8197b9, Wrap: true, HorizontalAlignment: Center); }
 }
  Group #ENERGYShutter { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #131e33;
 Group #ENERGYSlat0 { Anchor: (Left: 0, Top: 15, Width: 288, Height: 2); Background: #213049; HitTestVisible: false; }
@@ -176,17 +176,18 @@ Group #GravityUpper { Anchor: (Left: 78, Top: 43, Width: 78, Height: 2); Backgro
 Group #GravityLower { Anchor: (Left: 78, Top: 71, Width: 78, Height: 2); Background: #b797ea; HitTestVisible: false; }
 Group #GravityCube { Anchor: (Left: 105, Top: 51, Width: 24, Height: 24); Background: #64d5d0; HitTestVisible: false; }
 }
-$R.@Control #Force0 { Text: "-5"; Anchor: (Left: 0, Top: 119, Width: 25, Height: 25); }
-$R.@Control #Force1 { Text: "-4"; Anchor: (Left: 26, Top: 119, Width: 25, Height: 25); }
-$R.@Control #Force2 { Text: "-3"; Anchor: (Left: 52, Top: 119, Width: 25, Height: 25); }
-$R.@Control #Force3 { Text: "-2"; Anchor: (Left: 78, Top: 119, Width: 25, Height: 25); }
-$R.@Control #Force4 { Text: "-1"; Anchor: (Left: 104, Top: 119, Width: 25, Height: 25); }
-$R.@Control #Force5 { Text: "0"; Anchor: (Left: 130, Top: 119, Width: 25, Height: 25); }
-$R.@Control #Force6 { Text: "1"; Anchor: (Left: 156, Top: 119, Width: 25, Height: 25); }
-$R.@Control #Force7 { Text: "2"; Anchor: (Left: 182, Top: 119, Width: 25, Height: 25); }
-$R.@Control #Force8 { Text: "3"; Anchor: (Left: 208, Top: 119, Width: 25, Height: 25); }
-$R.@Control #Force9 { Text: "4"; Anchor: (Left: 234, Top: 119, Width: 25, Height: 25); }
-$R.@Control #Force10 { Text: "5"; Anchor: (Left: 260, Top: 119, Width: 25, Height: 25); }
+$R.@Control #Force0 { Padding: (Full: 0); Text: "-5"; Anchor: (Left: 0, Top: 119, Width: 25, Height: 25); }
+$R.@Control #Force1 { Padding: (Full: 0); Text: "-4"; Anchor: (Left: 26, Top: 119, Width: 25, Height: 25); }
+$R.@Control #Force2 { Padding: (Full: 0); Text: "-3"; Anchor: (Left: 52, Top: 119, Width: 25, Height: 25); }
+$R.@Control #Force3 { Padding: (Full: 0); Text: "-2"; Anchor: (Left: 78, Top: 119, Width: 25, Height: 25); }
+$R.@Control #Force4 { Padding: (Full: 0); Text: "-1"; Anchor: (Left: 104, Top: 119, Width: 25, Height: 25); }
+$R.@Control #Force5 { Padding: (Full: 0); Text: "0"; Anchor: (Left: 130, Top: 119, Width: 25, Height: 25); }
+$R.@Control #Force6 { Padding: (Full: 0); Text: "1"; Anchor: (Left: 156, Top: 119, Width: 25, Height: 25); }
+$R.@Control #Force7 { Padding: (Full: 0); Text: "2"; Anchor: (Left: 182, Top: 119, Width: 25, Height: 25); }
+$R.@Control #Force8 { Padding: (Full: 0); Text: "3"; Anchor: (Left: 208, Top: 119, Width: 25, Height: 25); }
+$R.@Control #Force9 { Padding: (Full: 0); Text: "4"; Anchor: (Left: 234, Top: 119, Width: 25, Height: 25); }
+$R.@Control #Force10 { Padding: (Full: 0); Text: "5"; Anchor: (Left: 260, Top: 119, Width: 25, Height: 25); }
+Group #ForceSelection { Anchor: (Left: 131, Top: 145, Width: 23, Height: 3); Background: #78f3e3; HitTestVisible: false; }
 Label #GravityReadout { Anchor: (Left: 0, Top: 151, Width: 288, Height: 23); Text: "Counterforce 0 / Keep the cube between the lines"; Style: (FontSize: 11, TextColor: #8197b9, Wrap: true, HorizontalAlignment: Center); }
 }
  Group #GRAVITYShutter { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #131e33;
@@ -263,13 +264,64 @@ Label  { Anchor: (Left: 12, Top: 115, Width: 284, Height: 36); Text: "SEALED / D
 Group { Anchor: (Left: 326, Top: 338, Width: 310, Height: 234); Background: #263553; Padding: (Full: 1);
  Group { Background: #101b2f;
  Group #SPACEIcon { Anchor: (Left: 10, Top: 12, Width: 18, Height: 18); Background: (TexturePath: "Disciplines/space.png"); HitTestVisible: false; }
- Label { Anchor: (Left: 34, Top: 10, Width: 264, Height: 23); Text: "SPACE / IMAGE UNWARP"; Style: (FontSize: 12, TextColor: #8a9dc5, Wrap: true, HorizontalAlignment: Center); }
+ Label { Anchor: (Left: 34, Top: 10, Width: 264, Height: 23); Text: "SPACE / LATTICE ALIGNMENT"; Style: (FontSize: 12, TextColor: #8a9dc5, Wrap: true, HorizontalAlignment: Center); }
 
  Label #SPACEState { Anchor: (Left: 180, Top: 31, Width: 116, Height: 18); Text: "OFFLINE"; Style: (FontSize: 10, TextColor: #697a98, Wrap: true, HorizontalAlignment: Center); }
 
  Group #SPACEControls { Anchor: (Left: 10, Top: 53, Width: 288, Height: 174); Visible: false;
-Group { Anchor: (Left: 28, Top: 0, Width: 236, Height: 103); Background: #0b1425;
-Group #SpaceDot0 { Anchor: (Left: 70, Top: 10, Width: 5, Height: 5); Background: #b48ee8; HitTestVisible: false; }
+Group { Anchor: (Left: 28, Top: 0, Width: 236, Height: 83); Background: #0b1425;
+Label { Anchor: (Left: 3, Top: 22, Width: 65, Height: 42); Text: "Selected bend: 2 stops"; Style: (FontSize: 10, TextColor: #8197b9, Wrap: true, HorizontalAlignment: Center); HitTestVisible: false; }
+Label { Anchor: (Left: 167, Top: 22, Width: 65, Height: 42); Text: "Other bend: 1 stop"; Style: (FontSize: 10, TextColor: #8197b9, Wrap: true, HorizontalAlignment: Center); HitTestVisible: false; }
+Group #SpaceTarget0 { Anchor: (Left: 86, Top: 8, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget1 { Anchor: (Left: 96, Top: 8, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget2 { Anchor: (Left: 106, Top: 8, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget3 { Anchor: (Left: 116, Top: 8, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget4 { Anchor: (Left: 126, Top: 8, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget5 { Anchor: (Left: 136, Top: 8, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget6 { Anchor: (Left: 146, Top: 8, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget7 { Anchor: (Left: 86, Top: 18, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget8 { Anchor: (Left: 96, Top: 18, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget9 { Anchor: (Left: 106, Top: 18, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget10 { Anchor: (Left: 116, Top: 18, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget11 { Anchor: (Left: 126, Top: 18, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget12 { Anchor: (Left: 136, Top: 18, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget13 { Anchor: (Left: 146, Top: 18, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget14 { Anchor: (Left: 86, Top: 28, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget15 { Anchor: (Left: 96, Top: 28, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget16 { Anchor: (Left: 106, Top: 28, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget17 { Anchor: (Left: 116, Top: 28, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget18 { Anchor: (Left: 126, Top: 28, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget19 { Anchor: (Left: 136, Top: 28, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget20 { Anchor: (Left: 146, Top: 28, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget21 { Anchor: (Left: 86, Top: 38, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget22 { Anchor: (Left: 96, Top: 38, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget23 { Anchor: (Left: 106, Top: 38, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget24 { Anchor: (Left: 116, Top: 38, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget25 { Anchor: (Left: 126, Top: 38, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget26 { Anchor: (Left: 136, Top: 38, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget27 { Anchor: (Left: 146, Top: 38, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget28 { Anchor: (Left: 86, Top: 48, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget29 { Anchor: (Left: 96, Top: 48, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget30 { Anchor: (Left: 106, Top: 48, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget31 { Anchor: (Left: 116, Top: 48, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget32 { Anchor: (Left: 126, Top: 48, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget33 { Anchor: (Left: 136, Top: 48, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget34 { Anchor: (Left: 146, Top: 48, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget35 { Anchor: (Left: 86, Top: 58, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget36 { Anchor: (Left: 96, Top: 58, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget37 { Anchor: (Left: 106, Top: 58, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget38 { Anchor: (Left: 116, Top: 58, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget39 { Anchor: (Left: 126, Top: 58, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget40 { Anchor: (Left: 136, Top: 58, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget41 { Anchor: (Left: 146, Top: 58, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget42 { Anchor: (Left: 86, Top: 68, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget43 { Anchor: (Left: 96, Top: 68, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget44 { Anchor: (Left: 106, Top: 68, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget45 { Anchor: (Left: 116, Top: 68, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget46 { Anchor: (Left: 126, Top: 68, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget47 { Anchor: (Left: 136, Top: 68, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceTarget48 { Anchor: (Left: 146, Top: 68, Width: 6, Height: 6); Background: #926abd; HitTestVisible: false; }
+Group #SpaceDot0 { Anchor: (Left: 70, Top: 10, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot1 { Anchor: (Left: 83, Top: 10, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot2 { Anchor: (Left: 96, Top: 10, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot3 { Anchor: (Left: 109, Top: 10, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
@@ -277,7 +329,7 @@ Group #SpaceDot4 { Anchor: (Left: 122, Top: 10, Width: 5, Height: 5); Background
 Group #SpaceDot5 { Anchor: (Left: 135, Top: 10, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot6 { Anchor: (Left: 148, Top: 10, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot7 { Anchor: (Left: 70, Top: 23, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
-Group #SpaceDot8 { Anchor: (Left: 83, Top: 23, Width: 5, Height: 5); Background: #b48ee8; HitTestVisible: false; }
+Group #SpaceDot8 { Anchor: (Left: 83, Top: 23, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot9 { Anchor: (Left: 96, Top: 23, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot10 { Anchor: (Left: 109, Top: 23, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot11 { Anchor: (Left: 122, Top: 23, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
@@ -285,7 +337,7 @@ Group #SpaceDot12 { Anchor: (Left: 135, Top: 23, Width: 5, Height: 5); Backgroun
 Group #SpaceDot13 { Anchor: (Left: 148, Top: 23, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot14 { Anchor: (Left: 70, Top: 36, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot15 { Anchor: (Left: 83, Top: 36, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
-Group #SpaceDot16 { Anchor: (Left: 96, Top: 36, Width: 5, Height: 5); Background: #b48ee8; HitTestVisible: false; }
+Group #SpaceDot16 { Anchor: (Left: 96, Top: 36, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot17 { Anchor: (Left: 109, Top: 36, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot18 { Anchor: (Left: 122, Top: 36, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot19 { Anchor: (Left: 135, Top: 36, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
@@ -293,7 +345,7 @@ Group #SpaceDot20 { Anchor: (Left: 148, Top: 36, Width: 5, Height: 5); Backgroun
 Group #SpaceDot21 { Anchor: (Left: 70, Top: 49, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot22 { Anchor: (Left: 83, Top: 49, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot23 { Anchor: (Left: 96, Top: 49, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
-Group #SpaceDot24 { Anchor: (Left: 109, Top: 49, Width: 5, Height: 5); Background: #b48ee8; HitTestVisible: false; }
+Group #SpaceDot24 { Anchor: (Left: 109, Top: 49, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot25 { Anchor: (Left: 122, Top: 49, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot26 { Anchor: (Left: 135, Top: 49, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot27 { Anchor: (Left: 148, Top: 49, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
@@ -301,7 +353,7 @@ Group #SpaceDot28 { Anchor: (Left: 70, Top: 62, Width: 5, Height: 5); Background
 Group #SpaceDot29 { Anchor: (Left: 83, Top: 62, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot30 { Anchor: (Left: 96, Top: 62, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot31 { Anchor: (Left: 109, Top: 62, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
-Group #SpaceDot32 { Anchor: (Left: 122, Top: 62, Width: 5, Height: 5); Background: #b48ee8; HitTestVisible: false; }
+Group #SpaceDot32 { Anchor: (Left: 122, Top: 62, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot33 { Anchor: (Left: 135, Top: 62, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot34 { Anchor: (Left: 148, Top: 62, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot35 { Anchor: (Left: 70, Top: 75, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
@@ -309,7 +361,7 @@ Group #SpaceDot36 { Anchor: (Left: 83, Top: 75, Width: 5, Height: 5); Background
 Group #SpaceDot37 { Anchor: (Left: 96, Top: 75, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot38 { Anchor: (Left: 109, Top: 75, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot39 { Anchor: (Left: 122, Top: 75, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
-Group #SpaceDot40 { Anchor: (Left: 135, Top: 75, Width: 5, Height: 5); Background: #b48ee8; HitTestVisible: false; }
+Group #SpaceDot40 { Anchor: (Left: 135, Top: 75, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot41 { Anchor: (Left: 148, Top: 75, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot42 { Anchor: (Left: 70, Top: 88, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot43 { Anchor: (Left: 83, Top: 88, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
@@ -317,11 +369,14 @@ Group #SpaceDot44 { Anchor: (Left: 96, Top: 88, Width: 5, Height: 5); Background
 Group #SpaceDot45 { Anchor: (Left: 109, Top: 88, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot46 { Anchor: (Left: 122, Top: 88, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 Group #SpaceDot47 { Anchor: (Left: 135, Top: 88, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
-Group #SpaceDot48 { Anchor: (Left: 148, Top: 88, Width: 5, Height: 5); Background: #b48ee8; HitTestVisible: false; }
+Group #SpaceDot48 { Anchor: (Left: 148, Top: 88, Width: 5, Height: 5); Background: #67dce5; HitTestVisible: false; }
 }
-$R.@Control #SpaceMinus { Text: "UNWARP -"; Anchor: (Left: 54, Top: 110, Width: 87, Height: 28); }
-$R.@Control #SpacePlus { Text: "WARP +"; Anchor: (Left: 148, Top: 110, Width: 87, Height: 28); }
-Label #SpaceReadout { Anchor: (Left: 0, Top: 147, Width: 288, Height: 25); Text: "Spatial distortion / Restore the lattice"; Style: (FontSize: 11, TextColor: #8197b9, Wrap: true, HorizontalAlignment: Center); }
+$R.@Control #SpaceHorizontal { Text: "HORIZONTAL"; Padding: (Horizontal: 2); Anchor: (Left: 12, Top: 86, Width: 126, Height: 26); TooltipText: "Select this bend. Each press moves it two stops and the other bend one stop."; }
+$R.@Control #SpaceVertical { Text: "VERTICAL"; Padding: (Horizontal: 2); Anchor: (Left: 150, Top: 86, Width: 126, Height: 26); TooltipText: "Select this bend. Each press moves it two stops and the other bend one stop."; }
+Group #SpaceAxisSelection { Anchor: (Left: 12, Top: 113, Width: 126, Height: 2); Background: #78f3e3; HitTestVisible: false; }
+$R.@Control #SpaceMinus { Text: "WARP IN"; Anchor: (Left: 12, Top: 119, Width: 126, Height: 28); TooltipText: "Decrease both bends. Bring both near zero within the shown margin. The lattice settles when close enough."; }
+$R.@Control #SpacePlus { Text: "WARP OUT"; Anchor: (Left: 150, Top: 119, Width: 126, Height: 28); TooltipText: "Increase both bends. Bring both near zero within the shown margin. The lattice settles when close enough."; }
+Label #SpaceReadout { Anchor: (Left: 0, Top: 150, Width: 288, Height: 24); Text: "Bring both bends near zero"; Style: (FontSize: 11, TextColor: #8197b9, Wrap: true, HorizontalAlignment: Center); }
 }
  Group #SPACEShutter { Anchor: (Left: 0, Top: 0, Right: 0, Bottom: 0); Background: #131e33;
 Group #SPACESlat0 { Anchor: (Left: 0, Top: 15, Width: 288, Height: 2); Background: #213049; HitTestVisible: false; }
@@ -402,27 +457,24 @@ Label  { Anchor: (Left: 12, Top: 115, Width: 284, Height: 36); Text: "SEALED / D
 }
 }
 }
-Group #NotePicker { Anchor: (Left: 0, Top: 92, Width: 960, Height: 508); Background: #0e192c;
- Label { Anchor: (Left: 20, Top: 15, Width: 720, Height: 28); Text: "CHOOSE A RESEARCH NOTE"; Style: (FontSize: 21, TextColor: #bba2ed, RenderBold: true); }
- Label { Anchor: (Left: 20, Top: 49, Width: 718, Height: 24); Text: "Select a note from your inventory, review its instruments, then insert it."; Style: (FontSize: 13, TextColor: #9db0cb); }
- $R.@Control #RefreshNotes { Text: "REFRESH NOTES"; Anchor: (Left: 794, Top: 22, Width: 146, Height: 34); }
- Label #NoteCount { Anchor: (Left: 20, Top: 80, Width: 338, Height: 20); Style: (FontSize: 12, TextColor: #869cbb); }
- Group #Notes { Anchor: (Left: 20, Top: 109, Width: 338, Height: 379); Background: #0a1322; Padding: (Full: 5); LayoutMode: TopScrolling; ScrollbarStyle: $C.@DefaultScrollbarStyle; }
- Label #NoNotes { Anchor: (Left: 37, Top: 160, Width: 302, Height: 146); Text: "No unfinished notes found. Use your Research Tablet to create a note from field observations, then return here."; Style: (FontSize: 15, TextColor: #9aabc6, Wrap: true, HorizontalAlignment: Center); Visible: false; HitTestVisible: false; }
- Label #NoNoteSelection { Anchor: (Left: 412, Top: 204, Width: 488, Height: 100); Text: "Your next discovery begins with a research note. Choose one to see what you will learn."; Style: (FontSize: 17, TextColor: #849bb8, Wrap: true, HorizontalAlignment: Center); }
- Group #NoteDetails { Anchor: (Left: 378, Top: 109, Width: 562, Height: 379); Background: #18243a;
-  ItemIcon #NoteIcon { Anchor: (Left: 18, Top: 16, Width: 64, Height: 64); ItemId: "SM_Research_Notes"; }
-  Group #NoteDisciplineIcon { Anchor: (Left: 18, Top: 16, Width: 64, Height: 64); Background: (TexturePath: "Disciplines/cognition.png"); Visible: false; HitTestVisible: false; }
-  Label #NoteTitle { Anchor: (Left: 98, Top: 17, Width: 446, Height: 55); Style: (FontSize: 21, TextColor: #e0e9f7, Wrap: true, RenderBold: true, VerticalAlignment: Center); }
-  Label #NoteDescription { Anchor: (Left: 20, Top: 92, Width: 522, Height: 82); Style: (FontSize: 14, TextColor: #b6c6dc, Wrap: true); }
-  Label { Anchor: (Left: 20, Top: 183, Width: 522, Height: 21); Text: "ACTIVE INSTRUMENTS"; Style: (FontSize: 12, TextColor: #ac93d5, RenderBold: true); }
-  Group #NoteDisciplines { Anchor: (Left: 20, Top: 212, Width: 522, Height: 41); }
-  Label #NotePrerequisites { Anchor: (Left: 20, Top: 261, Width: 522, Height: 48); Style: (FontSize: 13, TextColor: #a6daca, Wrap: true); }
-  $R.@Control #InsertNote { Text: "INSERT SELECTED NOTE"; Anchor: (Left: 20, Top: 321, Width: 522, Height: 40); }
+Group #NotePicker { Anchor: (Left: 0, Top: 92, Width: 984, Height: 610); Background: #0e192c;
+ Label { Anchor: (Left: 20, Top: 15, Width: 930, Height: 28); Text: "PREPARE YOUR EXPERIMENT"; Style: (FontSize: 21, TextColor: #bba2ed, RenderBold: true); }
+ Label { Anchor: (Left: 20, Top: 49, Width: 930, Height: 24); Text: "Place a note in the machine slot. Your note stays here until you take it back or finish its research."; Style: (FontSize: 13, TextColor: #9db0cb); }
+ Label #NoNoteSelection { Anchor: (Left: 140, Top: 117, Width: 700, Height: 100); Text: "Your next discovery begins with a research note. Use your Research Tablet to create one, then place it in the slot below."; Style: (FontSize: 17, TextColor: #849bb8, Wrap: true, HorizontalAlignment: Center); }
+ Group #NoteDetails { Anchor: (Left: 10, Top: 84, Width: 964, Height: 196); Background: #18243a;
+  ItemIcon #NoteIcon { Anchor: (Left: 18, Top: 14, Width: 64, Height: 64); ItemId: "SM_Research_Notes"; }
+  Group #NoteDisciplineIcon { Anchor: (Left: 18, Top: 14, Width: 64, Height: 64); Background: (TexturePath: "Disciplines/cognition.png"); Visible: false; HitTestVisible: false; }
+  Label #NoteTitle { Anchor: (Left: 98, Top: 15, Width: 356, Height: 58); Style: (FontSize: 20, TextColor: #e0e9f7, Wrap: true, RenderBold: true, VerticalAlignment: Center); }
+  Label #NoteDescription { Anchor: (Left: 20, Top: 90, Width: 438, Height: 94); Style: (FontSize: 13, TextColor: #b6c6dc, Wrap: true); }
+  Label { Anchor: (Left: 488, Top: 14, Width: 456, Height: 21); Text: "ACTIVE INSTRUMENTS"; Style: (FontSize: 12, TextColor: #ac93d5, RenderBold: true); }
+  Group #NoteDisciplines { Anchor: (Left: 488, Top: 40, Width: 456, Height: 41); }
+  Label #NotePrerequisites { Anchor: (Left: 488, Top: 87, Width: 456, Height: 48); Style: (FontSize: 13, TextColor: #a6daca, Wrap: true); }
+  $R.@Control #ViewInstruments { Text: "REVIEW EXPERIMENT"; Anchor: (Left: 488, Top: 146, Width: 456, Height: 36); }
  }
+ Group #ResearchInventory { Anchor: (Left: 0, Top: 294, Width: 984, Height: 310); }
 }
 $R.@Control #Begin { Text: "BEGIN STABILIZATION"; Anchor: (Left: 318, Top: 590, Width: 330, Height: 34); Visible: false; }
-Label #Message { Anchor: (Left: 0, Top: 638, Width: 960, Height: 49); Style: (FontSize: 13, TextColor: #a4b4d2, Wrap: true, HorizontalAlignment: Center); }
+Label #Message { Anchor: (Left: 0, Top: 730, Width: 960, Height: 49); Style: (FontSize: 13, TextColor: #a4b4d2, Wrap: true, HorizontalAlignment: Center); }
 }
 }
 }

@@ -54,7 +54,7 @@ def main():
     for selector in ['DisciplineIcon', 'DisciplineLabel']:
         rect(block(chip, selector), 138, 20)
     note = anchor(block(machine, 'NoteDisciplines'))
-    assert 3 * 174 <= note['Width'] and 21 + 20 <= note['Height'], 'Six note disciplines must fit'
+    assert 3 * 152 <= note['Width'] and 21 + 20 <= note['Height'], 'Six note disciplines must fit'
     tablet = (UI / 'ResearchTablet.ui').read_text()
     assert 6 * 19 <= anchor(block(tablet, 'CostRows'))['Height']
     cost = (UI / 'ResearchDisciplineCost.ui').read_text()

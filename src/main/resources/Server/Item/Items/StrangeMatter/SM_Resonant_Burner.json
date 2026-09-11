@@ -7,7 +7,8 @@
   "MaxStack": 25,
   "Categories": [
     "Furniture.Benches",
-    "SM_StrangeMatter.All"
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Machines"
   ],
   "PlayerAnimationsId": "Block",
   "Quality": "Uncommon",
@@ -17,6 +18,11 @@
     ]
   },
   "BlockType": {
+    "BlockEntity": {
+      "Components": {
+        "SM_Factory": {}
+      }
+    },
     "Material": "Solid",
     "DrawType": "Model",
     "Opacity": "Transparent",
@@ -104,5 +110,6 @@
       }
     ],
     "KnowledgeRequired": true
-  }
+  },
+  "SubCategory": "SM_PowerEquipment"
 }

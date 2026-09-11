@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.equipment;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.hexvane.strangematter.machine.MachineService;
 import com.hexvane.strangematter.machine.MachineState;
 import com.hypixel.hytale.codec.Codec;
@@ -28,13 +30,13 @@ public final class NativeLevitationVerification {
     private record Cell(int block,int rotation,int filler) { }
     public static void verify(World world,MachineService machines)throws Exception {
         var store=world.getEntityStore().getStore();var at=new Vector3i(8,190,8);var roof=new Vector3i(8,200,8);var side=new Vector3i(9,198,8);
-        var chunk=world.getChunkIfInMemory(ChunkUtil.indexChunkFromBlock(at.x,at.z));
+        var chunk=WorldAccess.inMemory(world,ChunkUtil.indexChunkFromBlock(at.x,at.z));
         require(chunk!=null,"Levitation fixture uses an already loaded native column");
         var originals=new LinkedHashMap<Vector3i,Cell>();
         // An earlier geology fixture intentionally leaves rock at y194..199. Snapshot
         // and isolate the entire swept body volume, not only the three explicit test blocks.
         for(int x=6;x<=10;x++)for(int z=6;z<=10;z++)for(int y=189;y<=210;y++){
-            var section=chunk.getBlockChunk().getSectionAtBlockY(y);
+            var section=WorldAccess.section(chunk,y);
             originals.put(new Vector3i(x,y,z),new Cell(section.get(x,y,z),section.getRotationIndex(x,y,z),section.getFiller(x,y,z)));
         }
         var fields=new LaboratoryFields(machines);Ref<EntityStore> drop=null;
@@ -140,7 +142,7 @@ public final class NativeLevitationVerification {
             for(var entry:originals.entrySet())writeCell(chunk,entry.getKey(),entry.getValue());
             refreshHeights(chunk);fields.cleanup(world);
             for(var entry:originals.entrySet()){
-                var p=entry.getKey();var expected=entry.getValue();var section=chunk.getBlockChunk().getSectionAtBlockY(p.y);
+                var p=entry.getKey();var expected=entry.getValue();var section=WorldAccess.section(chunk,p.y);
                 require(section.get(p.x,p.y,p.z)==expected.block()&&section.getRotationIndex(p.x,p.y,p.z)==expected.rotation()
                                 &&section.getFiller(p.x,p.y,p.z)==expected.filler(),
                         "Fixture restores each original shaft/neighbor block, rotation and filler: "+p);
@@ -254,9 +256,9 @@ public final class NativeLevitationVerification {
                 "Real client movement wire reaches native input processing without replacing or inventing wishes");
     }
     private static void writeCell(WorldChunk chunk,Vector3i p,Cell cell){
-        chunk.getBlockChunk().getSectionAtBlockY(p.y).set(p.x,p.y,p.z,cell.block(),cell.rotation(),cell.filler());
+        WorldAccess.section(chunk,p.y).set(p.x,p.y,p.z,cell.block(),cell.rotation(),cell.filler());
     }
-    private static void refreshHeights(WorldChunk chunk){for(int x=6;x<=10;x++)for(int z=6;z<=10;z++)chunk.getBlockChunk().updateHeight(x,z);}
+    private static void refreshHeights(WorldChunk chunk){for(int x=6;x<=10;x++)for(int z=6;z<=10;z++)WorldAccess.column(chunk).updateHeight(x,z);}
     private static void reportPosition(NativePlayerFixture player,Vector3d position){
         var store=player.store();var current=store.getComponent(player.ref(),TransformComponent.getComponentType()).getPosition();
         var delta=new Vector3d(position).sub(current);store.getComponent(player.ref(),PlayerInput.getComponentType()).queue(new PlayerInput.RelativeMovement(delta.x,delta.y,delta.z));

@@ -21,6 +21,8 @@ public final class ResearchRecipeBridge {
             Map.entry("SM_Chrono_Blister", "chrono_blister"), Map.entry("SM_Graviton_Hammer", "graviton_hammer"),
             Map.entry("SM_Stasis_Projector", "stasis_projector"), Map.entry("SM_Rift_Stabilizer", "rift_stabilizer"),
             Map.entry("SM_Anomaly_Nullifier", "rift_stabilizer"),
+            Map.entry("SM_Resonant_Separator", "resonant_separation"), Map.entry("SM_Flux_Furnace", "flux_smelting"),
+            Map.entry("SM_Gravitic_Tube", "gravitic_transport"), Map.entry("SM_Pattern_Assembler", "pattern_assembly"),
             Map.entry("SM_Levitation_Pad", "levitation_pad"), Map.entry("SM_Hoverboard", "hoverboard"));
     public static String requirement(String item) {
         if (item == null) return null;

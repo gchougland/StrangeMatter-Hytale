@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.anomaly;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.hypixel.hytale.math.shape.Box;
 import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
@@ -27,36 +29,36 @@ public final class NativeWarpLandingVerification {
         var saved=new LinkedHashMap<Vector3i,Cell>();
         try{
             for(int x=30;x<=33;x++)for(int z=11;z<=13;z++){
-                var chunk=world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock(x,z));require(chunk!=null,"Both native chunk-boundary fixture columns are loaded");
+                var chunk=WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock(x,z));require(chunk!=null,"Both native chunk-boundary fixture columns are loaded");
                 for(int y=239;y<ChunkUtil.HEIGHT;y++){
-                    var section=chunk.getBlockChunk().getSectionAtBlockY(y);
+                    var section=WorldAccess.section(chunk,y);
                     saved.put(new Vector3i(x,y,z),new Cell(section.get(x,y,z),section.getRotationIndex(x,y,z),section.getFiller(x,y,z)));
                     section.set(x,y,z,y==240?BlockType.getAssetMap().getIndex("Rock_Stone"):0,0,0);
                 }
-                chunk.getBlockChunk().updateHeight(x,z);
+                WorldAccess.column(chunk).updateHeight(x,z);
             }
             var effects=new HytaleAnomalyEffects();var body=new BoundingBox(new Box(-.6,0,-.35,.6,1.8,.35));
             var position=HytaleAnomalyEffects.safeSurface(world,31,12);
             require(position!=null&&position.y==241&&effects.fitsAt(world,body,position),"Native full body safely straddles the loaded x31/x32 chunk boundary with real ground contact");
-            var chunk=world.getChunkIfLoaded(ChunkUtil.indexChunk(0,0));
+            var chunk=WorldAccess.loaded(world,ChunkUtil.indexChunk(0,0));
             int bread=BlockType.getAssetMap().getIndex("Food_Bread");require(bread>=0,"Native noncolliding semitransparent bread asset exists");
-            chunk.getBlockChunk().getSectionAtBlockY(250).set(31,250,12,bread,0,0);chunk.getBlockChunk().updateHeight(31,12);
+            WorldAccess.section(chunk,250).set(31,250,12,bread,0,0);WorldAccess.column(chunk).updateHeight(31,12);
             position=HytaleAnomalyEffects.safeSurface(world,31,12);
             require(position!=null&&position.y==251,"Native opacity heightmap actually selects unsupported bread above the solid floor");
             int result=CollisionModule.get().validatePosition(world,body.getBoundingBox(),position,new CollisionResult());
             require(result==CollisionModule.VALIDATE_OK,"Native collision accepts empty airborne space but does not report footing: "+result);
             require(!effects.fitsAt(world,body,position),"Gate rejects the unsupported destination that the old nonoverlap-only predicate accepted");
             var remote=new Vector3d(1_048_576.5,241,1_048_576.5);long index=ChunkUtil.indexChunkFromBlock((int)remote.x,(int)remote.z);
-            require(world.getChunkIfLoaded(index)==null,"Remote destination starts unloaded");
+            require(WorldAccess.loaded(world,index)==null,"Remote destination starts unloaded");
             require(!effects.fitsAt(world,body,remote)&&HytaleAnomalyEffects.safeSurface(world,(int)remote.x,(int)remote.z)==null
-                    &&world.getChunkIfLoaded(index)==null,"Both safety checks reject unloaded terrain without synchronously loading it");
+                    &&WorldAccess.loaded(world,index)==null,"Both safety checks reject unloaded terrain without synchronously loading it");
         }finally{
             var columns=new HashSet<Vector3i>();
             for(var entry:saved.entrySet()){
-                var p=entry.getKey();var value=entry.getValue();var chunk=world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock(p.x,p.z));
-                chunk.getBlockChunk().getSectionAtBlockY(p.y).set(p.x,p.y,p.z,value.block,value.rotation,value.filler);columns.add(new Vector3i(p.x,0,p.z));
+                var p=entry.getKey();var value=entry.getValue();var chunk=WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock(p.x,p.z));
+                WorldAccess.section(chunk,p.y).set(p.x,p.y,p.z,value.block,value.rotation,value.filler);columns.add(new Vector3i(p.x,0,p.z));
             }
-            for(var p:columns)world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock(p.x,p.z)).getBlockChunk().updateHeight(p.x,p.z);
+            for(var p:columns)WorldAccess.column(WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock(p.x,p.z))).updateHeight(p.x,p.z);
         }
     }
     private static void verifyLoads(World world){
@@ -64,7 +66,7 @@ public final class NativeWarpLandingVerification {
         var outcomes=new ArrayList<Boolean>();var loads=new WarpLandingLoads((w,index)->{requested.add(index);var future=new CompletableFuture<Void>();pending.add(future);return future;},clock::get);
         var center=new Vector3d(31.5,241,12.5);var source=UUID.randomUUID();var area=WarpLandingLoads.area(center);
         require(area.size()==9&&area.contains(ChunkUtil.indexChunk(-1,-1))&&area.contains(ChunkUtil.indexChunk(1,1)),"Boundary landing preloads the entire bounded candidate/body neighborhood");
-        long missing=area.stream().filter(index->world.getChunkIfLoaded(index)==null).count();require(missing>0,"Boundary fixture has unloaded neighboring chunks");
+        long missing=area.stream().filter(index->WorldAccess.loaded(world,index)==null).count();require(missing>0,"Boundary fixture has unloaded neighboring chunks");
         require(loads.request(world,source,center,outcomes::add)&&requested.size()==missing&&outcomes.isEmpty(),"Only missing chunks are requested and no completion blocks the world thread");
         require(!loads.request(world,source,center,outcomes::add)&&requested.size()==missing,"Repeated gate ticks never duplicate an in-flight batch");
         boolean[] sentinel={false};world.execute(()->sentinel[0]=true);world.consumeTaskQueue();require(sentinel[0]&&outcomes.isEmpty(),"Owning world tasks continue while all destination futures remain pending");

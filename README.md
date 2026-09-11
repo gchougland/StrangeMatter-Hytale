@@ -22,7 +22,17 @@ Each discovery adds pages to your journal. Read them to learn how your new equip
 
 Start with a Laboratory Bench, then grow your workshop into a room full of strange machines. Burn fuel for power, connect machines with conduits and use a Resonance Condenser to collect shards from nearby anomalies.
 
-The Reality Forge turns materials and shards into equipment you have learned to make. Capture anomalies in containment capsules and move them where you need them.
+The Reality Forge turns materials and shards into equipment you have learned to make. Connect it to power, choose a recipe and drag the materials into its ingredient slots. Choose Craft once for a single job or turn on Repeat to keep making it. The charge meter shows stored power, while a separate progress bar shows the current job. If power runs out, the job waits until power returns.
+
+Use a Resonant Separator to turn supported ores into twice as many metal concentrates. Smelt each concentrate into a matching bar in an ordinary furnace or a Flux Furnace. The Flux Furnace runs on power instead of fuel and can also smelt ordinary furnace recipes. Finished bars and concentrates cannot be doubled again.
+
+Choose a known Workbench recipe in a Pattern Assembler, fill its ingredient slots and start crafting. Turn on Repeat and set a stock target to keep a supply of the finished item. Its target counts the items in the assembler's own output slots. Open Settings to upgrade supported machines or manage shared access.
+
+Connect Gravitic Tubes between your chests, furnaces and machine inventories to move supplies automatically. Tubes need no extra fuel or power. Use a tube, select the face touching a container and choose TAKE to pull from it or SEND to push into it. Select the appropriate storage, ingredient, fuel or output section, then apply that connection. New container connections start on SEND. They use ingredient slots when available and storage otherwise. Choose TAKE on the source container. Higher priority destinations receive items first. Adjoining tubes connect automatically. Cyan pulses travel inward on TAKE connections, and purple pulses travel outward on SEND connections. These lights show the saved direction even while the inventories are empty.
+
+Copy a held item into one of the five filter samples to choose what may travel. Samples do not consume items. You can match an item, match its details, choose a resource family or exclude matching items. Leave in source protects a reserve, and Fill destination up to controls how much arrives, including items already travelling. A higher destination priority receives supplies first. Broken or unloaded routes stop transferring until a valid route is available again.
+
+Capture anomalies in containment capsules and move them where you need them.
 
 Make the laboratory your home with matching Resonite furniture. Rest in a bed, gather around a table and store your supplies in chests and cabinets. Add shelves, windows and glowing wall displays, then finish your building with matching roofs and stairs.
 

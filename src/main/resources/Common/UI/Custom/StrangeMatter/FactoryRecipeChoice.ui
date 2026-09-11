@@ -1,0 +1,10 @@
+$B = "SharedButtons.ui";
+Group { Anchor: (Height: 85, Bottom: 7);
+  Button #Choose { Style: $B.@RowStyle;
+    Group #RecipeAccent { Anchor: (Left: 0, Top: 0, Width: 4, Bottom: 0); Background: #466a80; HitTestVisible: false; }
+    ItemIcon #RecipeIcon { Anchor: (Left: 16, Top: 13, Width: 58, Height: 58); ItemId: "SM_Resonite_Ingot"; HitTestVisible: false; }
+    Label #RecipeName { Anchor: (Left: 91, Top: 11, Right: 224, Height: 34); Style: (FontSize: 18, TextColor: #d9eafa, Wrap: true, VerticalAlignment: Center); HitTestVisible: false; }
+    Label #RecipeStatus { Anchor: (Left: 91, Top: 51, Right: 224, Height: 24); Style: (FontSize: 13, TextColor: #b9a1dc); HitTestVisible: false; }
+    Label #RecipeTime { Anchor: (Right: 19, Top: 29, Width: 190, Height: 26); Style: (FontSize: 15, TextColor: #91d9d8, HorizontalAlignment: End); HitTestVisible: false; }
+  }
+}

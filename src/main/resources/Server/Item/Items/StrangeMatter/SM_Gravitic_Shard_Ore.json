@@ -7,7 +7,8 @@
   "MaxStack": 100,
   "Categories": [
     "Blocks.Ores",
-    "SM_StrangeMatter.All"
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Nature"
   ],
   "PlayerAnimationsId": "Block",
   "Quality": "Uncommon",
@@ -60,5 +61,6 @@
   "Interactions": {
     "Primary": "Block_Primary",
     "Secondary": "Block_Secondary"
-  }
+  },
+  "SubCategory": "SM_Ores"
 }

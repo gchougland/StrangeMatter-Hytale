@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.equipment;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.hexvane.strangematter.machine.MachineService;
 import com.hexvane.strangematter.machine.MachineState;
 import com.hexvane.strangematter.effects.GadgetEffects;
@@ -46,7 +48,7 @@ final class LaboratoryFields {
     synchronized void temporal(World world,Vector3i center){
         for(var offset:temporalOffsets(random)){
             var pos=new Vector3i(center).add(offset);
-            if(pos.y<0||pos.y>=ChunkUtil.HEIGHT||world.getChunkIfInMemory(ChunkUtil.indexChunkFromBlock(pos.x,pos.z))==null)continue;
+            if(pos.y<0||pos.y>=ChunkUtil.HEIGHT||WorldAccess.inMemory(world,ChunkUtil.indexChunkFromBlock(pos.x,pos.z))==null)continue;
             var block=world.getBlockType(pos.x,pos.y,pos.z);
             if(block==null||block.getMaterial()!=BlockMaterial.Empty||block.getId().equals("SM_Time_Dilation_Block"))continue;
             world.setBlock(pos.x,pos.y,pos.z,"SM_Time_Dilation_Block");
@@ -202,6 +204,6 @@ final class LaboratoryFields {
         var effect=EntityEffect.getAssetMap().getAsset(id);var controller=store.getComponent(ref,EffectControllerComponent.getComponentType());
         if(effect!=null&&controller!=null)controller.addEffect(ref,effect,.7f,OverlapBehavior.OVERWRITE,store);
     }
-    void toggleDoor(World world,Vector3i pos,BlockType type){var chunk=world.getChunkIfInMemory(ChunkUtil.indexChunkFromBlock(pos.x,pos.z));if(chunk!=null)chunk.setBlockInteractionState(pos,type,type.getId().contains("OpenDoor")?"CloseDoorIn":"OpenDoorIn");}
+    void toggleDoor(World world,Vector3i pos,BlockType type){var chunk=WorldAccess.inMemory(world,ChunkUtil.indexChunkFromBlock(pos.x,pos.z));if(chunk!=null)WorldAccess.state(chunk,pos,type,type.getId().contains("OpenDoor")?"CloseDoorIn":"OpenDoorIn");}
     synchronized void cleanup(World world){ticks.remove(world.getName());specimens.entrySet().removeIf(e->e.getKey().startsWith(world.getName()+":"));liftDirections.keySet().removeIf(key->key.startsWith(world.getName()+":"));LevitationInputSystem.cleanup(world);machines.save();}
 }

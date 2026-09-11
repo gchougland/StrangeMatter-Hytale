@@ -7,7 +7,8 @@
   "MaxStack": 1,
   "Categories": [
     "Items",
-    "SM_StrangeMatter.All"
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Gadgets"
   ],
   "PlayerAnimationsId": "Item",
   "Quality": "Uncommon",
@@ -58,5 +59,6 @@
       "RequireNewClick": true
     }
   },
-  "MaxDurability": 100
+  "MaxDurability": 100,
+  "SubCategory": "SM_PersonalEquipment"
 }

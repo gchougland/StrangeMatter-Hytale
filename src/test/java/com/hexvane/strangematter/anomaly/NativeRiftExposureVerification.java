@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.anomaly;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.hexvane.strangematter.StrangeMatterConfig;
 import com.hexvane.strangematter.equipment.NativePlayerFixture;
 import com.hexvane.strangematter.machine.MachineService;
@@ -39,7 +41,7 @@ public final class NativeRiftExposureVerification {
             fixture.player().setLastSpawnTimeNanos(System.nanoTime()-TimeUnit.SECONDS.toNanos(30));
             require(fixture.player().getGameMode()==GameMode.Adventure&&!fixture.player().hasSpawnProtection(),"Actual ready Adventure player is outside native spawn protection");
             require(world.getPlayerRefs().contains(fixture.owner()),"Native player lifecycle populates the service's nearby-player activation query");
-            require(world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock(20,21))!=null,"Field activation chunk is loaded");
+            require(WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock(20,21))!=null,"Field activation chunk is loaded");
             // Update the real PlayerSpatialSystem/KD tree, not a fabricated target list.
             store.tick(.05f);
             var record=service.spawn(AnomalyType.ENERGETIC_RIFT,world,new Vector3d(20,46,21),true);

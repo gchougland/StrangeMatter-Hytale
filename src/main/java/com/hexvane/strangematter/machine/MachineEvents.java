@@ -1,5 +1,6 @@
 package com.hexvane.strangematter.machine;
 
+import com.hexvane.strangematter.automation.FactoryPickup;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.EntityEventSystem;
@@ -26,7 +27,9 @@ public final class MachineEvents {
             if(event.isCancelled()||event.getItemInHand()==null)return;
             var id=event.getItemInHand().getItemId();if(!MachineService.IDS.contains(id))return;
             var world=store.getExternalData().getWorld();var pos=new Vector3i(event.getTargetBlock());
-            world.execute(()->{var type=world.getBlockType(pos.x,pos.y,pos.z);if(type!=null&&id.equals(MachineService.baseId(type))){service.register(world,pos,id);service.save();}});
+            var player=chunk.getComponent(index,PlayerRef.getComponentType());var owner=player==null?null:player.getUuid();
+            var placedItem=event.getItemInHand();
+            world.execute(()->{if(event.isCancelled())return;var type=world.getBlockType(pos.x,pos.y,pos.z);if(type!=null&&id.equals(MachineService.baseId(type))){var state=service.register(world,pos,id);FactoryPickup.placed(service,world,state,placedItem,owner);service.save();}});
         }
     }
     public static final class Break extends EntityEventSystem<EntityStore,BreakBlockEvent> {
@@ -35,11 +38,11 @@ public final class MachineEvents {
         @Override public Query<EntityStore> getQuery(){return Player.getComponentType();}
         @Override public void handle(int index,ArchetypeChunk<EntityStore> chunk,Store<EntityStore> store,CommandBuffer<EntityStore> buffer,BreakBlockEvent event){
             if(event.isCancelled()||!MachineService.IDS.contains(MachineService.baseId(event.getBlockType())))return;
-            var world=store.getExternalData().getWorld();var pos=new Vector3i(event.getTargetBlock());var state=service.get(world,pos);
-            if(state!=null&&state.hasContents()) {
+            var world=store.getExternalData().getWorld();var pos=MachineService.origin(world,event.getTargetBlock());var state=service.get(world,pos);
+            if(state!=null&&service.hasContents(world,state)) {
                 event.setCancelled(true);var player=chunk.getComponent(index,PlayerRef.getComponentType());
-                if(player!=null)player.sendMessage(Message.raw("Empty the output tray and let the reserved fuel or crafting finish before dismantling this machine."));
-            }else world.execute(()->{var type=world.getBlockType(pos.x,pos.y,pos.z);if(type==null||!MachineService.IDS.contains(MachineService.baseId(type)))service.removed(world,pos);});
+                if(player!=null)player.sendMessage(Message.raw("Empty this machine and finish or stop its current job before picking it up."));
+            }else {var component=FactoryPickup.component(world,pos);world.execute(()->FactoryPickup.completeRemoval(service,world,pos,state,component,event));}
         }
     }
     /** Environmental breaks have no actor and cannot be cancelled by the native event. */
@@ -48,9 +51,10 @@ public final class MachineEvents {
         public EnvironmentBreak(MachineService service){super(EnvironmentBreakBlockEvent.class);this.service=service;}
         @Override public void handle(Store<EntityStore> store,CommandBuffer<EntityStore> buffer,EnvironmentBreakBlockEvent event){
             if(!MachineService.IDS.contains(MachineService.baseId(event.getBlockType())))return;
-            var world=store.getExternalData().getWorld();var pos=new Vector3i(event.getTargetBlock());var state=service.get(world,pos);
+            var world=store.getExternalData().getWorld();var pos=MachineService.origin(world,event.getTargetBlock());var state=service.get(world,pos);
             if(state==null)return;
             List<ItemStack> refunds=new ArrayList<>();
+            if(service.factory()!=null)for(var stack:service.factory().remove(world,state))add(refunds,stack);
             if(state.outputQuantity>0&&!state.output.isEmpty())add(refunds,new ItemStack(state.output,state.outputQuantity));
             if(!state.recipe.isEmpty()){
                 if(state.reservedInputs!=null&&!state.reservedInputs.isEmpty()){

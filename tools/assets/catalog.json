@@ -2646,23 +2646,50 @@
       "model": "Items/StrangeMatter/warp_gun.blockymodel",
       "texture": "Items/StrangeMatter/warp_gun.png",
       "icon": "Icons/ItemsGenerated/SM_Warp_Gun.png",
-      "nodes": 16,
+      "nodes": 51,
       "boundsModelUnits": {
         "min": [
-          -6.0,
-          -3.694,
-          -10.0
+          -9.625,
+          -3.942,
+          -14.14
         ],
         "max": [
-          9.5,
-          21.75,
-          25.5
+          9.625,
+          21.425,
+          28.924
         ]
       },
       "atlas": [
-        256,
+        128,
         64
-      ]
+      ],
+      "uniqueFaceTiles": 84,
+      "texturedFaces": 306
+    },
+    {
+      "sourceId": "resonite_floor_panel",
+      "id": "SM_Resonite_Floor_Panel",
+      "block": true,
+      "model": "Blocks/StrangeMatter/resonite_floor_panel.blockymodel",
+      "texture": "Blocks/StrangeMatter/resonite_floor_panel.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Floor_Panel.png",
+      "atlas": [
+        128,
+        64
+      ],
+      "nodes": 1,
+      "boundsModelUnits": {
+        "min": [
+          -16,
+          0,
+          -16
+        ],
+        "max": [
+          16,
+          32,
+          16
+        ]
+      }
     }
   ],
   "anomalyCores": [

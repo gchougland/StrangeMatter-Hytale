@@ -1,0 +1,286 @@
+{
+  "items": [
+    {
+      "id": "SM_Resonant_Separator",
+      "name": "Resonant Separator",
+      "description": "Separates supported ore into twice the normal metal yield. Requires resonant power.",
+      "research": "resonant_separation",
+      "model": "Blocks/StrangeMatter/Automation/resonant_separator.blockymodel",
+      "tierModels": [
+        "Blocks/StrangeMatter/Automation/resonant_separator.blockymodel"
+      ],
+      "texture": "Blocks/StrangeMatter/Automation/automation.png",
+      "workingTexture": "Blocks/StrangeMatter/Automation/automation_working.png",
+      "animation": "Blocks/StrangeMatter/Automation/resonant_separator_working.blockyanim",
+      "animationSeconds": 4,
+      "tiers": 1,
+      "boundsBlocks": [
+        1,
+        1.5,
+        1
+      ],
+      "hum": "SM_Resonant_Separator_Hum_SFX",
+      "completionSound": "SM_Resonant_Separator_Complete_SFX",
+      "workingParticle": "SM_Resonant_Separator_Work",
+      "particleOriginBlock": [
+        0.5,
+        0.92,
+        0.5
+      ]
+    },
+    {
+      "id": "SM_Flux_Furnace",
+      "name": "Flux Furnace",
+      "description": "Smelts ordinary furnace recipes using resonant power instead of fuel.",
+      "research": "flux_smelting",
+      "model": "Blocks/StrangeMatter/Automation/flux_furnace.blockymodel",
+      "tierModels": [
+        "Blocks/StrangeMatter/Automation/flux_furnace.blockymodel",
+        "Blocks/StrangeMatter/Automation/flux_furnace_tier2.blockymodel"
+      ],
+      "texture": "Blocks/StrangeMatter/Automation/automation.png",
+      "workingTexture": "Blocks/StrangeMatter/Automation/automation_working.png",
+      "animation": "Blocks/StrangeMatter/Automation/flux_furnace_working.blockyanim",
+      "animationSeconds": 4,
+      "tiers": 2,
+      "boundsBlocks": [
+        1,
+        1,
+        1
+      ],
+      "hum": "SM_Flux_Furnace_Hum_SFX",
+      "completionSound": "SM_Flux_Furnace_Complete_SFX",
+      "workingParticle": "SM_Flux_Furnace_Work",
+      "particleOriginBlock": [
+        0.5,
+        0.65,
+        0.78
+      ]
+    },
+    {
+      "id": "SM_Pattern_Assembler",
+      "name": "Pattern Assembler",
+      "description": "Repeats a known Workbench recipe using stored ingredients and resonant power.",
+      "research": "pattern_assembly",
+      "model": "Blocks/StrangeMatter/Automation/pattern_assembler.blockymodel",
+      "tierModels": [
+        "Blocks/StrangeMatter/Automation/pattern_assembler.blockymodel",
+        "Blocks/StrangeMatter/Automation/pattern_assembler_tier2.blockymodel",
+        "Blocks/StrangeMatter/Automation/pattern_assembler_tier3.blockymodel"
+      ],
+      "texture": "Blocks/StrangeMatter/Automation/automation.png",
+      "workingTexture": "Blocks/StrangeMatter/Automation/automation_working.png",
+      "animation": "Blocks/StrangeMatter/Automation/pattern_assembler_working.blockyanim",
+      "animationSeconds": 4,
+      "tiers": 3,
+      "boundsBlocks": [
+        2,
+        1.5,
+        1
+      ],
+      "hum": "SM_Pattern_Assembler_Hum_SFX",
+      "completionSound": "SM_Pattern_Assembler_Complete_SFX",
+      "workingParticle": "SM_Pattern_Assembler_Work",
+      "particleOriginBlock": [
+        1,
+        0.65,
+        0.5
+      ]
+    },
+    {
+      "id": "SM_Gravitic_Tube",
+      "name": "Gravitic Tube",
+      "description": "Moves items between configured containers through a suspended gravity field.",
+      "research": "gravitic_transport",
+      "model": "Blocks/StrangeMatter/Automation/gravitic_tube_connection00.blockymodel",
+      "connectionModels": [
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection00.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection01.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection02.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection03.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection04.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection05.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection06.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection07.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection08.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection09.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection10.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection11.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection12.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection13.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection14.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection15.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection16.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection17.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection18.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection19.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection20.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection21.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection22.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection23.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection24.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection25.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection26.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection27.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection28.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection29.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection30.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection31.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection32.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection33.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection34.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection35.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection36.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection37.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection38.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection39.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection40.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection41.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection42.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection43.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection44.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection45.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection46.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection47.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection48.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection49.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection50.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection51.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection52.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection53.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection54.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection55.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection56.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection57.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection58.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection59.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection60.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection61.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection62.blockymodel",
+        "Blocks/StrangeMatter/Automation/gravitic_tube_connection63.blockymodel"
+      ],
+      "texture": "Blocks/StrangeMatter/Automation/automation_working.png",
+      "bitDirections": [
+        "+X",
+        "-X",
+        "+Y",
+        "-Y",
+        "+Z",
+        "-Z"
+      ]
+    },
+    {
+      "id": "SM_Copper_Concentrate",
+      "name": "Copper Concentrate",
+      "description": "Separated copper mineral. Smelt one concentrate into one matching bar.",
+      "research": "resonant_separation",
+      "model": "Items/StrangeMatter/Concentrates/metal_concentrate.blockymodel",
+      "texture": "Items/StrangeMatter/Concentrates/copper_concentrate.png",
+      "metal": "Copper"
+    },
+    {
+      "id": "SM_Iron_Concentrate",
+      "name": "Iron Concentrate",
+      "description": "Separated iron mineral. Smelt one concentrate into one matching bar.",
+      "research": "resonant_separation",
+      "model": "Items/StrangeMatter/Concentrates/metal_concentrate.blockymodel",
+      "texture": "Items/StrangeMatter/Concentrates/iron_concentrate.png",
+      "metal": "Iron"
+    },
+    {
+      "id": "SM_Gold_Concentrate",
+      "name": "Gold Concentrate",
+      "description": "Separated gold mineral. Smelt one concentrate into one matching bar.",
+      "research": "resonant_separation",
+      "model": "Items/StrangeMatter/Concentrates/metal_concentrate.blockymodel",
+      "texture": "Items/StrangeMatter/Concentrates/gold_concentrate.png",
+      "metal": "Gold"
+    },
+    {
+      "id": "SM_Thorium_Concentrate",
+      "name": "Thorium Concentrate",
+      "description": "Separated thorium mineral. Smelt one concentrate into one matching bar.",
+      "research": "resonant_separation",
+      "model": "Items/StrangeMatter/Concentrates/metal_concentrate.blockymodel",
+      "texture": "Items/StrangeMatter/Concentrates/thorium_concentrate.png",
+      "metal": "Thorium"
+    },
+    {
+      "id": "SM_Cobalt_Concentrate",
+      "name": "Cobalt Concentrate",
+      "description": "Separated cobalt mineral. Smelt one concentrate into one matching bar.",
+      "research": "resonant_separation",
+      "model": "Items/StrangeMatter/Concentrates/metal_concentrate.blockymodel",
+      "texture": "Items/StrangeMatter/Concentrates/cobalt_concentrate.png",
+      "metal": "Cobalt"
+    },
+    {
+      "id": "SM_Adamantite_Concentrate",
+      "name": "Adamantite Concentrate",
+      "description": "Separated adamantite mineral. Smelt one concentrate into one matching bar.",
+      "research": "resonant_separation",
+      "model": "Items/StrangeMatter/Concentrates/metal_concentrate.blockymodel",
+      "texture": "Items/StrangeMatter/Concentrates/adamantite_concentrate.png",
+      "metal": "Adamantite"
+    },
+    {
+      "id": "SM_Mithril_Concentrate",
+      "name": "Mithril Concentrate",
+      "description": "Separated mithril mineral. Smelt one concentrate into one matching bar.",
+      "research": "resonant_separation",
+      "model": "Items/StrangeMatter/Concentrates/metal_concentrate.blockymodel",
+      "texture": "Items/StrangeMatter/Concentrates/mithril_concentrate.png",
+      "metal": "Mithril"
+    },
+    {
+      "id": "SM_Silver_Concentrate",
+      "name": "Silver Concentrate",
+      "description": "Separated silver mineral. Smelt one concentrate into one matching bar.",
+      "research": "resonant_separation",
+      "model": "Items/StrangeMatter/Concentrates/metal_concentrate.blockymodel",
+      "texture": "Items/StrangeMatter/Concentrates/silver_concentrate.png",
+      "metal": "Silver"
+    },
+    {
+      "id": "SM_Onyxium_Concentrate",
+      "name": "Onyxium Concentrate",
+      "description": "Separated onyxium mineral. Smelt one concentrate into one matching bar.",
+      "research": "resonant_separation",
+      "model": "Items/StrangeMatter/Concentrates/metal_concentrate.blockymodel",
+      "texture": "Items/StrangeMatter/Concentrates/onyxium_concentrate.png",
+      "metal": "Onyxium"
+    },
+    {
+      "id": "SM_Prisma_Concentrate",
+      "name": "Prisma Concentrate",
+      "description": "Separated prisma mineral. Smelt one concentrate into one matching bar.",
+      "research": "resonant_separation",
+      "model": "Items/StrangeMatter/Concentrates/metal_concentrate.blockymodel",
+      "texture": "Items/StrangeMatter/Concentrates/prisma_concentrate.png",
+      "metal": "Prisma"
+    },
+    {
+      "id": "SM_Resonite_Concentrate",
+      "name": "Resonite Concentrate",
+      "description": "Separated resonite mineral. Smelt one concentrate into one matching bar.",
+      "research": "resonant_separation",
+      "model": "Items/StrangeMatter/Concentrates/metal_concentrate.blockymodel",
+      "texture": "Items/StrangeMatter/Concentrates/resonite_concentrate.png",
+      "metal": "Resonite"
+    }
+  ],
+  "interactionHints": {
+    "server.interactionHints.SM_Resonant_Separator": "[{key}] Open resonant separator",
+    "server.interactionHints.SM_Flux_Furnace": "[{key}] Open flux furnace",
+    "server.interactionHints.SM_Pattern_Assembler": "[{key}] Open pattern assembler",
+    "server.interactionHints.SM_Gravitic_Tube": "[{key}] Configure gravitic tube"
+  },
+  "textureSize": [
+    512,
+    128
+  ],
+  "modelUnitsPerBlock": 32,
+  "front": "+Z",
+  "constructionRecipes": "Central Forge recipes owned by Factory content integration.",
+  "preservation": "Only new Automation and Concentrates resources. Current existing art remains authoritative."
+}

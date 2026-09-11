@@ -90,8 +90,8 @@
           "name": "Tinfoil Hat",
           "description": "A protective helmet crafted from resonite that shields the mind from cognitive anomalies and deflects electrical energy.",
           "costs": {
-            "ENERGY": 10,
-            "COGNITION": 10
+            "COGNITION": 10,
+            "ENERGY": 10
           },
           "prerequisites": [
             "resonite"
@@ -107,8 +107,8 @@
           "name": "Anomaly Resonator",
           "description": "An advanced compass-like device that points toward nearby anomalies and allows synchronization.",
           "costs": {
-            "ENERGY": 10,
-            "SPACE": 10
+            "SPACE": 10,
+            "ENERGY": 10
           },
           "prerequisites": [
             "field_scanner"
@@ -124,9 +124,9 @@
           "name": "Reality Forge",
           "description": "The ultimate crafting machine that uses anomaly shards to create powerful and exotic items.",
           "costs": {
-            "TIME": 5,
+            "SPACE": 5,
             "ENERGY": 5,
-            "SPACE": 5
+            "TIME": 5
           },
           "prerequisites": [
             "resonite"
@@ -236,6 +236,7 @@
       {
         "parent": "research",
         "child": "field_scanner",
+        "source": "research",
         "x": 276,
         "y": 260,
         "width": 178,
@@ -244,6 +245,7 @@
       {
         "parent": "research",
         "child": "anomaly_shards",
+        "source": "research",
         "x": 452,
         "y": 260,
         "width": 178,
@@ -252,6 +254,7 @@
       {
         "parent": "research",
         "child": "anomaly_types",
+        "source": "research",
         "x": 452,
         "y": 184,
         "width": 2,
@@ -260,6 +263,7 @@
       {
         "parent": "research",
         "child": "resonite",
+        "source": "research",
         "x": 452,
         "y": 260,
         "width": 2,
@@ -268,6 +272,7 @@
       {
         "parent": "research",
         "child": "resonite",
+        "source": "research",
         "x": 450,
         "y": 334,
         "width": 6,
@@ -276,6 +281,7 @@
       {
         "parent": "research",
         "child": "resonite",
+        "source": "research",
         "x": 276,
         "y": 336,
         "width": 178,
@@ -284,6 +290,7 @@
       {
         "parent": "research",
         "child": "resonant_energy",
+        "source": "research",
         "x": 452,
         "y": 260,
         "width": 106,
@@ -292,6 +299,7 @@
       {
         "parent": "research",
         "child": "resonant_energy",
+        "source": "research",
         "x": 554,
         "y": 258,
         "width": 6,
@@ -300,6 +308,7 @@
       {
         "parent": "research",
         "child": "resonant_energy",
+        "source": "research",
         "x": 556,
         "y": 260,
         "width": 2,
@@ -308,6 +317,7 @@
       {
         "parent": "research",
         "child": "resonant_energy",
+        "source": "research",
         "x": 554,
         "y": 310,
         "width": 6,
@@ -316,6 +326,7 @@
       {
         "parent": "research",
         "child": "resonant_energy",
+        "source": "research",
         "x": 556,
         "y": 312,
         "width": 74,
@@ -324,6 +335,7 @@
       {
         "parent": "research",
         "child": "resonant_energy",
+        "source": "research",
         "x": 626,
         "y": 310,
         "width": 6,
@@ -332,6 +344,7 @@
       {
         "parent": "research",
         "child": "resonant_energy",
+        "source": "research",
         "x": 628,
         "y": 312,
         "width": 2,
@@ -340,6 +353,7 @@
       {
         "parent": "resonite",
         "child": "tinfoil_hat",
+        "source": "resonite",
         "x": 100,
         "y": 336,
         "width": 178,
@@ -348,6 +362,7 @@
       {
         "parent": "field_scanner",
         "child": "anomaly_resonator",
+        "source": "field_scanner",
         "x": 100,
         "y": 260,
         "width": 178,
@@ -356,6 +371,7 @@
       {
         "parent": "resonite",
         "child": "reality_forge",
+        "source": "resonite",
         "x": 276,
         "y": 336,
         "width": 2,
@@ -364,6 +380,7 @@
       {
         "parent": "anomaly_types",
         "child": "gravity_anomalies",
+        "source": "anomaly_types",
         "x": 276,
         "y": 184,
         "width": 178,
@@ -372,6 +389,7 @@
       {
         "parent": "anomaly_types",
         "child": "gravity_anomalies",
+        "source": "anomaly_types",
         "x": 274,
         "y": 182,
         "width": 6,
@@ -380,6 +398,7 @@
       {
         "parent": "anomaly_types",
         "child": "gravity_anomalies",
+        "source": "anomaly_types",
         "x": 276,
         "y": 108,
         "width": 2,
@@ -388,6 +407,7 @@
       {
         "parent": "anomaly_types",
         "child": "temporal_anomalies",
+        "source": "anomaly_types",
         "x": 452,
         "y": 108,
         "width": 2,
@@ -396,6 +416,7 @@
       {
         "parent": "anomaly_types",
         "child": "spatial_anomalies",
+        "source": "anomaly_types",
         "x": 452,
         "y": 184,
         "width": 178,
@@ -404,6 +425,7 @@
       {
         "parent": "anomaly_types",
         "child": "spatial_anomalies",
+        "source": "anomaly_types",
         "x": 626,
         "y": 182,
         "width": 6,
@@ -412,6 +434,7 @@
       {
         "parent": "anomaly_types",
         "child": "spatial_anomalies",
+        "source": "anomaly_types",
         "x": 628,
         "y": 108,
         "width": 2,
@@ -420,6 +443,7 @@
       {
         "parent": "anomaly_types",
         "child": "energy_anomalies",
+        "source": "anomaly_types",
         "x": 348,
         "y": 184,
         "width": 106,
@@ -428,6 +452,7 @@
       {
         "parent": "anomaly_types",
         "child": "energy_anomalies",
+        "source": "anomaly_types",
         "x": 346,
         "y": 182,
         "width": 6,
@@ -436,6 +461,7 @@
       {
         "parent": "anomaly_types",
         "child": "energy_anomalies",
+        "source": "anomaly_types",
         "x": 348,
         "y": 76,
         "width": 2,
@@ -444,6 +470,7 @@
       {
         "parent": "anomaly_types",
         "child": "energy_anomalies",
+        "source": "anomaly_types",
         "x": 346,
         "y": 74,
         "width": 6,
@@ -452,6 +479,7 @@
       {
         "parent": "anomaly_types",
         "child": "energy_anomalies",
+        "source": "anomaly_types",
         "x": 276,
         "y": 76,
         "width": 74,
@@ -460,6 +488,7 @@
       {
         "parent": "anomaly_types",
         "child": "energy_anomalies",
+        "source": "anomaly_types",
         "x": 274,
         "y": 74,
         "width": 6,
@@ -468,6 +497,7 @@
       {
         "parent": "anomaly_types",
         "child": "energy_anomalies",
+        "source": "anomaly_types",
         "x": 276,
         "y": 32,
         "width": 2,
@@ -476,6 +506,7 @@
       {
         "parent": "anomaly_types",
         "child": "shadow_anomalies",
+        "source": "anomaly_types",
         "x": 452,
         "y": 184,
         "width": 74,
@@ -484,6 +515,7 @@
       {
         "parent": "anomaly_types",
         "child": "shadow_anomalies",
+        "source": "anomaly_types",
         "x": 522,
         "y": 182,
         "width": 6,
@@ -492,6 +524,7 @@
       {
         "parent": "anomaly_types",
         "child": "shadow_anomalies",
+        "source": "anomaly_types",
         "x": 524,
         "y": 76,
         "width": 2,
@@ -500,6 +533,7 @@
       {
         "parent": "anomaly_types",
         "child": "shadow_anomalies",
+        "source": "anomaly_types",
         "x": 522,
         "y": 74,
         "width": 6,
@@ -508,6 +542,7 @@
       {
         "parent": "anomaly_types",
         "child": "shadow_anomalies",
+        "source": "anomaly_types",
         "x": 452,
         "y": 76,
         "width": 74,
@@ -516,6 +551,7 @@
       {
         "parent": "anomaly_types",
         "child": "shadow_anomalies",
+        "source": "anomaly_types",
         "x": 450,
         "y": 74,
         "width": 6,
@@ -524,6 +560,7 @@
       {
         "parent": "anomaly_types",
         "child": "shadow_anomalies",
+        "source": "anomaly_types",
         "x": 452,
         "y": 32,
         "width": 2,
@@ -532,6 +569,7 @@
       {
         "parent": "anomaly_types",
         "child": "cognitive_anomalies",
+        "source": "anomaly_types",
         "x": 452,
         "y": 184,
         "width": 106,
@@ -540,6 +578,7 @@
       {
         "parent": "anomaly_types",
         "child": "cognitive_anomalies",
+        "source": "anomaly_types",
         "x": 554,
         "y": 182,
         "width": 6,
@@ -548,6 +587,7 @@
       {
         "parent": "anomaly_types",
         "child": "cognitive_anomalies",
+        "source": "anomaly_types",
         "x": 556,
         "y": 76,
         "width": 2,
@@ -556,6 +596,7 @@
       {
         "parent": "anomaly_types",
         "child": "cognitive_anomalies",
+        "source": "anomaly_types",
         "x": 554,
         "y": 74,
         "width": 6,
@@ -564,6 +605,7 @@
       {
         "parent": "anomaly_types",
         "child": "cognitive_anomalies",
+        "source": "anomaly_types",
         "x": 556,
         "y": 76,
         "width": 74,
@@ -572,6 +614,7 @@
       {
         "parent": "anomaly_types",
         "child": "cognitive_anomalies",
+        "source": "anomaly_types",
         "x": 626,
         "y": 74,
         "width": 6,
@@ -580,6 +623,7 @@
       {
         "parent": "anomaly_types",
         "child": "cognitive_anomalies",
+        "source": "anomaly_types",
         "x": 628,
         "y": 32,
         "width": 2,
@@ -597,16 +641,16 @@
           "name": "Reality Forge",
           "description": "The ultimate crafting machine that uses anomaly shards to create powerful and exotic items.",
           "costs": {
-            "TIME": 5,
+            "SPACE": 5,
             "ENERGY": 5,
-            "SPACE": 5
+            "TIME": 5
           },
           "prerequisites": [
             "reality_forge"
           ]
         },
         "x": 300,
-        "y": 124
+        "y": 16
       },
       {
         "research": {
@@ -615,15 +659,15 @@
           "name": "Resonance Condenser",
           "description": "An advanced machine that condenses anomaly energy into crystallized shards for advanced crafting.",
           "costs": {
-            "ENERGY": 25,
-            "SPACE": 15
+            "SPACE": 15,
+            "ENERGY": 25
           },
           "prerequisites": [
             "reality_forge_category"
           ]
         },
-        "x": 156,
-        "y": 48
+        "x": 12,
+        "y": 144
       },
       {
         "research": {
@@ -632,15 +676,15 @@
           "name": "Containment Basics",
           "description": "Fundamental principles of anomaly containment using Echo Vacuum and Containment Capsules.",
           "costs": {
-            "ENERGY": 20,
-            "SHADOW": 15
+            "SHADOW": 15,
+            "ENERGY": 20
           },
           "prerequisites": [
             "reality_forge_category"
           ]
         },
         "x": 300,
-        "y": 276
+        "y": 144
       },
       {
         "research": {
@@ -649,15 +693,15 @@
           "name": "Echoform Imprinter",
           "description": "A revolutionary device that scans and mimics the physical forms of living entities through shadow-cognitive resonance.",
           "costs": {
-            "COGNITION": 20,
-            "SHADOW": 25
+            "SHADOW": 25,
+            "COGNITION": 20
           },
           "prerequisites": [
             "containment_basics"
           ]
         },
-        "x": 588,
-        "y": 276
+        "x": 156,
+        "y": 280
       },
       {
         "research": {
@@ -666,15 +710,15 @@
           "name": "Warp Gun",
           "description": "A powerful weapon that shoots projectiles creating temporary mini warp gates.",
           "costs": {
-            "ENERGY": 10,
-            "SPACE": 15
+            "SPACE": 15,
+            "ENERGY": 10
           },
           "prerequisites": [
             "containment_basics"
           ]
         },
-        "x": 444,
-        "y": 200
+        "x": 300,
+        "y": 280
       },
       {
         "research": {
@@ -690,8 +734,8 @@
             "containment_basics"
           ]
         },
-        "x": 444,
-        "y": 352
+        "x": 156,
+        "y": 416
       },
       {
         "research": {
@@ -708,7 +752,7 @@
           ]
         },
         "x": 300,
-        "y": 352
+        "y": 416
       },
       {
         "research": {
@@ -724,25 +768,25 @@
             "reality_forge_category"
           ]
         },
-        "x": 588,
-        "y": 124
+        "x": 12,
+        "y": 416
       },
       {
         "research": {
           "id": "rift_stabilizer",
           "category": "reality_forge",
           "name": "Rift Stabilizer",
-          "description": "A revolutionary power generation device that harnesses raw energy directly from Energetic Rift anomalies.",
+          "description": "Harness energetic rifts for power, or build an Anomaly Nullifier to suppress nearby anomaly effects without fuel.",
           "costs": {
-            "ENERGY": 20,
-            "SPACE": 10
+            "SPACE": 10,
+            "ENERGY": 20
           },
           "prerequisites": [
             "reality_forge_category"
           ]
         },
-        "x": 444,
-        "y": 48
+        "x": 12,
+        "y": 280
       },
       {
         "research": {
@@ -759,7 +803,7 @@
           ]
         },
         "x": 12,
-        "y": 124
+        "y": 552
       },
       {
         "research": {
@@ -775,156 +819,873 @@
             "containment_basics"
           ]
         },
-        "x": 12,
-        "y": 276
+        "x": 228,
+        "y": 552
+      },
+      {
+        "research": {
+          "id": "resonant_separation",
+          "category": "reality_forge",
+          "name": "Resonant Separation",
+          "description": "Separate raw ore into twice the normal metal yield.",
+          "costs": {
+            "ENERGY": 20,
+            "GRAVITY": 15
+          },
+          "prerequisites": [
+            "gravitic_transport"
+          ]
+        },
+        "x": 588,
+        "y": 280
+      },
+      {
+        "research": {
+          "id": "flux_smelting",
+          "category": "reality_forge",
+          "name": "Flux Smelting",
+          "description": "Heat ordinary furnace recipes with resonant energy.",
+          "costs": {
+            "ENERGY": 15,
+            "TIME": 5
+          },
+          "prerequisites": [
+            "gravitic_transport"
+          ]
+        },
+        "x": 588,
+        "y": 416
+      },
+      {
+        "research": {
+          "id": "gravitic_transport",
+          "category": "reality_forge",
+          "name": "Gravitic Transport",
+          "description": "Move supplies through carefully controlled gravity fields.",
+          "costs": {
+            "SPACE": 5,
+            "GRAVITY": 15
+          },
+          "prerequisites": [
+            "reality_forge"
+          ]
+        },
+        "x": 588,
+        "y": 144
+      },
+      {
+        "research": {
+          "id": "pattern_assembly",
+          "category": "reality_forge",
+          "name": "Pattern Assembly",
+          "description": "Repeat discovered Workbench recipes with stored ingredients.",
+          "costs": {
+            "COGNITION": 25,
+            "ENERGY": 20,
+            "GRAVITY": 10
+          },
+          "prerequisites": [
+            "gravitic_transport"
+          ]
+        },
+        "x": 588,
+        "y": 552
       }
     ],
     "traces": [
       {
         "parent": "reality_forge_category",
         "child": "resonance_condenser",
-        "x": 220,
-        "y": 148,
-        "width": 146,
-        "height": 2
+        "source": "reality_forge_category",
+        "x": 364,
+        "y": 40,
+        "width": 2,
+        "height": 66
       },
       {
         "parent": "reality_forge_category",
         "child": "resonance_condenser",
-        "x": 218,
-        "y": 146,
+        "source": "reality_forge_category",
+        "x": 362,
+        "y": 102,
         "width": 6,
         "height": 6
       },
       {
         "parent": "reality_forge_category",
         "child": "resonance_condenser",
-        "x": 220,
-        "y": 72,
+        "source": "reality_forge_category",
+        "x": 4,
+        "y": 104,
+        "width": 362,
+        "height": 2
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "resonance_condenser",
+        "source": "reality_forge_category",
+        "x": 2,
+        "y": 102,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "resonance_condenser",
+        "source": "reality_forge_category",
+        "x": 4,
+        "y": 104,
         "width": 2,
-        "height": 78
+        "height": 66
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "resonance_condenser",
+        "source": "reality_forge_category",
+        "x": 2,
+        "y": 166,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "resonance_condenser",
+        "source": "reality_forge_category",
+        "x": 4,
+        "y": 168,
+        "width": 74,
+        "height": 2
       },
       {
         "parent": "reality_forge_category",
         "child": "containment_basics",
+        "source": "reality_forge_category",
         "x": 364,
-        "y": 148,
+        "y": 40,
         "width": 2,
-        "height": 154
+        "height": 130
       },
       {
         "parent": "containment_basics",
         "child": "echoform_imprinter",
+        "source": "containment_basics",
         "x": 364,
-        "y": 300,
-        "width": 290,
+        "y": 168,
+        "width": 74,
+        "height": 2
+      },
+      {
+        "parent": "containment_basics",
+        "child": "echoform_imprinter",
+        "source": "containment_basics",
+        "x": 434,
+        "y": 166,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "containment_basics",
+        "child": "echoform_imprinter",
+        "source": "containment_basics",
+        "x": 436,
+        "y": 168,
+        "width": 2,
+        "height": 82
+      },
+      {
+        "parent": "containment_basics",
+        "child": "echoform_imprinter",
+        "source": "containment_basics",
+        "x": 434,
+        "y": 246,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "containment_basics",
+        "child": "echoform_imprinter",
+        "source": "containment_basics",
+        "x": 220,
+        "y": 248,
+        "width": 218,
+        "height": 2
+      },
+      {
+        "parent": "containment_basics",
+        "child": "echoform_imprinter",
+        "source": "containment_basics",
+        "x": 218,
+        "y": 246,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "containment_basics",
+        "child": "echoform_imprinter",
+        "source": "containment_basics",
+        "x": 220,
+        "y": 248,
+        "width": 2,
+        "height": 58
+      },
+      {
+        "parent": "containment_basics",
+        "child": "warp_gun",
+        "source": "containment_basics",
+        "x": 364,
+        "y": 168,
+        "width": 74,
         "height": 2
       },
       {
         "parent": "containment_basics",
         "child": "warp_gun",
-        "x": 364,
-        "y": 300,
-        "width": 146,
-        "height": 2
-      },
-      {
-        "parent": "containment_basics",
-        "child": "warp_gun",
-        "x": 506,
-        "y": 298,
+        "source": "containment_basics",
+        "x": 434,
+        "y": 166,
         "width": 6,
         "height": 6
       },
       {
         "parent": "containment_basics",
         "child": "warp_gun",
-        "x": 508,
-        "y": 224,
+        "source": "containment_basics",
+        "x": 436,
+        "y": 168,
         "width": 2,
-        "height": 78
+        "height": 82
+      },
+      {
+        "parent": "containment_basics",
+        "child": "warp_gun",
+        "source": "containment_basics",
+        "x": 434,
+        "y": 246,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "containment_basics",
+        "child": "warp_gun",
+        "source": "containment_basics",
+        "x": 364,
+        "y": 248,
+        "width": 74,
+        "height": 2
+      },
+      {
+        "parent": "containment_basics",
+        "child": "warp_gun",
+        "source": "containment_basics",
+        "x": 362,
+        "y": 246,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "containment_basics",
+        "child": "warp_gun",
+        "source": "containment_basics",
+        "x": 364,
+        "y": 248,
+        "width": 2,
+        "height": 58
       },
       {
         "parent": "containment_basics",
         "child": "chrono_blister",
+        "source": "containment_basics",
         "x": 364,
-        "y": 300,
-        "width": 146,
+        "y": 168,
+        "width": 74,
         "height": 2
       },
       {
         "parent": "containment_basics",
         "child": "chrono_blister",
-        "x": 506,
-        "y": 298,
+        "source": "containment_basics",
+        "x": 434,
+        "y": 166,
         "width": 6,
         "height": 6
       },
       {
         "parent": "containment_basics",
         "child": "chrono_blister",
-        "x": 508,
-        "y": 300,
+        "source": "containment_basics",
+        "x": 436,
+        "y": 168,
         "width": 2,
-        "height": 78
+        "height": 218
+      },
+      {
+        "parent": "containment_basics",
+        "child": "chrono_blister",
+        "source": "containment_basics",
+        "x": 434,
+        "y": 382,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "containment_basics",
+        "child": "chrono_blister",
+        "source": "containment_basics",
+        "x": 220,
+        "y": 384,
+        "width": 218,
+        "height": 2
+      },
+      {
+        "parent": "containment_basics",
+        "child": "chrono_blister",
+        "source": "containment_basics",
+        "x": 218,
+        "y": 382,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "containment_basics",
+        "child": "chrono_blister",
+        "source": "containment_basics",
+        "x": 220,
+        "y": 384,
+        "width": 2,
+        "height": 58
       },
       {
         "parent": "containment_basics",
         "child": "graviton_hammer",
+        "source": "containment_basics",
         "x": 364,
-        "y": 300,
+        "y": 168,
+        "width": 74,
+        "height": 2
+      },
+      {
+        "parent": "containment_basics",
+        "child": "graviton_hammer",
+        "source": "containment_basics",
+        "x": 434,
+        "y": 166,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "containment_basics",
+        "child": "graviton_hammer",
+        "source": "containment_basics",
+        "x": 436,
+        "y": 168,
         "width": 2,
-        "height": 78
+        "height": 218
+      },
+      {
+        "parent": "containment_basics",
+        "child": "graviton_hammer",
+        "source": "containment_basics",
+        "x": 434,
+        "y": 382,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "containment_basics",
+        "child": "graviton_hammer",
+        "source": "containment_basics",
+        "x": 364,
+        "y": 384,
+        "width": 74,
+        "height": 2
+      },
+      {
+        "parent": "containment_basics",
+        "child": "graviton_hammer",
+        "source": "containment_basics",
+        "x": 362,
+        "y": 382,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "containment_basics",
+        "child": "graviton_hammer",
+        "source": "containment_basics",
+        "x": 364,
+        "y": 384,
+        "width": 2,
+        "height": 58
       },
       {
         "parent": "reality_forge_category",
         "child": "stasis_projector",
+        "source": "reality_forge_category",
         "x": 364,
-        "y": 148,
-        "width": 290,
+        "y": 40,
+        "width": 2,
+        "height": 66
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "stasis_projector",
+        "source": "reality_forge_category",
+        "x": 362,
+        "y": 102,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "stasis_projector",
+        "source": "reality_forge_category",
+        "x": 4,
+        "y": 104,
+        "width": 362,
+        "height": 2
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "stasis_projector",
+        "source": "reality_forge_category",
+        "x": 2,
+        "y": 102,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "stasis_projector",
+        "source": "reality_forge_category",
+        "x": 4,
+        "y": 104,
+        "width": 2,
+        "height": 338
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "stasis_projector",
+        "source": "reality_forge_category",
+        "x": 2,
+        "y": 438,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "stasis_projector",
+        "source": "reality_forge_category",
+        "x": 4,
+        "y": 440,
+        "width": 74,
         "height": 2
       },
       {
         "parent": "reality_forge_category",
         "child": "rift_stabilizer",
+        "source": "reality_forge_category",
         "x": 364,
-        "y": 148,
-        "width": 146,
-        "height": 2
+        "y": 40,
+        "width": 2,
+        "height": 66
       },
       {
         "parent": "reality_forge_category",
         "child": "rift_stabilizer",
-        "x": 506,
-        "y": 146,
+        "source": "reality_forge_category",
+        "x": 362,
+        "y": 102,
         "width": 6,
         "height": 6
       },
       {
         "parent": "reality_forge_category",
         "child": "rift_stabilizer",
-        "x": 508,
-        "y": 72,
+        "source": "reality_forge_category",
+        "x": 4,
+        "y": 104,
+        "width": 362,
+        "height": 2
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "rift_stabilizer",
+        "source": "reality_forge_category",
+        "x": 2,
+        "y": 102,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "rift_stabilizer",
+        "source": "reality_forge_category",
+        "x": 4,
+        "y": 104,
         "width": 2,
-        "height": 78
+        "height": 202
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "rift_stabilizer",
+        "source": "reality_forge_category",
+        "x": 2,
+        "y": 302,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "rift_stabilizer",
+        "source": "reality_forge_category",
+        "x": 4,
+        "y": 304,
+        "width": 74,
+        "height": 2
       },
       {
         "parent": "reality_forge_category",
         "child": "levitation_pad",
-        "x": 76,
-        "y": 148,
-        "width": 290,
+        "source": "reality_forge_category",
+        "x": 364,
+        "y": 40,
+        "width": 2,
+        "height": 66
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "levitation_pad",
+        "source": "reality_forge_category",
+        "x": 362,
+        "y": 102,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "levitation_pad",
+        "source": "reality_forge_category",
+        "x": 4,
+        "y": 104,
+        "width": 362,
+        "height": 2
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "levitation_pad",
+        "source": "reality_forge_category",
+        "x": 2,
+        "y": 102,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "levitation_pad",
+        "source": "reality_forge_category",
+        "x": 4,
+        "y": 104,
+        "width": 2,
+        "height": 474
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "levitation_pad",
+        "source": "reality_forge_category",
+        "x": 2,
+        "y": 574,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "reality_forge_category",
+        "child": "levitation_pad",
+        "source": "reality_forge_category",
+        "x": 4,
+        "y": 576,
+        "width": 74,
         "height": 2
       },
       {
         "parent": "containment_basics",
         "child": "hoverboard",
-        "x": 76,
-        "y": 300,
+        "source": "containment_basics",
+        "x": 364,
+        "y": 168,
+        "width": 74,
+        "height": 2
+      },
+      {
+        "parent": "containment_basics",
+        "child": "hoverboard",
+        "source": "containment_basics",
+        "x": 434,
+        "y": 166,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "containment_basics",
+        "child": "hoverboard",
+        "source": "containment_basics",
+        "x": 436,
+        "y": 168,
+        "width": 2,
+        "height": 354
+      },
+      {
+        "parent": "containment_basics",
+        "child": "hoverboard",
+        "source": "containment_basics",
+        "x": 434,
+        "y": 518,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "containment_basics",
+        "child": "hoverboard",
+        "source": "containment_basics",
+        "x": 292,
+        "y": 520,
+        "width": 146,
+        "height": 2
+      },
+      {
+        "parent": "containment_basics",
+        "child": "hoverboard",
+        "source": "containment_basics",
+        "x": 290,
+        "y": 518,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "containment_basics",
+        "child": "hoverboard",
+        "source": "containment_basics",
+        "x": 292,
+        "y": 520,
+        "width": 2,
+        "height": 58
+      },
+      {
+        "parent": "gravitic_transport",
+        "child": "resonant_separation",
+        "source": "gravitic_transport",
+        "x": 548,
+        "y": 168,
+        "width": 106,
+        "height": 2
+      },
+      {
+        "parent": "gravitic_transport",
+        "child": "resonant_separation",
+        "source": "gravitic_transport",
+        "x": 546,
+        "y": 166,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "gravitic_transport",
+        "child": "resonant_separation",
+        "source": "gravitic_transport",
+        "x": 548,
+        "y": 168,
+        "width": 2,
+        "height": 82
+      },
+      {
+        "parent": "gravitic_transport",
+        "child": "resonant_separation",
+        "source": "gravitic_transport",
+        "x": 546,
+        "y": 246,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "gravitic_transport",
+        "child": "resonant_separation",
+        "source": "gravitic_transport",
+        "x": 548,
+        "y": 248,
+        "width": 106,
+        "height": 2
+      },
+      {
+        "parent": "gravitic_transport",
+        "child": "resonant_separation",
+        "source": "gravitic_transport",
+        "x": 650,
+        "y": 246,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "gravitic_transport",
+        "child": "resonant_separation",
+        "source": "gravitic_transport",
+        "x": 652,
+        "y": 248,
+        "width": 2,
+        "height": 58
+      },
+      {
+        "parent": "gravitic_transport",
+        "child": "flux_smelting",
+        "source": "gravitic_transport",
+        "x": 548,
+        "y": 168,
+        "width": 106,
+        "height": 2
+      },
+      {
+        "parent": "gravitic_transport",
+        "child": "flux_smelting",
+        "source": "gravitic_transport",
+        "x": 546,
+        "y": 166,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "gravitic_transport",
+        "child": "flux_smelting",
+        "source": "gravitic_transport",
+        "x": 548,
+        "y": 168,
+        "width": 2,
+        "height": 218
+      },
+      {
+        "parent": "gravitic_transport",
+        "child": "flux_smelting",
+        "source": "gravitic_transport",
+        "x": 546,
+        "y": 382,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "gravitic_transport",
+        "child": "flux_smelting",
+        "source": "gravitic_transport",
+        "x": 548,
+        "y": 384,
+        "width": 106,
+        "height": 2
+      },
+      {
+        "parent": "gravitic_transport",
+        "child": "flux_smelting",
+        "source": "gravitic_transport",
+        "x": 650,
+        "y": 382,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "gravitic_transport",
+        "child": "flux_smelting",
+        "source": "gravitic_transport",
+        "x": 652,
+        "y": 384,
+        "width": 2,
+        "height": 58
+      },
+      {
+        "parent": "reality_forge",
+        "child": "gravitic_transport",
+        "source": "reality_forge_category",
+        "x": 364,
+        "y": 40,
         "width": 290,
         "height": 2
+      },
+      {
+        "parent": "reality_forge",
+        "child": "gravitic_transport",
+        "source": "reality_forge_category",
+        "x": 650,
+        "y": 38,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "reality_forge",
+        "child": "gravitic_transport",
+        "source": "reality_forge_category",
+        "x": 652,
+        "y": 40,
+        "width": 2,
+        "height": 130
+      },
+      {
+        "parent": "gravitic_transport",
+        "child": "pattern_assembly",
+        "source": "gravitic_transport",
+        "x": 548,
+        "y": 168,
+        "width": 106,
+        "height": 2
+      },
+      {
+        "parent": "gravitic_transport",
+        "child": "pattern_assembly",
+        "source": "gravitic_transport",
+        "x": 546,
+        "y": 166,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "gravitic_transport",
+        "child": "pattern_assembly",
+        "source": "gravitic_transport",
+        "x": 548,
+        "y": 168,
+        "width": 2,
+        "height": 354
+      },
+      {
+        "parent": "gravitic_transport",
+        "child": "pattern_assembly",
+        "source": "gravitic_transport",
+        "x": 546,
+        "y": 518,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "gravitic_transport",
+        "child": "pattern_assembly",
+        "source": "gravitic_transport",
+        "x": 548,
+        "y": 520,
+        "width": 106,
+        "height": 2
+      },
+      {
+        "parent": "gravitic_transport",
+        "child": "pattern_assembly",
+        "source": "gravitic_transport",
+        "x": 650,
+        "y": 518,
+        "width": 6,
+        "height": 6
+      },
+      {
+        "parent": "gravitic_transport",
+        "child": "pattern_assembly",
+        "source": "gravitic_transport",
+        "x": 652,
+        "y": 520,
+        "width": 2,
+        "height": 58
       }
     ],
-    "height": 464
+    "height": 636
   }
 }

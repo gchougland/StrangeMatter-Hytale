@@ -1,5 +1,23 @@
 package com.hexvane.strangematter.block;
 
+import com.hexvane.strangematter.util.WorldAccess;
+import com.hexvane.strangematter.equipment.NativePlayerFixture;
+import com.hypixel.hytale.codec.ExtraInfo;
+import com.hypixel.hytale.codec.builder.BuilderCodec;
+import com.hypixel.hytale.component.CommandBuffer;
+import com.hypixel.hytale.protocol.InteractionType;
+import com.hypixel.hytale.protocol.BlockPosition;
+import com.hypixel.hytale.protocol.packets.world.PlaySoundEvent3D;
+import com.hypixel.hytale.server.core.entity.InteractionContext;
+import com.hypixel.hytale.server.core.inventory.ItemStack;
+import com.hypixel.hytale.server.core.modules.interaction.InteractionModule;
+import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler;
+import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
+import com.hypixel.hytale.server.core.modules.interaction.interaction.config.RootInteraction;
+import com.hypixel.hytale.server.core.modules.interaction.interaction.config.client.ChangeStateInteraction;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+
 import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import com.hypixel.hytale.server.core.universe.world.World;
@@ -9,6 +27,9 @@ import com.hypixel.hytale.server.core.universe.world.chunk.section.ChunkLightDat
 import java.nio.file.Files;
 import java.util.Arrays;
 import org.bson.BsonDocument;
+import org.joml.Vector3d;
+import org.joml.Vector3i;
+import java.util.Objects;
 
 /** Native integration fixture. Call on the world thread with columns (0,0) and
  * (1,0) already loaded. The production refresh must never load that neighbor.
@@ -21,12 +42,13 @@ public final class NativeFixtureLightingVerification {
         var sourceChunk = loaded(world, 0, 0);
         var neighborChunk = loaded(world, 1, 0);
         require(sourceChunk != null && neighborChunk != null, "Fixture columns must be preloaded by the native harness");
-        int[] ids = FixtureLightingRefresh.fixtureIndexes();
-        require(Arrays.stream(ids).allMatch(id -> id > 0), "All twelve native fixture IDs resolve");
-        require(!FixtureLightingRefresh.containsFixture(new BlockSection(), ids), "Empty palette is not a fixture");
-        for (int id : ids) {
+        int[] paletteIds = FixtureLightingRefresh.fixtureIndexes();
+        int[] ids = Arrays.stream(FixtureLightingRefresh.fixtureIds()).mapToInt(BlockType.getAssetMap()::getIndex).toArray();
+        require(ids.length == 13 && paletteIds.length == 39 && Arrays.stream(paletteIds).allMatch(id -> id > 0), "All thirteen native fixtures and both switch states resolve");
+        require(!FixtureLightingRefresh.containsFixture(new BlockSection(), paletteIds), "Empty palette is not a fixture");
+        for (int id : paletteIds) {
             var section = new BlockSection(); section.set(0, id, 0, 0);
-            require(FixtureLightingRefresh.containsFixture(section, ids), "Each family/kind triggers refresh");
+            require(FixtureLightingRefresh.containsFixture(section, paletteIds), "Every default/On/Off family and Lab Lamp triggers cache refresh");
         }
         var ordinary = new BlockSection(); ordinary.set(0, BlockType.getAssetMap().getIndex("Soil_Dirt"), 0, 0);
         require(!FixtureLightingRefresh.containsFixture(ordinary, ids), "Ordinary native terrain is excluded");
@@ -35,11 +57,11 @@ public final class NativeFixtureLightingVerification {
         try {
             for (int i = 0; i < ids.length; i++) world.setBlock(2 + i * 2, Y, 24, BlockType.getAssetMap().getAsset(ids[i]).getId());
             int sectionY = Y >> ChunkUtil.BITS;
-            var source = sourceChunk.getBlockChunk().getSectionAtIndex(sectionY);
-            var neighbor = neighborChunk.getBlockChunk().getSectionAtIndex(sectionY);
-            var lower = sourceChunk.getBlockChunk().getSectionAtIndex(sectionY - 1);
-            var upper = sourceChunk.getBlockChunk().getSectionAtIndex(sectionY + 1);
-            var distant = sourceChunk.getBlockChunk().getSectionAtIndex(sectionY + 2);
+            var source = WorldAccess.section(sourceChunk,sectionY*ChunkUtil.SIZE);
+            var neighbor = WorldAccess.section(neighborChunk,sectionY*ChunkUtil.SIZE);
+            var lower = WorldAccess.section(sourceChunk,(sectionY - 1)*ChunkUtil.SIZE);
+            var upper = WorldAccess.section(sourceChunk,(sectionY + 1)*ChunkUtil.SIZE);
+            var distant = WorldAccess.section(sourceChunk,(sectionY + 2)*ChunkUtil.SIZE);
             int sample = ChunkUtil.indexBlock(2, Y, 24);
 
             // Serialize native block palettes, rotation/filler layers, RGB and validity
@@ -60,7 +82,7 @@ public final class NativeFixtureLightingVerification {
             short distantLocal = distant.getLocalChangeCounter(), distantGlobal = distant.getGlobalChangeCounter();
             int loadedBefore = world.getChunkStore().getLoadedChunksCount();
 
-            require(FixtureLightingRefresh.refreshChunk(sourceChunk) == 3, "Twelve sources deduplicate to three vertical sections");
+            require(FixtureLightingRefresh.refreshChunk(sourceChunk) == 3, "Thirteen sources deduplicate to three vertical sections");
             advanced(sourceLocal, source.getLocalChangeCounter(), "Source local cache invalidated");
             advanced(sourceGlobal, source.getGlobalChangeCounter(), "Source global cache invalidated");
             advanced(neighborGlobal, neighbor.getGlobalChangeCounter(), "Already loaded neighbor global cache invalidated");
@@ -83,22 +105,100 @@ public final class NativeFixtureLightingVerification {
             require(FixtureLightingRefresh.refreshLoaded(world) == 3, "Startup pass refreshes each fixture source once");
             advanced(sourceLocal, source.getLocalChangeCounter(), "Startup pass invalidates existing fixture cache");
             require(world.getChunkStore().getLoadedChunksCount() == loadedBefore, "Neither load nor startup refresh loads extra chunks");
-            System.out.println("NATIVE_FIXTURE_LIGHTING_VERIFICATION_PASSED: disk RGB cache, 12 fixture palettes, native invalidation, vertical and late-neighbor spill, startup, unchanged blocks and chunk count");
+            verifySwitches(world,sourceChunk,ids);
+            System.out.println("NATIVE_FIXTURE_LIGHTING_VERIFICATION_PASSED: disk RGB cache, 39 fixture state palettes, native toggles/sounds, Off save and cache refresh, unchanged collision/rotation/held lights, vertical and late-neighbor spill without chunk loads");
         } finally {
             for (int i = 0; i < ids.length; i++) world.setBlock(2 + i * 2, Y, 24, "Empty");
         }
     }
 
+    private static void verifySwitches(World world,WorldChunk sourceChunk,int[] ids)throws Exception {
+        try(var player=NativePlayerFixture.create(world,"NativeLampSwitch",new Vector3d(16.5,Y+3,22.5))) {
+            for(int i=0;i<ids.length;i++) {
+                var base=BlockType.getAssetMap().getAsset(ids[i]);
+                var off=Objects.requireNonNull(base.getBlockForState("Off"));
+                var on=Objects.requireNonNull(base.getBlockForState("On"));
+                require(base.getLight()!=null&&on.getLight()!=null&&off.getLight()==null,"Native default and On emit while Off is dark: "+base.getId());
+                require(off.getParticles()==null||off.getParticles().length==0,"Off disables emitted particles: "+base.getId());
+                require(off.getInteractionHint().equals("server.interactionHints.turnon")&&on.getInteractionHint().equals("server.interactionHints.turnoff"),"Native switch key hints follow actual state");
+                require(base.getHitboxTypeIndex()==off.getHitboxTypeIndex()&&base.getHitboxTypeIndex()==on.getHitboxTypeIndex(),"Switch preserves native physical collision: "+base.getId());
+                require(base.getInteractionHitboxTypeIndex()==off.getInteractionHitboxTypeIndex()&&Arrays.equals(base.toPacket().modelTexture,off.toPacket().modelTexture),"Switch preserves interaction collision and native texture palette");
+                var position=new Vector3i(2+i*2,Y,24);
+                player.store().getComponent(player.ref(),com.hypixel.hytale.server.core.modules.entity.component.TransformComponent.getComponentType())
+                        .setPosition(new Vector3d(position.x+.5,Y+1,22.5));
+                player.store().tick(.01f); // Publish the real listener position into native spatial audio.
+                int rotation=WorldAccess.rotation(sourceChunk,position.x,position.y,position.z);
+                invokeNativeUse(player,base,position);
+                require(world.getBlockType(position.x,position.y,position.z)==off,"Loaded default Use changes the actual block to Off: "+base.getId());
+                require(WorldAccess.rotation(sourceChunk,position.x,position.y,position.z)==rotation,"Off transition preserves placement rotation");
+                var held=new ItemStack(base.getId(),1);
+                player.hotbar().setItemStackForSlot((short)0,held,false);
+                require(BlockType.getAssetMap().getAsset(held.getItem().getBlockId()).getLight()!=null,"Held item retains native default light while placed copy is Off");
+                invokeNativeUse(player,off,position);
+                require(world.getBlockType(position.x,position.y,position.z)==on&&on.getLight().equals(base.getLight()),"Native Off Use restores exact original color and radius");
+                invokeNativeUse(player,on,position);
+                require(world.getBlockType(position.x,position.y,position.z)==off,"Native On Use can switch off repeatedly");
+            }
+            int sectionY=Y>>ChunkUtil.BITS;
+            var section=WorldAccess.section(sourceChunk,sectionY*ChunkUtil.SIZE);
+            int sample=ChunkUtil.indexBlock(2,Y,24);
+            var saved=savedWhiteCache(section,sample);
+            require(Arrays.equals(blockState(section),blockState(saved)),"Native disk roundtrip retains all Off IDs, fillers and rotations");
+            // Publish the native saved Off states again, as a loaded palette would, then install its stale cache.
+            for(int i=0;i<ids.length;i++) {
+                int x=2+i*2,index=ChunkUtil.indexBlock(x,Y,24),id=saved.get(index);
+                var type=BlockType.getAssetMap().getAsset(id);
+                WorldAccess.set(sourceChunk,x,Y,24,id,type,saved.getRotationIndex(index),saved.getFiller(index),
+                        com.hypixel.hytale.server.core.universe.world.SetBlockSettings.NO_UPDATE_STATE|
+                        com.hypixel.hytale.server.core.universe.world.SetBlockSettings.FORCE_CHANGED);
+                require(type.getLight()==null,"Reinstalled saved fixture stays Off");
+            }
+            installCache(section,saved);
+            var before=blockState(section);
+            short counter=section.getLocalChangeCounter();
+            require(FixtureLightingRefresh.refreshLoaded(world)==3,"Saved Off fixtures invalidate obsolete lit RGB caches");
+            advanced(counter,section.getLocalChangeCounter(),"Off cache invalidation reaches native light propagation");
+            require(Arrays.equals(before,blockState(section)),"Reload light repair never re-enables Off fixtures");
+            for(int i=0;i<ids.length;i++)require(world.getBlockType(2+i*2,Y,24).getLight()==null,"Every reloaded Off fixture remains dark");
+            int ignite=com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent.getAssetMap().getIndex("SFX_Torch_Ignite");
+            int extinguish=com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent.getAssetMap().getIndex("SFX_Torch_Off");
+            require(player.packets().ofType(PlaySoundEvent3D.class).stream().filter(p->p.soundEventIndex==ignite||p.soundEventIndex==extinguish).count()==ids.length*3,"Native switch interactions emit exactly their configured short sound cues");
+        }
+    }
+
+    private static void invokeNativeUse(NativePlayerFixture player,BlockType block,Vector3i position) {
+        var root=Objects.requireNonNull(RootInteraction.getAssetMap().getAsset(block.getInteractions().get(InteractionType.Use)));
+        require(root.getInteractionIds().length==1,"Switch Use resolves exactly one native interaction");
+        var loaded=Interaction.getAssetMap().getAsset(root.getInteractionIds()[0]);
+        require(loaded instanceof ChangeStateInteraction,"Switch uses Hytale ChangeState instead of a GUI or custom dispatcher");
+        var action=NativeUse.CODEC.decode(ChangeStateInteraction.CODEC.encode((ChangeStateInteraction)loaded,new ExtraInfo()),new ExtraInfo());
+        var manager=player.store().getComponent(player.ref(),InteractionModule.get().getInteractionManagerComponent());
+        var context=InteractionContext.forInteraction(manager,player.ref(),InteractionType.Use,player.store());
+        context.getMetaStore().putMetaObject(Interaction.TARGET_BLOCK,new BlockPosition(position.x,position.y,position.z));
+        player.store().forEachChunk(PlayerRef.getComponentType(),(chunk,commands)->{
+            for(int i=0;i<chunk.size();i++)if(chunk.getReferenceTo(i).equals(player.ref()))action.apply(player.world(),commands,context,position);
+        });
+    }
+    /** Exposes the native block phase after resolving and decoding its actual loaded Use asset.
+     * Client target acquisition/prediction is outside this server fixture. No native mutation is replaced.
+     */
+    private static final class NativeUse extends ChangeStateInteraction {
+        private static final BuilderCodec<NativeUse> CODEC=BuilderCodec.builder(NativeUse.class,NativeUse::new,ChangeStateInteraction.CODEC).build();
+        private void apply(World world,CommandBuffer<EntityStore> commands,InteractionContext context,Vector3i target) {
+            super.interactWithBlock(world,commands,InteractionType.Use,context,context.getHeldItem(),target,new CooldownHandler());
+        }
+    }
+
     private static BlockSection savedWhiteCache(BlockSection source, int sample) throws Exception {
-        var detached = BlockSection.CODEC.decode(BlockSection.CODEC.encode(source));
+        var detached = BlockSection.CODEC.decode(BlockSection.CODEC.encode(source,new com.hypixel.hytale.codec.ExtraInfo()),new com.hypixel.hytale.codec.ExtraInfo());
         var local = new ChunkLightDataBuilder(detached.getLocalChangeCounter());
         local.setBlockLight(sample, (byte)15, (byte)15, (byte)15); detached.setLocalLight(local);
         var global = new ChunkLightDataBuilder(detached.getGlobalChangeCounter());
         global.setBlockLight(sample, (byte)15, (byte)15, (byte)15); detached.setGlobalLight(global);
         var path = Files.createTempFile("sm-saved-fixture-light-", ".json");
         try {
-            Files.writeString(path, BlockSection.CODEC.encode(detached).asDocument().toJson());
-            var saved = BlockSection.CODEC.decode(BsonDocument.parse(Files.readString(path)));
+            Files.writeString(path, BlockSection.CODEC.encode(detached,new com.hypixel.hytale.codec.ExtraInfo()).asDocument().toJson());
+            var saved = BlockSection.CODEC.decode(BsonDocument.parse(Files.readString(path)),new com.hypixel.hytale.codec.ExtraInfo());
             require(saved.hasLocalLight() && saved.hasGlobalLight(), "Disk read retains native cache validity counters");
             return saved;
         } finally { Files.deleteIfExists(path); }

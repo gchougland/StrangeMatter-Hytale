@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.hexvane"
-version = "0.8.12"
+version = "0.9.10"
 
 val hytaleHome = providers.environmentVariable("APPDATA").map { "$it/Hytale/install/release/package/game/latest" }
 val localServerJar = providers.gradleProperty("hytaleServerJar").orElse(hytaleHome.map { "$it/Server/HytaleServer.jar" })
@@ -29,6 +29,7 @@ tasks.withType<JavaCompile>().configureEach {
     // Compile only this plugin's explicit source inputs, never dependency sources.
     options.sourcepath = files("build/empty-sourcepath")
     options.compilerArgs.add("-implicit:none")
+    options.compilerArgs.addAll(listOf("-Xlint:deprecation", "-Xlint:removal", "-Xmaxwarns", "10000"))
 }
 tasks.named<Jar>("jar") {
     archiveBaseName = "StrangeMatter"
@@ -43,12 +44,60 @@ val verifyGameplay by tasks.registering(JavaExec::class) {
     enableAssertions = true
 }
 tasks.test { enabled = false } // Deterministic main-based checks need no external test framework.
+val verifyTextureFootprint by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/diagnostics/check_reports.py")
+}
+val verifyResearchAdmin by tasks.registering(JavaExec::class) {
+    dependsOn(tasks.testClasses)
+    classpath = sourceSets.test.get().runtimeClasspath
+    mainClass = "com.hexvane.strangematter.research.ResearchAdminVerification"
+    systemProperty("java.util.logging.manager", "com.hypixel.hytale.logger.backend.HytaleLogManager")
+    enableAssertions = true
+}
+tasks.check { dependsOn(verifyTextureFootprint, verifyResearchAdmin) }
+val verifyFixtureSwitches by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/assets/fixture_toggles.py")
+}
+val verifyWarpGunArt by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/assets/test_warp_gun_revision.py")
+}
+tasks.check { dependsOn(verifyFixtureSwitches, verifyWarpGunArt) }
+val verifyDiagnosticReports by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/diagnostics/test_check_reports.py")
+}
+tasks.check { dependsOn(verifyDiagnosticReports) }
+val verifyResonantRouting by tasks.registering(JavaExec::class) {
+    dependsOn(tasks.testClasses)
+    classpath = sourceSets.test.get().runtimeClasspath
+    mainClass = "com.hexvane.strangematter.machine.ResonantNetworkVerification"
+    enableAssertions = true
+}
+tasks.check { dependsOn(verifyResonantRouting) }
+val verifyFloorPanel by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/assets/test_floor_panel.py")
+}
+tasks.check { dependsOn(verifyFloorPanel) }
+val verifyOptionalBeacon by tasks.registering(JavaExec::class) {
+    dependsOn(tasks.testClasses)
+    classpath = sourceSets.test.get().runtimeClasspath
+    mainClass = "com.hexvane.strangematter.telemetry.BeaconVerification"
+    enableAssertions = true
+}
+tasks.check { dependsOn(verifyOptionalBeacon) }
 val verifyRecipeAssets by tasks.registering(Exec::class) {
     commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_recipes.py")
 }
 val verifyUiAssets by tasks.registering(Exec::class) {
     commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/test_validate_ui.py")
 }
+val verifySharedUi by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/test_shared_ui.py")
+}
+val verifyMachineSettingsUi by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_machine_settings_ui.py")
+}
+tasks.check { dependsOn(verifyMachineSettingsUi) }
+tasks.check { dependsOn(verifySharedUi) }
 val verifyLaboratoryUi by tasks.registering(Exec::class) {
     commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_laboratory_ui.py")
 }
@@ -134,6 +183,17 @@ val verifyModelAtlases by tasks.registering(Exec::class) {
     commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/test_validate_model_atlases.py")
 }
 tasks.check { dependsOn(verifyTexturePacking, verifyModelAtlases) }
+val verifyAutomationArt by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/test_automation_art.py")
+}
+val verifyMachineInventories by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/test_machine_inventory_panel.py")
+}
+tasks.check { dependsOn(verifyAutomationArt, verifyMachineInventories) }
+val verifyFactoryPickup by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/test_factory_pickup.py")
+}
+tasks.check { dependsOn(verifyFactoryPickup) }
 tasks.check { dependsOn(verifyArchitectureSet, verifyFurnitureSet, verifyResonatorGrip, verifyTabletGrip, verifyRealityForge, verifyNullifierPresentation, verifyNullifierContent, verifyWallSupport) }
 tasks.check { dependsOn(verifyGameplay, verifyRecipeAssets, verifyUiAssets, verifyLaboratoryUi, verifyCognitionGlyphs, verifyResearchTreeLayout, verifyTabletUi, verifyDisciplineIcons, verifyEffects, verifyPresentation, verifyMachineWork, verifyHeldLights, verifyEnergeticPresentation, verifyClientAnimations, verifyGrassStatusIcon, verifyThoughtwellEchoes, verifyThoughtwellHallucinations, verifySeamlessTerrain, verifyWarpBolts, verifyPluginIdentity) }
 // Match Aetherhaven: the editor changes build/resources/main during a development

@@ -554,7 +554,8 @@
     "quantity": 1,
     "ingredients": {
       "SM_Resonite_Nugget": 8,
-      "Ingredient_Stick": 1
+      "Ingredient_Stick": 1,
+      "Ingredient_Bar_Copper": 1
     },
     "shards": {},
     "research": "",
@@ -1154,5 +1155,95 @@
     "research": "rift_stabilizer",
     "seconds": 5.0,
     "station": "forge"
+  },
+  {
+    "id": "resonant_separator",
+    "output": "SM_Resonant_Separator",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 5,
+      "SM_Resonant_Coil": 2,
+      "SM_Resonant_Circuit": 2,
+      "SM_Stabilized_Core": 1,
+      "SM_Containment_Capsule_Gravity": 1
+    },
+    "shards": {
+      "gravitic": 2,
+      "energetic": 1
+    },
+    "research": "resonant_separation",
+    "seconds": 5,
+    "station": "forge",
+    "source": "Hytale factory expansion"
+  },
+  {
+    "id": "flux_furnace",
+    "output": "SM_Flux_Furnace",
+    "quantity": 1,
+    "ingredients": {
+      "Bench_Furnace": 1,
+      "SM_Resonite_Ingot": 5,
+      "SM_Resonant_Coil": 2,
+      "SM_Resonant_Circuit": 1,
+      "SM_Containment_Capsule_Energetic": 1
+    },
+    "shards": {
+      "energetic": 2
+    },
+    "research": "flux_smelting",
+    "seconds": 5,
+    "station": "forge",
+    "source": "Hytale factory expansion"
+  },
+  {
+    "id": "pattern_assembler",
+    "output": "SM_Pattern_Assembler",
+    "quantity": 1,
+    "ingredients": {
+      "Bench_WorkBench": 1,
+      "SM_Resonite_Ingot": 5,
+      "SM_Resonant_Circuit": 3,
+      "SM_Resonant_Coil": 2,
+      "SM_Stabilized_Core": 1,
+      "SM_Containment_Capsule_Thoughtwell": 1
+    },
+    "shards": {
+      "insight": 2,
+      "gravitic": 2
+    },
+    "research": "pattern_assembly",
+    "seconds": 5,
+    "station": "forge",
+    "source": "Hytale factory expansion"
+  },
+  {
+    "id": "gravitic_tube",
+    "output": "SM_Gravitic_Tube",
+    "quantity": 10,
+    "ingredients": {
+      "SM_Resonite_Nugget": 5,
+      "SM_Resonant_Coil": 1
+    },
+    "shards": {
+      "gravitic": 1
+    },
+    "research": "gravitic_transport",
+    "seconds": 5,
+    "station": "workbench",
+    "source": "Hytale factory expansion"
+  },
+  {
+    "id": "resonite_floor_panel",
+    "source": "Hytale floor panel/SM_Resonite_Floor_Panel",
+    "output": "SM_Resonite_Floor_Panel",
+    "quantity": 4,
+    "ingredients": {
+      "SM_Resonite_Tile": 4,
+      "SM_Resonite_Ingot": 1
+    },
+    "shards": {},
+    "research": "resonite",
+    "seconds": 2.0,
+    "station": "workbench"
   }
 ]

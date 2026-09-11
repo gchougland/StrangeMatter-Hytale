@@ -1,0 +1,5 @@
+Group { Anchor: (Height: 41, Bottom: 4); Background: #162438;
+  ItemIcon #MaterialIcon { Anchor: (Left: 5, Top: 3, Width: 34, Height: 34); HitTestVisible: false; }
+  Label #MaterialName { Anchor: (Left: 46, Top: 3, Width: 202, Height: 35); Style: (FontSize: 12, TextColor: #c5d8e7, Wrap: true, VerticalAlignment: Center); HitTestVisible: false; }
+  Label #MaterialCount { Anchor: (Right: 8, Top: 3, Width: 86, Height: 35); Style: (FontSize: 12, TextColor: #79f4ed, RenderBold: true, HorizontalAlignment: End, VerticalAlignment: Center); HitTestVisible: false; }
+}

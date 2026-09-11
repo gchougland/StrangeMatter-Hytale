@@ -124,6 +124,10 @@ def validate(resources):
             check(block['DrawType'] == 'CubeWithModel' and block['Textures'][0]['All'] == 'BlockTextures/Rock_Stone.png',
                   item_id + ': ore must be embedded in ordinary native stone')
     language = dict(line.split('=', 1) for line in (resources / 'Server/Languages/en-US/server.lang').read_text(encoding='utf-8-sig').splitlines() if '=' in line)
+    # These stock lamp hints live in Hytale's server.lang, not in the mod's pack.
+    # Keep their native key placeholder contract without overriding translations.
+    language.setdefault('interactionHints.turnon', 'Press [{key}] to turn on')
+    language.setdefault('interactionHints.turnoff', 'Press [{key}] to turn off')
     for item_id, item in items.items():
         block = item.get('BlockType', {})
         if block.get('Interactions', {}).get('Use') or block.get('Bench'):
@@ -131,7 +135,7 @@ def validate(resources):
         for obj in walk(block):
             if obj.get('InteractionHint'):
                 key = obj['InteractionHint'].removeprefix('server.')
-                check(key.startswith('interactionHints.SM_') and '[{key}]' in language.get(key, ''),
+                check((key.startswith('interactionHints.SM_') or key in ('interactionHints.turnon', 'interactionHints.turnoff')) and '[{key}]' in language.get(key, ''),
                       item_id + ': prompt must name its action and include the native key binding placeholder')
     bench = items['SM_Laboratory_Bench']
     check(bench['BlockType']['Bench']['Id'] == 'SM_Laboratory', 'Laboratory bench has incorrect native bench ID')

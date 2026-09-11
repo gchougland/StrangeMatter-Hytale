@@ -1,0 +1,418 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Gravitic_Tube.name",
+    "Description": "server.items.SM_Gravitic_Tube.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Gravitic_Tube.png",
+  "MaxStack": 100,
+  "Categories": [
+    "Furniture.Benches",
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Machines"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection00.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/Automation/automation_working.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Gravitic_Tube_Connection00",
+    "VariantRotation": "None",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#243950",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "InteractionHint": "server.interactionHints.SM_Gravitic_Tube",
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "SM_Use",
+            "Action": "machine"
+          }
+        ],
+        "RequireNewClick": true
+      }
+    },
+    "InteractionHitboxType": "SM_Gravitic_Tube_Connection00",
+    "State": {
+      "Definitions": {
+        "Connection00": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection00.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection00",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection00"
+        },
+        "Connection01": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection01.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection01",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection01"
+        },
+        "Connection02": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection02.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection02",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection02"
+        },
+        "Connection03": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection03.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection03",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection03"
+        },
+        "Connection04": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection04.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection04",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection04"
+        },
+        "Connection05": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection05.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection05",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection05"
+        },
+        "Connection06": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection06.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection06",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection06"
+        },
+        "Connection07": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection07.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection07",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection07"
+        },
+        "Connection08": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection08.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection08",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection08"
+        },
+        "Connection09": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection09.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection09",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection09"
+        },
+        "Connection10": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection10.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection10",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection10"
+        },
+        "Connection11": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection11.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection11",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection11"
+        },
+        "Connection12": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection12.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection12",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection12"
+        },
+        "Connection13": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection13.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection13",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection13"
+        },
+        "Connection14": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection14.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection14",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection14"
+        },
+        "Connection15": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection15.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection15",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection15"
+        },
+        "Connection16": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection16.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection16",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection16"
+        },
+        "Connection17": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection17.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection17",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection17"
+        },
+        "Connection18": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection18.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection18",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection18"
+        },
+        "Connection19": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection19.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection19",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection19"
+        },
+        "Connection20": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection20.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection20",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection20"
+        },
+        "Connection21": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection21.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection21",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection21"
+        },
+        "Connection22": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection22.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection22",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection22"
+        },
+        "Connection23": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection23.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection23",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection23"
+        },
+        "Connection24": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection24.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection24",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection24"
+        },
+        "Connection25": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection25.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection25",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection25"
+        },
+        "Connection26": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection26.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection26",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection26"
+        },
+        "Connection27": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection27.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection27",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection27"
+        },
+        "Connection28": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection28.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection28",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection28"
+        },
+        "Connection29": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection29.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection29",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection29"
+        },
+        "Connection30": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection30.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection30",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection30"
+        },
+        "Connection31": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection31.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection31",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection31"
+        },
+        "Connection32": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection32.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection32",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection32"
+        },
+        "Connection33": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection33.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection33",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection33"
+        },
+        "Connection34": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection34.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection34",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection34"
+        },
+        "Connection35": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection35.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection35",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection35"
+        },
+        "Connection36": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection36.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection36",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection36"
+        },
+        "Connection37": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection37.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection37",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection37"
+        },
+        "Connection38": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection38.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection38",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection38"
+        },
+        "Connection39": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection39.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection39",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection39"
+        },
+        "Connection40": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection40.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection40",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection40"
+        },
+        "Connection41": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection41.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection41",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection41"
+        },
+        "Connection42": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection42.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection42",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection42"
+        },
+        "Connection43": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection43.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection43",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection43"
+        },
+        "Connection44": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection44.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection44",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection44"
+        },
+        "Connection45": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection45.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection45",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection45"
+        },
+        "Connection46": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection46.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection46",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection46"
+        },
+        "Connection47": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection47.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection47",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection47"
+        },
+        "Connection48": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection48.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection48",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection48"
+        },
+        "Connection49": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection49.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection49",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection49"
+        },
+        "Connection50": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection50.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection50",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection50"
+        },
+        "Connection51": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection51.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection51",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection51"
+        },
+        "Connection52": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection52.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection52",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection52"
+        },
+        "Connection53": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection53.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection53",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection53"
+        },
+        "Connection54": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection54.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection54",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection54"
+        },
+        "Connection55": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection55.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection55",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection55"
+        },
+        "Connection56": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection56.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection56",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection56"
+        },
+        "Connection57": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection57.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection57",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection57"
+        },
+        "Connection58": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection58.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection58",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection58"
+        },
+        "Connection59": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection59.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection59",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection59"
+        },
+        "Connection60": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection60.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection60",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection60"
+        },
+        "Connection61": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection61.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection61",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection61"
+        },
+        "Connection62": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection62.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection62",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection62"
+        },
+        "Connection63": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/gravitic_tube_connection63.blockymodel",
+          "HitboxType": "SM_Gravitic_Tube_Connection63",
+          "InteractionHitboxType": "SM_Gravitic_Tube_Connection63"
+        }
+      }
+    },
+    "BlockEntity": {
+      "Components": {
+        "SM_GraviticTube": {}
+      }
+    }
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "SM_Resonite_Nugget",
+        "Quantity": 5
+      },
+      {
+        "ItemId": "SM_Resonant_Coil",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "SM_Gravitic_Shard",
+        "Quantity": 1
+      }
+    ],
+    "OutputQuantity": 10,
+    "TimeSeconds": 2,
+    "KnowledgeRequired": true,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_All"
+        ]
+      }
+    ]
+  },
+  "SubCategory": "SM_ItemTransport"
+}

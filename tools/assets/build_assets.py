@@ -99,6 +99,9 @@ class Model:
     def bolts(self,xs,y,z):
         for x in xs:self.box('rivet',(x,y,z),(1.2,1.2,1),'steel')
     def save(self):
+        if self.name=='warp_gun':
+            from build_warp_gun_revision import save_generated
+            return save_generated(self)
         tiles=[]
         for ni,n in enumerate(self.nodes):
             s=n['shape']['settings']['size']; x,y,z=[s.get(k,0) for k in ('x','y','z')]
@@ -119,6 +122,9 @@ class Model:
         height=max(32,2**math.ceil(math.log2(py+row+1))); atlas=atlas.crop((0,0,width,height))
         folder=COMMON/('Blocks' if self.block else 'Items')/'StrangeMatter';folder.mkdir(parents=True,exist_ok=True)
         model={'nodes':self.nodes,'format':'prop'}
+        if self.name=='echoform_imprinter':
+            from fit_imprinter_grip import fit
+            model=fit(model)
         (folder/(self.name+'.blockymodel')).write_text(json.dumps(model,indent=2)+'\n')
         atlas.save(folder/(self.name+'.png'))
         mesh=geometry(model); pts=np.concatenate([f[0] for f in mesh]); low=pts.min(0); high=pts.max(0)
@@ -364,6 +370,9 @@ def make_block(name):
     return m
 
 def make_item(name):
+    if name=='warp_gun':
+        from build_warp_gun_revision import model_art
+        return model_art()
     m=Model(name);c=family(name)
     if name.endswith('_shard') or name in ('raw_resonite','resonite_nugget'):
         m.crystal('shard',(0,10,0),18 if name!='resonite_nugget' else 8,c,(0,10,-12),w=7)

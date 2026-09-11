@@ -22,6 +22,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.joml.Vector3d;
 import java.util.*;
 import java.util.function.Supplier;
+import java.util.function.BiConsumer;
 
 /** Real native subcommands and typed arguments provide client help, completion and permissions. */
 public final class StrangeMatterCommand extends AbstractCommandCollection {
@@ -46,7 +47,7 @@ public final class StrangeMatterCommand extends AbstractCommandCollection {
         @Override protected void executeSync(CommandContext context){
             context.sendMessage(Message.raw("Scan natural anomalies, buy notes in the tablet, then stabilize them at a Research Machine. Select an unlocked topic to read its field guide. Use --help after any subcommand for typed arguments."));
             context.sendMessage(StrangeMatterCommand.this.getFullUsage(context.sender()));
-            if(context.sender().hasPermission(ADMIN))context.sendMessage(Message.raw("Admin examples: /sm research unlock hoverboard | /sm research unlock all --player PlayerName | /sm points energy 25 | /sm points all 25 --player PlayerName. Unlock includes prerequisites; --strict requires them to be completed."));
+            if(context.sender().hasPermission(ADMIN))context.sendMessage(Message.raw("Admin examples: /sm research unlock hoverboard | /sm research note hoverboard --player PlayerName | /sm research reset --player PlayerName | /sm points all 25. Unlock includes prerequisites; --strict requires them to be completed. Reset keeps observation points, scans and notes."));
         }
     }
     private final class PlayerAction extends AbstractPlayerCommand {
@@ -98,7 +99,49 @@ public final class StrangeMatterCommand extends AbstractCommandCollection {
         }catch(ArithmeticException overflow){context.sendMessage(Message.raw("The point balance is at its supported maximum. No points were added."));}
     }
     private final class ResearchCommands extends AbstractCommandCollection {
-        ResearchCommands(){super("research","Administer research progression");setPermissionGroups();requirePermission(ADMIN);addSubCommand(new Unlock("unlock"));}
+        ResearchCommands(){super("research","Administer research progression");setPermissionGroups();requirePermission(ADMIN);addSubCommand(new Unlock("unlock"));addSubCommand(new GiveNote());addSubCommand(new ResetResearch());}
+    }
+    private final class GiveNote extends CommandBase {
+        private final RequiredArg<String> node=withRequiredArg("node","Research experiment to put in the note",noteArgument());
+        private final OptionalArg<UUID> target=withOptionalArg("player","Online recipient name or UUID; defaults to you",playerArgument());
+        GiveNote(){super("note","Give one named research note without spending observations");setPermissionGroups();requirePermission(ADMIN);}
+        @Override protected void executeSync(CommandContext context){
+            UUID id=target(context,target);if(id==null)return;
+            String requested=node.get(context);
+            withOnlinePlayer(context,id,(player,store)->{
+                var inventory=InventoryComponent.getCombined(store,player.getReference(),InventoryComponent.HOTBAR_FIRST);
+                context.sendMessage(Message.raw(player.getUsername()+": "+research.giveNote(requested,inventory)));
+            });
+        }
+    }
+    private final class ResetResearch extends CommandBase {
+        private final OptionalArg<UUID> target=withOptionalArg("player","Online name or offline UUID; defaults to you",playerArgument());
+        ResetResearch(){super("reset","Clear earned research; keep points, scans, notes and starter topics");setPermissionGroups();requirePermission(ADMIN);}
+        @Override protected void executeSync(CommandContext context){
+            UUID id=target(context,target);if(id==null)return;
+            var online=Universe.get().getPlayer(id);
+            if(online!=null&&online.getReference()!=null&&online.getReference().isValid())
+                withOnlinePlayer(context,id,(player,store)->resetResearch(context,id,player,store));
+            else resetResearch(context,id,null,null);
+        }
+    }
+    private void resetResearch(CommandContext context,UUID id,PlayerRef online,Store<EntityStore> store){
+        int removed=research.reset(id);
+        try{progression.reconcileResearch(id,research.earnedNodes(id));}
+        catch(RuntimeException failed){System.getLogger(StrangeMatterCommand.class.getName()).log(System.Logger.Level.WARNING,"Research reset; achievement criteria will reconcile on next join",failed);}
+        if(online!=null)try{research.refreshAfterReset(online,store);}
+        catch(RuntimeException failed){System.getLogger(StrangeMatterCommand.class.getName()).log(System.Logger.Level.WARNING,"Research reset; native recipe knowledge will reconcile on next join",failed);}
+        context.sendMessage(Message.raw("Reset "+removed+" earned research topics for "+(online==null?id:online.getUsername())+". Observation points, scans, notes and starter topics were kept."));
+        if(online!=null)online.sendMessage(Message.raw("Your earned research was reset by an administrator. Your observation points and notes were kept."));
+    }
+    private void withOnlinePlayer(CommandContext context,UUID id,BiConsumer<PlayerRef,Store<EntityStore>> action){
+        var online=Universe.get().getPlayer(id);var ref=online==null?null:online.getReference();
+        if(ref==null||!ref.isValid()){context.sendMessage(Message.raw("The recipient must be online."));return;}
+        var store=ref.getStore();var world=store.getExternalData().getWorld();
+        try{world.execute(()->{
+            if(!ref.isValid()||online.getReference()!=ref||ref.getStore()!=store){context.sendMessage(Message.raw("The player changed worlds or disconnected. Run the command again."));return;}
+            action.accept(online,store);
+        });}catch(RuntimeException stopped){context.sendMessage(Message.raw("The player's world is stopping. Run the command again after they reconnect."));}
     }
     private final class Unlock extends CommandBase {
         private final RequiredArg<String> node=withRequiredArg("node","Research node ID or all",researchArgument());
@@ -120,6 +163,7 @@ public final class StrangeMatterCommand extends AbstractCommandCollection {
     }
     private static UUID target(CommandContext context,OptionalArg<UUID> argument){UUID id=argument.get(context);if(id!=null)return id;if(context.isPlayer())return context.senderAs(PlayerRef.class).getUuid();context.sendMessage(Message.raw("The console must specify --player <online name or UUID>."));return null;}
     public SingleArgumentType<String> researchArgument(){return choices("Research node",()->{var ids=new ArrayList<>(research.nodes().stream().map(ResearchNode::id).toList());ids.add("all");return ids;});}
+    public SingleArgumentType<String> noteArgument(){return choices("Research experiment",()->research.nodes().stream().filter(node->!node.defaultUnlocked()&&!node.id().equals("reality_forge_category")).map(ResearchNode::id).toList());}
     public static SingleArgumentType<String> disciplineArgument(){return choices("Research discipline",()->{var names=new ArrayList<>(Arrays.stream(ResearchType.values()).map(ResearchType::getName).toList());names.add("all");return names;});}
     static SingleArgumentType<String> choices(String name,Supplier<Collection<String>> values){
         return new SingleArgumentType<>(name,Message.raw(name)){

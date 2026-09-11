@@ -1,0 +1,17 @@
+{
+  "AudioCategory": "AudioCat_Ambient",
+  "SpatialBlend": 1,
+  "StartAttenuationDistance": 1,
+  "MaxDistance": 7,
+  "MaxInstance": 3,
+  "Volume": -23,
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/StrangeMatter/Automation/flux_furnace_hum.ogg"
+      ],
+      "Looping": true,
+      "Volume": 0
+    }
+  ]
+}

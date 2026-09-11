@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.anomaly;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.events.ChunkPreLoadProcessEvent;
 import com.hypixel.hytale.server.core.universe.Universe;
@@ -16,13 +18,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 /** Actual unloaded distant terrain, engine pre-load events, and world-queue responsiveness. */
 public final class NativeNaturalGateVerification {
     private volatile AnomalyService service;
+    private volatile com.hexvane.strangematter.worldgen.GenerationCoordinator generation;
     private final Set<Long> generated=ConcurrentHashMap.newKeySet();
 
     public void onPreLoad(ChunkPreLoadProcessEvent event) {
         var current=service;if(current==null)return;
-        current.onChunkPreLoad(event);
+        var coordinator=generation;if(coordinator!=null)coordinator.column(event);
         if(event.isNewlyGenerated())generated.add(ChunkUtil.indexChunk(event.getChunk().getX(),event.getChunk().getZ()));
     }
+    public void onSectionPreLoad(com.hypixel.hytale.server.core.universe.world.events.ChunkSectionPreLoadProcessEvent event){var coordinator=generation;if(coordinator!=null)coordinator.section(event);}
     public CompletableFuture<Void> verifyAsync(Path directory) {
         // The other fixtures deliberately use the stock one-layer flat world at y=0.
         // Give this independent world actual safe terrain above the gate's build-floor exclusion.
@@ -33,13 +37,14 @@ public final class NativeNaturalGateVerification {
         config.setSpawningNPC(false);config.setIsSpawnMarkersEnabled(false);config.setBlockTicking(false);config.setCanUnloadChunks(false);
         String name="sm_gate_verification_"+UUID.randomUUID().toString().replace("-","");
         return Universe.get().makeWorld(name,Universe.get().validateWorldPath(name),config)
-            .thenCompose(world->world.getChunkAsync(ChunkUtil.indexChunk(0,0)).thenComposeAsync(ignored->verifyOnWorld(world,directory),world));
+            .thenCompose(world->WorldAccess.load(world,ChunkUtil.indexChunk(0,0)).thenComposeAsync(ignored->verifyOnWorld(world,directory),world));
     }
     private CompletableFuture<Void> verifyOnWorld(World world,Path directory) {
         var result=new CompletableFuture<Void>();
         try {
             world.getEntityStore().getStore().assertThread();
             service=new AnomalyService(directory.resolve("natural-gate-regression"));
+            generation=new com.hexvane.strangematter.worldgen.GenerationCoordinator(service,null);
             service.generationSettings.terrainPatches=false;service.rarity=Integer.MAX_VALUE;
             var source=service.spawnRaised(AnomalyType.WARP_GATE,world,new Vector3d(20.5,40,20.5),true);
             source.creatingPair=true;

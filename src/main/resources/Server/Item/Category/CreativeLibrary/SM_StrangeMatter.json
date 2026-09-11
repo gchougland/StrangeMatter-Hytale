@@ -7,7 +7,334 @@
     {
       "Id": "All",
       "Name": "server.ui.itemcategory.SM_StrangeMatter_All",
-      "Icon": "Icons/ItemCategories/SM_StrangeMatter_All.png"
+      "Icon": "Icons/ItemCategories/SM_StrangeMatter_All.png",
+      "SubCategories": [
+        {
+          "Id": "SM_ResearchEquipment",
+          "Name": "server.ui.itemcategory.subcategory.SM_ResearchEquipment.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_ResearchEquipment.description",
+          "Order": 10
+        },
+        {
+          "Id": "SM_FieldEquipment",
+          "Name": "server.ui.itemcategory.subcategory.SM_FieldEquipment.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_FieldEquipment.description",
+          "Order": 20
+        },
+        {
+          "Id": "SM_ContainmentCapsules",
+          "Name": "server.ui.itemcategory.subcategory.SM_ContainmentCapsules.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_ContainmentCapsules.description",
+          "Order": 30
+        },
+        {
+          "Id": "SM_PoweredTools",
+          "Name": "server.ui.itemcategory.subcategory.SM_PoweredTools.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_PoweredTools.description",
+          "Order": 40
+        },
+        {
+          "Id": "SM_PersonalEquipment",
+          "Name": "server.ui.itemcategory.subcategory.SM_PersonalEquipment.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_PersonalEquipment.description",
+          "Order": 50
+        },
+        {
+          "Id": "SM_ProcessingMachines",
+          "Name": "server.ui.itemcategory.subcategory.SM_ProcessingMachines.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_ProcessingMachines.description",
+          "Order": 60
+        },
+        {
+          "Id": "SM_PowerEquipment",
+          "Name": "server.ui.itemcategory.subcategory.SM_PowerEquipment.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_PowerEquipment.description",
+          "Order": 70
+        },
+        {
+          "Id": "SM_FieldControl",
+          "Name": "server.ui.itemcategory.subcategory.SM_FieldControl.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_FieldControl.description",
+          "Order": 80
+        },
+        {
+          "Id": "SM_ItemTransport",
+          "Name": "server.ui.itemcategory.subcategory.SM_ItemTransport.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_ItemTransport.description",
+          "Order": 90
+        },
+        {
+          "Id": "SM_AnomalyShards",
+          "Name": "server.ui.itemcategory.subcategory.SM_AnomalyShards.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_AnomalyShards.description",
+          "Order": 100
+        },
+        {
+          "Id": "SM_Metals",
+          "Name": "server.ui.itemcategory.subcategory.SM_Metals.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_Metals.description",
+          "Order": 110
+        },
+        {
+          "Id": "SM_Concentrates",
+          "Name": "server.ui.itemcategory.subcategory.SM_Concentrates.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_Concentrates.description",
+          "Order": 120
+        },
+        {
+          "Id": "SM_Components",
+          "Name": "server.ui.itemcategory.subcategory.SM_Components.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_Components.description",
+          "Order": 130
+        },
+        {
+          "Id": "SM_Furniture",
+          "Name": "server.ui.itemcategory.subcategory.SM_Furniture.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_Furniture.description",
+          "Order": 140
+        },
+        {
+          "Id": "SM_CrystalClusters",
+          "Name": "server.ui.itemcategory.subcategory.SM_CrystalClusters.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_CrystalClusters.description",
+          "Order": 150
+        },
+        {
+          "Id": "SM_StandingLamps",
+          "Name": "server.ui.itemcategory.subcategory.SM_StandingLamps.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_StandingLamps.description",
+          "Order": 160
+        },
+        {
+          "Id": "SM_Lanterns",
+          "Name": "server.ui.itemcategory.subcategory.SM_Lanterns.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_Lanterns.description",
+          "Order": 170
+        },
+        {
+          "Id": "SM_Masonry",
+          "Name": "server.ui.itemcategory.subcategory.SM_Masonry.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_Masonry.description",
+          "Order": 180
+        },
+        {
+          "Id": "SM_Roofing",
+          "Name": "server.ui.itemcategory.subcategory.SM_Roofing.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_Roofing.description",
+          "Order": 190
+        },
+        {
+          "Id": "SM_Entrances",
+          "Name": "server.ui.itemcategory.subcategory.SM_Entrances.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_Entrances.description",
+          "Order": 200
+        },
+        {
+          "Id": "SM_Ores",
+          "Name": "server.ui.itemcategory.subcategory.SM_Ores.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_Ores.description",
+          "Order": 210
+        },
+        {
+          "Id": "SM_AnomalousTerrain",
+          "Name": "server.ui.itemcategory.subcategory.SM_AnomalousTerrain.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_AnomalousTerrain.description",
+          "Order": 220
+        }
+      ]
+    },
+    {
+      "Id": "Gadgets",
+      "Name": "server.ui.itemcategory.SM_StrangeMatter_Gadgets",
+      "Icon": "Icons/ItemCategories/SM_StrangeMatter_Gadgets.png",
+      "SubCategories": [
+        {
+          "Id": "SM_ResearchEquipment",
+          "Name": "server.ui.itemcategory.subcategory.SM_ResearchEquipment.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_ResearchEquipment.description",
+          "Order": 10
+        },
+        {
+          "Id": "SM_FieldEquipment",
+          "Name": "server.ui.itemcategory.subcategory.SM_FieldEquipment.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_FieldEquipment.description",
+          "Order": 20
+        },
+        {
+          "Id": "SM_ContainmentCapsules",
+          "Name": "server.ui.itemcategory.subcategory.SM_ContainmentCapsules.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_ContainmentCapsules.description",
+          "Order": 30
+        },
+        {
+          "Id": "SM_PoweredTools",
+          "Name": "server.ui.itemcategory.subcategory.SM_PoweredTools.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_PoweredTools.description",
+          "Order": 40
+        },
+        {
+          "Id": "SM_PersonalEquipment",
+          "Name": "server.ui.itemcategory.subcategory.SM_PersonalEquipment.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_PersonalEquipment.description",
+          "Order": 50
+        }
+      ]
+    },
+    {
+      "Id": "Machines",
+      "Name": "server.ui.itemcategory.SM_StrangeMatter_Machines",
+      "Icon": "Icons/ItemCategories/SM_StrangeMatter_Machines.png",
+      "SubCategories": [
+        {
+          "Id": "SM_ResearchEquipment",
+          "Name": "server.ui.itemcategory.subcategory.SM_ResearchEquipment.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_ResearchEquipment.description",
+          "Order": 10
+        },
+        {
+          "Id": "SM_ProcessingMachines",
+          "Name": "server.ui.itemcategory.subcategory.SM_ProcessingMachines.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_ProcessingMachines.description",
+          "Order": 60
+        },
+        {
+          "Id": "SM_PowerEquipment",
+          "Name": "server.ui.itemcategory.subcategory.SM_PowerEquipment.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_PowerEquipment.description",
+          "Order": 70
+        },
+        {
+          "Id": "SM_FieldControl",
+          "Name": "server.ui.itemcategory.subcategory.SM_FieldControl.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_FieldControl.description",
+          "Order": 80
+        },
+        {
+          "Id": "SM_ItemTransport",
+          "Name": "server.ui.itemcategory.subcategory.SM_ItemTransport.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_ItemTransport.description",
+          "Order": 90
+        }
+      ]
+    },
+    {
+      "Id": "Materials",
+      "Name": "server.ui.itemcategory.SM_StrangeMatter_Materials",
+      "Icon": "Icons/ItemCategories/SM_StrangeMatter_Materials.png",
+      "SubCategories": [
+        {
+          "Id": "SM_AnomalyShards",
+          "Name": "server.ui.itemcategory.subcategory.SM_AnomalyShards.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_AnomalyShards.description",
+          "Order": 100
+        },
+        {
+          "Id": "SM_Metals",
+          "Name": "server.ui.itemcategory.subcategory.SM_Metals.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_Metals.description",
+          "Order": 110
+        },
+        {
+          "Id": "SM_Concentrates",
+          "Name": "server.ui.itemcategory.subcategory.SM_Concentrates.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_Concentrates.description",
+          "Order": 120
+        },
+        {
+          "Id": "SM_Components",
+          "Name": "server.ui.itemcategory.subcategory.SM_Components.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_Components.description",
+          "Order": 130
+        }
+      ]
+    },
+    {
+      "Id": "Decorations",
+      "Name": "server.ui.itemcategory.SM_StrangeMatter_Decorations",
+      "Icon": "Icons/ItemCategories/SM_StrangeMatter_Decorations.png",
+      "SubCategories": [
+        {
+          "Id": "SM_Furniture",
+          "Name": "server.ui.itemcategory.subcategory.SM_Furniture.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_Furniture.description",
+          "Order": 140
+        },
+        {
+          "Id": "SM_CrystalClusters",
+          "Name": "server.ui.itemcategory.subcategory.SM_CrystalClusters.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_CrystalClusters.description",
+          "Order": 150
+        },
+        {
+          "Id": "SM_StandingLamps",
+          "Name": "server.ui.itemcategory.subcategory.SM_StandingLamps.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_StandingLamps.description",
+          "Order": 160
+        },
+        {
+          "Id": "SM_Lanterns",
+          "Name": "server.ui.itemcategory.subcategory.SM_Lanterns.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_Lanterns.description",
+          "Order": 170
+        }
+      ]
+    },
+    {
+      "Id": "Building",
+      "Name": "server.ui.itemcategory.SM_StrangeMatter_Building",
+      "Icon": "Icons/ItemCategories/SM_StrangeMatter_Building.png",
+      "SubCategories": [
+        {
+          "Id": "SM_Masonry",
+          "Name": "server.ui.itemcategory.subcategory.SM_Masonry.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_Masonry.description",
+          "Order": 180
+        },
+        {
+          "Id": "SM_Roofing",
+          "Name": "server.ui.itemcategory.subcategory.SM_Roofing.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_Roofing.description",
+          "Order": 190
+        },
+        {
+          "Id": "SM_Entrances",
+          "Name": "server.ui.itemcategory.subcategory.SM_Entrances.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_Entrances.description",
+          "Order": 200
+        }
+      ]
+    },
+    {
+      "Id": "Nature",
+      "Name": "server.ui.itemcategory.SM_StrangeMatter_Nature",
+      "Icon": "Icons/ItemCategories/SM_StrangeMatter_Nature.png",
+      "SubCategories": [
+        {
+          "Id": "SM_Ores",
+          "Name": "server.ui.itemcategory.subcategory.SM_Ores.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_Ores.description",
+          "Order": 210
+        },
+        {
+          "Id": "SM_AnomalousTerrain",
+          "Name": "server.ui.itemcategory.subcategory.SM_AnomalousTerrain.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_AnomalousTerrain.description",
+          "Order": 220
+        }
+      ]
+    },
+    {
+      "Id": "Research",
+      "Name": "server.ui.itemcategory.SM_StrangeMatter_Research",
+      "Icon": "Icons/ItemCategories/SM_StrangeMatter_Research.png",
+      "SubCategories": [
+        {
+          "Id": "SM_ResearchEquipment",
+          "Name": "server.ui.itemcategory.subcategory.SM_ResearchEquipment.name",
+          "Description": "server.ui.itemcategory.subcategory.SM_ResearchEquipment.description",
+          "Order": 10
+        }
+      ]
     }
   ]
 }

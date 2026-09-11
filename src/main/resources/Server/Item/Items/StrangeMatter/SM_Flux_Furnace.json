@@ -1,0 +1,124 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Flux_Furnace.name",
+    "Description": "server.items.SM_Flux_Furnace.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Flux_Furnace.png",
+  "MaxStack": 25,
+  "Categories": [
+    "Furniture.Benches",
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Machines"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/StrangeMatter/Automation/flux_furnace.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/Automation/automation.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Flux_Furnace",
+    "VariantRotation": "NESW",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#243950",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "InteractionHint": "server.interactionHints.SM_Flux_Furnace",
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "SM_Use",
+            "Action": "machine"
+          }
+        ],
+        "RequireNewClick": true
+      }
+    },
+    "BlockEntity": {
+      "Components": {
+        "SM_Factory": {}
+      }
+    },
+    "State": {
+      "Definitions": {
+        "Working": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/flux_furnace.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "Blocks/StrangeMatter/Automation/automation_working.png",
+              "Weight": 1
+            }
+          ],
+          "CustomModelAnimation": "Blocks/StrangeMatter/Automation/flux_furnace_working.blockyanim",
+          "CustomModelAnimationSpeed": 1,
+          "Looping": true,
+          "AmbientSoundEventId": "SM_Flux_Furnace_Hum_SFX"
+        },
+        "Tier2": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/flux_furnace_tier2.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "Blocks/StrangeMatter/Automation/automation.png",
+              "Weight": 1
+            }
+          ],
+          "Gathering": {
+            "Breaking": {
+              "GatherType": "Rocks",
+              "Quantity": 1,
+              "DropList": "SM_Flux_Furnace_Tier2"
+            },
+            "Physics": {
+              "DropList": "SM_Flux_Furnace_Tier2"
+            }
+          }
+        },
+        "Tier2Working": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/flux_furnace_tier2.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "Blocks/StrangeMatter/Automation/automation_working.png",
+              "Weight": 1
+            }
+          ],
+          "CustomModelAnimation": "Blocks/StrangeMatter/Automation/flux_furnace_working.blockyanim",
+          "CustomModelAnimationSpeed": 1,
+          "Looping": true,
+          "AmbientSoundEventId": "SM_Flux_Furnace_Hum_SFX",
+          "Gathering": {
+            "Breaking": {
+              "GatherType": "Rocks",
+              "Quantity": 1,
+              "DropList": "SM_Flux_Furnace_Tier2"
+            },
+            "Physics": {
+              "DropList": "SM_Flux_Furnace_Tier2"
+            }
+          }
+        }
+      }
+    }
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "SubCategory": "SM_ProcessingMachines"
+}

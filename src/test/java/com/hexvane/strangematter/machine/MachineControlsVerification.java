@@ -79,7 +79,7 @@ public final class MachineControlsVerification {
         machines.fuel(combined,burner,true);machines.fuel(combined,burner,false);
         require(hotbar.getItemStack((short)0).getQuantity()==7,"Full capacity consumes nothing through either action");
         var persisted=new Gson().fromJson(new Gson().toJson(burner),MachineState.class);
-        require(persisted.fuelQueue.size()==3&&persisted.fuelQueue.stream().allMatch(c->c.toItemStack().getMetadata().equals(fuel.getMetadata())),"Every queued fuel refund preserves nested BSON through save/load");
+        require(persisted.fuelQueue.size()==3&&persisted.fuelQueue.stream().allMatch(c->com.hexvane.strangematter.util.StackData.metadata(c.toItemStack()).equals(com.hexvane.strangematter.util.StackData.metadata(fuel))),"Every queued fuel refund preserves nested BSON through save/load");
         var single=new MachineState("test",new Vector3i(),"SM_Resonant_Burner");machines.fuel(combined,single,false);
         require(single.fuelQueue.size()==1&&hotbar.getItemStack((short)0).getQuantity()==6,"Load One continues consuming exactly one item");
         var tight=new MachineState("test",new Vector3i(),"SM_Resonant_Burner");tight.fuelTicks=FurnaceFuel.MAX_FUEL_TICKS-duration+1;

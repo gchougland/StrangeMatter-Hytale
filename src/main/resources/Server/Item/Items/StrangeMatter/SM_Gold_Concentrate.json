@@ -1,0 +1,23 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Gold_Concentrate.name",
+    "Description": "server.items.SM_Gold_Concentrate.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Gold_Concentrate.png",
+  "MaxStack": 100,
+  "Categories": [
+    "Items",
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Materials"
+  ],
+  "PlayerAnimationsId": "Item",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "Model": "Items/StrangeMatter/Concentrates/metal_concentrate.blockymodel",
+  "Texture": "Items/StrangeMatter/Concentrates/gold_concentrate.png",
+  "SubCategory": "SM_Concentrates"
+}

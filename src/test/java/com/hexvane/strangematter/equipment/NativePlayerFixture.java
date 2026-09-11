@@ -42,7 +42,7 @@ public final class NativePlayerFixture implements AutoCloseable {
     private final PlayerRef owner;
     private final Player player;
     private final RecordingPackets packets;
-    private final Ref<EntityStore> ref;
+    private Ref<EntityStore> ref;
 
     private NativePlayerFixture(World world,UUID id,String name,Vector3d position,Holder<EntityStore> holder){
         world.getEntityStore().getStore().assertThread();
@@ -62,10 +62,9 @@ public final class NativePlayerFixture implements AutoCloseable {
         holder.putComponent(TransformComponent.getComponentType(),new TransformComponent(position,new Rotation3f()));
         player=holder.ensureAndGetComponent(Player.getComponentType());
         player.init(id,owner);player.setFirstSpawn(false);player.setClientViewRadius(1);
-        player.setNetworkId(world.getEntityStore().takeNextNetworkId());
         player.getPlayerConfigData().setWorld(world.getName());
         owner.setWorldUuid(world.getWorldConfig().getUuid());
-        holder.putComponent(NetworkId.getComponentType(),new NetworkId(player.getNetworkId()));
+        holder.putComponent(NetworkId.getComponentType(),new NetworkId(world.getEntityStore().takeNextNetworkId()));
         holder.putComponent(EntityTrackerSystems.EntityViewer.getComponentType(),new EntityTrackerSystems.EntityViewer(32,packets));
         // Runs native holder migration, PlayerInitSystem, PlayerRefAddedSystem and PlayerSpawnedSystem.
         ref=Objects.requireNonNull(owner.addToStore(world.getEntityStore().getStore()));
@@ -86,6 +85,13 @@ public final class NativePlayerFixture implements AutoCloseable {
     public RecordingPackets packets(){return packets;}
     public ItemContainer inventory(){return InventoryComponent.getCombined(store(),ref,InventoryComponent.BACKPACK_STORAGE_HOTBAR);}
     public ItemContainer hotbar(){return store().getComponent(ref,InventoryComponent.Hotbar.getComponentType()).getInventory();}
+    /** Exercise native removal/reentry, as a world transfer does, without replacing the connection. */
+    public void reattach(){
+        store().assertThread();var previous=ref;var manager=player.getWindowManager();
+        owner.removeFromStore();
+        ref=Objects.requireNonNull(owner.addToStore(store()));
+        require(!previous.isValid()&&ref!=previous&&player.getWindowManager()==manager,"Native reentry replaces the entity reference and preserves the window manager");
+    }
     public void save()throws Exception{PlayerInventoryPersistence.save(world,owner).get(10,TimeUnit.SECONDS);}
     @Override public void close(){
         store().assertThread();

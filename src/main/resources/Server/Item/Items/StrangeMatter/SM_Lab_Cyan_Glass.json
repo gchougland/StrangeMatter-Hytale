@@ -7,7 +7,8 @@
   "MaxStack": 100,
   "Categories": [
     "Blocks",
-    "SM_StrangeMatter.All"
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Building"
   ],
   "PlayerAnimationsId": "Block",
   "BlockType": {
@@ -35,5 +36,6 @@
   "Interactions": {
     "Primary": "Block_Primary",
     "Secondary": "Block_Secondary"
-  }
+  },
+  "SubCategory": "SM_Entrances"
 }

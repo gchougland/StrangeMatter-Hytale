@@ -55,8 +55,18 @@ public final class NativeResearchTabletVerification {
             research.unlock(id,"reality_forge",true);ui.ackAll();var unlocked=ui.frame(page);require(has(unlocked,"#Forge.Disabled","false"),"Completed research unlocks the category without reopening");
             ui.click(page,binding(returned,"#Forge"));ui.click(page,node(returned,"gravity_anomalies"));
             require(field(page,"selected").equals("reality_forge_category"),"A stale foundation node event cannot select across the changed category");
-            ui.ackAll();var advanced=ui.frame(page);require(count(advanced,"#SelectNode")==11,"Advanced tree rebuild and all eleven exact node bindings arrive together");
+            ui.ackAll();var advanced=ui.frame(page);require(count(advanced,"#SelectNode")==15,"Advanced tree rebuild includes the original discoveries and four automation nodes with exact bindings");
             require(has(advanced,"#CategoryTitle.Text","REALITY FORGE"),"Category heading matches its graph");
+            var tree=(ResearchTreeLayout.Plan)field(page,"tree");int proxySegments=0;
+            for(int i=0;i<tree.traces().size();i++){
+                var trace=tree.traces().get(i);if(!trace.parent().equals("reality_forge")||!trace.child().equals("gravitic_transport"))continue;
+                proxySegments++;require(trace.source().equals("reality_forge_category"),"Native tablet routes the canonical Forge edge from the visible proxy");
+                String selector="#Traces["+i+"]";var command=Arrays.stream(advanced.commands).filter(c->(selector+".Anchor").equals(c.selector)).findFirst().orElseThrow();
+                var anchor=JsonParser.parseString(command.data).getAsJsonObject().getAsJsonObject("0");
+                require(anchor.get("Left").getAsInt()==trace.x()&&anchor.get("Top").getAsInt()==trace.y()&&anchor.get("Width").getAsInt()==trace.width()&&anchor.get("Height").getAsInt()==trace.height(),"Actual serialized native page contains each complete Forge to Transport segment");
+                require(has(advanced,selector+".Background","#655779"),"Unlocked canonical Forge parent gives its Transport edge the active parent color");
+            }
+            require(proxySegments>0,"The actual native advanced page cannot omit the cross category Forge prerequisite");
             ui.click(page,node(advanced,"hoverboard"));ui.ackAll();var locked=ui.frame(page);require(has(locked,"#Purchase.Disabled","true"),"Containment prerequisite still gates Hoverboard notes");
             ui.click(page,binding(locked,"#Purchase"));require(notes(player,research,"hoverboard")==0,"Disabled controls cannot bypass the actual prerequisite transaction");
             research.unlock(id,"containment_basics",true);research.addPoints(id,ResearchType.ENERGY,15);research.addPoints(id,ResearchType.GRAVITY,10);
@@ -66,7 +76,7 @@ public final class NativeResearchTabletVerification {
             var event=new CustomPageEvent(CustomPageEventType.Data,node(advanced,"hoverboard").data);require(PacketAdapters.__handleInbound(player.packets(),event),"Closed tree events remain scoped and consumed");
             require(player.player().getPageManager().getCustomPage()==null,"Stale closed page input cannot reopen or mutate another page");
         }
-        System.out.println("NATIVE_RESEARCH_TABLET_VERIFICATION_PASSED: 26 connected nodes, real icons and tooltips, category gating, live ID selection and exact purchases under held ACKs, stale selection rejection, original observation costs, field guide Back and clean Close.");
+        System.out.println("NATIVE_RESEARCH_TABLET_VERIFICATION_PASSED: 30 nodes, canonical Forge to Transport proxy edge and native color, real icons and tooltips, category gating, live ID selection and exact purchases under held ACKs, stale selection rejection, original observation costs, field guide Back and clean Close.");
     }
     private static int notes(NativePlayerFixture player,ResearchService service,String id){int count=0;for(short slot=0;slot<player.inventory().getCapacity();slot++){ItemStack item=player.inventory().getItemStack(slot);var node=service.noteNode(item);if(node!=null&&node.id().equals(id))count+=item.getQuantity();}return count;}
     private static long count(CustomPage page,String suffix){return Arrays.stream(page.eventBindings).filter(b->b.selector.endsWith(suffix)).count();}

@@ -38,4 +38,6 @@ for node, method in methods.items():
 add_nullifier_teaching(output)
 target = Path(__file__).resolve().parents[1] / "src/main/resources/Server/StrangeMatter/Research/Teaching.json"
 target.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+import automation_content
+automation_content.apply()
 print(f"Imported {sum(map(len, output.values())) - 1} original teaching pages and the Anomaly Nullifier guide for {len(output)} research topics.")

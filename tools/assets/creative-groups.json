@@ -1,0 +1,481 @@
+{
+  "groups": [
+    "Gadgets",
+    "Machines",
+    "Materials",
+    "Decorations",
+    "Building",
+    "Nature",
+    "Research"
+  ],
+  "items": {
+    "SM_Adamantite_Concentrate": [
+      "Materials"
+    ],
+    "SM_Anomalous_Dirt": [
+      "Nature"
+    ],
+    "SM_Anomalous_Grass": [
+      "Nature"
+    ],
+    "SM_Anomaly_Nullifier": [
+      "Machines"
+    ],
+    "SM_Anomaly_Resonator": [
+      "Gadgets"
+    ],
+    "SM_Chrono_Blister": [
+      "Gadgets"
+    ],
+    "SM_Chrono_Shard": [
+      "Materials"
+    ],
+    "SM_Chrono_Shard_Crystal": [
+      "Decorations"
+    ],
+    "SM_Chrono_Shard_Lamp": [
+      "Decorations"
+    ],
+    "SM_Chrono_Shard_Lantern": [
+      "Decorations"
+    ],
+    "SM_Chrono_Shard_Ore": [
+      "Nature"
+    ],
+    "SM_Cobalt_Concentrate": [
+      "Materials"
+    ],
+    "SM_Containment_Capsule": [
+      "Gadgets"
+    ],
+    "SM_Containment_Capsule_Echoing_Shadow": [
+      "Gadgets"
+    ],
+    "SM_Containment_Capsule_Energetic": [
+      "Gadgets"
+    ],
+    "SM_Containment_Capsule_Gravity": [
+      "Gadgets"
+    ],
+    "SM_Containment_Capsule_Temporal_Bloom": [
+      "Gadgets"
+    ],
+    "SM_Containment_Capsule_Thoughtwell": [
+      "Gadgets"
+    ],
+    "SM_Containment_Capsule_Warp_Gate": [
+      "Gadgets"
+    ],
+    "SM_Copper_Concentrate": [
+      "Materials"
+    ],
+    "SM_Echo_Vacuum": [
+      "Gadgets"
+    ],
+    "SM_Echoform_Imprinter": [
+      "Gadgets"
+    ],
+    "SM_Energetic_Shard": [
+      "Materials"
+    ],
+    "SM_Energetic_Shard_Crystal": [
+      "Decorations"
+    ],
+    "SM_Energetic_Shard_Lamp": [
+      "Decorations"
+    ],
+    "SM_Energetic_Shard_Lantern": [
+      "Decorations"
+    ],
+    "SM_Energetic_Shard_Ore": [
+      "Nature"
+    ],
+    "SM_Fancy_Resonite_Tile": [
+      "Building"
+    ],
+    "SM_Field_Scanner": [
+      "Gadgets"
+    ],
+    "SM_Flux_Furnace": [
+      "Machines"
+    ],
+    "SM_Gold_Concentrate": [
+      "Materials"
+    ],
+    "SM_Gravitic_Shard": [
+      "Materials"
+    ],
+    "SM_Gravitic_Shard_Crystal": [
+      "Decorations"
+    ],
+    "SM_Gravitic_Shard_Lamp": [
+      "Decorations"
+    ],
+    "SM_Gravitic_Shard_Lantern": [
+      "Decorations"
+    ],
+    "SM_Gravitic_Shard_Ore": [
+      "Nature"
+    ],
+    "SM_Gravitic_Tube": [
+      "Machines"
+    ],
+    "SM_Graviton_Hammer": [
+      "Gadgets"
+    ],
+    "SM_Hoverboard": [
+      "Gadgets"
+    ],
+    "SM_Insight_Shard": [
+      "Materials"
+    ],
+    "SM_Insight_Shard_Crystal": [
+      "Decorations"
+    ],
+    "SM_Insight_Shard_Lamp": [
+      "Decorations"
+    ],
+    "SM_Insight_Shard_Lantern": [
+      "Decorations"
+    ],
+    "SM_Insight_Shard_Ore": [
+      "Nature"
+    ],
+    "SM_Iron_Concentrate": [
+      "Materials"
+    ],
+    "SM_Lab_Cyan_Glass": [
+      "Building"
+    ],
+    "SM_Lab_Lamp": [
+      "Decorations"
+    ],
+    "SM_Laboratory_Bench": [
+      "Machines"
+    ],
+    "SM_Levitation_Pad": [
+      "Machines"
+    ],
+    "SM_Mithril_Concentrate": [
+      "Materials"
+    ],
+    "SM_Onyxium_Concentrate": [
+      "Materials"
+    ],
+    "SM_Paradoxical_Energy_Cell": [
+      "Machines"
+    ],
+    "SM_Pattern_Assembler": [
+      "Machines"
+    ],
+    "SM_Prisma_Concentrate": [
+      "Materials"
+    ],
+    "SM_Raw_Resonite": [
+      "Materials"
+    ],
+    "SM_Reality_Forge": [
+      "Machines"
+    ],
+    "SM_Research_Machine": [
+      "Machines",
+      "Research"
+    ],
+    "SM_Research_Notes": [
+      "Research"
+    ],
+    "SM_Research_Tablet": [
+      "Gadgets",
+      "Research"
+    ],
+    "SM_Resonance_Condenser": [
+      "Machines"
+    ],
+    "SM_Resonant_Burner": [
+      "Machines"
+    ],
+    "SM_Resonant_Circuit": [
+      "Materials"
+    ],
+    "SM_Resonant_Coil": [
+      "Materials"
+    ],
+    "SM_Resonant_Conduit": [
+      "Machines"
+    ],
+    "SM_Resonant_Separator": [
+      "Machines"
+    ],
+    "SM_Resonite_Bed": [
+      "Decorations"
+    ],
+    "SM_Resonite_Block": [
+      "Building"
+    ],
+    "SM_Resonite_Bookshelf": [
+      "Decorations"
+    ],
+    "SM_Resonite_Cabinet": [
+      "Decorations"
+    ],
+    "SM_Resonite_Ceiling_Vent": [
+      "Decorations"
+    ],
+    "SM_Resonite_Chair": [
+      "Decorations"
+    ],
+    "SM_Resonite_Chest": [
+      "Decorations"
+    ],
+    "SM_Resonite_Chest_Large": [
+      "Decorations"
+    ],
+    "SM_Resonite_Concentrate": [
+      "Materials"
+    ],
+    "SM_Resonite_Desk": [
+      "Decorations"
+    ],
+    "SM_Resonite_Door": [
+      "Building"
+    ],
+    "SM_Resonite_Ingot": [
+      "Materials"
+    ],
+    "SM_Resonite_Ladder": [
+      "Building"
+    ],
+    "SM_Resonite_Nugget": [
+      "Materials"
+    ],
+    "SM_Resonite_Ore": [
+      "Nature"
+    ],
+    "SM_Resonite_Pillar": [
+      "Building"
+    ],
+    "SM_Resonite_Roof": [
+      "Building"
+    ],
+    "SM_Resonite_Roof_Flat": [
+      "Building"
+    ],
+    "SM_Resonite_Roof_Shallow": [
+      "Building"
+    ],
+    "SM_Resonite_Roof_Steep": [
+      "Building"
+    ],
+    "SM_Resonite_Sign": [
+      "Decorations"
+    ],
+    "SM_Resonite_Sofa": [
+      "Decorations"
+    ],
+    "SM_Resonite_Stool": [
+      "Decorations"
+    ],
+    "SM_Resonite_Table": [
+      "Decorations"
+    ],
+    "SM_Resonite_Tile": [
+      "Building"
+    ],
+    "SM_Resonite_Tile_Slab": [
+      "Building"
+    ],
+    "SM_Resonite_Tile_Stairs": [
+      "Building"
+    ],
+    "SM_Resonite_Trapdoor": [
+      "Building"
+    ],
+    "SM_Resonite_Wall_Monitor": [
+      "Decorations"
+    ],
+    "SM_Resonite_Wall_Shelf": [
+      "Decorations"
+    ],
+    "SM_Resonite_Wardrobe": [
+      "Decorations"
+    ],
+    "SM_Resonite_Window": [
+      "Building"
+    ],
+    "SM_Rift_Stabilizer": [
+      "Machines"
+    ],
+    "SM_Shade_Shard": [
+      "Materials"
+    ],
+    "SM_Shade_Shard_Crystal": [
+      "Decorations"
+    ],
+    "SM_Shade_Shard_Lamp": [
+      "Decorations"
+    ],
+    "SM_Shade_Shard_Lantern": [
+      "Decorations"
+    ],
+    "SM_Shade_Shard_Ore": [
+      "Nature"
+    ],
+    "SM_Silver_Concentrate": [
+      "Materials"
+    ],
+    "SM_Spatial_Shard": [
+      "Materials"
+    ],
+    "SM_Spatial_Shard_Crystal": [
+      "Decorations"
+    ],
+    "SM_Spatial_Shard_Lamp": [
+      "Decorations"
+    ],
+    "SM_Spatial_Shard_Lantern": [
+      "Decorations"
+    ],
+    "SM_Spatial_Shard_Ore": [
+      "Nature"
+    ],
+    "SM_Stabilized_Core": [
+      "Materials"
+    ],
+    "SM_Stasis_Projector": [
+      "Machines"
+    ],
+    "SM_Thorium_Concentrate": [
+      "Materials"
+    ],
+    "SM_Time_Dilation_Block": [
+      "Machines"
+    ],
+    "SM_Tinfoil_Hat": [
+      "Gadgets"
+    ],
+    "SM_Warp_Gun": [
+      "Gadgets"
+    ],
+    "SM_Resonite_Floor_Panel": [
+      "Building"
+    ]
+  },
+  "itemHeadings": {
+    "SM_Adamantite_Concentrate": "Concentrates",
+    "SM_Anomalous_Dirt": "AnomalousTerrain",
+    "SM_Anomalous_Grass": "AnomalousTerrain",
+    "SM_Anomaly_Nullifier": "FieldControl",
+    "SM_Anomaly_Resonator": "FieldEquipment",
+    "SM_Chrono_Blister": "PersonalEquipment",
+    "SM_Chrono_Shard": "AnomalyShards",
+    "SM_Chrono_Shard_Crystal": "CrystalClusters",
+    "SM_Chrono_Shard_Lamp": "StandingLamps",
+    "SM_Chrono_Shard_Lantern": "Lanterns",
+    "SM_Chrono_Shard_Ore": "Ores",
+    "SM_Cobalt_Concentrate": "Concentrates",
+    "SM_Containment_Capsule": "ContainmentCapsules",
+    "SM_Containment_Capsule_Echoing_Shadow": "ContainmentCapsules",
+    "SM_Containment_Capsule_Energetic": "ContainmentCapsules",
+    "SM_Containment_Capsule_Gravity": "ContainmentCapsules",
+    "SM_Containment_Capsule_Temporal_Bloom": "ContainmentCapsules",
+    "SM_Containment_Capsule_Thoughtwell": "ContainmentCapsules",
+    "SM_Containment_Capsule_Warp_Gate": "ContainmentCapsules",
+    "SM_Copper_Concentrate": "Concentrates",
+    "SM_Echo_Vacuum": "FieldEquipment",
+    "SM_Echoform_Imprinter": "FieldEquipment",
+    "SM_Energetic_Shard": "AnomalyShards",
+    "SM_Energetic_Shard_Crystal": "CrystalClusters",
+    "SM_Energetic_Shard_Lamp": "StandingLamps",
+    "SM_Energetic_Shard_Lantern": "Lanterns",
+    "SM_Energetic_Shard_Ore": "Ores",
+    "SM_Fancy_Resonite_Tile": "Masonry",
+    "SM_Field_Scanner": "FieldEquipment",
+    "SM_Flux_Furnace": "ProcessingMachines",
+    "SM_Gold_Concentrate": "Concentrates",
+    "SM_Gravitic_Shard": "AnomalyShards",
+    "SM_Gravitic_Shard_Crystal": "CrystalClusters",
+    "SM_Gravitic_Shard_Lamp": "StandingLamps",
+    "SM_Gravitic_Shard_Lantern": "Lanterns",
+    "SM_Gravitic_Shard_Ore": "Ores",
+    "SM_Gravitic_Tube": "ItemTransport",
+    "SM_Graviton_Hammer": "PoweredTools",
+    "SM_Hoverboard": "PersonalEquipment",
+    "SM_Insight_Shard": "AnomalyShards",
+    "SM_Insight_Shard_Crystal": "CrystalClusters",
+    "SM_Insight_Shard_Lamp": "StandingLamps",
+    "SM_Insight_Shard_Lantern": "Lanterns",
+    "SM_Insight_Shard_Ore": "Ores",
+    "SM_Iron_Concentrate": "Concentrates",
+    "SM_Lab_Cyan_Glass": "Entrances",
+    "SM_Lab_Lamp": "StandingLamps",
+    "SM_Laboratory_Bench": "ResearchEquipment",
+    "SM_Levitation_Pad": "FieldControl",
+    "SM_Mithril_Concentrate": "Concentrates",
+    "SM_Onyxium_Concentrate": "Concentrates",
+    "SM_Paradoxical_Energy_Cell": "PowerEquipment",
+    "SM_Pattern_Assembler": "ProcessingMachines",
+    "SM_Prisma_Concentrate": "Concentrates",
+    "SM_Raw_Resonite": "Metals",
+    "SM_Reality_Forge": "ProcessingMachines",
+    "SM_Research_Machine": "ResearchEquipment",
+    "SM_Research_Notes": "ResearchEquipment",
+    "SM_Research_Tablet": "ResearchEquipment",
+    "SM_Resonance_Condenser": "PowerEquipment",
+    "SM_Resonant_Burner": "PowerEquipment",
+    "SM_Resonant_Circuit": "Components",
+    "SM_Resonant_Coil": "Components",
+    "SM_Resonant_Conduit": "PowerEquipment",
+    "SM_Resonant_Separator": "ProcessingMachines",
+    "SM_Resonite_Bed": "Furniture",
+    "SM_Resonite_Block": "Masonry",
+    "SM_Resonite_Bookshelf": "Furniture",
+    "SM_Resonite_Cabinet": "Furniture",
+    "SM_Resonite_Ceiling_Vent": "Furniture",
+    "SM_Resonite_Chair": "Furniture",
+    "SM_Resonite_Chest": "Furniture",
+    "SM_Resonite_Chest_Large": "Furniture",
+    "SM_Resonite_Concentrate": "Concentrates",
+    "SM_Resonite_Desk": "Furniture",
+    "SM_Resonite_Door": "Entrances",
+    "SM_Resonite_Ingot": "Metals",
+    "SM_Resonite_Ladder": "Entrances",
+    "SM_Resonite_Nugget": "Metals",
+    "SM_Resonite_Ore": "Ores",
+    "SM_Resonite_Pillar": "Masonry",
+    "SM_Resonite_Roof": "Roofing",
+    "SM_Resonite_Roof_Flat": "Roofing",
+    "SM_Resonite_Roof_Shallow": "Roofing",
+    "SM_Resonite_Roof_Steep": "Roofing",
+    "SM_Resonite_Sign": "Furniture",
+    "SM_Resonite_Sofa": "Furniture",
+    "SM_Resonite_Stool": "Furniture",
+    "SM_Resonite_Table": "Furniture",
+    "SM_Resonite_Tile": "Masonry",
+    "SM_Resonite_Tile_Slab": "Masonry",
+    "SM_Resonite_Tile_Stairs": "Masonry",
+    "SM_Resonite_Trapdoor": "Entrances",
+    "SM_Resonite_Wall_Monitor": "Furniture",
+    "SM_Resonite_Wall_Shelf": "Furniture",
+    "SM_Resonite_Wardrobe": "Furniture",
+    "SM_Resonite_Window": "Entrances",
+    "SM_Rift_Stabilizer": "FieldControl",
+    "SM_Shade_Shard": "AnomalyShards",
+    "SM_Shade_Shard_Crystal": "CrystalClusters",
+    "SM_Shade_Shard_Lamp": "StandingLamps",
+    "SM_Shade_Shard_Lantern": "Lanterns",
+    "SM_Shade_Shard_Ore": "Ores",
+    "SM_Silver_Concentrate": "Concentrates",
+    "SM_Spatial_Shard": "AnomalyShards",
+    "SM_Spatial_Shard_Crystal": "CrystalClusters",
+    "SM_Spatial_Shard_Lamp": "StandingLamps",
+    "SM_Spatial_Shard_Lantern": "Lanterns",
+    "SM_Spatial_Shard_Ore": "Ores",
+    "SM_Stabilized_Core": "Components",
+    "SM_Stasis_Projector": "FieldControl",
+    "SM_Thorium_Concentrate": "Concentrates",
+    "SM_Time_Dilation_Block": "FieldControl",
+    "SM_Tinfoil_Hat": "PersonalEquipment",
+    "SM_Warp_Gun": "PoweredTools",
+    "SM_Resonite_Floor_Panel": "Masonry"
+  }
+}

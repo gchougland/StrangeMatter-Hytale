@@ -22,7 +22,7 @@ public final class CapsuleFlightVerification {
         String encoded=bson.toJson(JsonWriterSettings.builder().outputMode(JsonMode.EXTENDED).build());
         var item=LaboratoryProjectiles.decodeCapsule(encoded);
         var recovered=LaboratoryProjectiles.decodeCapsule(LaboratoryProjectiles.encodeCapsule(item));
-        require(recovered.getMetadata().equals(metadata),"All nested BSON metadata types survive native ItemStack round trip");
+        require(com.hexvane.strangematter.util.StackData.metadata(recovered).equals(metadata),"All nested BSON metadata types survive native ItemStack round trip");
         require(recovered.getDurability()==7.25&&recovered.getMaxDurability()==60&&recovered.getQualityIndex()==3,"Durability and quality survive persistence");
         require(BsonDocument.parse(LaboratoryProjectiles.encodeCapsule(recovered)).getBoolean("OverrideDroppedItemAnimation").getValue(),"Native item presentation metadata survives");
         require(LaboratoryProjectiles.sameToken(recovered,token)&&!LaboratoryProjectiles.sameToken(recovered,UUID.randomUUID()+":"+nonce),"Recovery reconciles the exact token, not an item ID");

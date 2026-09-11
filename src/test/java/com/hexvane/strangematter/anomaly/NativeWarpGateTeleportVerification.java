@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.anomaly;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.hexvane.strangematter.equipment.MobilityTools;
 import com.hexvane.strangematter.equipment.NativePlayerFixture;
 import com.hexvane.strangematter.ui.gadget.GadgetHudService;
@@ -103,9 +105,9 @@ public final class NativeWarpGateTeleportVerification {
 
     private static void verifyMounted(NativePlayerFixture rider,Probe probe)throws Exception {
         var world=rider.world();var store=rider.store();
-        var chunk=world.getChunkIfInMemory(ChunkUtil.indexChunkFromBlock(24,24));
+        var chunk=WorldAccess.inMemory(world,ChunkUtil.indexChunkFromBlock(24,24));
         require(chunk!=null,"Mounted gate fixture uses an already loaded native chunk");
-        var section=chunk.getBlockChunk().getSectionAtBlockY(219);
+        var section=WorldAccess.section(chunk,219);
         int original=section.get(24,219,24),rotation=section.getRotationIndex(24,219,24),filler=section.getFiller(24,219,24);
         try(var hud=new GadgetHudService()){
             var mobility=new MobilityTools(hud,Files.createTempDirectory("sm-native-gate-mount-"));
@@ -145,7 +147,7 @@ public final class NativeWarpGateTeleportVerification {
                 require(probe.protectedExisting&&rider.owner().getTeleportAckTracker().isEmpty(),"Mounted crossing retains native request and ACK ownership");
             }finally{
                 mobility.cleanup(world);
-                section.set(24,219,24,original,rotation,filler);chunk.getBlockChunk().updateHeight(24,24);
+                section.set(24,219,24,original,rotation,filler);WorldAccess.column(chunk).updateHeight(24,24);
             }
         }
     }

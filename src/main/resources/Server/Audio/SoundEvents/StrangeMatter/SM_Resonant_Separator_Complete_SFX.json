@@ -1,0 +1,17 @@
+{
+  "AudioCategory": "AudioCat_SFX",
+  "SpatialBlend": 1,
+  "StartAttenuationDistance": 1,
+  "MaxDistance": 7,
+  "MaxInstance": 3,
+  "Volume": -18,
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/StrangeMatter/Automation/resonant_separator_complete.ogg"
+      ],
+      "Looping": false,
+      "Volume": 0
+    }
+  ]
+}

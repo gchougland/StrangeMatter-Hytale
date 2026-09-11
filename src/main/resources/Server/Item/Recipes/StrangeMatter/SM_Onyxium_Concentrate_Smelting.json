@@ -1,0 +1,25 @@
+{
+  "Input": [
+    {
+      "ItemId": "SM_Onyxium_Concentrate",
+      "Quantity": 1
+    }
+  ],
+  "PrimaryOutput": {
+    "ItemId": "Ingredient_Bar_Onyxium",
+    "Quantity": 1
+  },
+  "Output": [
+    {
+      "ItemId": "Ingredient_Bar_Onyxium",
+      "Quantity": 1
+    }
+  ],
+  "TimeSeconds": 4,
+  "BenchRequirement": [
+    {
+      "Type": "Processing",
+      "Id": "Furnace"
+    }
+  ]
+}

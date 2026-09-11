@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.anomaly;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.server.core.universe.world.World;
 import org.joml.Vector3d;
@@ -18,7 +20,7 @@ final class WarpLandingLoads {
     private final BiFunction<World,Long,CompletableFuture<?>> loader;
     private final LongSupplier clock;
 
-    WarpLandingLoads(){this((world,index)->world.getChunkAsync(index),System::nanoTime);}
+    WarpLandingLoads(){this((world,index)->WorldAccess.load(world,index),System::nanoTime);}
     WarpLandingLoads(BiFunction<World,Long,CompletableFuture<?>> loader,LongSupplier clock){this.loader=loader;this.clock=clock;}
 
     /** The 6-block candidate ring plus any supported 16-block body fits in these nine chunks. */
@@ -29,7 +31,7 @@ final class WarpLandingLoads {
         return result;
     }
     boolean ready(World world,Vector3d center){
-        for(long index:area(center))if(world.getChunkIfLoaded(index)==null)return false;
+        for(long index:area(center))if(WorldAccess.loaded(world,index)==null)return false;
         return true;
     }
     /** False means an earlier request is pending or its failure backoff is still active. */
@@ -40,7 +42,7 @@ final class WarpLandingLoads {
         var request=new Request();inWorld.put(source,request);
         var futures=new ArrayList<CompletableFuture<?>>();
         for(long index:area(center)){
-            if(world.getChunkIfLoaded(index)!=null)continue;
+            if(WorldAccess.loaded(world,index)!=null)continue;
             try {futures.add(Objects.requireNonNull(loader.apply(world,index)).thenApply(chunk->{
                 if(chunk==null)throw new IllegalStateException("Warp destination chunk was unavailable: "+index);
                 return chunk;

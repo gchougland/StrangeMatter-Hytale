@@ -1,0 +1,66 @@
+$C = "../Common.ui";
+$B = "SharedButtons.ui";
+$C.@PageOverlay {}
+Group {
+  Anchor: (Width: 1140, Height: 896); Background: #101a2a;
+  Group { Anchor: (Left: 0, Top: 0, Width: 4, Bottom: 0); Background: #7651ad; }
+  Label #Title { Anchor: (Left: 26, Top: 20, Width: 770, Height: 34); Style: (FontSize: 26, TextColor: #72edf2, RenderBold: true); }
+  Label #Owner { Anchor: (Left: 26, Top: 55, Width: 580, Height: 19); Style: (FontSize: 12, TextColor: #93a9c6); }
+  Label #Tier { Anchor: (Right: 194, Top: 26, Width: 120, Height: 25); Style: (FontSize: 17, TextColor: #bf9be9, HorizontalAlignment: End); }
+  $B.@SecondaryTextButton #Settings { @Text = "SETTINGS"; Anchor: (Right: 26, Top: 20, Width: 148, Height: 40); }
+  Group { Anchor: (Left: 26, Top: 78, Width: 1088, Height: 1); Background: #36516b; }
+  Group #RecipeBrowser { Anchor: (Left: 26, Top: 92, Width: 280, Height: 326);
+    $C.@TextField #Search { Anchor: (Left: 0, Top: 0, Width: 280, Height: 36); PlaceholderText: "Find a recipe"; }
+    $B.@SecondaryTextButton #Category { @Text = "All"; Anchor: (Left: 0, Top: 44, Width: 280, Height: 40); }
+    Label #RecipeCount { Anchor: (Left: 0, Top: 90, Width: 280, Height: 19); Style: (FontSize: 12, TextColor: #93a9c6); }
+    Group #Recipes { Anchor: (Left: 0, Top: 118, Width: 280, Height: 208); Background: #0b1423; Padding: (Full: 5); LayoutMode: TopScrolling; ScrollbarStyle: $C.@DefaultScrollbarStyle; }
+  }
+  Group #ProcessOverview { Anchor: (Left: 26, Top: 92, Width: 280, Height: 326); Background: #0c1727; Visible: false;
+    ItemIcon #ProcessIcon { Anchor: (Left: 98, Top: 12, Width: 84, Height: 84); ItemId: "SM_Pattern_Assembler"; HitTestVisible: false; }
+    Label #ProcessTitle { Anchor: (Left: 14, Top: 106, Width: 252, Height: 23); Style: (FontSize: 16, TextColor: #86ece7, RenderBold: true, HorizontalAlignment: Center); HitTestVisible: false; }
+    Label #ProcessHelp { Anchor: (Left: 18, Top: 141, Width: 244, Height: 116); Style: (FontSize: 14, TextColor: #b9ccdf, Wrap: true); HitTestVisible: false; }
+    $B.@TextButton #ChoosePattern { @Text = "CHOOSE RECIPE"; Anchor: (Left: 14, Top: 270, Width: 252, Height: 42); }
+  }
+  $B.@SecondaryTextButton #Recovery { @Text = "RECOVERED ITEMS"; Anchor: (Left: 26, Top: 427, Width: 280, Height: 40); Visible: false; }
+  Label #Selected { Anchor: (Left: 328, Top: 92, Width: 780, Height: 31); Style: (FontSize: 22, TextColor: #e1eafa, RenderBold: true); }
+  Label #RecipeAccess { Anchor: (Left: 328, Top: 126, Width: 780, Height: 23); Style: (FontSize: 13, TextColor: #ba9bef); }
+  Group #Ingredients { Anchor: (Left: 328, Top: 157, Width: 370, Height: 132); Background: #0b1423; Padding: (Full: 6); LayoutMode: TopScrolling; ScrollbarStyle: $C.@DefaultScrollbarStyle; }
+  Group { Anchor: (Left: 716, Top: 157, Width: 398, Height: 132); Background: #263d57; Padding: (Full: 1);
+    Group { Background: #0b1728;
+      Group { Anchor: (Left: 67, Top: 16, Width: 262, Height: 96); Background: #263253; Padding: (Full: 1); Group { Background: #142038; } }
+    }
+  }
+  ItemIcon #Preview { Anchor: (Left: 866, Top: 175, Width: 96, Height: 96); ItemId: "SM_Resonite_Ingot"; HitTestVisible: false; }
+  Group #Scan { Anchor: (Left: 784, Top: 173, Width: 2, Height: 98); Background: #67e8ef; HitTestVisible: false; Visible: false; }
+  $B.@TextButton #Craft { @Text = "CRAFT ONCE"; Anchor: (Left: 328, Top: 300, Width: 204, Height: 40); }
+  $B.@SecondaryTextButton #Stop { @Text = "STOP JOB"; Anchor: (Left: 544, Top: 300, Width: 164, Height: 40); }
+  $B.@SecondaryTextButton #Repeat { @Text = "Repeat off"; Anchor: (Left: 720, Top: 300, Width: 182, Height: 40); }
+  $B.@SecondaryTextButton #Toggle { @Text = "Pause"; Anchor: (Left: 914, Top: 300, Width: 200, Height: 40); }
+  $B.@SecondaryTextButton #StockDown { @Text = "LESS"; Anchor: (Left: 894, Top: 348, Width: 104, Height: 36); }
+  $B.@SecondaryTextButton #StockUp { @Text = "MORE"; Anchor: (Left: 1010, Top: 348, Width: 104, Height: 36); }
+  Label #Stock { Anchor: (Left: 328, Top: 346, Width: 548, Height: 22); Style: (FontSize: 14, TextColor: #adc5db, HorizontalAlignment: End); TextTooltipStyle: $C.@DefaultTextTooltipStyle; }
+  Label #StockHelp { Anchor: (Left: 328, Top: 370, Width: 548, Height: 15); Text: "Repeat pauses at this amount and resumes when items are removed."; Style: (FontSize: 11, TextColor: #91a9bd, HorizontalAlignment: End); HitTestVisible: false; }
+  Label #AutomaticHint { Anchor: (Left: 328, Top: 352, Width: 786, Height: 30); Style: (FontSize: 13, TextColor: #adc5db, Wrap: true); Visible: false; }
+  Group #PowerMeter { Anchor: (Left: 328, Top: 389, Width: 786, Height: 70); }
+  Label #Status { Anchor: (Left: 328, Top: 465, Width: 304, Height: 20); Style: (FontSize: 12, TextColor: #8aedee); }
+  Label #Progress { Anchor: (Left: 640, Top: 465, Width: 474, Height: 20); Style: (FontSize: 12, TextColor: #afbcda, HorizontalAlignment: End); }
+  Group { Anchor: (Left: 328, Top: 489, Width: 786, Height: 7); Background: #263551;
+    Group #ProgressFill { Anchor: (Left: 0, Top: 0, Width: 1, Height: 7); Background: #67e8ef; }
+  }
+  Group #SettingsGroup { Anchor: (Left: 26, Top: 92, Width: 1088, Height: 404); Background: #152238; Visible: false;
+    Group { Anchor: (Left: 362, Top: 20, Width: 1, Height: 364); Background: #36516b; HitTestVisible: false; }
+    Label { Anchor: (Left: 20, Top: 20, Width: 320, Height: 26); Text: "SHARED ACCESS"; Style: (FontSize: 18, TextColor: #72edf2, RenderBold: true); }
+    Label { Anchor: (Left: 20, Top: 62, Width: 320, Height: 80); Text: "Allow a player by name or UUID. Recipes still use the owner's discoveries."; Style: (FontSize: 14, TextColor: #adc0d5, Wrap: true); }
+    $C.@TextField #AccessName { Anchor: (Left: 20, Top: 158, Width: 320, Height: 40); PlaceholderText: "Player name or UUID"; }
+    $B.@TextButton #Grant { @Text = "ALLOW"; Anchor: (Left: 20, Top: 212, Width: 154, Height: 42); }
+    $B.@SecondaryTextButton #Revoke { @Text = "REMOVE"; Anchor: (Left: 186, Top: 212, Width: 154, Height: 42); }
+    Label { Anchor: (Left: 20, Top: 280, Width: 320, Height: 88); Text: "Upgrade materials come from your inventory and hotbar. The machine needs power while upgrading."; Style: (FontSize: 13, TextColor: #91a9bd, Wrap: true); }
+    Label #UpgradeTitle { Anchor: (Left: 384, Top: 20, Width: 684, Height: 26); Text: "MACHINE UPGRADE"; Style: (FontSize: 18, TextColor: #bd9fe9, RenderBold: true); }
+    Group #UpgradeCosts { Anchor: (Left: 384, Top: 62, Width: 684, Height: 270); Background: #0b1423; Padding: (Full: 6); LayoutMode: TopScrolling; ScrollbarStyle: $C.@DefaultScrollbarStyle; }
+    Label #UpgradeHelp { Anchor: (Left: 384, Top: 350, Width: 428, Height: 36); Style: (FontSize: 13, TextColor: #adc0d5, Wrap: true); HitTestVisible: false; }
+    $B.@TextButton #Upgrade { @Text = "UPGRADE"; Anchor: (Left: 828, Top: 348, Width: 240, Height: 42); }
+  }
+  Group #InventoryHost { Anchor: (Left: 78, Top: 501, Width: 984, Height: 310); }
+  Label #Message { Anchor: (Left: 26, Top: 820, Width: 1088, Height: 19); Style: (FontSize: 12, TextColor: #a9bfd5); }
+  $B.@CancelTextButton #Close { @Text = "CLOSE"; Anchor: (Left: 26, Top: 848, Width: 1088, Height: 40); }
+}

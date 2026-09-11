@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.anomaly;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.hypixel.hytale.component.RemoveReason;
 import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.math.vector.Rotation3f;
@@ -34,7 +36,7 @@ public final class NativeAnomalyRevisionVerification {
         world.setBlock(28,40,28,"SM_Rift_Stabilizer");
         require(!effects.hasRod(world,new Vector3d(28,40,28),1),"A stabilizer block alone cannot bypass enabled grounding hook");
         world.setBlock(28,40,28,"Empty");
-        var chunk=world.getChunkIfLoaded(ChunkUtil.indexChunk(0,0));require(chunk!=null,"Loaded terrain fixture chunk exists");
+        var chunk=WorldAccess.loaded(world,ChunkUtil.indexChunk(0,0));require(chunk!=null,"Loaded terrain fixture chunk exists");
         var settings=new AnomalyGenerationSettings();
         for(var type:AnomalyType.values()) {
             geology(chunk);
@@ -44,28 +46,28 @@ public final class NativeAnomalyRevisionVerification {
             effects.terrainGenerated(chunk,record,new MissEveryRoll(),settings);
             int resonite=0,shard=0;
             for(int x=2;x<=12;x++)for(int z=2;z<=12;z++)for(int y=68;y<=69;y++) {
-                String id=chunk.getBlockType(x,y,z).getId();
+                String id=WorldAccess.blockType(chunk,x,y,z).getId();
                 if(id.equals("SM_Resonite_Ore"))resonite++;
                 if(id.equals(HytaleAnomalyEffects.shardOre(type)))shard++;
             }
             require(resonite>0&&shard>0,type+" fresh field includes resonite and its own shard ore");
-            require("Rock_Stone_Brick".equals(chunk.getBlockType(7,67,7).getId())&&"Rock_Bedrock".equals(chunk.getBlockType(7,66,7).getId()),"Ore generation preserves shaped blocks and bedrock");
+            require("Rock_Stone_Brick".equals(WorldAccess.blockType(chunk,7,67,7).getId())&&"Rock_Bedrock".equals(WorldAccess.blockType(chunk,7,66,7).getId()),"Ore generation preserves shaped blocks and bedrock");
         }
         geology(chunk);settings.resoniteColumnChance=0;settings.shardColumnChance=0;
         effects.terrainGenerated(chunk,new AnomalyRecord(UUID.randomUUID(),AnomalyType.GRAVITY,world.getName(),new Vector3d(7.5,101,7.5),true),new MissEveryRoll(),settings);
-        for(int x=2;x<=12;x++)for(int z=2;z<=12;z++)require("Rock_Lime".equals(chunk.getBlockType(x,69,z).getId())&&"Rock_Lime".equals(chunk.getBlockType(x,68,z).getId()),"Explicit zero ore probabilities disable guaranteed deposit");
+        for(int x=2;x<=12;x++)for(int z=2;z<=12;z++)require("Rock_Lime".equals(WorldAccess.blockType(chunk,x,69,z).getId())&&"Rock_Lime".equals(WorldAccess.blockType(chunk,x,68,z).getId()),"Explicit zero ore probabilities disable guaranteed deposit");
         System.out.println("NATIVE_ANOMALY_REVISION_PASSED: actual rift health delta and invulnerability; disabled stabilizer cannot ground; six mixed ore deposits below deep strata, safe hosts, disabled generation.");
     }
     private static void geology(WorldChunk chunk) {
         for(int x=2;x<=12;x++)for(int z=2;z<=12;z++) {
             for(int y=70;y<=100;y++)set(chunk,x,y,z,y==100?"Soil_Dirt":"Empty");
             set(chunk,x,69,z,"Rock_Lime");set(chunk,x,68,z,"Rock_Lime");set(chunk,x,67,z,"Rock_Stone_Brick");set(chunk,x,66,z,"Rock_Bedrock");
-            chunk.getBlockChunk().updateHeight(x,z);
+            WorldAccess.column(chunk).updateHeight(x,z);
         }
     }
     private static void set(WorldChunk chunk,int x,int y,int z,String id) {
         int block=BlockType.getAssetMap().getIndex(id);require(block>=0,"Native terrain asset "+id+" loaded");
-        chunk.getBlockChunk().getSectionAtBlockY(y).set(x,y,z,block,0,0);
+        WorldAccess.section(chunk,y).set(x,y,z,block,0,0);
     }
     public static final class MissEveryRoll extends Random {
         @Override public double nextDouble(){return 1;}

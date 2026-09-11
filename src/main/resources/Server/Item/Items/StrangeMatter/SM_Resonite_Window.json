@@ -7,7 +7,8 @@
   "MaxStack": 25,
   "Categories": [
     "Furniture.Doors",
-    "SM_StrangeMatter.All"
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Building"
   ],
   "PlayerAnimationsId": "Block",
   "ItemSoundSetId": "ISS_Blocks_Stone",
@@ -83,5 +84,6 @@
       }
     ],
     "KnowledgeRequired": true
-  }
+  },
+  "SubCategory": "SM_Entrances"
 }

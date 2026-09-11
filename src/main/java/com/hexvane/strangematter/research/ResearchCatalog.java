@@ -43,6 +43,10 @@ public final class ResearchCatalog {
         add("rift_stabilizer", "reality_forge", "ENERGY:20,SPACE:10", "reality_forge_category");
         add("levitation_pad", "reality_forge", "GRAVITY:15,ENERGY:10", "reality_forge_category");
         add("hoverboard", "reality_forge", "GRAVITY:10,ENERGY:15", "containment_basics");
+        add("resonant_separation", "reality_forge", "ENERGY:20,GRAVITY:15", "gravitic_transport");
+        add("flux_smelting", "reality_forge", "ENERGY:15,TIME:5", "gravitic_transport");
+        add("gravitic_transport", "reality_forge", "GRAVITY:15,SPACE:5", "reality_forge");
+        add("pattern_assembly", "reality_forge", "COGNITION:25,ENERGY:20,GRAVITY:10", "gravitic_transport");
     }
     private static void add(String id, String category, String costs, String prereq) {
         var map = new EnumMap<ResearchType, Integer>(ResearchType.class);

@@ -28,6 +28,7 @@ public final class LivePageVerification {
         @Override public void handleDataEvent(Ref<EntityStore> ref, Store<EntityStore> store, String raw) { if (fallback != null) fallback.accept(raw); else inputs.add(raw); }
     }
     public static void main(String[] args) throws Exception {
+        dynamicValueEvents();
         actualNativeAdapterEvents();
         PageManager manager = new PageManager();
         TestPage page = new TestPage();
@@ -137,6 +138,18 @@ public final class LivePageVerification {
         transferred.close();
         realCognitionUnderDelayedAck();
         System.out.println("PASS: native ACK gate, 1,200 ordered controls at 1.2s RTT, real cognition at 250ms debounce, world-transfer ACK reset, unrelated/stale input rejection and bounded queues.");
+    }
+    private static void dynamicValueEvents(){
+        var connection=new LivePageTransport.Connection();var world=new WorldQueue();var values=new ArrayList<String>();var current=new AtomicBoolean(true);
+        var lease=new LivePageTransport.Lease(connection,world,current::get,data->values.add(data.action+":"+data.value),System::nanoTime);connection.activate(lease);
+        var bindings=new UIEventBuilder();lease.bindValue(bindings,CustomUIEventBindingType.ValueChanged,"#Search","Search","#Search.Value");
+        var binding=bindings.getEvents()[0];require(!binding.locksInterface,"Search fields never enable the client interface lock");
+        var payload=com.google.gson.JsonParser.parseString(binding.data).getAsJsonObject();require(payload.get("@Value").getAsString().equals("#Search.Value"),"Dynamic value binding uses the native selector key");
+        payload.addProperty("@Value","Copper");connection.sentPage(true);
+        require(LivePageTransport.route(connection,payload.toString()),"Resolved native text value is scoped to this page");world.drain();
+        require(values.equals(List.of("Search:Copper"))&&!connection.ready(),"Actual @Value event updates search under pending ACK without acknowledging it");
+        current.set(false);payload.addProperty("@Value","Iron");LivePageTransport.route(connection,payload.toString());world.drain();
+        require(values.size()==1,"Closed search field cannot deliver a delayed dynamic event");lease.close();
     }
     /** Constructor-free network handler fixture; no unsafe/reflection appears in production. */
     private static final class RecordingGameHandler extends com.hypixel.hytale.server.core.io.handlers.game.GamePacketHandler {

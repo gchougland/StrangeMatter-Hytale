@@ -1,0 +1,79 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Resonite_Floor_Panel.name",
+    "Description": "server.items.SM_Resonite_Floor_Panel.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Resonite_Floor_Panel.png",
+  "MaxStack": 100,
+  "Categories": [
+    "Blocks",
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Building"
+  ],
+  "SubCategory": "SM_Masonry",
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Solid",
+    "CustomModel": "Blocks/StrangeMatter/resonite_floor_panel.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/resonite_floor_panel.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "Full",
+    "VariantRotation": "NESW",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#263c53",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "Supporting": {
+      "BlockSides": [
+        {
+          "FaceType": "Full"
+        }
+      ]
+    }
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "SM_Resonite_Tile",
+        "Quantity": 4
+      },
+      {
+        "ItemId": "SM_Resonite_Ingot",
+        "Quantity": 1
+      }
+    ],
+    "OutputQuantity": 4,
+    "TimeSeconds": 2.0,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_Building"
+        ]
+      }
+    ],
+    "KnowledgeRequired": true
+  }
+}

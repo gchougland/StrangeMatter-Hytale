@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.equipment;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.hypixel.hytale.builtin.blockphysics.BlockPhysicsUtil;
 import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.protocol.BlockNeighbor;
@@ -22,8 +24,8 @@ public final class NativeWallMountVerification {
     private record Cell(Vector3i position,int id,int rotation,int filler) {}
 
     public static void verify(World world){
-        var chunk=world.getChunkIfLoaded(ChunkUtil.indexChunk(0,0));require(chunk!=null,"Wall mount fixture uses a loaded chunk");
-        var section=chunk.getBlockChunk().getSectionAtBlockY(ORIGIN.y);
+        var chunk=WorldAccess.loaded(world,ChunkUtil.indexChunk(0,0));require(chunk!=null,"Wall mount fixture uses a loaded chunk");
+        var section=WorldAccess.section(chunk,ORIGIN.y);
         var saved=new ArrayList<Cell>();
         for(int x=15;x<=17;x++)for(int z=15;z<=17;z++)
             saved.add(new Cell(new Vector3i(x,ORIGIN.y,z),section.get(x,ORIGIN.y,z),section.getRotationIndex(x,ORIGIN.y,z),section.getFiller(x,ORIGIN.y,z)));
@@ -33,10 +35,10 @@ public final class NativeWallMountVerification {
             for(String id:List.of("SM_Resonite_Block","SM_Resonite_Tile","SM_Fancy_Resonite_Tile","SM_Resonite_Pillar","Rock_Stone"))supports.add(asset(id));
             var doubled=asset("SM_Resonite_Tile_Slab").getBlockForState("Block");require(doubled!=null,"Native doubled slab state exists");supports.add(doubled);
             var reader=new BlockPhysicsUtil.SupportReader(){
-                @Override public boolean isPositionAvailable(int x,int y,int z){return world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock(x,z))!=null;}
+                @Override public boolean isPositionAvailable(int x,int y,int z){return WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock(x,z))!=null;}
                 @Override public BlockPhysicsUtil.SupportBlock getBlock(int x,int y,int z){
-                    var current=world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock(x,z));if(current==null)return null;
-                    var blocks=current.getBlockChunk().getSectionAtBlockY(y);
+                    var current=WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock(x,z));if(current==null)return null;
+                    var blocks=WorldAccess.section(current,y);
                     return new BlockPhysicsUtil.SupportBlock(blocks.get(x,y,z),blocks.getRotationIndex(x,y,z),blocks.getFiller(x,y,z),Fluid.EMPTY_ID,Fluid.EMPTY);
                 }
                 @Override public int getSupportValue(int x,int y,int z){return 0;}
@@ -81,10 +83,10 @@ public final class NativeWallMountVerification {
     }
     private static BlockType asset(String id){var type=BlockType.getAssetMap().getAsset(id);require(type!=null,"Loaded native block "+id);return type;}
     private static void put(WorldChunk chunk,Vector3i position,BlockType type,int rotation){
-        chunk.getBlockChunk().getSectionAtBlockY(position.y).set(position.x,position.y,position.z,BlockType.getAssetMap().getIndex(type.getId()),rotation,0);
+        WorldAccess.section(chunk,position.y).set(position.x,position.y,position.z,BlockType.getAssetMap().getIndex(type.getId()),rotation,0);
     }
     private static void clear(WorldChunk chunk){
-        for(int x=15;x<=17;x++)for(int z=15;z<=17;z++)chunk.getBlockChunk().getSectionAtBlockY(ORIGIN.y).set(x,ORIGIN.y,z,0,0,0);
+        for(int x=15;x<=17;x++)for(int z=15;z<=17;z++)WorldAccess.section(chunk,ORIGIN.y).set(x,ORIGIN.y,z,0,0,0);
     }
     private static void require(boolean condition,String message){if(!condition)throw new AssertionError(message);}
 }

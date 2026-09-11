@@ -6,7 +6,7 @@ import java.util.*;
 /** Executable headless regression checks; no live Hytale client required. */
 public final class ResearchVerification {
     public static void main(String[] args) throws Exception {
-        require(ResearchCatalog.nodes().size() == 26, "All original research nodes are present");
+        require(ResearchCatalog.nodes().size() == 30, "Original research nodes and four automation discoveries are present");
         require(ResearchCatalog.get("reality_forge").costs().equals(Map.of(ResearchType.ENERGY, 5, ResearchType.SPACE, 5, ResearchType.TIME, 5)), "Forge's original multi-discipline cost");
         require(ResearchCatalog.get("hoverboard").prerequisites().equals(List.of("containment_basics")), "Hoverboard prerequisite");
         for (ResearchNode node : ResearchCatalog.nodes()) for (String id : node.prerequisites()) require(ResearchCatalog.get(id) != null, "Resolvable prerequisite " + id);
@@ -64,6 +64,8 @@ public final class ResearchVerification {
         verifyStartingStates(six);
         verifyExactShadow();
         verifyExactTime();
+        ResearchPuzzleVerification.verify();
+        ResearchStabilityVerification.verify();
         verifyCatalogExtensions();
         verifyStoppedWorldReleasesReservations();
         System.out.println("Research verification passed: " + solved + " solved seeded experiments; config, failure, input validation, costs, prerequisites, scan deduplication and persistence.");
@@ -81,8 +83,8 @@ public final class ResearchVerification {
             var shadow = game.panel(ResearchType.SHADOW);
             require(Math.abs(shadow.value+180-shadow.target)>=59.99 && Math.abs(ResearchSession.shadowLength(shadow)-shadow.targetSecondary)>=11.99,
                     "Shadow begins with both a visibly incorrect angle and length");
-            require(game.panel(ResearchType.SPACE).value>=.65,"Space never starts with a nearly restored lattice");
-            require(Math.abs(game.panel(ResearchType.TIME).value-1)>=.59 && game.panel(ResearchType.TIME).angle!=game.panel(ResearchType.TIME).targetAngle,
+            require(Math.abs(game.panel(ResearchType.SPACE).value)>=2 && game.panel(ResearchType.SPACE).value*game.panel(ResearchType.SPACE).secondary<0,"Space starts with opposing unsolved bends");
+            require(Math.abs(game.panel(ResearchType.TIME).value-game.panel(ResearchType.TIME).target)>=.59 && game.panel(ResearchType.TIME).angle!=game.panel(ResearchType.TIME).targetAngle,
                     "Time begins with visibly different speed and hand positions");
             game.begin();for(int i=0;i<20;i++)game.tick();
             require(game.activeTypes().stream().noneMatch(type->game.panel(type).stable),"No instrument auto solves without a control input: "+seed);
@@ -116,7 +118,7 @@ public final class ResearchVerification {
         var node=new ResearchNode("clock_test","general","Time","",Map.of(ResearchType.TIME,1),List.of());
         var game=new ResearchSession(node,13);game.begin();var p=game.panel(ResearchType.TIME);
         // Enter the source tolerance at 0.9x, then let a real phase difference accumulate.
-        p.value=.8;require(game.control(ResearchType.TIME,"speed",1),"Real speed control enters the tolerance band");
+        p.target=1;p.value=.8;require(game.control(ResearchType.TIME,"speed",1),"Real speed control enters the tolerance band");
         for(int i=0;i<30;i++)game.tick();
         require(p.stable&&Math.abs(p.value-.9)<1e-8&&Math.abs(p.angle-p.targetAngle)>1,"Stable does not imply an exactly matched speed or phase");
         require(game.control(ResearchType.TIME,"speed",1)&&p.value==p.target&&p.angle==p.targetAngle,
@@ -149,12 +151,12 @@ public final class ResearchVerification {
             ]}
             """);
         try(var service=new ResearchService(directory)){
-            require(service.nodes().size()==27,"Extension keeps defaults and adds a node");
+            require(service.nodes().size()==31,"Extension keeps defaults and adds a node");
             require(service.node("hoverboard").name().equals("Experimental Board"),"Existing node name override");
             require(service.node("hoverboard").costs().equals(Map.of(ResearchType.GRAVITY,7)),"Existing costs replaced and zero-cost disciplines omitted");
             require(service.node("hoverboard").prerequisites().equals(List.of("containment_basics")),"Omitted override fields preserved");
             require(service.availability(UUID.randomUUID(),service.node("custom_laboratory")).contains("Experimental Board"),"Custom prerequisite gates use configured catalog");
-            require(ResearchCatalog.nodes().size()==26&&ResearchCatalog.get("hoverboard").costs().size()==2,"Default catalog and other service instances remain unchanged");
+            require(ResearchCatalog.nodes().size()==30&&ResearchCatalog.get("hoverboard").costs().size()==2,"Default catalog and other service instances remain unchanged");
             for(String bad:List.of(
                     "{\"id\":\"custom\",\"name\":\"Bad\",\"costs\":{\"time\":-1}}",
                     "{\"id\":\"custom\",\"name\":\"Bad\",\"costs\":{\"time\":1.5}}",
@@ -164,7 +166,7 @@ public final class ResearchVerification {
                 Files.writeString(config,"{\"nodes\":["+bad+"]}");boolean rejected=false;
                 try{ResearchCatalog.load(directory);}catch(java.io.IOException expected){rejected=true;}
                 require(rejected,"Invalid customization rejected atomically: "+bad);
-                require(service.nodes().size()==27&&service.node("hoverboard").name().equals("Experimental Board"),"Invalid config cannot alter live catalog");
+                require(service.nodes().size()==31&&service.node("hoverboard").name().equals("Experimental Board"),"Invalid config cannot alter live catalog");
             }
         }
     }
@@ -184,7 +186,7 @@ public final class ResearchVerification {
                         if (Math.abs(p.value + 180 - p.target) > 7.5) game.control(type, "angle", p.value + 180 < p.target ? 1 : -1);
                         else if (Math.abs(ResearchSession.shadowLength(p) - p.targetSecondary) > 2) game.control(type, "distance", ResearchSession.shadowLength(p) > p.targetSecondary ? 1 : -1);
                     }
-                    case SPACE -> { if (p.value >= .02) game.control(type, "warp", -1); }
+                    case SPACE -> ResearchPuzzleVerification.controlSpace(game);
                     case TIME -> { if (Math.abs(p.value - p.target) > .04) game.control(type, "speed", p.value < p.target ? 1 : -1); }
                 }
             }

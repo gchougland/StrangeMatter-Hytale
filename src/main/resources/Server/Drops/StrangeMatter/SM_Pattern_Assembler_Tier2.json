@@ -1,0 +1,13 @@
+{
+  "Container": {
+    "Type": "Single",
+    "Item": {
+      "ItemId": "SM_Pattern_Assembler",
+      "QuantityMin": 1,
+      "QuantityMax": 1,
+      "Metadata": {
+        "SMFactoryTier": 2
+      }
+    }
+  }
+}

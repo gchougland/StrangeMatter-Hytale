@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.anomaly;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.Rotation;
@@ -15,7 +17,7 @@ public final class NativeArchitectureVerification {
     private static final Vector3i ORIGIN=new Vector3i(16,280,16);
     private static final List<String> STATES=List.of("default","Corner_Left","Corner_Right","Inverted_Corner_Left","Inverted_Corner_Right");
     public static void verify(World world){
-        var chunk=world.getChunkIfLoaded(ChunkUtil.indexChunk(0,0));require(chunk!=null,"Architecture fixture chunk loaded");
+        var chunk=WorldAccess.loaded(world,ChunkUtil.indexChunk(0,0));require(chunk!=null,"Architecture fixture chunk loaded");
         try{
             verifyDoors(world,chunk);
             int samples=0;
@@ -86,8 +88,8 @@ public final class NativeArchitectureVerification {
         throw new AssertionError("Unknown native connected result "+id+" -> "+result.blockTypeKey());
     }
     private static Vector3i offset(Rotation yaw,int x,int y,int z){var result=new Vector3i(x,y,z);yaw.rotateY(result,result);return result.add(ORIGIN);}
-    private static void place(WorldChunk chunk,String id,int rotation){var type=BlockType.getAssetMap().getAsset(id);require(type!=null,"Loaded placeable "+id);chunk.setBlock(ORIGIN.x,ORIGIN.y,ORIGIN.z,BlockType.getAssetMap().getIndex(id),type,rotation,0,0);}
-    private static void put(WorldChunk chunk,Vector3i position,String id,int rotation){int value=BlockType.getAssetMap().getIndex(id);require(value>=0,"Loaded block "+id);chunk.getBlockChunk().getSectionAtBlockY(position.y).set(position.x,position.y,position.z,value,rotation,0);}
-    private static void clear(WorldChunk chunk){for(int x=11;x<=21;x++)for(int z=11;z<=21;z++)for(int y=278;y<=283;y++)chunk.getBlockChunk().getSectionAtBlockY(y).set(x,y,z,0,0,0);}
+    private static void place(WorldChunk chunk,String id,int rotation){var type=BlockType.getAssetMap().getAsset(id);require(type!=null,"Loaded placeable "+id);WorldAccess.set(chunk,ORIGIN.x,ORIGIN.y,ORIGIN.z,BlockType.getAssetMap().getIndex(id),type,rotation,0,0);}
+    private static void put(WorldChunk chunk,Vector3i position,String id,int rotation){int value=BlockType.getAssetMap().getIndex(id);require(value>=0,"Loaded block "+id);WorldAccess.section(chunk,position.y).set(position.x,position.y,position.z,value,rotation,0);}
+    private static void clear(WorldChunk chunk){for(int x=11;x<=21;x++)for(int z=11;z<=21;z++)for(int y=278;y<=283;y++)WorldAccess.section(chunk,y).set(x,y,z,0,0,0);}
     private static void require(boolean value,String message){if(!value)throw new AssertionError(message);}
 }

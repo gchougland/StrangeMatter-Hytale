@@ -1,0 +1,91 @@
+$C = "../Common.ui";
+
+@Label = LabelStyle(FontSize: 14, TextColor: #d8f0f4, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+@SmallLabel = LabelStyle(FontSize: 13, TextColor: #d8f0f4, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+@DisabledLabel = LabelStyle(FontSize: 14, TextColor: #73889e, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+@ActionDefault = PatchStyle(TexturePath: "Buttons/Action_Default.png", Border: 8);
+@ActionHovered = PatchStyle(TexturePath: "Buttons/Action_Hovered.png", Border: 8);
+@ActionPressed = PatchStyle(TexturePath: "Buttons/Action_Pressed.png", Border: 8);
+@ActionDisabled = PatchStyle(TexturePath: "Buttons/Action_Disabled.png", Border: 8);
+@SecondaryDefault = PatchStyle(TexturePath: "Buttons/Secondary_Default.png", Border: 8);
+@SecondaryHovered = PatchStyle(TexturePath: "Buttons/Secondary_Hovered.png", Border: 8);
+@SecondaryPressed = PatchStyle(TexturePath: "Buttons/Secondary_Pressed.png", Border: 8);
+@SecondaryDisabled = PatchStyle(TexturePath: "Buttons/Secondary_Disabled.png", Border: 8);
+@CancelDefault = PatchStyle(TexturePath: "Buttons/Cancel_Default.png", Border: 8);
+@CancelHovered = PatchStyle(TexturePath: "Buttons/Cancel_Hovered.png", Border: 8);
+@CancelPressed = PatchStyle(TexturePath: "Buttons/Cancel_Pressed.png", Border: 8);
+@CancelDisabled = PatchStyle(TexturePath: "Buttons/Cancel_Disabled.png", Border: 8);
+@TextButtonStyle = TextButtonStyle(
+  Default: (Background: @ActionDefault, LabelStyle: @Label),
+  Hovered: (Background: @ActionHovered, LabelStyle: @Label),
+  Pressed: (Background: @ActionPressed, LabelStyle: @Label),
+  Disabled: (Background: @ActionDisabled, LabelStyle: @DisabledLabel),
+  Sounds: $C.@ButtonSounds
+);
+@SecondaryTextButtonStyle = TextButtonStyle(
+  Default: (Background: @SecondaryDefault, LabelStyle: @Label),
+  Hovered: (Background: @SecondaryHovered, LabelStyle: @Label),
+  Pressed: (Background: @SecondaryPressed, LabelStyle: @Label),
+  Disabled: (Background: @SecondaryDisabled, LabelStyle: @DisabledLabel),
+  Sounds: $C.@ButtonSounds
+);
+@CancelTextButtonStyle = TextButtonStyle(
+  Default: (Background: @CancelDefault, LabelStyle: @Label),
+  Hovered: (Background: @CancelHovered, LabelStyle: @Label),
+  Pressed: (Background: @CancelPressed, LabelStyle: @Label),
+  Disabled: (Background: @CancelDisabled, LabelStyle: @DisabledLabel),
+  Sounds: $C.@ButtonSounds
+);
+@ControlStyle = TextButtonStyle(
+  Default: (Background: @ActionDefault, LabelStyle: @SmallLabel),
+  Hovered: (Background: @ActionHovered, LabelStyle: @SmallLabel),
+  Pressed: (Background: @ActionPressed, LabelStyle: @SmallLabel),
+  Disabled: (Background: @ActionDisabled, LabelStyle: (FontSize: 13, TextColor: #73889e, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)),
+  Sounds: $C.@ButtonSounds
+);
+@RowStyle = ButtonStyle(
+  Default: (Background: @SecondaryDefault),
+  Hovered: (Background: @SecondaryHovered),
+  Pressed: (Background: @SecondaryPressed),
+  Disabled: (Background: @SecondaryDisabled),
+  Sounds: $C.@ButtonSounds
+);
+@IconButtonStyle = ButtonStyle(
+  Default: (Background: @ActionDefault),
+  Hovered: (Background: @ActionHovered),
+  Pressed: (Background: @ActionPressed),
+  Disabled: (Background: @ActionDisabled),
+  Sounds: $C.@ButtonSounds
+);
+// Circuit connections pass beneath the node hit target. Only the icon and title are backed.
+@TreeNodeStyle = ButtonStyle(
+  Default: (Background: #000000(0)),
+  Hovered: (Background: #71d7ee(0.07)),
+  Pressed: (Background: #9e7de0(0.11)),
+  Disabled: (Background: #000000(0)),
+  Sounds: $C.@ButtonSounds
+);
+@TextButton = TextButton {
+  Style: @TextButtonStyle;
+  Anchor: (Height: 40);
+  Padding: (Horizontal: 10);
+  TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+  Text: @Text;
+};
+@SecondaryTextButton = TextButton {
+  Style: @SecondaryTextButtonStyle;
+  Anchor: (Height: 40);
+  Padding: (Horizontal: 10);
+  TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+  Text: @Text;
+};
+@CancelTextButton = TextButton {
+  Style: @CancelTextButtonStyle;
+  Anchor: (Height: 40);
+  Padding: (Horizontal: 10);
+  TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+  Text: @Text;
+};
+@Control = TextButton { Style: @ControlStyle; Padding: (Horizontal: 5); TextTooltipStyle: $C.@DefaultTextTooltipStyle; };
+@IconButton = Button { Style: @IconButtonStyle; Anchor: (Width: 48, Height: 40); Padding: (Full: 6); TextTooltipStyle: $C.@DefaultTextTooltipStyle; };
+@Button = Button { Style: @IconButtonStyle; Anchor: (Height: 40); TextTooltipStyle: $C.@DefaultTextTooltipStyle; };

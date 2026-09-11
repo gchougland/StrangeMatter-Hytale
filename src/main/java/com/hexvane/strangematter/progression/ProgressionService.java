@@ -45,6 +45,30 @@ public final class ProgressionService {
     public synchronized void completedResearch(UUID player,ResearchNode node) {
         if(node!=null)for(ResearchType type:node.costs().keySet())event(player,"complete_research_category",type.getName());
     }
+    /** Repair only research-completion criteria from the authoritative unlocked topics, without new toasts. */
+    public synchronized void reconcileResearch(UUID player,Collection<ResearchNode> earned) {
+        Set<String> categories=new HashSet<>();
+        for(var node:earned)for(var type:node.costs().keySet())categories.add(type.getName());
+        Set<String> affected=new HashSet<>();
+        for(var definition:definitions){
+            boolean research=false;
+            for(var entry:definition.criteria.entrySet()){
+                var criterion=entry.getValue();if(!criterion.trigger.equals("complete_research_category"))continue;
+                research=true;String key=player+".criterion."+definition.id+"."+entry.getKey();
+                boolean met=!categories.isEmpty()&&(criterion.values.isEmpty()||criterion.values.stream().anyMatch(categories::contains));
+                if(met){if(ledger.setProperty(key,"true")==null)dirty=true;}else if(ledger.remove(key)!=null)dirty=true;
+            }
+            if(!research)continue;
+            affected.add(definition.id);
+            boolean done=definition.requirements.stream().allMatch(group->group.stream().anyMatch(c->met(player,definition.id,c)));
+            String key=player+".done."+definition.id;
+            if(done){if(!ledger.containsKey(key)){ledger.setProperty(key,Long.toString(System.currentTimeMillis()));dirty=true;}}
+            else if(ledger.remove(key)!=null)dirty=true;
+        }
+        var notices=pending.get(player);
+        if(notices!=null){notices.removeIf(d->affected.contains(d.id));if(notices.isEmpty())pending.remove(player);}
+        save();
+    }
     public synchronized void inventoryChanged(UUID player,Collection<String> itemIds) {
         for(String id:itemIds)event(player,"inventory_changed",id);
     }

@@ -35,37 +35,37 @@ public final class NativeLaboratorySelectionVerification {
                 research.addPoints(fixture.owner().getUuid(),ResearchType.ENERGY,5);
                 require(research.purchase(fixture.owner().getUuid(),"gravity_anomalies",fixture.inventory()).startsWith("Created "),"First real inventory note purchased");
                 require(research.purchase(fixture.owner().getUuid(),"energy_anomalies",fixture.inventory()).startsWith("Created "),"Second real inventory note purchased");
-                var page=new ResearchMachinePage(fixture.owner(),research,researchAt);
-                var initial=ui.open(page);
-                require(bindings(initial,"#SelectNote")==2,"Every inventory note has a stable selectable token binding");
-                require(Arrays.stream(initial.commands).filter(c->c.selector!=null&&c.selector.endsWith("#NoteRowDisciplineIcon.Background")).count()==2,"Anomaly note rows carry the original discipline symbols");
+                require(ResearchMachinePage.open(fixture.owner(),research,researchAt,null,fixture.store()),"Native note slot opens with the custom page");
+                var page=(ResearchMachinePage)fixture.player().getPageManager().getCustomPage();ui.observe();var initial=ui.last();
+                var noteInventory=(com.hypixel.hytale.server.core.inventory.container.ItemContainer)field(page,"noteInventory");
+                require(noteInventory.getCapacity()==1,"Research shows a real one slot note inventory");
+                verifyInventoryCells(initial,"#PlayerStorageGrid",36,com.hypixel.hytale.server.core.inventory.InventoryComponent.STORAGE_SECTION_ID);
+                verifyInventoryCells(initial,"#PlayerHotbarGrid",9,com.hypixel.hytale.server.core.inventory.InventoryComponent.HOTBAR_SECTION_ID);
+                require(Arrays.stream(initial.commands).anyMatch(c->c.selector!=null&&c.selector.endsWith(".Slots")&&c.data.contains("Research Notes:")&&!c.data.contains("ItemDisplay")),
+                        "Real research notes retain their explicit slot names without embedding server metadata");
                 for(var type:ResearchType.values()){
                     require(has(initial,"#"+type.name()+"Icon.Background",type.uiIconPath()),"Machine header uses the original "+type+" symbol");
                     require(has(initial,"#"+type.name()+"ShutterIcon.Background",type.uiIconPath()),"Closed instrument keeps the same original symbol");
                     require(has(initial,"#NoteDisciplines["+type.ordinal()+"] #DisciplineIcon.Background",type.uiIconPath()),"Note summary uses typed labeled symbols");
                 }
-                var oldInsert=binding(initial,"#InsertNote");String first=value(oldInsert);
-                var choose=Arrays.stream(initial.eventBindings).filter(b->b.selector.endsWith("#SelectNote")&&!value(b).equals(first)).findFirst().orElseThrow();
-                String selected=value(choose);
-                require(ui.pending()>0,"Initial window is still awaiting its real native acknowledgement");
-                ui.click(page,choose);
-                require(selected.equals(field(page,"selectedNote")),"Note selection is processed while the initial frame is unacknowledged");
-                ui.click(page,oldInsert);
-                require(field(page,"session")==null&&field(page,"message").toString().contains("selection changed"),"An old displayed Insert token cannot load the newly selected note");
-                research.addPoints(fixture.owner().getUuid(),ResearchType.SPACE,5);
-                research.purchase(fixture.owner().getUuid(),"spatial_anomalies",fixture.inventory());
-                ui.click(page,binding(initial,"#RefreshNotes"));
+                var oldReview=binding(initial,"#ViewInstruments");
+                short firstSlot=noteSlot(fixture);String first=ResearchService.noteToken(fixture.inventory().getItemStack(firstSlot));
+                require(ui.pending()>0&&fixture.inventory().moveItemStackFromSlot(firstSlot,noteInventory,true,true).succeeded(),"Real note moves while initial page is unacknowledged");
+                ui.click(page,oldReview);require(field(page,"session")==null,"An empty stale note binding cannot start a new experiment");
                 int before=fixture.packets().ofType(CustomPage.class).size();ui.frame(page);
-                require(before==fixture.packets().ofType(CustomPage.class).size(),"Inventory refresh waits for the current frame instead of losing structural row changes");
-                ui.ackAll();var updated=ui.frame(page);
-                require(bindings(updated,"#SelectNote")==3&&value(binding(updated,"#InsertNote")).equals(selected),"Refreshed row structure and exact selected Insert token share one native packet");
-                require(has(updated,"#NoteTitle.Text",research.noteNode(findNote(fixture,selected)).name()),"Selected title is delivered with its matching token");
-                ui.click(page,binding(updated,"#InsertNote"));
+                require(before==fixture.packets().ofType(CustomPage.class).size(),"Slot detail waits for the current visual ACK while item movement remains immediate");
+                ui.ackAll();var updated=ui.frame(page);var firstReview=binding(updated,"#ViewInstruments");
+                require(value(firstReview).equals(first)&&has(updated,"#NoteTitle.Text",research.noteNode(noteInventory.getItemStack((short)0)).name()),"Note title and matching review token share the native packet");
+                require(noteInventory.moveItemStackFromSlot((short)0,fixture.inventory(),true,true).succeeded(),"Note can be removed without being consumed");
+                short second=-1;for(short slot=0;slot<fixture.inventory().getCapacity();slot++){var stack=fixture.inventory().getItemStack(slot);var token=ResearchService.noteToken(stack);if(token!=null&&!token.equals(first)){second=slot;break;}}
+                require(second>=0&&fixture.inventory().moveItemStackFromSlot(second,noteInventory,true,true).succeeded(),"Another real note can occupy the slot");
+                String selected=ResearchService.noteToken(noteInventory.getItemStack((short)0));
+                ui.click(page,firstReview);require(field(page,"session")==null,"Stale review never starts the replacement note");
+                ui.ackAll();updated=ui.frame(page);ui.click(page,binding(updated,"#ViewInstruments"));
                 var session=(ResearchSession)field(page,"session");
-                require(session!=null&&session.node().id().equals(research.noteNode(findNote(fixture,selected)).id()),"Matching Insert opens the selected real note without consuming it");
-                require(!ItemStack.isEmpty(findNote(fixture,selected)),"Inserting does not consume a note before research succeeds");
+                require(session!=null&&session.node().id().equals(research.noteNode(noteInventory.getItemStack((short)0)).id()),"Review reads the exact real note without moving or consuming it");
                 ui.click(page,binding(initial,"#Close"));
-                require(fixture.player().getPageManager().getCustomPage()==null,"Close works while the note detail frame is awaiting ACK");ui.ackAll();
+                require(fixture.player().getPageManager().getCustomPage()==null&&!ItemStack.isEmpty(noteInventory.getItemStack((short)0)),"Close works under ACK and leaves the saved note safely in the desk");ui.ackAll();
 
                 var target=machines.recipes.stream().filter(r->r.id.equals("levitation_pad")).findFirst().orElseThrow();
                 machines.selectRecipe(forge,fixture.owner().getUuid(),target.id);
@@ -115,8 +115,9 @@ public final class NativeLaboratorySelectionVerification {
 
                 // Reproduce an ACK delivered to Hytale without our observer seeing it. Both
                 // actual screens used to accept controls indefinitely without sending a frame.
-                var recoveryPage=new ResearchMachinePage(fixture.owner(),research,researchAt,selected);
-                var recoveryInitial=ui.open(recoveryPage);ui.ackNativeOnly();
+                require(ResearchMachinePage.open(fixture.owner(),research,researchAt,selected,fixture.store()),"Research desk reopens its saved slot");
+                var recoveryPage=(ResearchMachinePage)fixture.player().getPageManager().getCustomPage();ui.observe();var recoveryInitial=ui.last();
+                ui.click(recoveryPage,binding(recoveryInitial,"#ViewInstruments"));ui.ackNativeOnly();
                 var experiment=(ResearchSession)field(recoveryPage,"session");
                 require(experiment!=null,"Recovery fixture uses a real inventory note in the research machine");
                 ui.click(recoveryPage,binding(recoveryInitial,"#Begin"));
@@ -143,24 +144,52 @@ public final class NativeLaboratorySelectionVerification {
                         "Recovered forge updates both the scan line and floating output animation to current crafting progress");
                 require(recoveredForge.eventBindings.length==0,"Animation recovery keeps the existing recipe and transaction bindings");
                 ui.click(recoveryForge,binding(recoveryForgeInitial,"#Close"));ui.ackAll();
+                require(ResearchMachinePage.open(fixture.owner(),research,researchAt,null,fixture.store()),"Open research slot for native component replacement check");
+                var stalePage=(ResearchMachinePage)fixture.player().getPageManager().getCustomPage();
+                var staleInventory=(com.hypixel.hytale.server.core.inventory.container.ItemContainer)field(stalePage,"noteInventory");
+                var panel=(com.hexvane.strangematter.ui.MachineInventoryPanel)field(stalePage,"inventoryPanel");int sectionId=panel.windows()[0].getId();
+                var blockRef=com.hypixel.hytale.server.core.modules.block.BlockModule.getBlockEntity(world,researchAt.x,researchAt.y,researchAt.z);
+                var type=com.hypixel.hytale.server.core.modules.block.components.ItemContainerBlock.getComponentType();
+                var oldComponent=blockRef.getStore().getComponent(blockRef,type);
+                var codec=com.hypixel.hytale.server.core.modules.block.components.ItemContainerBlock.CODEC;
+                var replacement=codec.decode(codec.encode(oldComponent,new com.hypixel.hytale.codec.ExtraInfo()),new com.hypixel.hytale.codec.ExtraInfo());
+                blockRef.getStore().putComponent(blockRef,type,replacement);
+                var savedNote=staleInventory.getItemStack((short)0);
+                com.hypixel.hytale.server.core.inventory.InventoryUtils.moveItem(fixture.ref(),sectionId,0,1,
+                        com.hypixel.hytale.server.core.inventory.InventoryComponent.STORAGE_SECTION_ID,34,fixture.store());
+                require(java.util.Objects.equals(staleInventory.getItemStack((short)0),savedNote)
+                        &&java.util.Objects.equals(replacement.getItemContainer().getItemStack((short)0),savedNote)
+                        &&fixture.player().getWindowManager().getWindow(sectionId)==null,
+                        "Research page rejects stale note inventory after a native component replacement");
+                ui.frame(stalePage);require(fixture.player().getPageManager().getCustomPage()==null,"Stale research page closes and releases its session");ui.ackAll();
             } finally {ui.close();}
         } finally {
             world.setBlock(researchAt.x,researchAt.y,researchAt.z,"Empty");
             world.setBlock(forgeAt.x,forgeAt.y,forgeAt.z,"Empty");machines.removed(world,forgeAt);
         }
-        System.out.println("NATIVE_LABORATORY_SELECTION_VERIFICATION_PASSED: real icon rows, note selection/refresh/insert, hidden locked recipes and empty state, forged hidden events rejected, newly learned rows under held ACKs, stale selection rejection, real crafting reservation, saved selection, active chamber, research and forge animation recovery after unobserved native ACK, genuine pending frame fairness and native Close.");
+        System.out.println("NATIVE_LABORATORY_SELECTION_VERIFICATION_PASSED: real native note slot, main inventory and hotbar, stale note review rejection, hidden locked recipes and empty state, forged hidden events rejected, newly learned rows under held ACKs, stale selection rejection, real crafting reservation, saved selection, active chamber, research and forge animation recovery after unobserved native ACK, genuine pending frame fairness and native Close.");
     }
     private static CustomUIEventBinding withAction(CustomUIEventBinding source,String action,String value){
         var json=JsonParser.parseString(source.data).getAsJsonObject();String old=json.get("Action").getAsString();
         json.addProperty("Action",old.substring(0,old.lastIndexOf(':')+1)+action);json.addProperty("Value",value);
         var event=new CustomUIEventBinding();event.data=json.toString();return event;
     }
+    private static short noteSlot(NativePlayerFixture player){for(short slot=0;slot<player.inventory().getCapacity();slot++)if(ResearchService.noteToken(player.inventory().getItemStack(slot))!=null)return slot;throw new AssertionError("No fixture note");}
     private static ItemStack findNote(NativePlayerFixture player,String token){for(short slot=0;slot<player.inventory().getCapacity();slot++){var item=player.inventory().getItemStack(slot);if(token.equals(ResearchService.noteToken(item)))return item;}return ItemStack.EMPTY;}
     private static long bindings(CustomPage page,String ending){return Arrays.stream(page.eventBindings).filter(b->b.selector.endsWith(ending)).count();}
     private static CustomUIEventBinding binding(CustomPage page,String selector){return Arrays.stream(page.eventBindings).filter(b->b.selector.equals(selector)).findFirst().orElseThrow();}
     private static String value(CustomUIEventBinding binding){return JsonParser.parseString(binding.data).getAsJsonObject().get("Value").getAsString();}
     private static boolean has(CustomPage page,String selector,String text){return Arrays.stream(page.commands).anyMatch(c->selector.equals(c.selector)&&c.data!=null&&c.data.contains(text));}
     private static String commandData(CustomPage page,String selector){return Arrays.stream(page.commands).filter(c->selector.equals(c.selector)).findFirst().orElseThrow().data;}
+    static void verifyInventoryCells(CustomPage page,String host,int count,int section){
+        require(Arrays.stream(page.commands).filter(c->c.selector!=null&&c.selector.startsWith(host+"[")&&c.selector.endsWith(".InventorySectionId")).count()==count,"Every "+host+" cell has a native section binding");
+        for(int slot=0;slot<count;slot++){
+            String cell=host+"["+(slot/9)+"]["+(slot%9)+"] #Slot";
+            require(JsonParser.parseString(commandData(page,cell+".InventorySectionId")).getAsJsonObject().get("0").getAsInt()==section,"Cell points at the actual native inventory section: "+cell);
+            var entries=JsonParser.parseString(commandData(page,cell+".Slots")).getAsJsonObject().getAsJsonArray("0");
+            require(entries.size()==1&&entries.get(0).getAsJsonObject().get("InventorySlotIndex").getAsInt()==slot,"Every filled or empty cell retains its actual native slot address: "+cell);
+        }
+    }
     private static Object field(Object value,String name)throws Exception{var field=value.getClass().getDeclaredField(name);field.setAccessible(true);return field.get(value);}
     private static void require(boolean value,String message){if(!value)throw new AssertionError(message);}
 

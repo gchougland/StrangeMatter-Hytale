@@ -10,22 +10,29 @@ public final class MachineState {
     public static final int MAX_RECIPE_SELECTIONS=64;
     public String world, id;
     public int x,y,z,energy,fuelTicks,queuedFuelTicks,progress,age;
+    /** Native factory component is authoritative; this cached tier sizes the power port. */
+    public transient int factoryTier=1;
+    public transient int incomingRate,receivedThisTick;
+    public transient int[] receivedLastSecond=new int[20];
+    public String factoryMigration="";
     public boolean enabled=true,ascending=true,active;
     public String recipe="", output="", lastAnomaly="";
     /** Stable recipe IDs, oldest selection first. This is independent of the active craft. */
     public Map<String,String> selectedRecipes=new LinkedHashMap<>();
     public int outputQuantity;
-    public record FuelCharge(String itemId,int ticks,String metadata,Double durability) {
+    public record FuelCharge(String itemId,int ticks,String metadata,Double durability,String encoded) {
+        public FuelCharge(String itemId,int ticks,String metadata,Double durability){this(itemId,ticks,metadata,durability,null);}
         public FuelCharge(String itemId,int ticks,String metadata){this(itemId,ticks,metadata,null);}
-        public static FuelCharge from(ItemStack stack,int ticks){return new FuelCharge(stack.getItemId(),ticks,stack.getMetadata()==null?null:stack.getMetadata().toJson(),stack.getDurability());}
-        public ItemStack toItemStack(){var stack=new ItemStack(itemId,1,metadata==null?null:BsonDocument.parse(metadata));return durability==null?stack:stack.withDurability(durability);}
+        public static FuelCharge from(ItemStack stack,int ticks){return new FuelCharge(stack.getItemId(),ticks,null,null,com.hexvane.strangematter.util.StackData.encode(stack.withQuantity(1)));}
+        public ItemStack toItemStack(){if(encoded!=null)return com.hexvane.strangematter.util.StackData.decode(encoded);var stack=new ItemStack(itemId,1,metadata==null?null:BsonDocument.parse(metadata));return durability==null?stack:stack.withDurability(durability);}
     }
     public List<FuelCharge> fuelQueue=new ArrayList<>();
     /** Unburned non-fuel from older versions is quarantined for collection instead of destroyed. */
     public List<FuelCharge> recoveredFuel=new ArrayList<>();
-    public record ReservedInput(String itemId,int quantity,String metadata,double durability) {
-        public static ReservedInput from(ItemStack stack){return new ReservedInput(stack.getItemId(),stack.getQuantity(),stack.getMetadata()==null?null:stack.getMetadata().toJson(),stack.getDurability());}
-        public ItemStack toItemStack(){return new ItemStack(itemId,quantity,metadata==null?null:BsonDocument.parse(metadata)).withDurability(durability);}
+    public record ReservedInput(String itemId,int quantity,String metadata,double durability,String encoded) {
+        public ReservedInput(String itemId,int quantity,String metadata,double durability){this(itemId,quantity,metadata,durability,null);}
+        public static ReservedInput from(ItemStack stack){return new ReservedInput(stack.getItemId(),stack.getQuantity(),null,stack.getDurability(),com.hexvane.strangematter.util.StackData.encode(stack));}
+        public ItemStack toItemStack(){return encoded!=null?com.hexvane.strangematter.util.StackData.decode(encoded):new ItemStack(itemId,quantity,metadata==null?null:BsonDocument.parse(metadata)).withDurability(durability);}
     }
     public List<ReservedInput> reservedInputs=new ArrayList<>();
     public String owner="";

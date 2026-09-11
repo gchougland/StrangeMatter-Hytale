@@ -3,6 +3,8 @@ from pathlib import Path
 import hashlib
 import json
 import re
+import subprocess
+import sys
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,6 +17,8 @@ validation = max((p for p in (ROOT / 'build/validation-run').iterdir()
                   and (p / 'mods' / jar.name).is_file()), key=lambda p: p.stat().st_mtime)
 assert 'NATIVE_WORLD_VERIFICATION_PASSED:' in (run / 'native-world-result.txt').read_text()
 assert 'Asset validation passed' in (validation / 'asset-validation.log').read_text()
+atlas_report = run / 'atlas-audit-report.json'
+subprocess.run([sys.executable, str(ROOT / 'tools/diagnostics/check_reports.py'), '--atlas', str(atlas_report)], check=True, capture_output=True, text=True)
 resources = [p for p in (ROOT / 'src/main/resources').rglob('*') if p.is_file()]
 classes = list((ROOT / 'build/classes/java/main').rglob('*.class'))
 with zipfile.ZipFile(jar) as z, zipfile.ZipFile(run / 'mods/StrangeMatter-Smoke.jar') as native, \
@@ -56,6 +60,34 @@ with zipfile.ZipFile(jar) as z, zipfile.ZipFile(run / 'mods/StrangeMatter-Smoke.
     test_names = {p.relative_to(ROOT / 'build/classes/java/test').as_posix()
                   for p in (ROOT / 'build/classes/java/test').rglob('*.class')}
     assert not names.intersection(test_names), 'Test fixture leaked into release'
+    tube_hashes = {name: hashlib.sha256(z.read(name)).hexdigest() for name in names
+                   if name.startswith('com/hexvane/strangematter/automation/Tube') and name.endswith('.class')}
+
+# Process-level crash checks use the exact current transport classes and native server.
+# Separate fixture plugins intentionally have a different manifest and extra test classes.
+crash_runs = {}
+expected_cuts = {'journal', 'mutated', 'source', 'destination', 'both', 'complete'}
+server_hash = hashlib.sha256((ROOT / 'build/deps/HytaleServer.jar').read_bytes()).hexdigest()
+for candidate in sorted((ROOT / 'build/tube-crash-runs').glob('*/results.json'), key=lambda p: p.stat().st_mtime):
+    evidence_path = candidate.with_name('evidence.json')
+    if not evidence_path.exists():
+        continue
+    evidence = json.loads(evidence_path.read_text(encoding='utf-8-sig'))
+    if evidence.get('tubeClasses') != tube_hashes or evidence.get('serverSha256') != server_hash:
+        continue
+    cases = json.loads(candidate.read_text(encoding='utf-8-sig'))
+    if not isinstance(cases, list) or {case['cut'] for case in cases} != expected_cuts:
+        continue
+    for case in cases:
+        stages = case['stages']
+        assert len(stages) == 3 and stages[0]['forced'] is True
+        assert all(stage['exit'] == 0 and stage['forced'] is False and
+                   stage['result'] == f"NATIVE_TUBE_CRASH_PASS {case['cut']} round={i}"
+                   for i, stage in enumerate(stages[1:], 1))
+    storage = cases[0]['storage']
+    assert all(case['storage'] == storage for case in cases)
+    crash_runs[storage] = candidate.relative_to(ROOT).as_posix()
+assert {'Hytale', 'RocksDb'} <= crash_runs.keys(), 'Current transport needs all six process crash cuts on both native storage backends'
 
 report = {
     'name': manifest['Name'], 'version': version, 'jar': str(jar), 'bytes': jar.stat().st_size,
@@ -68,6 +100,10 @@ report = {
     'packagedAssetInventoryMatchesSource': True,
     'referencedUiDocumentsPackaged': len(referenced_ui),
     'liveClientVerified': False,
+    'nativeAtlasAudit': 'PASS',
+    'nativeAtlasReport': atlas_report.relative_to(ROOT).as_posix(),
+    'tubeProcessCrashRecovery': crash_runs,
+    'tubeCrashClassesMatchRelease': True,
     'license': 'All Rights Reserved', 'packagedLicenseMatchesRepository': True,
 }
 (ROOT / 'build' / f'release-verification-{version}.json').write_text(json.dumps(report, indent=2) + '\n')

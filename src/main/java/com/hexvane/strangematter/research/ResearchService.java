@@ -53,6 +53,35 @@ public final class ResearchService implements AutoCloseable {
     public String requiredResearchForItem(String itemId) { return ResearchRecipeBridge.requirement(itemId); }
     public String researchName(String nodeId) { var node = node(nodeId); return node == null ? nodeId : node.name(); }
     public void syncRecipes(PlayerRef player, Store<EntityStore> store) { ResearchRecipeBridge.sync(this, player, store); }
+    public synchronized List<ResearchNode> earnedNodes(UUID player) {
+        return nodes().stream().filter(node -> !node.defaultUnlocked() && hasUnlocked(player, node.id())).toList();
+    }
+    /** An experiment belongs to the research state in which its page was opened. */
+    public synchronized long generation(UUID player) { return Long.parseLong(ledger.getProperty(prefix(player) + "generation", "0")); }
+    /** Clear earned knowledge, retaining observations, their scan identities and all notes. */
+    public synchronized int reset(UUID player) {
+        Objects.requireNonNull(player);
+        int removed = earnedNodes(player).size();
+        Properties next = copy(); String unlocked = prefix(player) + "unlocked.";
+        next.keySet().removeIf(key -> key.toString().startsWith(unlocked));
+        next.setProperty(prefix(player) + "generation", Long.toString(Math.addExact(generation(player), 1)));
+        commit(next);
+        machineUsers.values().removeIf(player::equals); researchers.remove(player);
+        return removed;
+    }
+    /** Invoke on the player's world thread after resetting the ledger. Native ACK ownership is unchanged. */
+    public void refreshAfterReset(PlayerRef playerRef, Store<EntityStore> store) {
+        var ref = playerRef.getReference();
+        if (ref == null || !ref.isValid() || ref.getStore() != store) return;
+        var player = store.getComponent(ref, Player.getComponentType()); if (player == null) return;
+        var page = player.getPageManager().getCustomPage();
+        if (page instanceof ResearchMachinePage || page instanceof ResearchTabletPage || page instanceof ResearchInfoPage
+                || page instanceof com.hexvane.strangematter.progression.ProgressionPage
+                || page instanceof com.hexvane.strangematter.automation.FactoryPage
+                || page instanceof com.hexvane.strangematter.automation.FactoryRecipeSelectorPage)
+            player.getPageManager().setPage(ref, store, com.hypixel.hytale.protocol.packets.interface_.Page.None);
+        syncRecipes(playerRef, store);
+    }
     /** Administrative unlocks are atomic and preserve a valid prerequisite graph. */
     public synchronized List<ResearchNode> unlock(UUID player, String requested, boolean includePrerequisites) {
         var ordered = new LinkedHashSet<String>();
@@ -132,20 +161,35 @@ public final class ResearchService implements AutoCloseable {
         if (node == null) return "Unknown research.";
         String unavailable = availability(player, node);
         if (unavailable != null) return unavailable;
+        Properties next = copy();
+        for (var cost : node.costs().entrySet()) next.setProperty(prefix(player) + "points." + cost.getKey().getName(), Integer.toString(points(player, cost.getKey()) - cost.getValue()));
+        return deliverNote(node, inventory, next);
+    }
+    /** Administration may mint an experiment without points or prerequisite unlocks. */
+    public synchronized String giveNote(String nodeId, ItemContainer inventory) {
+        ResearchNode node = node(nodeId);
+        if (node == null) return "Unknown research.";
+        if (node.defaultUnlocked() || node.id().equals("reality_forge_category")) return "This topic does not use a research note.";
+        return deliverNote(node, inventory, copy());
+    }
+    private String deliverNote(ResearchNode node, ItemContainer inventory, Properties next) {
         String token = UUID.randomUUID().toString();
         ItemStack stack = describeNote(new ItemStack(NOTE_ITEM, 1).withMetadata(NOTE_TOKEN, Codec.STRING, token), node);
         if (inventory == null || !inventory.canAddItemStack(stack)) return "Make room in your inventory for a research note.";
-        Properties next = copy();
-        for (var cost : node.costs().entrySet()) next.setProperty(prefix(player) + "points." + cost.getKey().getName(), Integer.toString(points(player, cost.getKey()) - cost.getValue()));
+        String nodeId = node.id();
         next.setProperty("note." + token, nodeId);
         Properties previous = ledger;
         commit(next);
-        var transaction = inventory.addItemStack(stack, true, false, true);
-        if (!transaction.succeeded() || !ItemStack.isEmpty(transaction.getRemainder())) {
+        try {
+            var transaction = inventory.addItemStack(stack, true, false, true);
+            if (transaction.succeeded() && ItemStack.isEmpty(transaction.getRemainder()))
+                return "Created " + node.name() + " notes. Insert them into a Research Machine.";
+        } catch (RuntimeException failed) {
             commit(previous);
-            return "Could not deliver the research note; your points were refunded.";
+            throw failed;
         }
-        return "Created " + node.name() + " notes. Insert them into a Research Machine.";
+        commit(previous);
+        return "Could not deliver the research note. No points were spent.";
     }
     public synchronized ResearchNode noteNode(ItemStack stack) {
         String token = noteToken(stack);
@@ -177,7 +221,7 @@ public final class ResearchService implements AutoCloseable {
                 var ref = playerRef.getReference();
                 if (ref != null && ref.isValid()) {
                     var player = store.getComponent(ref, Player.getComponentType());
-                    if (player != null) player.getPageManager().openCustomPage(ref, store, new ResearchMachinePage(playerRef, this, target, noteToken(stack)));
+                    if (player != null) ResearchMachinePage.open(playerRef,this,target,noteToken(stack),store);
                 }
                 return;
             }
@@ -196,8 +240,8 @@ public final class ResearchService implements AutoCloseable {
         if (ItemStack.isEmpty(stack) || !NOTE_ITEM.equals(stack.getItemId())) return null;
         return stack.getFromMetadataOrNull(NOTE_TOKEN, Codec.STRING);
     }
-    synchronized boolean finish(UUID player, ResearchSession session, String token, ItemContainer inventory) {
-        if (session.state() != ResearchSession.State.SUCCESS || token == null) return false;
+    synchronized boolean finish(UUID player, ResearchSession session, String token, ItemContainer inventory, long expectedGeneration) {
+        if (expectedGeneration != generation(player) || session.state() != ResearchSession.State.SUCCESS || token == null) return false;
         if (!session.node().id().equals(ledger.getProperty("note." + token))) return false;
         short slot = findToken(inventory, token);
         if (slot < 0) return false;
@@ -220,10 +264,17 @@ public final class ResearchService implements AutoCloseable {
         return -1;
     }
     synchronized boolean acquire(String machine, UUID player) {
+        return acquire(machine, player, generation(player));
+    }
+    synchronized boolean acquire(String machine, UUID player, long expectedGeneration) {
+        if (expectedGeneration != generation(player)) return false;
         if (machineUsers.containsKey(machine) || researchers.contains(player)) return false;
         machineUsers.put(machine, player); researchers.add(player); return true;
     }
     synchronized void release(String machine, UUID player) { machineUsers.remove(machine, player); researchers.remove(player); }
+    synchronized void release(String machine, UUID player, long expectedGeneration) {
+        if (expectedGeneration == generation(player)) release(machine, player);
+    }
     public void openTablet(PlayerRef playerRef, Store<EntityStore> store) {
         openTablet(playerRef, store, null);
     }
@@ -243,7 +294,7 @@ public final class ResearchService implements AutoCloseable {
         Ref<EntityStore> ref = playerRef.getReference();
         if (ref == null || !ref.isValid()) return;
         Player player = store.getComponent(ref, Player.getComponentType());
-        if (player != null) player.getPageManager().openCustomPage(ref, store, new ResearchMachinePage(playerRef, this, position));
+        if (player != null) ResearchMachinePage.open(playerRef,this,position,null,store);
     }
     static ItemContainer inventory(Store<EntityStore> store, Ref<EntityStore> ref) {
         return InventoryComponent.getCombined(store, ref, InventoryComponent.HOTBAR_FIRST);

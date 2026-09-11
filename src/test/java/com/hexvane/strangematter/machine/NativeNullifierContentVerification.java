@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.machine;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.hexvane.strangematter.equipment.NativePlayerFixture;
 import com.hexvane.strangematter.research.ResearchService;
 import com.hexvane.strangematter.research.ResearchTeaching;
@@ -18,24 +20,24 @@ public final class NativeNullifierContentVerification {
     public static void verify(World world,MachineService existing)throws Exception {
         var directory=Files.createTempDirectory(existing.dataDirectory(),"nullifier-content-");
         var position=new Vector3i(28,230,4);
-        var chunk=world.getChunkIfInMemory(com.hypixel.hytale.math.util.ChunkUtil.indexChunkFromBlock(position.x,position.z));
+        var chunk=WorldAccess.inMemory(world,com.hypixel.hytale.math.util.ChunkUtil.indexChunkFromBlock(position.x,position.z));
         require(chunk!=null,"Acquisition fixture uses an already loaded column");
         int[][] saved=new int[3][3];
-        for(int y=0;y<saved.length;y++)saved[y]=new int[]{chunk.getBlock(position.x,position.y+y,position.z),chunk.getRotationIndex(position.x,position.y+y,position.z),chunk.getFiller(position.x,position.y+y,position.z)};
+        for(int y=0;y<saved.length;y++)saved[y]=new int[]{WorldAccess.block(chunk,position.x,position.y+y,position.z),WorldAccess.rotation(chunk,position.x,position.y+y,position.z),WorldAccess.filler(chunk,position.x,position.y+y,position.z)};
         try(var research=new ResearchService(directory);
             var machines=new MachineService(directory,existing.config,research,existing.anomalies);
             var player=NativePlayerFixture.create(world,"Nullifier recipe",new Vector3d(27.5,230,4.5))){
             var recipe=machines.recipes.stream().filter(r->r.id.equals("anomaly_nullifier")).findFirst().orElseThrow();
             require(recipe.output.equals("SM_Anomaly_Nullifier")&&recipe.quantity==1&&recipe.totalCost().size()==8,
                     "One obtainable nullifier has eight visible material rows");
-            require(research.nodes().size()==26&&"rift_stabilizer".equals(research.requiredResearchForItem(recipe.output)),
+            require(research.nodes().size()==30&&"rift_stabilizer".equals(research.requiredResearchForItem(recipe.output)),
                     "Existing Rift Stabilizer research gates the new device without another tree node");
             require(ResearchTeaching.pages(research.node("rift_stabilizer")).stream().anyMatch(p->"anomaly_nullifier".equals(p.recipe())&&p.content().contains("12 blocks")),
                     "Unlocked field guide exposes the real nullifier recipe and range");
             var item=new ItemStack(recipe.output,1).getItem();
             require(item!=null&&item.getMaxStack()==25,"New output resolves through the native loaded Item registry");
             var forge=BlockType.getAssetMap().getAsset("SM_Reality_Forge");
-            chunk.setBlock(position.x,position.y,position.z,BlockType.getAssetMap().getIndex(forge.getId()),forge,0,0,
+            WorldAccess.set(chunk,position.x,position.y,position.z,BlockType.getAssetMap().getIndex(forge.getId()),forge,0,0,
                     NO_UPDATE_STATE|NO_SEND_PARTICLES|NO_UPDATE_NEIGHBOR_CONNECTIONS|FORCE_CHANGED);
             var state=machines.register(world,position,forge.getId());
             for(var cost:recipe.totalCost().entrySet())require(InventoryOps.give(player.inventory(),new ItemStack(cost.getKey(),cost.getValue())),"Every native ingredient fits");
@@ -61,7 +63,7 @@ public final class NativeNullifierContentVerification {
             machines.removed(world,position);
         }finally{
             for(int y=0;y<saved.length;y++){
-                int[] old=saved[y];chunk.setBlock(position.x,position.y+y,position.z,old[0],BlockType.getAssetMap().getAsset(old[0]),old[1],old[2],
+                int[] old=saved[y];WorldAccess.set(chunk,position.x,position.y+y,position.z,old[0],BlockType.getAssetMap().getAsset(old[0]),old[1],old[2],
                         NO_UPDATE_STATE|NO_SEND_PARTICLES|NO_UPDATE_NEIGHBOR_CONNECTIONS|FORCE_CHANGED);
             }
         }

@@ -24,7 +24,8 @@
   "Set": "SM_Resonite",
   "Categories": [
     "Blocks.Metal",
-    "SM_StrangeMatter.All"
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Building"
   ],
   "Tags": {
     "Type": [
@@ -203,5 +204,6 @@
     "DrawType": "Model",
     "Opacity": "Transparent",
     "Group": "Roof"
-  }
+  },
+  "SubCategory": "SM_Roofing"
 }

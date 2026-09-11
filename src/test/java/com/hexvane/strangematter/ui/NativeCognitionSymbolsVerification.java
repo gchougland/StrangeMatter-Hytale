@@ -73,6 +73,7 @@ public final class NativeCognitionSymbolsVerification {
         for(long delay:new long[]{0,1_200_000_000L})verifyOrderedPresentation(bind,render,delay,true);
         verifyShadowOverlay();
         verifyOtherOverlays();
+        verifyAnimatedCalibration();
         System.out.println("NATIVE_COGNITION_SYMBOLS_VERIFICATION_PASSED: nine stable native bindings, all wire-decoded controls delivered, nine exclusive matching glyph cues, no numerical labels or rebound events, original debounce and real sequence completion under pending ACK.");
     }
     private static final class GatePage extends com.hypixel.hytale.server.core.entity.entities.player.pages.CustomUIPage {
@@ -116,7 +117,7 @@ public final class NativeCognitionSymbolsVerification {
                 require(frame.eventBindings.length==0,"Full cue playback retains the initial click bindings");
                 int shown=lit(frame);
                 if(shown!=lastLit){
-                    if(lastLit>=0)require(clock.get()-changedAt>=2_500_000_000L,"Every numbered symbol has its full configured visible hold");
+                    if(lastLit>=0)require(clock.get()-changedAt>=new ResearchSettings().cognitionCueTicks()*50_000_000L,"Every numbered symbol has its full configured visible hold");
                     if(shown>=0){
                         require(lastLit==-1,"Each consecutive symbol is separated by an acknowledged dark gap");
                         if(!observed.isEmpty())require(clock.get()-changedAt>=300_000_000L,"Inter-symbol gap is visibly held");
@@ -144,7 +145,7 @@ public final class NativeCognitionSymbolsVerification {
                     require(lit(frame)==-1&&!p.displaying,"Recall interval remains dark and playable");
                     require(connection.reserve(),"One native recall frame at a time");connection.sentPage(false);counter.incrementAndGet();
                 }
-                require(game.ticks()*50_000_000L==clock.get()&&game.ticks()>=200,
+                require(game.ticks()*50_000_000L==clock.get()&&game.ticks()>=140&&game.ticks()<200,
                         "The entire default cue and recall run at genuine 20 Hz without a paused instability clock");
                 require(game.state()==ResearchSession.State.RUNNING&&game.instability()<.85,
                         "Full default pattern plus three seconds of recall fit the original failure window with room to answer");
@@ -160,13 +161,15 @@ public final class NativeCognitionSymbolsVerification {
     }
     private static void verifyShadowOverlay()throws Exception{
         var render=ResearchMachinePage.class.getDeclaredMethod("renderShadow",UICommandBuilder.class,ResearchSession.Panel.class);render.setAccessible(true);
-        var page=new ResearchMachinePage(null,null,new org.joml.Vector3i());
-        for(int angle=-60;angle<=60;angle+=15)for(int distance=20;distance<=50;distance+=5){
-            var p=new ResearchSession.Panel();p.value=angle;p.secondary=distance;p.target=angle+180;p.targetSecondary=ResearchSession.shadowLength(p);
-            var commands=new UICommandBuilder();render.invoke(page,commands,p);var frame=wire(commands,new UIEventBuilder());
-            for(int i=0;i<12;i++){
-                var target=anchor(frame,"#ShadowTarget"+i+".Anchor");var live=anchor(frame,"#ShadowLive"+i+".Anchor");
-                for(String axis:List.of("Left","Top"))require(target.get(axis).getAsDouble()+3==live.get(axis).getAsDouble()+2,"Exactly solved shadow segments share their native pixel centres");
+        try(var service=new ResearchService(java.nio.file.Files.createTempDirectory("sm-shadow-overlay-"))){
+            var page=new ResearchMachinePage(overlayPlayer(),service,new org.joml.Vector3i());
+            for(int angle=-60;angle<=60;angle+=15)for(int distance=20;distance<=50;distance+=5){
+                var p=new ResearchSession.Panel();p.value=angle;p.secondary=distance;p.target=angle+180;p.targetSecondary=ResearchSession.shadowLength(p);
+                var commands=new UICommandBuilder();render.invoke(page,commands,p);var frame=wire(commands,new UIEventBuilder());
+                for(int i=0;i<12;i++){
+                    var target=anchor(frame,"#ShadowTarget"+i+".Anchor");var live=anchor(frame,"#ShadowLive"+i+".Anchor");
+                    for(String axis:List.of("Left","Top"))require(target.get(axis).getAsDouble()+3==live.get(axis).getAsDouble()+2,"Exactly solved shadow segments share their native pixel centres");
+                }
             }
         }
     }
@@ -174,18 +177,94 @@ public final class NativeCognitionSymbolsVerification {
         var energy=ResearchMachinePage.class.getDeclaredMethod("renderEnergy",UICommandBuilder.class,ResearchSession.Panel.class);energy.setAccessible(true);
         var time=ResearchMachinePage.class.getDeclaredMethod("renderTime",UICommandBuilder.class,ResearchSession.Panel.class);time.setAccessible(true);
         try(var service=new ResearchService(java.nio.file.Files.createTempDirectory("sm-instrument-overlay-"))){
-            var page=new ResearchMachinePage(null,service,new org.joml.Vector3i());
+            var page=new ResearchMachinePage(overlayPlayer(),service,new org.joml.Vector3i());
             var session=ResearchMachinePage.class.getDeclaredField("session");session.setAccessible(true);session.set(page,new ResearchSession(ResearchCatalog.get("cognitive_anomalies"),1));
             for(int step=0;step<=20;step++){
                 var p=new ResearchSession.Panel();p.value=p.target=.5+step*.05;p.secondary=p.targetSecondary=1+(step%6)*.05;
                 var commands=new UICommandBuilder();energy.invoke(page,commands,p);var frame=wire(commands,new UIEventBuilder());
                 verifyCentres(frame,"WaveTarget","WaveLive",32);
+                require(label(frame,"#EnergyLock.Text").equals("Match cyan to purple"),"Default wave instructions never request the removed five-second hold");
             }
             for(int angle=0;angle<360;angle+=5){
                 var p=new ResearchSession.Panel();p.angle=p.targetAngle=angle;var commands=new UICommandBuilder();time.invoke(page,commands,p);
                 verifyCentres(wire(commands,new UIEventBuilder()),"TimeTarget","TimeLive",12);
             }
+            for(double target:new double[]{-.7,.6,1.3,2}){
+                var p=new ResearchSession.Panel();p.value=.25;p.target=target;p.angle=30;p.targetAngle=90;
+                var commands=new UICommandBuilder();time.invoke(page,commands,p);var frame=wire(commands,new UIEventBuilder());
+                require(label(frame,"#TimeReadout.Text").equals("Cyan 0.25x   Match the purple hand"),"Native UI exposes only cyan speed, never the purple target's numeric answer");
+            }
         }
+    }
+    private static com.hypixel.hytale.server.core.universe.PlayerRef overlayPlayer(){
+        // These reflection-based render checks need a stable research identity, not a live entity or socket.
+        return new com.hypixel.hytale.server.core.universe.PlayerRef(null,UUID.randomUUID(),"InstrumentOverlay","en-US",null,null);
+    }
+    private static void verifyAnimatedCalibration()throws Exception{
+        var bind=ResearchMachinePage.class.getDeclaredMethod("bindSpace",UIEventBuilder.class,LivePageTransport.Lease.class);bind.setAccessible(true);
+        var energy=ResearchMachinePage.class.getDeclaredMethod("renderEnergy",UICommandBuilder.class,ResearchSession.Panel.class);energy.setAccessible(true);
+        var space=ResearchMachinePage.class.getDeclaredMethod("renderSpace",UICommandBuilder.class,ResearchSession.Panel.class);space.setAccessible(true);
+        var gravity=ResearchMachinePage.class.getDeclaredMethod("renderGravity",UICommandBuilder.class,ResearchSession.Panel.class);gravity.setAccessible(true);
+        var manager=new com.hypixel.hytale.server.core.entity.entities.player.pages.PageManager();var gatePage=new GatePage();
+        var pageField=manager.getClass().getDeclaredField("customPage");pageField.setAccessible(true);pageField.set(manager,gatePage);
+        var countField=manager.getClass().getDeclaredField("customPageRequiredAcknowledgments");countField.setAccessible(true);var counter=(AtomicInteger)countField.get(manager);
+        var game=new ResearchSession(new ResearchNode("native_puzzles","general","Calibration","",Map.of(ResearchType.ENERGY,1,ResearchType.SPACE,1),List.of()),18);
+        game.begin();var wave=game.panel(ResearchType.ENERGY);wave.value=wave.target;wave.secondary=wave.targetSecondary;
+        var lattice=game.panel(ResearchType.SPACE);lattice.value=2;lattice.secondary=-2;
+        var clock=new AtomicLong();game.advanceInputClock(0);var connection=new LivePageTransport.Connection();var queue=new ArrayDeque<Runnable>();var accepted=new AtomicInteger();
+        var lease=new LivePageTransport.Lease(connection,queue::addLast,()->manager.getCustomPage()==gatePage,data->{
+            var fields=data.value.split(":");game.advanceInputClock(clock.get());
+            require(fields[0].equals("SPACE")&&game.control(ResearchType.SPACE,fields[1],Integer.parseInt(fields[2])),"Wire-decoded axis and bend controls remain valid while a frame is pending");accepted.incrementAndGet();
+        },clock::get);gatePage.lease=lease;connection.activate(lease);
+        var probe=lease.getClass().getDeclaredField("nativeProbe");probe.setAccessible(true);probe.set(lease,(java.util.function.Consumer<String>)raw->manager.handleEvent(null,null,new CustomPageEvent(CustomPageEventType.Data,raw)));
+        try(var service=new ResearchService(java.nio.file.Files.createTempDirectory("sm-calibration-wire-"))){
+            var page=new ResearchMachinePage(overlayPlayer(),service,new org.joml.Vector3i());
+            var sessionField=ResearchMachinePage.class.getDeclaredField("session");sessionField.setAccessible(true);sessionField.set(page,game);
+            var events=new UIEventBuilder();bind.invoke(null,events,lease);
+            var bindings=wire(new UICommandBuilder(),events);require(bindings.eventBindings.length==4,"Both Space axes and both directions bind once");
+            var cmds=new UICommandBuilder();energy.invoke(page,cmds,wave);var first=wire(cmds,new UIEventBuilder());
+            connection.sentPage(true);counter.incrementAndGet();
+            for(int poll=0;poll<20;poll++){clock.addAndGet(200_000_000L);require(!lease.ready(),"A real outstanding native ACK never advances the decorative wave");}
+            require(wave.angle==0&&game.ticks()==0,"Waiting for native delivery leaves phase and physics untouched");
+            connection.acknowledged();manager.handleEvent(null,null,new CustomPageEvent(CustomPageEventType.Acknowledge,null));require(lease.ready(),"Genuine ACK permits the next frame");
+            game.tick();require(wave.stable&&wave.stableTicks==1,"The first acknowledged aligned wave tick becomes stable immediately");
+            for(int i=0;i<3;i++)game.tick();cmds=new UICommandBuilder();energy.invoke(page,cmds,wave);var moved=wire(cmds,new UIEventBuilder());
+            require(wave.angle>0&&!anchor(first,"#WaveLive0.Anchor").equals(anchor(moved,"#WaveLive0.Anchor")),"Acknowledged simulation actually moves the native wave geometry");
+            verifyCentres(moved,"WaveTarget","WaveLive",32);require(wave.stableTicks==4,"Visual phase does not disturb correct amplitude and period");
+            require(label(moved,"#EnergyLock.Text").equals("Waves locked"),"The first acknowledged aligned frame reports its stable lock");
+            require(moved.eventBindings.length==0&&connection.reserve(),"Moving wave patches never replace or rebind controls");connection.sentPage(false);counter.incrementAndGet();
+            long ticks=game.ticks();double phase=wave.angle;
+            for(String selector:List.of("#SpaceHorizontal","#SpaceMinus","#SpaceVertical","#SpacePlus")){
+                var event=Arrays.stream(bindings.eventBindings).filter(e->selector.equals(e.selector)).findFirst().orElseThrow();route(connection,queue,event.data);clock.addAndGet(250_000_000L);
+            }
+            require(accepted.get()==4&&lattice.value==1&&lattice.secondary==-1,"Actual nonced native controls reach the accepted visual margin using both axes and directions");
+            require(counter.get()==1&&game.ticks()==ticks&&wave.angle==phase&&!lease.ready(),"Live puzzle input cannot steal the outstanding native ACK or advance unseen waves");
+            connection.acknowledged();manager.handleEvent(null,null,new CustomPageEvent(CustomPageEventType.Acknowledge,null));require(lease.ready(),"Original native ACK still drains normally after live controls");
+            for(int i=0;i<4;i++)game.tick();cmds=new UICommandBuilder();space.invoke(page,cmds,lattice);var aligned=wire(cmds,new UIEventBuilder());verifyCentres(aligned,"SpaceTarget","SpaceDot",49);
+            require(lattice.stable&&lattice.value==0&&lattice.secondary==0&&aligned.eventBindings.length==0,"A near-aligned lattice visibly settles to exact target centres without rebinding");
+            try(var stream=ResearchMachinePage.class.getResourceAsStream("/Common/UI/Custom/StrangeMatter/ResearchMachine.ui")){
+                require(stream!=null,"Actual packaged instrument markup is present");var markup=new String(stream.readAllBytes(),java.nio.charset.StandardCharsets.UTF_8);
+                for(int i=0;i<49;i++){
+                    final int index=i;
+                    var line=markup.lines().filter(s->s.startsWith("Group #SpaceDot"+index+" {")).findFirst().orElseThrow();
+                    require(line.contains("Background: #67dce5;"),"Every live lattice dot is cyan, including the former purple diagonal");
+                }
+            }
+            for(int x=-6;x<=6;x++)for(int y=-6;y<=6;y++){
+                var panel=new ResearchSession.Panel();panel.value=x;panel.secondary=y;cmds=new UICommandBuilder();space.invoke(page,cmds,panel);var frame=wire(cmds,new UIEventBuilder());
+                for(int i=0;i<49;i++){
+                    var point=anchor(frame,"#SpaceDot"+i+".Anchor");int left=point.get("Left").getAsInt(),top=point.get("Top").getAsInt();
+                    require(left>=68&&left+4<=167&&top>=0&&top+4<=83,"All bent dots fit the actual plot and remain between the two helper labels");
+                }
+            }
+            var force=new ResearchSession.Panel();
+            for(int selected=-5;selected<=5;selected++){
+                force.value=selected;cmds=new UICommandBuilder();gravity.invoke(page,cmds,force);var frame=wire(cmds,new UIEventBuilder());
+                require(anchor(frame,"#ForceSelection.Anchor").get("Left").getAsInt()==(selected+5)*26+1,"Selection marker follows the actual counterforce");
+                require(Arrays.stream(frame.commands).noneMatch(c->c.selector!=null&&c.selector.matches("#Force[0-9]+\\.Text")),"Selecting a force never widens its label with brackets");
+            }
+        }finally{lease.close();}
+        System.out.println("PASS: real native ACK paced moving wave geometry, exact moving overlays, coupled Space input under held ACK, 49 restored lattice centres and all 11 unclipped gravity selections.");
     }
     private static void verifyCentres(CustomPage frame,String targetName,String liveName,int count){
         for(int i=0;i<count;i++){
@@ -211,6 +290,10 @@ public final class NativeCognitionSymbolsVerification {
     private static boolean flag(CustomPage frame,String selector){
         var command=Arrays.stream(frame.commands).filter(c->selector.equals(c.selector)).findFirst().orElseThrow();
         return JsonParser.parseString(command.data).getAsJsonObject().get("0").getAsBoolean();
+    }
+    private static String label(CustomPage frame,String selector){
+        var command=Arrays.stream(frame.commands).filter(c->selector.equals(c.selector)).findFirst().orElseThrow();
+        return JsonParser.parseString(command.data).getAsJsonObject().get("0").getAsString();
     }
     private static void require(boolean value,String message){if(!value)throw new AssertionError(message);}
 }

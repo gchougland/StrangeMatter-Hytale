@@ -1,0 +1,4 @@
+Group #InventoryRow {
+  Anchor: (Height: 46);
+  LayoutMode: Left;
+}

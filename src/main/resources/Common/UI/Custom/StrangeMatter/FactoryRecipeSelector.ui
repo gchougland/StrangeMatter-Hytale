@@ -1,0 +1,16 @@
+$C = "../Common.ui";
+$B = "SharedButtons.ui";
+$C.@PageOverlay {}
+Group {
+  Anchor: (Width: 1120, Height: 790); Background: #101b2c;
+  Group { Anchor: (Left: 0, Top: 0, Width: 4, Bottom: 0); Background: #8e69bf; HitTestVisible: false; }
+  Label { Anchor: (Left: 26, Top: 24, Width: 1050, Height: 34); Text: "CHOOSE AN ASSEMBLY RECIPE"; Style: (FontSize: 25, TextColor: #85eee9, RenderBold: true); }
+  Label { Anchor: (Left: 26, Top: 64, Width: 1050, Height: 22); Text: "Workbench categories"; Style: (FontSize: 14, TextColor: #b49bd5); }
+  Group #Tabs { Anchor: (Left: 26, Top: 99, Width: 1068, Height: 51); LayoutMode: TopScrolling; ScrollbarStyle: $C.@DefaultScrollbarStyle; }
+  $C.@TextField #Search { Anchor: (Left: 26, Top: 166, Width: 730, Height: 40); PlaceholderText: "Find a discovered recipe"; }
+  Label #RecipeCount { Anchor: (Left: 778, Top: 176, Width: 316, Height: 22); Style: (FontSize: 14, TextColor: #bed0e3, HorizontalAlignment: End); }
+  Group #RecipeRows { Anchor: (Left: 26, Top: 222, Width: 1068, Height: 434); LayoutMode: TopScrolling; ScrollbarStyle: $C.@DefaultScrollbarStyle; Background: #091322; Padding: (Full: 7); }
+  Label #Empty { Anchor: (Left: 60, Top: 375, Width: 1000, Height: 50); Text: "No discovered recipes match this category and search."; Style: (FontSize: 17, TextColor: #adc1d8, HorizontalAlignment: Center, Wrap: true); HitTestVisible: false; }
+  Label #Message { Anchor: (Left: 26, Top: 674, Width: 1068, Height: 42); Style: (FontSize: 14, TextColor: #aabed5, Wrap: true); }
+  $B.@CancelTextButton #Back { @Text = "BACK TO ASSEMBLER"; Anchor: (Left: 26, Top: 730, Width: 1068, Height: 42); }
+}

@@ -1,14 +1,14 @@
 {
   "status": "PASS",
-  "recipes": 69,
-  "embedded": 66,
-  "standalone": 3,
-  "materialsChecked": 460,
+  "recipes": 82,
+  "embedded": 68,
+  "standalone": 14,
+  "materialsChecked": 533,
   "resourceTypesUsed": [
     "SM_Anomaly_Shards",
     "Wood_Planks"
   ],
-  "auditedCatalogRecipes": 80,
+  "auditedCatalogRecipes": 85,
   "sourceAnyShardRecipes": 4,
   "sourceAnyShardMembers": [
     "SM_Chrono_Shard",

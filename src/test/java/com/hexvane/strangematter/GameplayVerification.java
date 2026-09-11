@@ -63,9 +63,22 @@ public final class GameplayVerification {
         nodes.put(new ResonantNetwork.Position(3,0,1),node("SM_Resonant_Conduit",3,0,1));
         var detour=ResonantNetwork.routes(source,nodes,64);
         check(detour.size()==1&&detour.getFirst().wires().size()==4,"Disabled shortest path reroutes through connected active conduits");
+        for(String id:List.of("SM_Reality_Forge","SM_Resonant_Separator","SM_Flux_Furnace","SM_Pattern_Assembler")){
+            var consumer=node(id,2,1,0);var wire=node("SM_Resonant_Conduit",1,1,0);
+            var ports=new HashMap<ResonantNetwork.Position,MachineState>();
+            ports.put(new ResonantNetwork.Position(0,0,0),source);
+            ports.put(new ResonantNetwork.Position(0,1,0),source);
+            ports.put(new ResonantNetwork.Position(1,1,0),wire);
+            ports.put(new ResonantNetwork.Position(2,1,0),consumer);
+            ports.put(new ResonantNetwork.Position(1,2,0),consumer);
+            var reachable=ResonantNetwork.routes(source,ports,64);
+            check(reachable.size()==1&&reachable.getFirst().consumer()==consumer&&reachable.getFirst().wires().size()==1,"One consumer per multiblock, with power entering the generator's upper face: "+id);
+            source.energy=1000;consumer.energy=0;
+            check(ResonantNetwork.transfer(source,reachable.getFirst(),500,73,500,.05,new HashMap<>())==73&&source.energy==927,"Each factory obeys its own capacity: "+id);
+        }
     }
     private static void recipes() throws Exception {
-        var recipes=ForgeRecipe.load();check(recipes.size()==12,"All eleven original forge recipes and the Anomaly Nullifier");
+        var recipes=ForgeRecipe.load();check(recipes.size()==15,"Original forge recipes, Anomaly Nullifier and three powered machines");
         Set<String> ids=new HashSet<>();
         for(var recipe:recipes){
             check(ids.add(recipe.id)&&recipe.quantity>0,"Unique productive recipe");
@@ -75,7 +88,8 @@ public final class GameplayVerification {
             check(recipe.totalCost().values().stream().mapToInt(n->n).sum()==expected,"Both ingredients and additional shard costs preserved");
         }
         check(ids.containsAll(Set.of("chrono_blister","containment_capsule","echo_vacuum","echoform_imprinter","graviton_hammer","hoverboard","levitation_pad","resonance_condenser","rift_stabilizer","stasis_projector","warp_gun","anomaly_nullifier")),"Original forge recipe identities preserved beside the new device");
-        check(ResearchCatalog.nodes().size()==26,"All original research nodes");
+        check(ids.containsAll(Set.of("resonant_separator","flux_furnace","pattern_assembler")),"All powered production machines are obtainable");
+        check(ResearchCatalog.nodes().size()==30,"Original research and four automation discoveries");
         for(var node:ResearchCatalog.nodes())for(String pre:node.prerequisites())check(ResearchCatalog.get(pre)!=null,"Research prerequisite exists");
     }
     private static void check(boolean value,String message){if(!value)throw new AssertionError(message);}

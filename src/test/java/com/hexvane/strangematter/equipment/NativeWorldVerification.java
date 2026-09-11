@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.equipment;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.hexvane.strangematter.StrangeMatterConfig;
 import com.hexvane.strangematter.StrangeMatterInteraction;
 import com.hexvane.strangematter.anomaly.AnomalyService;
@@ -40,12 +42,15 @@ public final class NativeWorldVerification extends JavaPlugin {
             research=new ResearchService(getDataDirectory());anomalies=new AnomalyService(getDataDirectory());
             var config=new StrangeMatterConfig();config.giveStarterTablet=false;
             machines=new MachineService(getDataDirectory(),config,research,anomalies);
+            com.hexvane.strangematter.automation.FactoryService.register(this);
+            com.hexvane.strangematter.automation.TubeService.register(getChunkStoreRegistry(),getEntityStoreRegistry());
             getCodecRegistry(Interaction.CODEC).register("SM_Use",StrangeMatterInteraction.class,StrangeMatterInteraction.CODEC);
             getCodecRegistry(RandomTickProcedure.CODEC).register("SM_Anomalous_Grass",AnomalousGrassService.class,AnomalousGrassService.CODEC);
             getChunkStoreRegistry().registerSystem(new com.hexvane.strangematter.block.FixtureLightingRefresh());
             getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.equipment.HoverboardRiderPose.RestoreOnRemove());
             getEntityStoreRegistry().registerSystem(new LevitationInputSystem());
             getEntityStoreRegistry().registerSystem(new LevitationInputSystem.RemoveSystem());
+            getEntityStoreRegistry().registerSystem(new NativeFactoryPickupVerification.BreakBridge());
             getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.anomaly.NativeWarpGateTeleportVerification.RequestObserver());
             getEntityStoreRegistry().registerSystem(anomalies.gravityInputSystem());
             getEntityStoreRegistry().registerSystem(anomalies.gravitySystem());
@@ -56,16 +61,32 @@ public final class NativeWorldVerification extends JavaPlugin {
             getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.anomaly.GravityTerrainEvents.EnvironmentBreak(anomalies));
             com.hexvane.strangematter.anomaly.ThoughtwellHallucinations.register(getEntityStoreRegistry());
             getEventRegistry().registerGlobal(com.hypixel.hytale.server.core.universe.world.events.ChunkPreLoadProcessEvent.class,naturalGateVerification::onPreLoad);
+            getEventRegistry().registerGlobal(com.hypixel.hytale.event.EventPriority.LAST,com.hypixel.hytale.server.core.universe.world.events.ChunkSectionPreLoadProcessEvent.class,naturalGateVerification::onSectionPreLoad);
         }catch(Exception ex){throw new IllegalStateException(ex);}
     }
     @Override protected void start(){
-        CompletableFuture.delayedExecutor(90,TimeUnit.SECONDS).execute(()->finish(new TimeoutException("Native world smoke exceeded90 seconds")));
+        int timeout=Boolean.getBoolean("strangematter.benchmarks")?300:90;
+        CompletableFuture.delayedExecutor(timeout,TimeUnit.SECONDS).execute(()->finish(new TimeoutException("Native verification exceeded "+timeout+" seconds")));
         Universe.get().getUniverseReady().thenCompose(ignored->{
             var config=new WorldConfig();config.setWorldGenProvider(new FlatWorldGenProvider());config.setSpawningNPC(false);config.setIsSpawnMarkersEnabled(false);config.setBlockTicking(false);config.setCanUnloadChunks(false);
             String name="sm_verification_"+UUID.randomUUID().toString().replace("-","");
             return Universe.get().makeWorld(name,Universe.get().validateWorldPath(name),config);
-        }).thenCompose(world->CompletableFuture.allOf(world.getChunkAsync(ChunkUtil.indexChunk(0,0)),world.getChunkAsync(ChunkUtil.indexChunk(1,0)))
-                .thenComposeAsync(ignored->{verify(world);return naturalGateVerification.verifyAsync(getDataDirectory());},world))
+        }).thenCompose(world->CompletableFuture.allOf(WorldAccess.load(world,ChunkUtil.indexChunk(0,0)),WorldAccess.load(world,ChunkUtil.indexChunk(1,0)))
+                .thenComposeAsync(ignored->{
+                    try { dev.zero.atlasaudit.StrangeMatterAtlasCheck.verify(); }
+                    catch(Exception ex){throw new CompletionException(ex);}
+                    if(Boolean.getBoolean("strangematter.benchmarks")) {
+                        try { com.hexvane.strangematter.automation.NativePerformanceBenchmarks.run(world,research,machines,getDataDirectory()); }
+                        catch(Exception ex){throw new CompletionException(ex);}
+                        return CompletableFuture.completedFuture(null);
+                    }
+                    verify(world);
+                    return NativeFactoryVerification.verifyAsync(world,research)
+                            .thenComposeAsync(unused->com.hexvane.strangematter.automation.NativeTubeVerification.verifyAsync(world),world)
+                            .thenRunAsync(()->{try{com.hexvane.strangematter.automation.NativeTubeUseVerification.verify(world);}catch(Exception error){throw new CompletionException(error);}},world)
+                            .thenRunAsync(()->{try{com.hexvane.strangematter.automation.NativeTubeBackendVerification.verify(world);}catch(Exception error){throw new CompletionException(error);}},world)
+                            .thenComposeAsync(unused->naturalGateVerification.verifyAsync(getDataDirectory()),world);
+                },world))
           .whenComplete((ignored,error)->finish(error));
     }
     private void verify(World world){
@@ -73,7 +94,7 @@ public final class NativeWorldVerification extends JavaPlugin {
         verifyRecipePackets();
         try {com.hexvane.strangematter.ui.NativeCognitionSymbolsVerification.verify();}
         catch(Exception ex){throw new IllegalStateException(ex);}
-        try {com.hexvane.strangematter.research.ResearchNoteVerification.verify();com.hexvane.strangematter.research.ResearchUnlockVerification.verify(world);}
+        try {com.hexvane.strangematter.research.ResearchNoteVerification.verify();com.hexvane.strangematter.research.ResearchUnlockVerification.verify(world);com.hexvane.strangematter.research.ResearchAdminVerification.verify(world);}
         catch(Exception ex){throw new IllegalStateException(ex);}
         verifyReservedMetadata();
         verifyForgeIngredients();
@@ -91,6 +112,8 @@ public final class NativeWorldVerification extends JavaPlugin {
         NativeHeldLightVerification.verify();
         com.hexvane.strangematter.block.NativeGrassStatusIconVerification.verify();
         try {com.hexvane.strangematter.block.NativeFixtureLightingVerification.verify(world);}
+        catch(Exception ex){throw new IllegalStateException(ex);}
+        try {com.hexvane.strangematter.block.NativeFloorLightingVerification.verify(world);}
         catch(Exception ex){throw new IllegalStateException(ex);}
         try {NativeFurnitureVerification.verify(world);}
         catch(Exception ex){throw new IllegalStateException(ex);}
@@ -122,6 +145,10 @@ public final class NativeWorldVerification extends JavaPlugin {
         try {com.hexvane.strangematter.anomaly.NativeRiftHatVerification.verify(world);NativeMobilityRevisionVerification.verify(world);com.hexvane.strangematter.anomaly.NativeTerrainHostVerification.verify(world);}
         catch(Exception ex){throw new IllegalStateException(ex);}
         var failures=new java.util.ArrayList<Throwable>();
+        verifyIndependent(failures,"Generation sections",()->NativeGenerationSectionVerification.verify(world));
+        verifyIndependent(failures,"Factory tier pickup",()->NativeFactoryPickupVerification.verify(world));
+        verifyIndependent(failures,"Machine native inventory",()->com.hexvane.strangematter.ui.NativeMachineInventoryVerification.verify(world));
+        verifyIndependent(failures,"Gravitic tubes",()->com.hexvane.strangematter.automation.NativeTubeVerification.verify(world));
         verifyIndependent(failures,"Hoverboard rider",()->NativeHoverboardRiderVerification.verify(world));
         verifyIndependent(failures,"Hoverboard presentation",()->NativeHoverboardPresentationVerification.verify(world));
         verifyIndependent(failures,"Thoughtwell",()->com.hexvane.strangematter.anomaly.NativeThoughtwellVerification.verify(world));
@@ -257,9 +284,9 @@ public final class NativeWorldVerification extends JavaPlugin {
         var gson=new Gson();var loaded=gson.fromJson(gson.toJson(state),MachineState.class);
         var returned=loaded.reservedInputs.getFirst().toItemStack();
         require(token.equals(returned.getFromMetadataOrNull("SMAnomaly",Codec.STRING)),"Contained anomaly token survives reserved-input JSON save/reload/refund");
-        require(returned.getQuantity()==1&&returned.getMetadata().equals(capsule.getMetadata()),"Nested BSON and capsule quantity survive reservation");
+        require(returned.getQuantity()==1&&com.hexvane.strangematter.util.StackData.metadata(returned).equals(com.hexvane.strangematter.util.StackData.metadata(capsule)),"Nested BSON and capsule quantity survive reservation");
         require(loaded.reservedInputs.get(1).toItemStack().getDurability()==37,"Reserved durable tool retains durability");
-        require(loaded.fuelQueue.getFirst().toItemStack().getMetadata().equals(metadata),"Fuel queue refunds preserve nested metadata");
+        require(com.hexvane.strangematter.util.StackData.metadata(loaded.fuelQueue.getFirst().toItemStack()).equals(metadata),"Fuel queue refunds preserve nested metadata");
     }
     private void verifyForgeIngredients(){
         var inventory=new com.hypixel.hytale.server.core.inventory.container.SimpleItemContainer((short)8);
@@ -295,7 +322,7 @@ public final class NativeWorldVerification extends JavaPlugin {
     }
     private void finish(Throwable error){
         if(!finished.compareAndSet(false,true))return;
-        String message=error==null?"NATIVE_WORLD_VERIFICATION_PASSED: colored grass border and Thoughtwell icon, surfing Action packets with preserved avatar and skin, energetic presentation and directed stabilizer arcs, scheduled rift exposure and grounding, fixtures, machines, mounted player lifecycle, inventory recovery, research/recipes, fuel/Forge controls, capsules, hammer, terrain, conduits and anomaly lifecycles.":"NATIVE_WORLD_VERIFICATION_FAILED: "+error;
+        String message=Boolean.getBoolean("strangematter.benchmarks")?(error==null?"NATIVE_BENCHMARKS_PASSED: server component timing and loaded atlas audit.":"NATIVE_BENCHMARKS_FAILED: "+error):error==null?"NATIVE_WORLD_VERIFICATION_PASSED: colored grass border and Thoughtwell icon, surfing Action packets with preserved avatar and skin, energetic presentation and directed stabilizer arcs, scheduled rift exposure and grounding, fixtures, machines, mounted player lifecycle, inventory recovery, research/recipes, fuel/Forge controls, capsules, hammer, terrain, conduits and anomaly lifecycles.":"NATIVE_WORLD_VERIFICATION_FAILED: "+error;
         System.out.println(message);if(error!=null)error.printStackTrace();
         try{Files.writeString(Path.of("native-world-result.txt"),message+"\n");}catch(Exception ex){ex.printStackTrace();}
         CompletableFuture.runAsync(()->HytaleServer.get().shutdownServer());

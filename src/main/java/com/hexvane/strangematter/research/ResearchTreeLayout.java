@@ -2,7 +2,7 @@ package com.hexvane.strangematter.research;
 
 import java.util.*;
 
-/** Original tablet coordinates, fitted to a native screen with orthogonal PCB routing. */
+/** Original foundation map and tiered Forge branches with orthogonal PCB routing. */
 public final class ResearchTreeLayout {
     public static final int WIDTH=728, NODE_WIDTH=128, NODE_HEIGHT=68, GRID=4;
     private static final Set<String> GENERAL=Set.of("research","field_scanner","anomaly_shards","anomaly_types","resonite","resonant_energy","tinfoil_hat","anomaly_resonator","reality_forge","gravity_anomalies","temporal_anomalies","spatial_anomalies","energy_anomalies","shadow_anomalies","cognitive_anomalies");
@@ -14,32 +14,65 @@ public final class ResearchTreeLayout {
         at("reality_forge_category",-80,240),at("resonance_condenser",-160,160),at("containment_basics",-80,400),
         at("echoform_imprinter",80,400),at("warp_gun",0,320),at("chrono_blister",0,480),at("graviton_hammer",-80,480),
         at("stasis_projector",80,240),at("rift_stabilizer",0,160),at("levitation_pad",-240,240),at("hoverboard",-240,400));
+    // Power and field equipment stay at the left. Containment equipment and
+    // transport machinery have separate lanes, with descendants below their parent.
+    private static final Map<String,int[]> FORGE=Map.ofEntries(
+        at("reality_forge_category",300,16),
+        at("resonance_condenser",12,144),at("containment_basics",300,144),at("gravitic_transport",588,144),
+        at("rift_stabilizer",12,280),at("stasis_projector",12,416),at("levitation_pad",12,552),
+        at("echoform_imprinter",156,280),at("warp_gun",300,280),
+        at("chrono_blister",156,416),at("graviton_hammer",300,416),at("hoverboard",228,552),
+        at("resonant_separation",588,280),at("flux_smelting",588,416),at("pattern_assembly",588,552));
     private static Map.Entry<String,int[]> at(String id,int x,int y){return Map.entry(id,new int[]{x,y});}
     public record Node(ResearchNode research,int x,int y){public int cx(){return x+64;}public int cy(){return y+24;}}
-    public record Segment(String parent,String child,int x,int y,int width,int height){}
+    /** parent owns research state; source is only the visible routing anchor. */
+    public record Segment(String parent,String child,String source,int x,int y,int width,int height){}
     public record Plan(List<Node> nodes,List<Segment> traces,int height){}
     public static Plan arrange(List<ResearchNode> catalog,String category){
         var nodes=new ArrayList<Node>();int extra=0;boolean general=category.equals("general");
         for(var node:catalog){
             if(!node.category().equals(category))continue;
-            int[] original=GENERAL.contains(node.id())==general?ORIGINAL.get(node.id()):null;int x,y;
-            if(original!=null){x=general?36+(original[0]/80+2)*176:12+(original[0]/80+3)*144;y=general?8+(original[1]/80+3)*76:48+(original[1]/80-2)*76;}
-            else{x=12+(extra%5)*144;y=484+(extra/5)*92;extra++;}
+            int[] original=general?(GENERAL.contains(node.id())?ORIGINAL.get(node.id()):null):FORGE.get(node.id());int x,y;
+            if(original!=null){x=general?36+(original[0]/80+2)*176:original[0];y=general?8+(original[1]/80+3)*76:original[1];}
+            else{x=12+(extra%5)*144;y=(general?484:688)+(extra/5)*92;extra++;}
             nodes.add(new Node(node,x,y));
         }
         int height=Math.max(464,nodes.stream().mapToInt(n->n.y+NODE_HEIGHT+16).max().orElse(464));
         var byId=new HashMap<String,Node>();for(var node:nodes)byId.put(node.research.id(),node);
         var segments=new ArrayList<Segment>();
         for(var child:nodes)for(String parentId:child.research.prerequisites()){
-            var parent=byId.get(parentId);if(parent==null)continue;
-            var path=route(parent,child,nodes,height);
+            var parent=byId.get(visibleParent(parentId,byId.keySet()));if(parent==null||parent==child)continue;
+            var path=general?null:branchRoute(parent,child,nodes);
+            if(path==null)path=route(parent,child,nodes,height);
             for(int i=1;i<path.size();i++){
                 var a=path.get(i-1);var b=path.get(i);
-                segments.add(new Segment(parentId,child.research.id(),Math.min(a[0],b[0]),Math.min(a[1],b[1]),Math.max(2,Math.abs(a[0]-b[0])+2),Math.max(2,Math.abs(a[1]-b[1])+2)));
-                if(i<path.size()-1)segments.add(new Segment(parentId,child.research.id(),b[0]-2,b[1]-2,6,6));
+                segments.add(new Segment(parentId,child.research.id(),parent.research.id(),Math.min(a[0],b[0]),Math.min(a[1],b[1]),Math.max(2,Math.abs(a[0]-b[0])+2),Math.max(2,Math.abs(a[1]-b[1])+2)));
+                if(i<path.size()-1)segments.add(new Segment(parentId,child.research.id(),parent.research.id(),b[0]-2,b[1]-2,6,6));
             }
         }
         return new Plan(List.copyOf(nodes),List.copyOf(segments),height);
+    }
+    /** The category proxy never becomes a new gameplay prerequisite. */
+    public static String visibleParent(String prerequisite,Set<String> visible){
+        return !visible.contains(prerequisite)&&prerequisite.equals("reality_forge")&&visible.contains("reality_forge_category")?"reality_forge_category":prerequisite;
+    }
+    /** Separate buses make the root, containment and transport dependencies unambiguous. */
+    private static List<int[]> branchRoute(Node start,Node end,List<Node> nodes){
+        List<int[]> path;
+        if(start.research.id().equals("reality_forge_category")&&Set.of("resonance_condenser","rift_stabilizer","stasis_projector","levitation_pad").contains(end.research.id()))
+            path=List.of(new int[]{start.cx(),start.cy()},new int[]{start.cx(),104},new int[]{4,104},new int[]{4,end.cy()},new int[]{end.cx(),end.cy()});
+        else if(start.research.id().equals("containment_basics")||start.research.id().equals("gravitic_transport")){
+            int lane=start.research.id().equals("containment_basics")?436:548;
+            path=List.of(new int[]{start.cx(),start.cy()},new int[]{lane,start.cy()},new int[]{lane,end.y-32},new int[]{end.cx(),end.y-32},new int[]{end.cx(),end.cy()});
+        }else return null;
+        // A pack may add or move research cards. Use the general obstacle router
+        // whenever a routing hint would intersect one of those unrelated cards.
+        for(int i=1;i<path.size();i++){
+            var a=path.get(i-1);var b=path.get(i);int x=Math.min(a[0],b[0]),y=Math.min(a[1],b[1]),right=Math.max(a[0],b[0])+2,bottom=Math.max(a[1],b[1])+2;
+            if(x<4||right>WIDTH-4||y<4)return null;
+            for(var other:nodes)if(other!=start&&other!=end&&x<other.x+NODE_WIDTH+4&&right>other.x-4&&y<other.y+NODE_HEIGHT+4&&bottom>other.y-4)return null;
+        }
+        return path;
     }
     /** Routes around unrelated complete node cards, including their labels. */
     private static List<int[]> route(Node start,Node end,List<Node> nodes,int height){
@@ -70,6 +103,7 @@ public final class ResearchTreeLayout {
     }
     public static String icon(ResearchNode node){
         return switch(node.id()){
+            case "resonant_separation"->"SM_Resonant_Separator";case "flux_smelting"->"SM_Flux_Furnace";case "gravitic_transport"->"SM_Gravitic_Tube";case "pattern_assembly"->"SM_Pattern_Assembler";
             case "research"->"SM_Research_Notes";case "anomaly_types"->"SM_Research_Tablet";case "anomaly_shards","gravity_anomalies"->"SM_Gravitic_Shard";
             case "temporal_anomalies"->"SM_Chrono_Shard";case "spatial_anomalies"->"SM_Spatial_Shard";case "energy_anomalies"->"SM_Energetic_Shard";
             case "shadow_anomalies"->"SM_Shade_Shard";case "cognitive_anomalies"->"SM_Insight_Shard";case "resonite"->"SM_Raw_Resonite";

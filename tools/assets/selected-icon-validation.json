@@ -1,12 +1,13 @@
 {
-  "icons": 1,
+  "icons": 2,
   "size": [
     64,
     64
   ],
-  "sourceFilesVerifiedUnchanged": 324,
+  "sourceFilesVerifiedUnchanged": 435,
   "status": "PASS",
   "itemIds": [
-    "SM_Anomaly_Resonator"
+    "SM_Resonite_Roof_Shallow",
+    "SM_Resonite_Roof_Steep"
   ]
 }

@@ -10,6 +10,7 @@ sys.path.insert(0, str(ROOT / 'tools/assets'))
 from content_policy import descriptions as item_descriptions, family_light, model_reference
 from nullifier_content import apply as apply_nullifier_content, add_recipe as add_nullifier_recipe
 from block_support import apply as apply_block_support
+from fixture_toggles import apply as apply_fixture_toggle
 RES = ROOT / 'src/main/resources'
 DEFAULT_MC = pathlib.Path('C:/Users/gchou/Documents/Projects/StrangeMatter-1.20.1/strange-matter')
 DEFAULT_ASSETS = ROOT.parent / 'HytaleSourceCode/hytale-shared-source/HytaleAssets'
@@ -48,6 +49,11 @@ def ingredient(value):
     return 'resource:' + RESOURCE_TAGS[value['tag']]
 def native_inputs(counts):
     return [{'ResourceTypeId' if k.startswith('resource:') else 'ItemId': k.removeprefix('resource:'), 'Quantity': v} for k,v in counts.items()]
+def native_recipe_costs(recipe_id, counts):
+    counts = dict(counts)
+    # The Hytale coil includes the copper winding described by its item lore.
+    if recipe_id == 'resonant_coil': counts['Ingredient_Bar_Copper'] = 1
+    return counts
 def write(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, indent=2) + '\n', encoding='utf-8')
@@ -75,6 +81,7 @@ def main():
             for ing in d['ingredients']: counts[ingredient(ing)]+=1
         else:
             counts[ingredient(d['ingredient'])]+=1
+        counts=native_recipe_costs(f.stem,counts)
         result=d['result']; out=item(result if isinstance(result,str) else result['item']); count=1 if isinstance(result,str) else result.get('count',1)
         rec={'id':f.stem, 'source':str(f.relative_to(a.minecraft)).replace('\\','/'),'output':out,'quantity':count,'ingredients':dict(counts),'shards':d.get('shards',{}),'research':d.get('required_research',''),'seconds':5.0 if t.endswith('reality_forge') else d.get('cookingtime',40)/20.0,'station':'forge' if t.endswith('reality_forge') else 'furnace' if t in ('minecraft:blasting','minecraft:smelting') else 'workbench'}
         recipes.append(rec)
@@ -150,6 +157,7 @@ def main():
             for key,interaction in owner.get('Interactions',{}).items():
                 if isinstance(interaction,dict) and 'Interactions' in interaction:
                     interaction['RequireNewClick']=not (name=='graviton_hammer' and key=='Primary')
+        apply_fixture_toggle(i,d,RES)
         write(RES/f'Server/Item/Items/StrangeMatter/{i}.json',d)
     # Secondary recipes (packing/unpacking and blasting) use standalone native recipe assets.
     for out,rs in standard.items():
@@ -159,7 +167,8 @@ def main():
             write(RES/f'Server/Item/Recipes/StrangeMatter/{hid(r["id"])}.json',{'Input':native_inputs(r['ingredients']),'PrimaryOutput':{'ItemId':out,'Quantity':r['quantity']},'Output':[{'ItemId':out,'Quantity':r['quantity']}],'TimeSeconds':r['seconds'],'BenchRequirement':[{'Type':'Processing' if r['station']=='furnace' else 'Crafting','Id':'Furnace' if r['station']=='furnace' else 'SM_Laboratory',**({} if r['station']=='furnace' else {'Categories':['SM_Laboratory_All']})}]})
     write(RES/'Server/Item/ResourceTypes/StrangeMatter/SM_Anomaly_Shards.json',{'Icon':'Icons/ResourceTypes/SM_Anomaly_Shards.png'})
     lang.extend(f'interactionHints.{key}=Press [{{key}}] to {description}' for key,description in INTERACTION_PROMPTS.items())
-    lang.extend(['benchCategories.sm.laboratory=Strange Matter','ui.itemcategory.SM_StrangeMatter=Strange Matter'])
+    lang.extend(['benchCategories.sm.laboratory=Strange Matter','ui.itemcategory.SM_StrangeMatter=Strange Matter',
+                 'resourceType.SM_Anomaly_Shards.name=Any Anomaly Shard'])
     p=RES/'Server/Languages/en-US/server.lang';p.parent.mkdir(parents=True,exist_ok=True)
     generated={line.split('=',1)[0] for line in lang}
     if p.exists(): lang.extend(line for line in p.read_text(encoding='utf8').splitlines() if '=' in line and line.split('=',1)[0] not in generated and not line.startswith(('interactionHints.SM_Till_Grass=','interactionHints.SM_Resonant_Conduit=','sm.interact=')))
@@ -167,6 +176,8 @@ def main():
     write(RES/'Server/StrangeMatter/recipes.json',recipes)
     apply_nullifier_content(RES)
     add_nullifier_recipe(recipes)
+    import automation_content
+    automation_content.apply(RES)
     write(ROOT/'docs/content-mapping.json',{'sourceItems':len(items),'sourceBlocks':len(blocks),'recipes':len(recipes),'portAddedItems':['SM_Laboratory_Bench','SM_Anomaly_Nullifier'],'nativeCraftingBench':'SM_Laboratory','vanillaIngredientMapping':MAP,'ingredientTagResources':RESOURCE_TAGS,'items':{n:hid(n) for n in items}})
     print(f'Generated {len(items)} items, {len(blocks)-1} placeable block types and {len(recipes)} audited recipes.')
 

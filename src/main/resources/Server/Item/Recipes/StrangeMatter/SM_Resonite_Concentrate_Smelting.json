@@ -1,0 +1,25 @@
+{
+  "Input": [
+    {
+      "ItemId": "SM_Resonite_Concentrate",
+      "Quantity": 1
+    }
+  ],
+  "PrimaryOutput": {
+    "ItemId": "SM_Resonite_Ingot",
+    "Quantity": 1
+  },
+  "Output": [
+    {
+      "ItemId": "SM_Resonite_Ingot",
+      "Quantity": 1
+    }
+  ],
+  "TimeSeconds": 10,
+  "BenchRequirement": [
+    {
+      "Type": "Processing",
+      "Id": "Furnace"
+    }
+  ]
+}

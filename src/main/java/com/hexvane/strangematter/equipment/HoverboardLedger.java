@@ -49,8 +49,8 @@ final class HoverboardLedger {
         }
         if(changed)save();
     }
-    static String encode(ItemStack item){return ItemStack.CODEC.encode(item).asDocument().toJson(BSON);}
-    static ItemStack decode(String item){return ItemStack.CODEC.decode(BsonDocument.parse(item));}
+    static String encode(ItemStack item){return ItemStack.CODEC.encode(item,new com.hypixel.hytale.codec.ExtraInfo()).asDocument().toJson(BSON);}
+    static ItemStack decode(String item){return ItemStack.CODEC.decode(BsonDocument.parse(item),new com.hypixel.hytale.codec.ExtraInfo());}
     static String token(ItemStack item){return ItemStack.isEmpty(item)?null:item.getFromMetadataOrNull(TOKEN,Codec.STRING);}
     static UUID identity(String token){try{var parts=token.split(":",-1);if(parts.length!=2)return null;UUID.fromString(parts[1]);return UUID.fromString(parts[0]);}catch(RuntimeException ex){return null;}}
     synchronized Receipt prepare(UUID owner,ItemStack item){

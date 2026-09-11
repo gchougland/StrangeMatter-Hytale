@@ -128,6 +128,10 @@
     {
       "title": "Using the Reality Forge",
       "content": "The Reality Forge operates\non principles of resonant\nfrequency manipulation.\n\nPlace your target item\nin the main slot, then\nselect the appropriate\nanomaly shard type.\n\nThe forge will carefully\ninfuse the item with\nanomaly energy, creating\nnew properties and\ncapabilities.\n\nEach shard type produces\ndifferent effects on the\ninfused item."
+    },
+    {
+      "title": "Powered forging",
+      "content": "The Reality Forge now uses resonant power. Keep ingredients in its supply inventory. Starting a job reserves those exact materials. A lack of power pauses progress. Stop returns reserved ingredients without refunding power already used. Finished items stay in the output inventory. Repeat uses the owner's discoveries."
     }
   ],
   "reality_forge_category": [
@@ -310,6 +314,34 @@
       "title": "Crafting the Tinfoil Hat",
       "content": "The Tinfoil Hat is crafted using 5 resonite ingots arranged in a helmet pattern in a standard crafting table:\n\n",
       "recipe": "tinfoil_hat"
+    }
+  ],
+  "resonant_separation": [
+    {
+      "title": "Resonant Separation",
+      "content": "Supply the Resonant Separator with supported raw ore and resonant power. It makes twice the normal metal yield as concentrate. Smelt concentrate in a regular furnace or a Flux Furnace. Bars, blocks, shards and concentrate cannot be separated again.",
+      "recipe": "resonant_separator"
+    }
+  ],
+  "flux_smelting": [
+    {
+      "title": "Flux Smelting",
+      "content": "The Flux Furnace uses resonant power instead of fuel. Insert ordinary furnace ingredients or metal concentrate and it chooses the recipe automatically. It keeps all recipe outputs and smelts twenty percent faster than a regular furnace at the same tier. Electricity makes no charcoal. Upgrade inside the machine to add five ingredient slots and improve its speed.",
+      "recipe": "flux_furnace"
+    }
+  ],
+  "gravitic_transport": [
+    {
+      "title": "Gravitic Transport",
+      "content": "Connect Gravitic Tubes to supported storage and machine inventories. Choose Take from container at the source and Send into container at the destination. Set the correct ingredient, fuel or finished item section. Filters, priority and stock limits control each connection. Tubes need no resonant power. Items stay in their source until the visible batch arrives safely.",
+      "recipe": "gravitic_tube"
+    }
+  ],
+  "pattern_assembly": [
+    {
+      "title": "Pattern Assembly",
+      "content": "Press Choose Recipe to open the Workbench category tabs. Pick a discovered recipe, then supply its ingredients and resonant power. Craft once or enable Repeat and choose how many finished items to keep in this machine. The assembler works slowly for you while powered. The owner provides recipe knowledge, even while offline. Visitors cannot lend their discoveries. Upgrade using the ordinary Workbench tier materials plus resonant parts. Other crafting stations keep their own recipes.",
+      "recipe": "pattern_assembler"
     }
   ]
 }

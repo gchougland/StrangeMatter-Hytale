@@ -1,5 +1,8 @@
 package com.hexvane.strangematter.anomaly;
 
+import com.hexvane.strangematter.util.WorldAccess;
+import com.hexvane.strangematter.worldgen.GenerationColumn;
+
 import com.hypixel.hytale.builtin.adventure.farming.states.FarmingBlock;
 import com.hexvane.strangematter.effects.GadgetEffects;
 import com.hypixel.hytale.component.*;
@@ -307,7 +310,7 @@ final class HytaleAnomalyEffects {
                 return false;
             }
             var p=a.shadowMobPositions.get(id);
-            boolean removed=ref!=null || (p!=null && world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock((int)Math.floor(p[0]),(int)Math.floor(p[2])))!=null);
+            boolean removed=ref!=null || (p!=null && WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock((int)Math.floor(p[0]),(int)Math.floor(p[2])))!=null);
             if(removed)a.shadowMobPositions.remove(id);return removed;
         });
         for(var ref:entities(world,a)) if(ref.isValid()) {
@@ -363,13 +366,13 @@ final class HytaleAnomalyEffects {
         int minZ=(int)Math.floor(position.z+box.getMin().z),maxZ=(int)Math.floor(position.z+box.getMax().z);
         if(minY<1 || maxY>=320)return false;
         for(int x=minX;x<=maxX;x++)for(int z=minZ;z<=maxZ;z++) {
-            var chunk=world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock(x,z));if(chunk==null)return false;
+            var chunk=WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock(x,z));if(chunk==null)return false;
             for(int y=minY;y<=maxY;y++) {
-                if(chunk.getFluidId(x,y,z)!=0)return false;
-                var block=chunk.getBlockType(x,y,z);if(block==null || block.getDamageToEntities()>0)return false;
+                if(WorldAccess.fluid(chunk,x,y,z)!=0)return false;
+                var block=WorldAccess.blockType(chunk,x,y,z);if(block==null || block.getDamageToEntities()>0)return false;
             }
-            var support=chunk.getBlockType(x,minY-1,z);if(support!=null && support.getDamageToEntities()>0)return false;
-            if(chunk.getFluidId(x,minY-1,z)!=0)return false;
+            var support=WorldAccess.blockType(chunk,x,minY-1,z);if(support!=null && support.getDamageToEntities()>0)return false;
+            if(WorldAccess.fluid(chunk,x,minY-1,z)!=0)return false;
         }
         int result=CollisionModule.get().validatePosition(world,box,position,new CollisionResult());
         // The heightmap records opacity, not support. Bread, moss and other noncolliding
@@ -377,11 +380,11 @@ final class HytaleAnomalyEffects {
         return result!=CollisionModule.VALIDATE_INVALID && (result&CollisionModule.VALIDATE_ON_GROUND)!=0;
     }
     static Vector3d safeSurface(World world,int x,int z) {
-        WorldChunk chunk=world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock(x,z));
+        WorldChunk chunk=WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock(x,z));
         if(chunk==null) return null;
         int y=chunk.getHeight(x,z)+1;
-        if(y<2 || y>315 || chunk.getBlock(x,y,z)!=0 || chunk.getBlock(x,y+1,z)!=0 || chunk.getFluidId(x,y,z)!=0 || chunk.getFluidId(x,y+1,z)!=0) return null;
-        var ground=chunk.getBlockType(x,y-1,z);
+        if(y<2 || y>315 || WorldAccess.block(chunk,x,y,z)!=0 || WorldAccess.block(chunk,x,y+1,z)!=0 || WorldAccess.fluid(chunk,x,y,z)!=0 || WorldAccess.fluid(chunk,x,y+1,z)!=0) return null;
+        var ground=WorldAccess.blockType(chunk,x,y-1,z);
         if(ground==null || ground.getId().contains("Water") || ground.getId().contains("Lava") || ground.getId().contains("Leaves")) return null;
         return new Vector3d(x+.5,y,z+.5);
     }
@@ -391,8 +394,8 @@ final class HytaleAnomalyEffects {
             if(dx*dx+dy*dy+dz*dz>radius*radius) continue;
             int x=(int)Math.floor(center.x)+dx,y=(int)Math.floor(center.y)+dy,z=(int)Math.floor(center.z)+dz;
             if(y<0 || y>319) continue;
-            var c=world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock(x,z)); if(c==null) continue;
-            var b=c.getBlockType(x,y,z);
+            var c=WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock(x,z)); if(c==null) continue;
+            var b=WorldAccess.blockType(c,x,y,z);
             // Stabilizers are evaluated by the enabled machine grounding hook. A physical
             // disabled stabilizer must not silently ground a rift just by existing nearby.
             if(b!=null && b.getId().contains("Lightning_Rod")) return true;
@@ -406,7 +409,9 @@ final class HytaleAnomalyEffects {
             case ECHOING_SHADOW->"SM_Shade_Shard_Ore";case THOUGHTWELL->"SM_Insight_Shard_Ore";
         };
     }
-    void terrainGenerated(WorldChunk chunk,AnomalyRecord a,Random random,AnomalyGenerationSettings settings) {
+    void terrainGenerated(WorldChunk chunk,AnomalyRecord a,Random random,AnomalyGenerationSettings settings) {terrainGenerated(GenerationColumn.loaded(chunk),a,random,settings);}
+    void terrainGenerated(GenerationColumn terrain,AnomalyRecord a,Random random,AnomalyGenerationSettings settings) {
+        var chunk=terrain.chunk;
         if(!settings.terrainPatches)return;
         String shard=shardOre(a.type);
         int radius=a.type==AnomalyType.WARP_GATE?5:4,resonitePlaced=0,shardsPlaced=0;
@@ -417,45 +422,44 @@ final class HytaleAnomalyEffects {
             // Only newly generated pre-load chunks enter here. Never cross into an existing
             // adjacent chunk or retrofit terrain underneath player builds or released capsules.
             if(ChunkUtil.chunkCoordinate(x)!=chunk.getX() || ChunkUtil.chunkCoordinate(z)!=chunk.getZ())continue;
-            int ground=chunk.getHeight(x,z);if(Math.abs(ground-a.terrainReferenceY())>8)continue;
+            int ground=terrain.height(x,z);if(Math.abs(ground-a.terrainReferenceY())>8)continue;
             columns.add(new org.joml.Vector3i(x,ground-1,z));
             // Sand, clay, gravel, mud, ash, snow and every other unshaped native soil family
             // participate, including buried soil. Only the raw freshly generated holder is edited.
             for(int y=ground;y>0;y--) {
-                var soil=chunk.getBlockType(x,y,z);
+                var soil=terrain.type(x,y,z);
                 if(soil!=null&&AnomalyTerrain.soil(soil.getId()))
-                    setGeneratedBlock(chunk,x,y,z,y==ground?"SM_Anomalous_Grass":"SM_Anomalous_Dirt");
+                    setGeneratedBlock(terrain,x,y,z,y==ground?"SM_Anomalous_Grass":"SM_Anomalous_Dirt");
             }
-            if(random.nextDouble()<settings.resoniteColumnChance)resonitePlaced+=oreColumn(chunk,x,ground-1,z,"SM_Resonite_Ore",random);
-            if(random.nextDouble()<settings.shardColumnChance)shardsPlaced+=oreColumn(chunk,x,ground-1,z,shard,random);
+            if(random.nextDouble()<settings.resoniteColumnChance)resonitePlaced+=oreColumn(terrain,x,ground-1,z,"SM_Resonite_Ore",random);
+            if(random.nextDouble()<settings.shardColumnChance)shardsPlaced+=oreColumn(terrain,x,ground-1,z,shard,random);
         }
         // Preserve the source density rolls, but each generated field with suitable geology
         // also guarantees its two advertised resources. An explicit zero chance still disables it.
         Collections.shuffle(columns,random);
         for(var c:columns) {
-            if(resonitePlaced==0 && settings.resoniteColumnChance>0)resonitePlaced+=oreColumn(chunk,c.x,c.y,c.z,"SM_Resonite_Ore",random);
-            if(shardsPlaced==0 && settings.shardColumnChance>0)shardsPlaced+=oreColumn(chunk,c.x,c.y,c.z,shard,random);
+            if(resonitePlaced==0 && settings.resoniteColumnChance>0)resonitePlaced+=oreColumn(terrain,c.x,c.y,c.z,"SM_Resonite_Ore",random);
+            if(shardsPlaced==0 && settings.shardColumnChance>0)shardsPlaced+=oreColumn(terrain,c.x,c.y,c.z,shard,random);
             if((resonitePlaced>0||settings.resoniteColumnChance<=0)&&(shardsPlaced>0||settings.shardColumnChance<=0))break;
         }
     }
     static boolean oreHost(String name) { return AnomalyTerrain.rock(name); }
-    private int oreColumn(WorldChunk chunk,int x,int y,int z,String id,Random random) {
+    private int oreColumn(GenerationColumn terrain,int x,int y,int z,String id,Random random) {
         if(BlockType.getAssetMap().getAsset(id)==null)return 0;
         int length=1+random.nextInt(3),placed=0;
         // The source walks to the world's bottom; a shallow arbitrary 24-block cap missed
         // the bedrock under Hytale's deep soil/sediment layers and cave ceilings.
         for(int blockY=y;blockY>0 && placed<length;blockY--) {
-            var old=chunk.getBlockType(x,blockY,z);if(old==null)continue;
+            var old=terrain.type(x,blockY,z);if(old==null)continue;
             if(!oreHost(old.getId())) {if(placed>0)break;continue;}
-            setGeneratedBlock(chunk,x,blockY,z,id);placed++;
+            setGeneratedBlock(terrain,x,blockY,z,id);placed++;
         }
         return placed;
     }
-    private void setGeneratedBlock(WorldChunk chunk,int x,int y,int z,String id) {
+    private void setGeneratedBlock(GenerationColumn terrain,int x,int y,int z,String id) {
         int blockId=BlockType.getAssetMap().getIndex(id);if(blockId<0)return;
         // Direct holder mutation is the worldgen path: no live ECS, drops, inventory, or player placement is touched.
-        chunk.getBlockChunk().getSectionAtBlockY(y).set(x,y,z,blockId,0,0);
-        chunk.markNeedsSaving();
+        terrain.set(x,y,z,id);
     }
     void crops(World world,AnomalyRecord a,Random random) {
         // Crop mutation matches the original ±1..2 stages, five vertical levels, every five seconds.

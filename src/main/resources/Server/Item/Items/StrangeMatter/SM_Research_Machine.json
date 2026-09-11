@@ -7,7 +7,9 @@
   "MaxStack": 25,
   "Categories": [
     "Furniture.Benches",
-    "SM_StrangeMatter.All"
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Machines",
+    "SM_StrangeMatter.Research"
   ],
   "PlayerAnimationsId": "Block",
   "Quality": "Uncommon",
@@ -49,7 +51,14 @@
         "RequireNewClick": true
       }
     },
-    "InteractionHint": "server.interactionHints.SM_Research_Machine"
+    "InteractionHint": "server.interactionHints.SM_Research_Machine",
+    "BlockEntity": {
+      "Components": {
+        "ItemContainerBlock": {
+          "Capacity": 1
+        }
+      }
+    }
   },
   "Interactions": {
     "Primary": "Block_Primary",
@@ -95,5 +104,6 @@
       }
     ],
     "KnowledgeRequired": true
-  }
+  },
+  "SubCategory": "SM_ResearchEquipment"
 }

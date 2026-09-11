@@ -55,7 +55,7 @@ def separate(a, b):
 
 def validate(files):
     forge, research = files['RealityForge.ui'], files['ResearchMachine.ui']
-    for source, selector in ((forge, 'Recipes'), (research, 'Notes')):
+    for source, selector in ((forge, 'Recipes'),):
         scrolling = block(source, selector)
         assert 'LayoutMode: TopScrolling;' in scrolling, f'#{selector} must scroll'
         assert 'ScrollbarStyle: $C.@DefaultScrollbarStyle;' in scrolling, f'#{selector} needs native scrollbar'
@@ -95,10 +95,12 @@ def validate(files):
     a = anchor(picker)
     assert a['Left'] == 0 and a['Top'] <= 92 and a['Width'] >= 960 and a['Top'] + a['Height'] >= 572, 'Picker must cover all six instruments'
     assert re.search(r'Background:\s*#[0-9a-fA-F]{6};', picker), 'Picker needs an opaque background'
-    separate(rect(block(picker, 'Notes'), 960, 508), rect(block(picker, 'NoteDetails'), 960, 508))
+    separate(rect(block(picker, 'ResearchInventory'), 984, 610), rect(block(picker, 'NoteDetails'), 984, 610))
+    assert anchor(block(picker, 'ResearchInventory')) == {'Left': 0, 'Top': 294, 'Width': 984, 'Height': 310}
+    assert '#InsertNote' not in research and '#Notes {' not in research, 'Notes must use the real machine inventory slot'
     detail = block(picker, 'NoteDetails')
-    controls = ['NoteIcon', 'NoteTitle', 'NoteDescription', 'NoteDisciplines', 'NotePrerequisites', 'InsertNote']
-    bounds = [rect(block(detail, selector), 562, 379) for selector in controls]
+    controls = ['NoteIcon', 'NoteTitle', 'NoteDescription', 'NoteDisciplines', 'NotePrerequisites', 'ViewInstruments']
+    bounds = [rect(block(detail, selector), 964, 196) for selector in controls]
     for i, first in enumerate(bounds):
         for other in bounds[i + 1:]:
             separate(first, other)
@@ -119,7 +121,7 @@ def main():
     mutations = [
         ('RealityForge.ui', 'LayoutMode: TopScrolling;', 'LayoutMode: Top;'),
         ('ForgeRecipeRow.ui', 'HitTestVisible: false;', 'HitTestVisible: true;'),
-        ('ResearchMachine.ui', 'Width: 960, Height: 508', 'Width: 960, Height: 300'),
+        ('ResearchMachine.ui', 'Width: 984, Height: 610', 'Width: 984, Height: 300'),
         ('ResearchNoteRow.ui', 'Top: 52, Right: 10', 'Top: 35, Right: 10'),
         ('RealityForge.ui', 'Left: 235, Top: 2, Width: 103', 'Left: 220, Top: 2, Width: 103'),
     ]

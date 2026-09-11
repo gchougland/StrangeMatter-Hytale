@@ -1,0 +1,11 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Pattern_Assembler_Work_Motes"
+    }
+  ],
+  "LifeSpan": 0.9,
+  "CullDistance": 24,
+  "BoundingRadius": 0.65,
+  "IsImportant": false
+}

@@ -1,0 +1,82 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Resonant_Separator.name",
+    "Description": "server.items.SM_Resonant_Separator.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Resonant_Separator.png",
+  "MaxStack": 25,
+  "Categories": [
+    "Furniture.Benches",
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Machines"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/StrangeMatter/Automation/resonant_separator.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/Automation/automation.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Resonant_Separator",
+    "VariantRotation": "NESW",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#243950",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "InteractionHint": "server.interactionHints.SM_Resonant_Separator",
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "SM_Use",
+            "Action": "machine"
+          }
+        ],
+        "RequireNewClick": true
+      }
+    },
+    "BlockEntity": {
+      "Components": {
+        "SM_Factory": {}
+      }
+    },
+    "State": {
+      "Definitions": {
+        "Working": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/resonant_separator.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "Blocks/StrangeMatter/Automation/automation_working.png",
+              "Weight": 1
+            }
+          ],
+          "CustomModelAnimation": "Blocks/StrangeMatter/Automation/resonant_separator_working.blockyanim",
+          "CustomModelAnimationSpeed": 1,
+          "Looping": true,
+          "AmbientSoundEventId": "SM_Resonant_Separator_Hum_SFX"
+        }
+      }
+    }
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "SubCategory": "SM_ProcessingMachines"
+}

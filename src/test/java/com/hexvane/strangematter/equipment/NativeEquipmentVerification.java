@@ -107,7 +107,7 @@ public final class NativeEquipmentVerification {
         var casInventory=new SimpleItemContainer((short)2);var stack=capsule.withQuantity(3);casInventory.setItemStackForSlot((short)0,stack,false);
         require(LaboratoryProjectiles.removeExact(casInventory,(short)0,stack,1),"Unique payload reserves one unit with native expected-value replacement");
         var remaining=casInventory.getItemStack((short)0);
-        require(remaining.getQuantity()==2&&remaining.getMetadata().equals(capsule.getMetadata()),"Reservation preserves every metadata field of the remaining stack");
+        require(remaining.getQuantity()==2&&com.hexvane.strangematter.util.StackData.metadata(remaining).equals(com.hexvane.strangematter.util.StackData.metadata(capsule)),"Reservation preserves every metadata field of the remaining stack");
         require(!LaboratoryProjectiles.removeExact(casInventory,(short)0,stack,1)&&casInventory.getItemStack((short)0).getQuantity()==2,"Delayed stale slot snapshot cannot consume another unit");
         require(LaboratoryProjectiles.removeExact(casInventory,(short)0,remaining,2)&&ItemStack.isEmpty(casInventory.getItemStack((short)0)),"Exact final-unit removal clears the slot");
         var inventory=live.hotbar();inventory.setItemStackForSlot((short)0,capsule,false);live.save();
@@ -116,7 +116,7 @@ public final class NativeEquipmentVerification {
         require(launched==LaboratoryProjectiles.LaunchResult.LAUNCHED&&ItemStack.isEmpty(inventory.getItemStack((short)0)),"Survival throw reserves native inventory once");
         require(projectiles.inFlight(token),"Live throw excludes the nonce from another operation");
         var pending=LaboratoryProjectiles.readFlights(directory.resolve("equipment-integration/capsule-flights.json"));
-        require(pending.size()==1&&pending.getFirst().phase==LaboratoryProjectiles.Phase.PREPARED&&LaboratoryProjectiles.decodeCapsule(pending.getFirst().item).getMetadata().equals(capsule.getMetadata()),"Actual launch persisted the full unique payload before inventory acknowledgement");
+        require(pending.size()==1&&pending.getFirst().phase==LaboratoryProjectiles.Phase.PREPARED&&com.hexvane.strangematter.util.StackData.metadata(LaboratoryProjectiles.decodeCapsule(pending.getFirst().item)).equals(com.hexvane.strangematter.util.StackData.metadata(capsule)),"Actual launch persisted the full unique payload before inventory acknowledgement");
         var shotsField=LaboratoryProjectiles.class.getDeclaredField("shots");shotsField.setAccessible(true);
         @SuppressWarnings("unchecked") var shots=(Map<String,List<LaboratoryProjectiles.Shot>>)shotsField.get(projectiles);
         var flight=shots.get(world.getName()).getFirst();

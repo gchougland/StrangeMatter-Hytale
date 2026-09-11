@@ -1,0 +1,32 @@
+$C = "../Common.ui";
+
+Group #MachineInventoryPanel {
+  Anchor: (Width: 984, Height: 310);
+  Group { Anchor: (Left: 0, Top: 0, Width: 512, Height: 278); Background: #091522;
+    Label #MachineInputLabel { Anchor: (Left: 10, Top: 7, Width: 234, Height: 22); Text: "INGREDIENTS"; Style: (FontSize: 12, TextColor: #89edf5, RenderBold: true); }
+    Group #MachineInputGrid {
+      Anchor: (Left: 10, Top: 36, Width: 242, Height: 230);
+      LayoutMode: TopScrolling;
+      ScrollbarStyle: $C.@DefaultScrollbarStyle; KeepScrollPosition: true;
+    }
+    Label #MachineOutputLabel { Anchor: (Left: 268, Top: 7, Width: 234, Height: 22); Text: "FINISHED ITEMS"; Style: (FontSize: 12, TextColor: #b9a3ee, RenderBold: true); }
+    Group #MachineOutputGrid {
+      Anchor: (Left: 268, Top: 36, Width: 242, Height: 230);
+      LayoutMode: TopScrolling;
+      ScrollbarStyle: $C.@DefaultScrollbarStyle; KeepScrollPosition: true;
+    }
+  }
+  Group { Anchor: (Left: 540, Top: 0, Width: 438, Height: 278); Background: #091522;
+    Label { Anchor: (Left: 10, Top: 7, Width: 414, Height: 22); Text: "YOUR INVENTORY"; Style: (FontSize: 12, TextColor: #a8c6d8, RenderBold: true); }
+    Group #PlayerStorageGrid {
+      Anchor: (Left: 10, Top: 36, Width: 414, Height: 184);
+      LayoutMode: Top;
+    }
+    Label { Anchor: (Left: 10, Top: 219, Width: 414, Height: 16); Text: "HOTBAR"; Style: (FontSize: 10, TextColor: #7d9fb5, RenderBold: true); }
+    Group #PlayerHotbarGrid {
+      Anchor: (Left: 10, Top: 236, Width: 414, Height: 42);
+      LayoutMode: Top;
+    }
+  }
+  Label { Anchor: (Left: 10, Top: 286, Width: 968, Height: 18); Text: "Move items between the machine, your inventory and your hotbar."; Style: (FontSize: 11, TextColor: #809dad); }
+}

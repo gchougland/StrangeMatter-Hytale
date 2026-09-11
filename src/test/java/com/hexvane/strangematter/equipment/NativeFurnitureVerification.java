@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.equipment;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.hexvane.strangematter.research.ResearchRecipeBridge;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.math.util.ChunkUtil;
@@ -37,7 +39,7 @@ public final class NativeFurnitureVerification {
     public static void verify(World world) throws Exception {
         world.debugAssertInTickingThread();
         int x = 40, y = 210, z = 16;
-        var chunk = world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock(x, z));
+        var chunk = WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock(x, z));
         require(chunk != null, "Furniture test uses the already loaded column");
         try (var player = NativePlayerFixture.create(world, "NativeFurniture", new Vector3d(x + .5, y, z - 2))) {
             for (String piece : PIECES) {
@@ -69,7 +71,7 @@ public final class NativeFurnitureVerification {
                         var contents = component.getItemContainer();
                         var specimen = new ItemStack("SM_Insight_Shard", 5).withMetadata("FurnitureSpecimen", Codec.STRING, "kept safe");
                         contents.setItemStackForSlot((short)(contents.getCapacity() - 1), specimen, false);
-                        var saved = ItemContainerBlock.CODEC.decode(ItemContainerBlock.CODEC.encode(component));
+                        var saved = ItemContainerBlock.CODEC.decode(ItemContainerBlock.CODEC.encode(component,new com.hypixel.hytale.codec.ExtraInfo()),new com.hypixel.hytale.codec.ExtraInfo());
                         require(saved.getItemContainer().getItemStack((short)(contents.getCapacity() - 1)).equals(specimen), "Native storage save retains the last slot and metadata: " + id);
                         var window = new ContainerBlockWindow(x, y, z, 0, type, saved.getItemContainer());
                         var packet = player.player().getWindowManager().openWindow(player.ref(), window, player.store());
@@ -94,8 +96,8 @@ public final class NativeFurnitureVerification {
                     }
                     if (piece.equals("Bed")) {
                         require(type.getBeds() != null && type.getBeds().size() == 1, "Bed exposes one native sleeping mount");
-                        var holder = chunk.getBlockComponentHolder(x, y, z);
-                        require(holder != null && holder.getComponent(RespawnBlock.getComponentType()) != null, "Placed bed creates native respawn state");
+                        var blockRef = com.hypixel.hytale.server.core.modules.block.BlockModule.getBlockEntity(world,x,y,z);
+                        require(blockRef != null && blockRef.getStore().getComponent(blockRef,RespawnBlock.getComponentType()) != null, "Placed bed creates native respawn state");
                     }
                 } finally {
                     world.setBlock(x, y, z, "Empty");
@@ -144,7 +146,7 @@ public final class NativeFurnitureVerification {
             var joined = liveContainer(world, x, y, z);
             require(joined != null && joined.getCapacity() == 36, "Joined inventory has thirty six slots");
             assertContents(joined, expected, "Joining keeps every stack and distinct metadata from both halves");
-            var saved = ItemContainerBlock.CODEC.decode(ItemContainerBlock.CODEC.encode(joined));
+            var saved = ItemContainerBlock.CODEC.decode(ItemContainerBlock.CODEC.encode(joined,new com.hypixel.hytale.codec.ExtraInfo()),new com.hypixel.hytale.codec.ExtraInfo());
             assertContents(saved, expected, "Actual native component persistence keeps all thirty six metadata stacks");
             // Native destruction uses dropAllItemStacks, the same extraction as
             // ItemContainerSystems.OnRemove, plus the block's native drop list.

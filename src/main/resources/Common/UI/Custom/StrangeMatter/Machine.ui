@@ -1,8 +1,9 @@
+$B = "SharedButtons.ui";
 $C = "../Common.ui";
 
 $C.@PageOverlay {}
 Group {
-  Anchor: (Width: 790, Height: 720);
+  Anchor: (Width: 1040, Height: 800);
   Background: #101a2a;
   Padding: (Full: 26);
   LayoutMode: Top;
@@ -10,38 +11,21 @@ Group {
   Label { Text: "STRANGE MATTER  /  LABORATORY CONTROL"; Anchor: (Height: 26); Style: (FontSize: 12, TextColor: #987ecb); }
   Group { Anchor: (Height: 2); Background: #426c83; }
   Label #State { Anchor: (Height: 32); Style: (FontSize: 16, TextColor: #ba9bef); }
-  Label #Power { Anchor: (Height: 30); Style: (FontSize: 15, TextColor: #9cd9e5); }
+  Group #PowerMeter { Anchor: (Height: 78); }
   Label #Progress { Anchor: (Height: 30); Style: (FontSize: 14, TextColor: #d6deee); }
   Group #FuelCapacity { LayoutMode: Top; Anchor: (Height: 48);
     Label #FuelCapacityText { Anchor: (Height: 28); Style: (FontSize: 13, TextColor: #9cd9e5); }
-    Group { Anchor: (Height: 6); Background: #25354c;
+    Group { Anchor: (Width: 738, Height: 6); Background: #25354c;
       Group #FuelFill { Anchor: (Left: 0, Top: 0, Width: 0, Height: 6); Background: #62efff; }
     }
   }
-  Label #Output { Anchor: (Height: 30); Style: (FontSize: 14, TextColor: #d6deee); }
-  Group { LayoutMode: Left; Anchor: (Height: 40);
-    $C.@TextButton #Fuel { @Text = "LOAD ONE"; Anchor: (Width: 140, Height: 40); }
-    Group { Anchor: (Width: 8); }
-    $C.@TextButton #FuelMax { @Text = "LOAD MAX"; Anchor: (Width: 140, Height: 40); }
-    Group { Anchor: (Width: 8); }
-    $C.@TextButton #Collect { @Text = "COLLECT OUTPUT"; Anchor: (Width: 200, Height: 40); }
-    Group { Anchor: (Width: 8); }
-    $C.@TextButton #Toggle { @Text = "DISABLE"; Anchor: (Height: 40); FlexWeight: 1; }
-  }
-  Group #ForgePanel { LayoutMode: Top; Anchor: (Height: 300); Padding: (Top: 18);
-    Label #Recipe { Anchor: (Height: 30); Style: (FontSize: 21, TextColor: #62efff, RenderBold: true); }
-    Label #Research { Anchor: (Height: 25); Style: (FontSize: 12, TextColor: #bd98f3); }
-    Label #Ingredients { Anchor: (Height: 112); Style: (FontSize: 14, TextColor: #d6deee, Wrap: true); }
-    Label #Shards { Anchor: (Height: 47); Style: (FontSize: 13, TextColor: #b6d4e9, Wrap: true); }
-    Group { LayoutMode: Left; Anchor: (Height: 40);
-      $C.@TextButton #Previous { @Text = "PREVIOUS"; Anchor: (Width: 145, Height: 40); }
-      Group { Anchor: (Width: 8); }
-      $C.@TextButton #Next { @Text = "NEXT RECIPE"; Anchor: (Width: 170, Height: 40); }
-      Group { Anchor: (Width: 8); }
-      $C.@TextButton #Craft { @Text = "COALESCE"; Anchor: (Height: 40); FlexWeight: 1; }
-    }
+  Group #InventoryHost { Anchor: (Height: 310); }
+  Group { LayoutMode: Left; Anchor: (Height: 38);
+    $B.@TextButton #Toggle { @Text = "PAUSE"; Anchor: (Width: 220, Height: 38); }
+    Group { Anchor: (Width: 12); }
+    $B.@TextButton #Recovery { @Text = "RECOVERED ITEMS"; Anchor: (Width: 220, Height: 38); Visible: false; }
   }
   Group { FlexWeight: 1; }
   Label #Message { Anchor: (Height: 70); Style: (FontSize: 14, TextColor: #93a9c6, Wrap: true); }
-  $C.@CancelTextButton #Close { @Text = "CLOSE INSTRUMENT"; Anchor: (Height: 40); }
+  $B.@CancelTextButton #Close { @Text = "CLOSE INSTRUMENT"; Anchor: (Height: 40); }
 }

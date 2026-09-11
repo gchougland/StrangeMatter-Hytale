@@ -1,0 +1,25 @@
+{
+  "Input": [
+    {
+      "ItemId": "SM_Mithril_Concentrate",
+      "Quantity": 1
+    }
+  ],
+  "PrimaryOutput": {
+    "ItemId": "Ingredient_Bar_Mithril",
+    "Quantity": 1
+  },
+  "Output": [
+    {
+      "ItemId": "Ingredient_Bar_Mithril",
+      "Quantity": 1
+    }
+  ],
+  "TimeSeconds": 30,
+  "BenchRequirement": [
+    {
+      "Type": "Processing",
+      "Id": "Furnace"
+    }
+  ]
+}

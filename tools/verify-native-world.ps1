@@ -1,4 +1,4 @@
-param([switch]$SkipBuild)
+param([switch]$SkipBuild, [switch]$Benchmarks, [ValidatePattern('^[A-Za-z0-9][A-Za-z0-9-]{5,90}$')][string]$RunName)
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
 Push-Location $projectRoot
@@ -17,9 +17,10 @@ try {
     if (-not $modJar) { throw 'The production StrangeMatter jar has not been built.' }
     $javaCommand = (Get-Command java -ErrorAction Stop).Source
     $jarCommand = (Get-Command jar -ErrorAction Stop).Source
-    $runRoot = Join-Path $projectRoot 'build/native-world-run'
-    $runName = (Get-Date -Format 'yyyyMMdd-HHmmss-fff') + '-' + ([guid]::NewGuid().ToString('N').Substring(0, 8))
+    $runRoot = Join-Path $projectRoot $(if ($Benchmarks) { 'build/performance-runs' } else { 'build/native-world-run' })
+    if (-not $RunName) { $RunName = (Get-Date -Format 'yyyyMMdd-HHmmss-fff') + '-' + ([guid]::NewGuid().ToString('N').Substring(0, 8)) }
     $runPath = Join-Path $runRoot $runName
+    if (Test-Path -LiteralPath $runPath) { throw "Test run already exists: $runPath" }
     $modsPath = Join-Path $runPath 'mods'
     $manifestPath = Join-Path $runPath 'test-manifest'
     New-Item -ItemType Directory -Force $modsPath, $manifestPath | Out-Null
@@ -33,9 +34,17 @@ try {
     # wildcard scope local to each package, including matching inner classes.
     $fixtureClasses = [System.Collections.Generic.List[string]]::new()
     $fixtureClasses.Add($testClass)
+    foreach ($package in @('dev/zero/atlasaudit', 'com/hexvane/strangematter/diagnostics')) {
+        foreach ($fixture in Get-ChildItem -LiteralPath (Join-Path $testClasses $package) -Filter '*.class') {
+            $fixtureClasses.Add("$package/$($fixture.Name)")
+        }
+    }
     $fixtureClasses.Add('com/hexvane/strangematter/research/ResearchNoteVerification.class')
     $researchFixturePath = Join-Path $testClasses 'com/hexvane/strangematter/research'
     foreach ($fixture in Get-ChildItem -LiteralPath $researchFixturePath -Filter 'ResearchUnlockVerification*.class') {
+        $fixtureClasses.Add("com/hexvane/strangematter/research/$($fixture.Name)")
+    }
+    foreach ($fixture in Get-ChildItem -LiteralPath $researchFixturePath -Filter 'ResearchAdminVerification*.class') {
         $fixtureClasses.Add("com/hexvane/strangematter/research/$($fixture.Name)")
     }
     $fixtureClasses.Add('com/hexvane/strangematter/machine/NativeMachineVerification.class')
@@ -50,6 +59,12 @@ try {
         $fixtureClasses.Add("com/hexvane/strangematter/anomaly/$($fixture.Name)")
     }
     $equipmentFixturePath = Join-Path $testClasses 'com/hexvane/strangematter/equipment'
+    $automationFixturePath = Join-Path $testClasses 'com/hexvane/strangematter/automation'
+    if (Test-Path -LiteralPath $automationFixturePath) {
+        foreach ($fixture in Get-ChildItem -LiteralPath $automationFixturePath -Filter 'Native*.class') {
+            $fixtureClasses.Add("com/hexvane/strangematter/automation/$($fixture.Name)")
+        }
+    }
     $uiFixturePath = Join-Path $testClasses 'com/hexvane/strangematter/ui'
     foreach ($fixture in Get-ChildItem -LiteralPath $uiFixturePath -Filter 'Native*.class') {
         $fixtureClasses.Add("com/hexvane/strangematter/ui/$($fixture.Name)")
@@ -78,6 +93,7 @@ try {
         foreach ($argument in @('-C', $testClasses, $relativeClass)) { $jarArguments.Add($argument) }
     }
     foreach ($argument in @('-C', $manifestPath, 'manifest.json')) { $jarArguments.Add($argument) }
+    foreach ($argument in @('-C', (Join-Path $PSScriptRoot 'diagnostics'), 'atlas-audit-LICENSE.txt')) { $jarArguments.Add($argument) }
     # A UTF8 argument file avoids Windows command length limits. Quote every token
     # using jar's argument file grammar, not shell interpolation. Preserve spaces,
     # backslashes and the dollar signs in compiled inner class filenames.
@@ -90,16 +106,21 @@ try {
     Set-Content -LiteralPath (Join-Path $runPath 'permissions.json') -Value '{"users":{},"groups":{}}' -Encoding utf8
     Push-Location $runPath
     try {
-        # Bare mode skips network-port binding and normal worlds. The test creates one flat world and shuts down after assertions.
-        & $javaCommand -Xmx3G -jar $serverJar --bare --assets $assetsZip --disable-sentry --disable-file-watcher --auth-mode offline --log 'HytaleServer:INFO,PluginManager:INFO,Strange Matter|P:INFO' *> native-world.log
+        # The current server rejects bare mode's empty listener list. An ephemeral loopback
+        # listener permits normal startup without exposing this isolated test to the network.
+        $benchmarkFlag = '-Dstrangematter.benchmarks=' + $Benchmarks.IsPresent.ToString().ToLowerInvariant()
+        & $javaCommand -Xmx3G $benchmarkFlag -jar $serverJar --bind 127.0.0.1:0 --assets $assetsZip --disable-sentry --disable-file-watcher --auth-mode offline --log 'HytaleServer:INFO,PluginManager:INFO,Strange Matter|P:INFO' *> native-world.log
         $serverExit = $LASTEXITCODE
         $logPath = Join-Path $runPath 'native-world.log'
         Copy-Item -LiteralPath $logPath -Destination (Join-Path $runRoot 'native-world.log')
         $resultPath = Join-Path $runPath 'native-world-result.txt'
         if (Test-Path -LiteralPath $resultPath) { Copy-Item -LiteralPath $resultPath -Destination (Join-Path $runRoot 'native-world-result.txt') }
-        $passed = Select-String -LiteralPath $logPath -Pattern 'NATIVE_WORLD_VERIFICATION_PASSED:' -Quiet
-        $failed = Select-String -LiteralPath $logPath -Pattern 'NATIVE_WORLD_VERIFICATION_FAILED:' -Quiet
+        $resultMarker = if ($Benchmarks) { 'NATIVE_BENCHMARKS' } else { 'NATIVE_WORLD_VERIFICATION' }
+        $passed = Select-String -LiteralPath $logPath -Pattern "${resultMarker}_PASSED:" -Quiet
+        $failed = Select-String -LiteralPath $logPath -Pattern "${resultMarker}_FAILED:" -Quiet
         if ($serverExit -ne 0 -or -not $passed -or $failed) { throw "Native world verification did not pass (server exit $serverExit). See $logPath" }
+        & python (Join-Path $PSScriptRoot 'diagnostics/check_reports.py') --atlas (Join-Path $runPath 'atlas-audit-report.json')
+        if ($LASTEXITCODE -ne 0) { throw "Atlas budget check failed. See $runPath" }
         Get-Content -LiteralPath $resultPath
         Write-Output "Isolated world and log: $runPath"
     } finally { Pop-Location }

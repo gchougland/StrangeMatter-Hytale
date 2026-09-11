@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.equipment;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.hypixel.hytale.builtin.mounts.MountPlugin;
 import com.hypixel.hytale.builtin.mounts.NPCMountComponent;
 import com.hypixel.hytale.component.Ref;
@@ -201,7 +203,7 @@ public final class MobilityTools {
         for (double d = .25; d < distance - .25; d += .2) {
             Vector3d point = new Vector3d(direction).mul(d).add(eye);
             int x = (int) Math.floor(point.x), y = (int) Math.floor(point.y), z = (int) Math.floor(point.z);
-            if (y < 0 || y >= ChunkUtil.HEIGHT || scan.world().getChunkIfInMemory(ChunkUtil.indexChunkFromBlock(x, z)) == null) return false;
+            if (y < 0 || y >= ChunkUtil.HEIGHT || WorldAccess.inMemory(scan.world(),ChunkUtil.indexChunkFromBlock(x, z)) == null) return false;
             var block = scan.world().getBlockType(x, y, z);
             if (block != null && !block.getId().equals("Empty") && block.getMaterial() == com.hypixel.hytale.protocol.BlockMaterial.Solid) return false;
         }
@@ -369,7 +371,7 @@ public final class MobilityTools {
     }
     private static boolean surfaceNearby(World world, Vector3d p) {
         int x = (int) Math.floor(p.x), z = (int) Math.floor(p.z);
-        if (world.getChunkIfInMemory(ChunkUtil.indexChunkFromBlock(x, z)) == null) return false;
+        if (WorldAccess.inMemory(world,ChunkUtil.indexChunkFromBlock(x, z)) == null) return false;
         for (int offset = 0; offset <= 3; offset++) {
             int y = (int) Math.floor(p.y) - offset; if (y < 0 || y >= ChunkUtil.HEIGHT) continue;
             var block = world.getBlockType(x, y, z);

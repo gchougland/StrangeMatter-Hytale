@@ -1,0 +1,6 @@
+Group { Anchor: (Height: 44, Bottom: 4); Background: #162438;
+  ItemIcon #UpgradeIcon { Anchor: (Left: 7, Top: 4, Width: 36, Height: 36); HitTestVisible: false; }
+  Label #UpgradeName { Anchor: (Left: 54, Top: 4, Right: 196, Height: 36); Style: (FontSize: 14, TextColor: #c5d8e7, Wrap: true, VerticalAlignment: Center); HitTestVisible: false; }
+  Label #UpgradeCount { Anchor: (Right: 12, Top: 3, Width: 170, Height: 20); Style: (FontSize: 14, TextColor: #79f4ed, RenderBold: true, HorizontalAlignment: End); HitTestVisible: false; }
+  Label #UpgradeMissing { Anchor: (Right: 12, Top: 24, Width: 170, Height: 16); Style: (FontSize: 11, TextColor: #f0a6bd, HorizontalAlignment: End); HitTestVisible: false; }
+}

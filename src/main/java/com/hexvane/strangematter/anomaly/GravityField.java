@@ -18,12 +18,10 @@ import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent;
 import com.hypixel.hytale.server.core.modules.entity.component.ActiveAnimationComponent;
-import com.hypixel.hytale.server.core.modules.entity.component.HeadRotation;
 import com.hypixel.hytale.server.core.modules.entity.player.PlayerSystems;
 import com.hypixel.hytale.server.core.modules.entity.player.PlayerInput;
 import com.hypixel.hytale.server.core.modules.entity.player.KnockbackPredictionSystems;
 import com.hypixel.hytale.server.core.universe.system.PlayerVelocityInstructionSystem;
-import com.hypixel.hytale.protocol.packets.entities.ChangeVelocity;
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent;
 import com.hypixel.hytale.server.core.modules.entity.item.ItemComponent;
 import com.hypixel.hytale.server.core.modules.entity.item.ItemPhysicsSystem;
@@ -42,7 +40,7 @@ import org.joml.Vector3d;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-/** Native zero-G locomotion. No persisted physics, frozen flags, avatar changes or teleports. */
+/** Native vertical player lift and independent creature/item suspension. No persisted movement overrides. */
 final class GravityField {
     // Each world owns its mutable state. The immutable field list is published by AnomalyService.
     private static final Map<World,GravityField> ACTIVE=new ConcurrentHashMap<>();
@@ -53,27 +51,26 @@ final class GravityField {
         double squared(Vector3d p){double dx=p.x-x,dy=p.y-y,dz=p.z-z;return dx*dx+dy*dy+dz*dz;}
     }
     private final Map<Ref<EntityStore>,Sample> samples=new ConcurrentHashMap<>();
-    private final Map<Ref<EntityStore>,Intent> intents=new ConcurrentHashMap<>();
-    private static final class Intent {
-        final Vector3d axes=new Vector3d();double age;
-    }
     private static final class Sample {
-        final Vector3d position,measured=new Vector3d();double elapsed;
+        final Vector3d position;double elapsed,reportY;boolean reported,positionReported;
         Sample(Vector3d p){position=new Vector3d(p);}
+        void beginFrame(){reported=false;positionReported=false;}
+        void report(double vertical){if(Double.isFinite(vertical)){reported=true;reportY=vertical;}}
         void update(Vector3d p,double dt){
             elapsed+=dt;
-            if(position.distanceSquared(p)>1e-8){
+            if(positionReported||position.distanceSquared(p)>1e-8){
                 var delta=new Vector3d(p).sub(position);
-                if(elapsed<=.3&&delta.length()<Math.max(2,elapsed*35))measured.set(delta).div(elapsed);else measured.zero();
+                // Actual reported positions are the fallback when ClientMovement omits velocity.
+                // Reject stale samples and discontinuities rather than treating a teleport as lift.
+                if(!reported&&elapsed>0&&elapsed<=GravityMomentum.REPORT_LEASE&&delta.length()<Math.max(2,elapsed*100))report(delta.y/elapsed);
                 position.set(p);elapsed=0;
-            }else if(elapsed>.3)measured.zero();
+            }
         }
     }
     private static final class PlayerLease {
-        final World world;final UUID source;final Vector3d momentum,lastDesired=new Vector3d();
-        final ArrayDeque<Vector3d> recentCommands=new ArrayDeque<>();
-        final double phase,height;double elapsed,verticalTravel,inputSuppression;Velocity.Instruction pending;
-        PlayerLease(World world,Field field,Ref<EntityStore> ref,Vector3d entry,double height){this.world=world;source=field.id;momentum=entry;phase=(ref.hashCode()&255)*.13;this.height=height;}
+        final World world;final GravityMomentum.PlayerLift lift=new GravityMomentum.PlayerLift();
+        Velocity.Instruction pending;
+        PlayerLease(World world){this.world=world;}
     }
     private static final class Drift {
         final UUID source; final double height,phase;
@@ -97,7 +94,6 @@ final class GravityField {
         for(var entry:players.entrySet())if(entry.getValue().world==world)restore(entry.getKey(),store);
         for(var ref:drifts.keySet())if(!ref.isValid()||ref.getStore()==store)restoreDrift(ref,store);
         samples.keySet().removeIf(ref->!ref.isValid()||ref.getStore()==store);
-        intents.keySet().removeIf(ref->!ref.isValid()||ref.getStore()==store);
     }
     private Field at(World world,Vector3d p) {
         Field closest=null;double best=64;
@@ -120,53 +116,32 @@ final class GravityField {
     }
     private void movePlayer(Ref<EntityStore> ref,double dt,CommandBuffer<EntityStore> store){
         var world=store.getExternalData().getWorld();var p=store.getComponent(ref,TransformComponent.getComponentType()).getPosition();
-        var sample=samples.get(ref);
-        if(sample==null){sample=new Sample(p);samples.put(ref,sample);}else sample.update(p,dt);
+        var sample=samples.computeIfAbsent(ref,ignored->new Sample(p));sample.update(p,dt);
         var field=at(world,p);var velocity=store.getComponent(ref,Velocity.getComponentType());
         if(field==null||velocity==null||!eligible(ref,store)){restore(ref,store);return;}
         var lease=players.get(ref);
         if(lease==null){
-            var entry=GravityMomentum.entry(velocity.getClientVelocity(),sample.measured);
-            // A stationary entrant also rises gently from the ground before settling into the wave.
-            if(Math.abs(entry.y)<.2)entry.y=.55;
-            lease=new PlayerLease(world,field,ref,entry,p.y);players.put(ref,lease);
+            lease=new PlayerLease(world);players.put(ref,lease);
+            // One initial sample permits stationary entrants to lift. Subsequent updates must be
+            // fresh native input/position reports, never a repeatedly reused cached Velocity.
+            lease.lift.observe(GravityMomentum.finite(velocity.getClientVelocity())?velocity.getClientVelocity().y:0);
         }
-        // Only remove our own not-yet-flushed command. Other knockback or tool instructions remain.
         if(lease.pending!=null)velocity.getInstructions().remove(lease.pending);
-        lease.elapsed+=dt;
-        lease.inputSuppression=Math.max(0,lease.inputSuppression-dt);
+        lease.pending=null;
         if(!velocity.getInstructions().isEmpty()){
-            // Native player instructions execute in order. Yield this tick so our Set cannot
-            // erase an earlier tool or knockback command, and retain its impulse on later ticks.
-            for(var instruction:velocity.getInstructions())if(instruction.getConfig()==null&&GravityMomentum.finite(instruction.getVelocity())){
-                switch(instruction.getType()){
-                    case Set -> lease.momentum.set(instruction.getVelocity());
-                    case Add -> lease.momentum.add(instruction.getVelocity());
-                }
-            }
-            // Configured forces retain their own native channel and must not be counted twice.
-            lease.inputSuppression=1;lease.recentCommands.clear();intents.remove(ref);
-            lease.verticalTravel+=lease.momentum.y*dt;
-            lease.lastDesired.set(lease.momentum);lease.pending=null;return;
+            // Yield to tools/knockback without changing their vector or copying their force into
+            // a second channel. A fresh client sample is required before resuming the overlay.
+            lease.lift.reset();return;
         }
-        var intent=intents.get(ref);var head=store.getComponent(ref,HeadRotation.getComponentType());
-        if(intent!=null&&intent.age<=GravityMomentum.INPUT_LEASE&&head!=null)
-            GravityMomentum.steer(lease.momentum,intent.axes,head.getRotation().yaw(),head.getRotation().pitch(),dt);
-        lease.lastDesired.set(GravityMomentum.desired(lease.momentum,dt,lease.elapsed,lease.phase));
-        lease.verticalTravel+=lease.momentum.y*dt;
-        double targetHeight=lease.height+lease.verticalTravel+GravityMomentum.bob(lease.elapsed,lease.phase)-GravityMomentum.bob(0,lease.phase);
-        // Reported positions correct accumulated client integration drift. Only bounded velocity
-        // is adjusted, so walls and ceilings remain under the native collision controller.
-        lease.lastDesired.y+=GravityMomentum.heightCorrection(targetHeight,p.y);
+        if(sample.reported)lease.lift.observe(sample.reportY);
         var manager=store.getComponent(ref,MovementManager.getComponentType());
         boolean inverted=manager!=null&&manager.getSettings()!=null&&manager.getSettings().invertedGravity;
-        var command=GravityMomentum.instruction(lease.lastDesired,dt,inverted);
-        // A nonnull config targets SplitVelocity's separate applied-force list; it does not
-        // replace the falling externalVelocity channel. The native null-config Set does.
-        velocity.addInstruction(command,null,ChangeVelocityType.Set);
+        double delta=lease.lift.advance(dt,GravityMomentum.force(Math.sqrt(field.squared(p))),inverted);
+        if(delta<=0)return;
+        // Null-config Add reaches native external velocity. X/Z are exactly zero: ordinary air
+        // control, sprint, crouch, jump, friction and collision remain entirely with the client.
+        velocity.addInstruction(new Vector3d(0,delta,0),null,ChangeVelocityType.Add);
         lease.pending=velocity.getInstructions().getLast();
-        lease.recentCommands.addLast(new Vector3d(command));
-        while(lease.recentCommands.size()>6)lease.recentCommands.removeFirst();
     }
     private static boolean hat(Ref<EntityStore> ref,ComponentAccessor<EntityStore> store) {
         var armor=store.getComponent(ref,InventoryComponent.Armor.getComponentType());short head=(short)ItemArmorSlot.Head.ordinal();
@@ -174,16 +149,11 @@ final class GravityField {
         var item=armor.getInventory().getItemStack(head);return !ItemStack.isEmpty(item)&&"SM_Tinfoil_Hat".equals(item.getItemId());
     }
     private void restore(Ref<EntityStore> ref,ComponentAccessor<EntityStore> store) {
-        var lease=players.remove(ref);if(lease==null||!ref.isValid()||lease.world!=store.getExternalData().getWorld())return;
-        intents.remove(ref);
+        var lease=players.remove(ref);if(lease==null||!ref.isValid()||ref.getStore()!=store.getExternalData().getWorld().getEntityStore().getStore()||lease.world!=store.getExternalData().getWorld())return;
         var velocity=store.getComponent(ref,Velocity.getComponentType());
         if(velocity!=null&&lease.pending!=null)velocity.getInstructions().remove(lease.pending);
-        var owner=store.getComponent(ref,PlayerRef.getComponentType());
-        // Preserve the final drift as momentum in the ordinary native velocity channel;
-        // no flight permission, saved movement setting, transform or avatar was changed.
-        if(owner!=null&&lease.world.getWorldConfig().getUuid().equals(owner.getWorldUuid())){
-            var v=lease.lastDesired;owner.getPacketHandler().writeNoCache(new ChangeVelocity((float)v.x,(float)v.y,(float)v.z,ChangeVelocityType.Set,null));
-        }
+        // Applied Add impulses already belong to native velocity. Stopping needs no final Set,
+        // which would overwrite fresh controls, jump or collision response during exit/transfer.
     }
     private void floatAnimation(Ref<EntityStore> ref,Drift drift,NPCEntity npc,ComponentAccessor<EntityStore> store){
         var model=store.getComponent(ref,ModelComponent.getComponentType());
@@ -236,9 +206,9 @@ final class GravityField {
         var active=effects==null?null:effects.getActiveEffects().get(EntityEffect.getAssetMap().getIndex("SM_Stasis_Hold"));
         return active!=null&&(active.isInfinite()||active.getRemainingDuration()>0);
     }
-    /** Observe input before native processing clears the queue; never consume or rewrite it. */
+    /** Observe fresh vertical reports before native processing; never consume or alter controls. */
     static final class InputSystem extends EntityTickingSystem<EntityStore> {
-        @Override public Query<EntityStore> getQuery(){return Query.and(Player.getComponentType(),PlayerInput.getComponentType(),HeadRotation.getComponentType());}
+        @Override public Query<EntityStore> getQuery(){return Query.and(Player.getComponentType(),PlayerInput.getComponentType(),TransformComponent.getComponentType());}
         @Override public boolean isParallel(int size,int tasks){return false;}
         @Override public Set<Dependency<EntityStore>> getDependencies(){return Set.of(
                 new SystemDependency<>(Order.BEFORE,PlayerSystems.ProcessPlayerInput.class),
@@ -246,30 +216,12 @@ final class GravityField {
         @Override public void tick(float dt,int index,ArchetypeChunk<EntityStore> chunk,Store<EntityStore> store,CommandBuffer<EntityStore> commands){
             var helper=ACTIVE.get(store.getExternalData().getWorld());if(helper==null)return;
             var ref=chunk.getReferenceTo(index);var input=chunk.getComponent(index,PlayerInput.getComponentType());
-            var intent=helper.intents.get(ref);if(intent!=null){intent.age+=Math.max(0,dt);if(intent.age>GravityMomentum.INPUT_LEASE)intent.axes.zero();}
-            double yaw=chunk.getComponent(index,HeadRotation.getComponentType()).getRotation().yaw();
-            var stateComponent=store.getComponent(ref,MovementStatesComponent.getComponentType());
-            MovementStates states=stateComponent==null?null:stateComponent.getMovementStates();
-            Vector3d wish=null,reported=null;boolean stateUpdate=false;double wishYaw=yaw;
+            var sample=helper.samples.computeIfAbsent(ref,ignored->new Sample(chunk.getComponent(index,TransformComponent.getComponentType()).getPosition()));
+            sample.beginFrame();
             for(var update:input.getMovementUpdateQueue()){
-                if(update instanceof PlayerInput.SetHead head)yaw=head.direction().yaw;
-                else if(update instanceof PlayerInput.SetMovementStates movement){states=movement.movementStates();stateUpdate=true;}
-                else if(update instanceof PlayerInput.SetClientVelocity velocity)reported=velocity.getVelocity();
-                else if(update instanceof PlayerInput.WishMovement movement){wish=new Vector3d(movement.getX(),movement.getY(),movement.getZ());wishYaw=yaw;}
-            }
-            Vector3d axes=null;var lease=helper.players.get(ref);
-            if(wish!=null)axes=GravityMomentum.inputAxes(wish,wishYaw);
-            else if(reported!=null){
-                // These flags are the client's locomotion state, not a direction. A fresh report
-                // supplies only the horizontal residual after removing our own recent motion.
-                boolean moving=states!=null&&!states.idle&&!states.horizontalIdle
-                        &&(states.walking||states.running||states.sprinting||states.crouching);
-                axes=moving&&lease!=null&&lease.inputSuppression<=0
-                        ?GravityMomentum.residualAxes(reported,lease.recentCommands,yaw):new Vector3d();
-            }else if(stateUpdate&&states!=null&&(states.idle||states.horizontalIdle))axes=new Vector3d();
-            if(axes!=null){
-                if(intent==null){intent=new Intent();helper.intents.put(ref,intent);}
-                intent.axes.set(axes);intent.age=0;
+                if(update instanceof PlayerInput.SetClientVelocity velocity){
+                    if(GravityMomentum.finite(velocity.getVelocity()))sample.report(velocity.getVelocity().y);
+                }else if(update instanceof PlayerInput.RelativeMovement||update instanceof PlayerInput.AbsoluteMovement)sample.positionReported=true;
             }
         }
     }
@@ -283,7 +235,7 @@ final class GravityField {
         @Override public void tick(float dt,int index,ArchetypeChunk<EntityStore> chunk,Store<EntityStore> store,CommandBuffer<EntityStore> commands){
             var helper=ACTIVE.get(store.getExternalData().getWorld());if(helper!=null){
                 var ref=chunk.getReferenceTo(index);
-                if(chunk.getComponent(index,Player.getComponentType())!=null)helper.movePlayer(ref,Math.min(dt,.1),commands);
+                if(chunk.getComponent(index,Player.getComponentType())!=null)helper.movePlayer(ref,dt,commands);
                 else helper.move(ref,Math.min(dt,.25),commands);
             }
         }
@@ -292,7 +244,7 @@ final class GravityField {
         @Override public Query<EntityStore> getQuery(){return Query.or(PlayerRef.getComponentType(),NPCEntity.getComponentType());}
         @Override public void onEntityAdded(Ref<EntityStore> ref,AddReason reason,Store<EntityStore> store,CommandBuffer<EntityStore> commands){}
         @Override public void onEntityRemove(Ref<EntityStore> ref,RemoveReason reason,Store<EntityStore> store,CommandBuffer<EntityStore> commands){
-            var helper=ACTIVE.get(store.getExternalData().getWorld());if(helper!=null){helper.restore(ref,commands);helper.restoreDrift(ref,commands);helper.samples.remove(ref);helper.intents.remove(ref);}
+            var helper=ACTIVE.get(store.getExternalData().getWorld());if(helper!=null){helper.restore(ref,commands);helper.restoreDrift(ref,commands);helper.samples.remove(ref);}
         }
     }
 }

@@ -38,7 +38,8 @@ def item_asset():
         'TranslationProperties': {'Name': f'server.items.{ITEM_ID}.name',
                                   'Description': f'server.items.{ITEM_ID}.description'},
         'Icon': f'Icons/ItemsGenerated/{ITEM_ID}.png', 'MaxStack': 25,
-        'Categories': ['Furniture.Benches', 'SM_StrangeMatter.All'],
+        'Categories': ['Furniture.Benches', 'SM_StrangeMatter.All', 'SM_StrangeMatter.Machines'],
+        'SubCategory': 'SM_FieldControl',
         'PlayerAnimationsId': 'Block', 'Quality': 'Uncommon', 'Tags': {'Type': ['StrangeMatter']},
         'BlockType': {
             'Material': 'Solid', 'DrawType': 'Model', 'Opacity': 'Transparent',
@@ -67,8 +68,13 @@ def hitbox_asset():
 
 def add_recipe(recipes):
     """Keep every existing source recipe and replace only this port addition, idempotently."""
-    recipes[:] = [recipe for recipe in recipes if recipe['id'] != RECIPE['id']]
-    recipes.append(deepcopy(RECIPE))
+    positions = [i for i, recipe in enumerate(recipes) if recipe['id'] == RECIPE['id']]
+    if positions:
+        recipes[positions[0]] = deepcopy(RECIPE)
+        for i in reversed(positions[1:]):
+            del recipes[i]
+    else:
+        recipes.append(deepcopy(RECIPE))
 
 
 def add_teaching(teaching):

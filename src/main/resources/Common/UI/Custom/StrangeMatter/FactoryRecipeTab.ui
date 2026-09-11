@@ -1,0 +1,5 @@
+$B = "SharedButtons.ui";
+Group { Anchor: (Width: 202, Height: 44, Right: 7);
+  $B.@SecondaryTextButton #Tab { @Text = ""; Anchor: (Left: 0, Top: 0, Width: 202, Height: 40); }
+  Group #TabAccent { Anchor: (Left: 9, Right: 9, Top: 41, Height: 3); Background: #8eeee4; HitTestVisible: false; Visible: false; }
+}

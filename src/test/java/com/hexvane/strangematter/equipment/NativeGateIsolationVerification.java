@@ -78,6 +78,9 @@ public final class NativeGateIsolationVerification {
                     "Explicit same colour pairing is also rejected without altering either endpoint");
             var aPurple=commit(warps,service,first,(short)0,true,new Vector3d(24.5,244,8.5));
             reciprocal(aCyan,aPurple,"A gun's real inventory impact commits pair its cyan and purple endpoints");
+            var gunBeforeCapture=first.hotbar().getItemStack((short)0);
+            NativeWarpCaptureVerification.reject(service,aCyan);NativeWarpCaptureVerification.reject(service,aPurple);
+            require(first.hotbar().getItemStack((short)0).equals(gunBeforeCapture),"Rejected capture leaves the actual gun's endpoint metadata intact");
             require(bCyan.pairedGate==null,"The other owner's cyan endpoint is untouched by the first owner's purple impact");
             var bPurple=commit(warps,service,second,(short)0,true,new Vector3d(24.5,244,24.5));
             reciprocal(bCyan,bPurple,"The second owner's purple commit pairs only its own cyan endpoint");
@@ -122,6 +125,7 @@ public final class NativeGateIsolationVerification {
                             &&first.packets().ofType(ClientTeleport.class).isEmpty(),
                     "The live gate tick also repairs a legacy mixed link before any loading or teleport");
         }finally{warps.cleanup(world);service.stopWorld(world);}
+        NativeWarpCaptureVerification.verify(world);
         System.out.println("NATIVE_GATE_ISOLATION_VERIFICATION_PASSED: real service tick at lone cyan, zero terrain requests or teleport, natural candidate filtering, mixed link rejection and saved repair, same gun colour pairing, separate guns and owners, late cancelled and transferred impacts, exact clear scope.");
     }
 

@@ -79,7 +79,7 @@ def main():
     for name,text in files.items():
         structure(text,name)
         label_alignments(text,name)
-        ids=re.findall(r'(?:Group|Label|ItemIcon|Button|TextButton|\$\w+\.@\w+)\s+#(\w+)\s*\{',text)
+        ids=re.findall(r'(?:Group|Label|ItemIcon|ItemGrid|ProgressBar|Button|TextButton|TextField|\$\w+\.@\w+)\s+#(\w+)\s*\{',text)
         assert len(ids)==len(set(ids)),(name,'duplicate selector');selectors[name]=set(ids)
         aliases=dict(re.findall(r'\$(\w+)\s*=\s*"([^"]+)"',text))
         for alias,symbol in re.findall(r'\$(\w+)\.@(\w+)',text):
@@ -88,10 +88,13 @@ def main():
             assert path.exists(),(name,rel)
             assert re.search(r'@'+re.escape(symbol)+r'\s*=',path.read_text()),(name,alias,symbol)
             imports+=1
-    pages={'research/ResearchMachinePage.java':['ResearchMachine.ui','ResearchNoteRow.ui','ResearchDisciplineChip.ui'],
+    pages={'research/ResearchMachinePage.java':['ResearchMachine.ui','ResearchNoteRow.ui','ResearchDisciplineChip.ui','MachineInventoryPanel.ui'],
       'research/ResearchTabletPage.java':['ResearchTablet.ui','ResearchTreeNode.ui','ResearchPoint.ui','ResearchTrace.ui','ResearchDisciplineCost.ui'],
       'research/ResearchInfoPage.java':['ResearchInfo.ui','ResearchDisciplineChip.ui'],
-      'machine/MachinePage.java':['Machine.ui','RealityForge.ui','ForgeRecipeRow.ui'],
+      'machine/MachinePage.java':['Machine.ui','RealityForge.ui','ForgeRecipeRow.ui','MachineInventoryPanel.ui','PowerMeter.ui'],
+      'automation/FactoryPage.java':['Factory.ui','ForgeRecipeRow.ui','FactoryIngredientRow.ui','FactoryUpgradeCost.ui','MachineInventoryPanel.ui','PowerMeter.ui'],
+      'automation/TubePage.java':['TubeConfig.ui'],
+      'automation/FactoryRecipeSelectorPage.java':['FactoryRecipeSelector.ui','FactoryRecipeTabRow.ui','FactoryRecipeTab.ui','FactoryRecipeChoice.ui'],
       'ui/gadget/GadgetHudService.java':['GadgetHud.ui']}
     for source,ui_files in pages.items():
         text=(ROOT/'src/main/java/com/hexvane/strangematter'/source).read_text();ids=set().union(*(selectors[f] for f in ui_files))
@@ -107,7 +110,7 @@ def main():
         assert all(family+str(i) in forge for i in range(8)),family
     catalog=json.loads((ROOT/'src/main/resources/Server/StrangeMatter/recipes.json').read_text())
     assert all(len(recipe['ingredients'])+len(recipe['shards'])<=8 for recipe in catalog if recipe['station']=='forge'),'Forge material cards must cover every ingredient'
-    for family,count in [('Rune',9),('RuneGlow',9),('Force',11),('WaveTarget',32),('WaveLive',32),('ShadowTarget',12),('ShadowLive',12),('SpaceDot',49),('TimeTarget',12),('TimeLive',12),('ClockMark',12)]:
+    for family,count in [('Rune',9),('RuneGlow',9),('Force',11),('WaveTarget',32),('WaveLive',32),('ShadowTarget',12),('ShadowLive',12),('SpaceTarget',49),('SpaceDot',49),('TimeTarget',12),('TimeLive',12),('ClockMark',12)]:
         assert all(family+str(i) in machine for i in range(count)),family
     for discipline in ['COGNITION','ENERGY','GRAVITY','SHADOW','SPACE','TIME']:
         assert all(discipline+suffix in machine for suffix in ['Controls','Shutter','State']),discipline

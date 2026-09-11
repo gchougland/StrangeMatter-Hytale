@@ -13,5 +13,12 @@
   "SM_Research_Tablet": {
     "yaw": 215,
     "pitch": 23
+  },
+  "SM_Echoform_Imprinter": {
+    "yaw": 215
+  },
+  "SM_Warp_Gun": {
+    "yaw": 35,
+    "pitch": 23
   }
 }

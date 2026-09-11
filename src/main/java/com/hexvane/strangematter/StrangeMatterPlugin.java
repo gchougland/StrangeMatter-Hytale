@@ -2,6 +2,9 @@ package com.hexvane.strangematter;
 
 import com.hexvane.strangematter.anomaly.AnomalyService;
 import com.hexvane.strangematter.machine.*;
+import com.hexvane.strangematter.automation.FactoryService;
+import com.hexvane.strangematter.automation.TubeService;
+import com.hexvane.strangematter.worldgen.GenerationCoordinator;
 import com.hexvane.strangematter.equipment.EquipmentService;
 import com.hexvane.strangematter.research.ResearchService;
 import com.hexvane.strangematter.block.AnomalousGrassService;
@@ -32,25 +35,45 @@ public final class StrangeMatterPlugin extends JavaPlugin {
     private ResearchService research;
     private AnomalyService anomalies;
     private MachineService machines;
+    private FactoryService factory;
+    private TubeService tubes;
+    private GenerationCoordinator generation;
     private EquipmentService equipment;
     private ScientistService scientists;
     private ProgressionService progression;
+    private volatile com.hexvane.strangematter.telemetry.BeaconTelemetry beacon;
     private volatile com.hexvane.strangematter.diagnostics.WorldStallDiagnostics diagnostics;
     public StrangeMatterPlugin(JavaPluginInit init){super(PluginDataPaths.preserveLegacyDirectory(init));}
     public static StrangeMatterPlugin instance(){return instance;}
     public EquipmentService equipment(){return equipment;}
+    public TubeService tubes(){return tubes;}
     public ProgressionService progression(){return progression;}
     @Override protected void setup(){
         try {
             var config=StrangeMatterConfig.load(getDataDirectory());
             research=new ResearchService(getDataDirectory());anomalies=new AnomalyService(getDataDirectory());
             machines=new MachineService(getDataDirectory(),config,research,anomalies);equipment=new EquipmentService(research,anomalies,machines);
+            FactoryService.register(this);
+            TubeService.register(getChunkStoreRegistry(),getEntityStoreRegistry());
+            factory=new FactoryService(machines,research);machines.setFactory(factory);
+            tubes=new TubeService(getDataDirectory(),factory);
+            equipment.setTubeService(tubes);
+            factory.setRecoveryBlocker(tubes::isRecoveryBlocked);
+            tubes.registerSystems(getChunkStoreRegistry(),getEntityStoreRegistry());
             anomalies.setGroundingHook(machines::grounded);
             anomalies.setSuppressionHook(machines::suppressed);
             machines.setCapsuleReservationCheck(equipment::capsuleInFlight);
             scientists=new ScientistService(getDataDirectory());progression=new ProgressionService(getDataDirectory());
+            generation=new GenerationCoordinator(anomalies,scientists);
             scientists.setMachineRegistrar((world,position,id)->machines.register(world,position,id));
-            research.setScanHook(progression::scanned);research.setCompletionHook(progression::completedResearch);
+            research.setScanHook((player,type)->{
+                progression.scanned(player,type);
+                var telemetry=beacon;if(telemetry!=null)telemetry.usage(com.hexvane.strangematter.telemetry.BeaconTelemetry.Feature.SCAN);
+            });
+            research.setCompletionHook((player,node)->{
+                progression.completedResearch(player,node);
+                var telemetry=beacon;if(telemetry!=null)telemetry.usage(com.hexvane.strangematter.telemetry.BeaconTelemetry.Feature.RESEARCH_UNLOCKED);
+            });
             anomalies.setFirstContactHook((player,anomaly,award)->{progression.firstContact(player);if(award>0)research.addPoints(player,ResearchType.fromName(anomaly.type.researchType),award);});
             instance=this;
             getCodecRegistry(Interaction.CODEC).register("SM_Use",StrangeMatterInteraction.class,StrangeMatterInteraction.CODEC);
@@ -76,15 +99,16 @@ public final class StrangeMatterPlugin extends JavaPlugin {
             getEventRegistry().registerGlobal(PlayerReadyEvent.class,event->{
                 var ref=event.getPlayerRef();if(ref==null||!ref.isValid())return;
                 var store=ref.getStore();var world=store.getExternalData().getWorld();
-                world.execute(()->{if(!ref.isValid())return;var p=store.getComponent(ref,PlayerRef.getComponentType());if(p!=null){research.syncRecipes(p,store);machines.welcome(p,event.getPlayer());}});
+                world.execute(()->{if(!ref.isValid())return;var p=store.getComponent(ref,PlayerRef.getComponentType());if(p!=null){research.syncRecipes(p,store);progression.reconcileResearch(p.getUuid(),research.earnedNodes(p.getUuid()));machines.welcome(p,event.getPlayer());}});
             });
-            getEventRegistry().registerGlobal(ChunkPreLoadProcessEvent.class,anomalies::onChunkPreLoad);
-            getEventRegistry().registerGlobal(EventPriority.FIRST,ChunkPreLoadProcessEvent.class,scientists::onChunkPreLoad);
+            getEventRegistry().registerGlobal(ChunkPreLoadProcessEvent.class,generation::column);
+            getEventRegistry().registerGlobal(EventPriority.LAST,com.hypixel.hytale.server.core.universe.world.events.ChunkSectionPreLoadProcessEvent.class,generation::section);
             getEventRegistry().registerGlobal(EventPriority.LAST,RemoveWorldEvent.class,event->{if(!event.isCancelled())cleanupWorld(event.getWorld());});
             getLogger().atInfo().log("Strange Matter initialized: six anomaly disciplines and native laboratory research.");
         }catch(Exception e){throw new IllegalStateException("Strange Matter initialization failed",e);}
     }
     @Override protected void start(){
+        beacon=new com.hexvane.strangematter.telemetry.BeaconTelemetry(getClass().getClassLoader());
         diagnostics=new com.hexvane.strangematter.diagnostics.WorldStallDiagnostics(message->getLogger().atWarning().log("%s",message));
         // Loaded chunk lighting can outlive changes to block asset colors.
         for(var world:Universe.get().getWorlds().values())if(world.isAlive())
@@ -93,8 +117,10 @@ public final class StrangeMatterPlugin extends JavaPlugin {
     private final class LaboratoryTick extends TickingSystem<EntityStore> {
         private final Set<String> pending=ConcurrentHashMap.newKeySet();
         private final java.util.Map<String,Long> lastErrors=new ConcurrentHashMap<>();
-        private void tickSubsystem(World world,String name,Runnable tick) {
+        private void tickSubsystem(World world,String name,com.hexvane.strangematter.telemetry.BeaconTelemetry.Subsystem subsystem,Runnable tick) {
             if(diagnostics!=null)diagnostics.stage(world.getName(),"Strange Matter "+name);
+            var telemetry=beacon;boolean measuring=telemetry!=null&&telemetry.isActive();
+            long started=measuring?System.nanoTime():0;
             try { tick.run(); }
             catch(Exception e) {
                 long now=System.currentTimeMillis();String key=world.getName()+":"+name;
@@ -102,6 +128,8 @@ public final class StrangeMatterPlugin extends JavaPlugin {
                     lastErrors.put(key,now);
                     getLogger().atSevere().withCause(e).log("Strange Matter %s tick failed in %s",name,world.getName());
                 }
+            } finally {
+                if(measuring)telemetry.performance(subsystem,System.nanoTime()-started);
             }
         }
         @Override public void tick(float dt,int index,Store<EntityStore> store){
@@ -110,15 +138,18 @@ public final class StrangeMatterPlugin extends JavaPlugin {
             if(!pending.add(world.getName()))return;
             world.execute(()->{try{if(instance!=null){
                 // A broken field must not starve capsule inventory receipts or mounted movement.
-                tickSubsystem(world,"anomalies",()->anomalies.tick(world,dt));
-                tickSubsystem(world,"machines",()->machines.tick(world,dt));
-                tickSubsystem(world,"equipment",()->equipment.tick(world,dt));
-                tickSubsystem(world,"scientists",()->scientists.tick(world,dt));
-                tickSubsystem(world,"progression",()->progression.tick(world,dt));
+                tickSubsystem(world,"anomalies",com.hexvane.strangematter.telemetry.BeaconTelemetry.Subsystem.ANOMALIES,()->anomalies.tick(world,dt));
+                tickSubsystem(world,"item tubes",com.hexvane.strangematter.telemetry.BeaconTelemetry.Subsystem.ITEM_TUBES,()->tubes.tick(world,dt));
+                tickSubsystem(world,"machines",com.hexvane.strangematter.telemetry.BeaconTelemetry.Subsystem.MACHINES,()->machines.tick(world,dt));
+                tickSubsystem(world,"equipment",com.hexvane.strangematter.telemetry.BeaconTelemetry.Subsystem.EQUIPMENT,()->equipment.tick(world,dt));
+                tickSubsystem(world,"scientists",com.hexvane.strangematter.telemetry.BeaconTelemetry.Subsystem.SCIENTISTS,()->scientists.tick(world,dt));
+                tickSubsystem(world,"progression",com.hexvane.strangematter.telemetry.BeaconTelemetry.Subsystem.PROGRESSION,()->progression.tick(world,dt));
+                var telemetry=beacon;if(telemetry!=null)telemetry.tick();
             }}finally{pending.remove(world.getName());if(diagnostics!=null)diagnostics.stage(world.getName(),"native world or another plugin");}});
         }
     }
     @Override protected void shutdown(){
+        if(beacon!=null){beacon.close();beacon=null;}
         if(diagnostics!=null)diagnostics.close();
         instance=null;
         if(research!=null)research.close();
@@ -127,13 +158,15 @@ public final class StrangeMatterPlugin extends JavaPlugin {
             anomalies.save();
         }
         if(machines!=null)machines.close();
+        if(factory!=null)factory.close();
+        if(tubes!=null)tubes.close();
         if(scientists!=null)scientists.save();
         if(progression!=null)progression.save();
     }
     private void cleanupWorld(World world){
         if(diagnostics!=null)diagnostics.forget(world.getName());
         if(equipment==null||anomalies==null)return;
-        Runnable cleanup=()->{equipment.cleanup(world);anomalies.stopWorld(world);if(machines!=null)machines.cleanupPresentation(world);};
+        Runnable cleanup=()->{equipment.cleanup(world);anomalies.stopWorld(world);if(tubes!=null)tubes.stopWorld(world);if(machines!=null)machines.cleanupPresentation(world);if(generation!=null)generation.cleanup(world);};
         if(world.isInThread()){cleanup.run();return;}
         if(!world.isAlive())return;
         try{CompletableFuture.runAsync(cleanup,world).get(5,TimeUnit.SECONDS);}

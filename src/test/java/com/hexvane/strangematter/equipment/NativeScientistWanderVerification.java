@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.equipment;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.hexvane.strangematter.worldgen.ScientistPage;
 import com.hexvane.strangematter.worldgen.ScientistService;
 import com.hypixel.hytale.component.Ref;
@@ -28,7 +30,7 @@ public final class NativeScientistWanderVerification {
 
     public static void verify(World world)throws Exception {
         var store=world.getEntityStore().getStore();store.assertThread();
-        var chunk=world.getChunkIfInMemory(com.hypixel.hytale.math.util.ChunkUtil.indexChunk(0,0));
+        var chunk=WorldAccess.inMemory(world,com.hypixel.hytale.math.util.ChunkUtil.indexChunk(0,0));
         require(chunk!=null,"Scientist arena uses an already loaded column");
         var saved=new ArrayList<Cell>();
         var service=new ScientistService(Files.createTempDirectory("sm-native-scientist-wander-"));
@@ -36,10 +38,10 @@ public final class NativeScientistWanderVerification {
         UUID merchant=null;double greatestRadius=0,walked=0;int idleTicks=0;
         try{
             for(int x=3;x<=29;x++)for(int z=3;z<=29;z++)for(int y=246;y<=251;y++){
-                var section=chunk.getBlockChunk().getSectionAtBlockY(y);
+                var section=WorldAccess.section(chunk,y);
                 saved.add(new Cell(x,y,z,section.get(x,y,z),section.getRotationIndex(x,y,z),section.getFiller(x,y,z)));
                 String id=y==246?"Rock_Stone":"Empty";var type=BlockType.getAssetMap().getAsset(id);
-                chunk.setBlock(x,y,z,BlockType.getAssetMap().getIndex(id),type,0,0,SETTINGS);
+                WorldAccess.set(chunk,x,y,z,BlockType.getAssetMap().getIndex(id),type,0,0,SETTINGS);
             }
             try(var first=NativePlayerFixture.create(world,"Scientist observer",new Vector3d(HOME).add(0,0,6));
                 var second=NativePlayerFixture.create(world,"Second customer",new Vector3d(HOME).add(0,0,-6))){
@@ -64,9 +66,9 @@ public final class NativeScientistWanderVerification {
 
                 // Native codec roundtrip must retain the original home after wandering.
                 npc=store.getComponent(ref(world,merchant),NPCEntity.getComponentType());
-                var encoded=NPCEntity.CODEC.encode(npc).asDocument();
+                var encoded=NPCEntity.CODEC.encode(npc,new com.hypixel.hytale.codec.ExtraInfo()).asDocument();
                 require(encoded.containsKey("LeashPos"),"Native NPC save contains its home position");
-                var restored=NPCEntity.CODEC.decode(encoded);
+                var restored=NPCEntity.CODEC.decode(encoded,new com.hypixel.hytale.codec.ExtraInfo());
                 require(restored.getLeashPoint().distance(HOME)<1e-8,"Native save/decode retains spawn home rather than current wandering position");
 
                 var beforeMigration=position(world,merchant);npc.setLeashPoint(new Vector3d());
@@ -119,7 +121,7 @@ public final class NativeScientistWanderVerification {
             }
         }finally{
             if(merchant!=null){var entity=world.getEntityStore().getRefFromUUID(merchant);if(entity!=null&&entity.isValid())store.removeEntity(entity,RemoveReason.REMOVE);}
-            for(var old:saved)chunk.setBlock(old.x,old.y,old.z,old.block,BlockType.getAssetMap().getAsset(old.block),old.rotation,old.filler,SETTINGS);
+            for(var old:saved)WorldAccess.set(chunk,old.x,old.y,old.z,old.block,BlockType.getAssetMap().getAsset(old.block),old.rotation,old.filler,SETTINGS);
         }
         System.out.println("NATIVE_SCIENTIST_WANDER_VERIFICATION_PASSED: actual native walking near observers, pauses, home radius, gradual return, native LeashPos persistence and migration, two real trading pages, final-close resume and unchanged UUID/appearance. Distance="+walked+", radius="+greatestRadius+", idle ticks="+idleTicks);
     }

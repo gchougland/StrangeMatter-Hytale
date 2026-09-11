@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "projectId": "strange-matter",
+  "displayName": "Strange Matter",
+  "ownerPluginIdentifiers": ["Hexvane:Strange Matter"],
+  "packagePrefixes": ["com.hexvane.strangematter"],
+  "hosted": {
+    "projectKey": "proj_P1rchzBlWofxKYLByvuikMS0"
+  },
+  "defaults": {
+    "enabled": false,
+    "destinationMode": "hosted"
+  },
+  "telemetry": {
+    "stats": {
+      "supported": true,
+      "defaultEnabled": false,
+      "allowedEvents": ["heartbeat"]
+    },
+    "usage": {
+      "supported": true,
+      "defaultEnabled": false,
+      "allowedEvents": ["research_activity"],
+      "details": {
+        "research_activity": {
+          "allowedFields": {
+            "scans": {"type": "number"},
+            "research_unlocks": {"type": "number"},
+            "window_seconds": {"type": "number"}
+          }
+        }
+      }
+    },
+    "performance": {
+      "supported": true,
+      "defaultEnabled": false,
+      "sampleRate": 1.0,
+      "thresholdMs": 0,
+      "details": {
+        "subsystem_tick": {
+          "allowedFields": {
+            "subsystem": {
+              "type": "enum",
+              "values": ["anomalies", "item_tubes", "machines", "equipment", "scientists", "progression"]
+            },
+            "samples": {"type": "number"},
+            "mean_ms": {"type": "number"},
+            "max_ms": {"type": "number"},
+            "window_seconds": {"type": "number"}
+          }
+        }
+      }
+    }
+  }
+}

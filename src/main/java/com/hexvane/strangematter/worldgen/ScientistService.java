@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.worldgen;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hexvane.strangematter.util.InventoryOps;
@@ -18,7 +20,7 @@ import com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset;
 import com.hypixel.hytale.server.core.modules.time.WorldTimeResource;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
-import com.hypixel.hytale.server.core.universe.world.chunk.ChunkColumn;
+
 import com.hypixel.hytale.server.core.universe.world.chunk.WorldChunk;
 import com.hypixel.hytale.server.core.universe.world.chunk.section.BlockSection;
 import com.hypixel.hytale.server.core.universe.world.chunk.section.FluidSection;
@@ -71,19 +73,17 @@ public final class ScientistService {
     public synchronized ScientistRecord record(UUID id){return scientists.get(id);}
     public synchronized Collection<ScientistRecord> records(){return List.copyOf(scientists.values());}
 
-    /** Register at EventPriority.FIRST, before native EARLY block-entity initialization. Never touches an existing chunk. */
-    public synchronized void onChunkPreLoad(ChunkPreLoadProcessEvent event) {
-        if(!generationEnabled||laboratoryWeight==0||!event.isNewlyGenerated())return;
-        WorldChunk chunk=event.getChunk();World world=chunk.getWorld();
+    /** Writes new section holders and installs native furnishing component holders before publication. */
+    public synchronized void generate(GenerationColumn terrain) {
+        if(!generationEnabled||laboratoryWeight==0)return;
+        WorldChunk chunk=terrain.chunk;World world=chunk.getWorld();
         if(world.getName().toLowerCase(Locale.ROOT).contains("instance"))return;
-        var column=event.getHolder().getComponent(ChunkColumn.getComponentType());
-        if(column==null||column.getSectionHolders()==null)return;
         // The original is a village house, never a wilderness ruin. Native settlement furniture is the plot marker.
         boolean settlement=false;
         outer:for(int x=1;x<32;x+=2)for(int z=1;z<32;z+=2) {
-            int top=chunk.getHeight(x,z);
+            int top=terrain.height(x,z);
             for(int y=Math.max(1,top-16);y<=top;y++) {
-                BlockType block=chunk.getBlockType(x,y,z);if(block==null)continue;String id=block.getId();
+                BlockType block=terrain.type(x,y,z);if(block==null)continue;String id=block.getId();
                 if(id.startsWith("Furniture_Kweebec_")||id.startsWith("Furniture_Village_")){settlement=true;break outer;}
             }
         }
@@ -92,33 +92,29 @@ public final class ScientistService {
         Random random=new Random(world.getWorldConfig().getSeed()^ChunkUtil.indexChunk(chunk.getX(),chunk.getZ())^0x537472616e67654cL);
         if(random.nextInt(Math.max(1,laboratoryWeight+ordinaryPlotWeight))>=laboratoryWeight)return;
         for(int attempt=0;attempt<48;attempt++) {
-            int localX=2+random.nextInt(20),localZ=2+random.nextInt(21),y=chunk.getHeight(localX,localZ);
-            if(!emptyPlot(chunk,localX,y,localZ))continue;
+            int localX=2+random.nextInt(20),localZ=2+random.nextInt(21),y=terrain.height(localX,localZ);
+            if(!emptyPlot(terrain,localX,y,localZ))continue;
             int x=chunk.getX()*32+localX,z=chunk.getZ()*32+localZ;
-            if(!placeGenerated(chunk,column,localX,y,localZ))continue;
+            if(!placeGenerated(terrain,localX,y,localZ))continue;
             ScientistRecord record=new ScientistRecord(UUID.randomUUID(),world.getName(),x,y,z);
             scientists.put(record.id,record);dirty=true;save();return;
         }
     }
-    private boolean emptyPlot(WorldChunk chunk,int x,int y,int z) {
+    private boolean emptyPlot(GenerationColumn terrain,int x,int y,int z) {
         if(y<2||y>310)return false;
         for(int dx=-1;dx<=9;dx++)for(int dz=-1;dz<=8;dz++) {
-            int top=chunk.getHeight(x+dx,z+dz);if(top!=y)return false;
-            BlockType ground=chunk.getBlockType(x+dx,y,z+dz);
+            int top=terrain.height(x+dx,z+dz);if(top!=y)return false;
+            BlockType ground=terrain.type(x+dx,y,z+dz);
             if(ground==null)return false;String id=ground.getId();
             if(!(id.startsWith("Soil_Grass")||id.startsWith("Soil_Dirt")||id.startsWith("Soil_Sand")||id.startsWith("Soil_Gravel")||id.startsWith("Soil_Snow")))return false;
-            for(int dy=1;dy<=8;dy++)if(chunk.getBlock(x+dx,y+dy,z+dz)!=0)return false;
+            for(int dy=1;dy<=8;dy++)if(terrain.block(x+dx,y+dy,z+dz)!=0)return false;
         }
         return true;
     }
-    private boolean placeGenerated(WorldChunk chunk,ChunkColumn column,int x,int y,int z) {
-        if(column==null||column.getSectionHolders()==null)return false;
-        var sections=column.getSectionHolders();
+    private boolean placeGenerated(GenerationColumn terrain,int x,int y,int z) {
         for(Block block:laboratory.blocks) {
             if(!"Empty".equals(block.name)&&BlockType.getAssetMap().getIndex(block.name)<0)return false;
-            var holder=sections[ChunkUtil.indexSection(y+block.y)];if(holder==null)return false;
-            var fluid=holder.getComponent(FluidSection.getComponentType());
-            if(fluid!=null&&fluid.getFluidId(x+block.x,y+block.y,z+block.z)!=0)return false;
+            if(terrain.fluid(x+block.x,y+block.y,z+block.z)!=0)return false;
         }
         // Resolve full native collision footprints before mutation; reject any component that protrudes beyond the checked plot.
         List<Block> blocks=new ArrayList<>(laboratory.blocks);
@@ -136,10 +132,9 @@ public final class ScientistService {
             if(filler.x==original.x&&filler.y==original.y&&filler.z==original.z&&!"Empty".equals(original.name)&&!filler.name.equals(original.name))return false;
         for(Block block:blocks) {
             int id="Empty".equals(block.name)?0:BlockType.getAssetMap().getIndex(block.name);
-            var section=sections[ChunkUtil.indexSection(y+block.y)].ensureAndGetComponent(BlockSection.getComponentType());
-            section.set(x+block.x,y+block.y,z+block.z,id,block.rotation,block.filler);
+            terrain.set(x+block.x,y+block.y,z+block.z,block.name,block.rotation,block.filler);
         }
-        for(int dx=0;dx<9;dx++)for(int dz=0;dz<8;dz++)chunk.getBlockChunk().updateHeight(x+dx,z+dz);
+        for(int dx=0;dx<9;dx++)for(int dz=0;dz<8;dz++)terrain.updateHeight(x+dx,z+dz);
         return true;
     }
     /** Explicit placement by an operator/native settlement integrator. Does not place terrain or respawn a dead scientist. */
@@ -161,7 +156,7 @@ public final class ScientistService {
         long slot=date.toLocalDate().toEpochDay()*2+(date.getHour()>=12?1:0);
         for(var state:scientists.values()) {
             if(!state.world.equals(world.getName()))continue;
-            if(world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock(state.x,state.z))==null)continue;
+            if(WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock(state.x,state.z))==null)continue;
             registerMachine(world,state,4,1,1,"SM_Research_Machine");
             registerMachine(world,state,6,2,1,"SM_Stasis_Projector");
             if(!state.spawned)spawn(world,state,new Vector3d(state.x+5.832658,state.y+1,state.z+2.335622));

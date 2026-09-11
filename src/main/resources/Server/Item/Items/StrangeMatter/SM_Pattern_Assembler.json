@@ -1,0 +1,167 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Pattern_Assembler.name",
+    "Description": "server.items.SM_Pattern_Assembler.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Pattern_Assembler.png",
+  "MaxStack": 25,
+  "Categories": [
+    "Furniture.Benches",
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Machines"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/StrangeMatter/Automation/pattern_assembler.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/Automation/automation.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Pattern_Assembler",
+    "VariantRotation": "NESW",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#243950",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "InteractionHint": "server.interactionHints.SM_Pattern_Assembler",
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "SM_Use",
+            "Action": "machine"
+          }
+        ],
+        "RequireNewClick": true
+      }
+    },
+    "BlockEntity": {
+      "Components": {
+        "SM_Factory": {},
+        "BenchBlock": {}
+      }
+    },
+    "State": {
+      "Definitions": {
+        "Working": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/pattern_assembler.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "Blocks/StrangeMatter/Automation/automation_working.png",
+              "Weight": 1
+            }
+          ],
+          "CustomModelAnimation": "Blocks/StrangeMatter/Automation/pattern_assembler_working.blockyanim",
+          "CustomModelAnimationSpeed": 1,
+          "Looping": true,
+          "AmbientSoundEventId": "SM_Pattern_Assembler_Hum_SFX"
+        },
+        "Tier2": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/pattern_assembler_tier2.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "Blocks/StrangeMatter/Automation/automation.png",
+              "Weight": 1
+            }
+          ],
+          "Gathering": {
+            "Breaking": {
+              "GatherType": "Rocks",
+              "Quantity": 1,
+              "DropList": "SM_Pattern_Assembler_Tier2"
+            },
+            "Physics": {
+              "DropList": "SM_Pattern_Assembler_Tier2"
+            }
+          }
+        },
+        "Tier2Working": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/pattern_assembler_tier2.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "Blocks/StrangeMatter/Automation/automation_working.png",
+              "Weight": 1
+            }
+          ],
+          "CustomModelAnimation": "Blocks/StrangeMatter/Automation/pattern_assembler_working.blockyanim",
+          "CustomModelAnimationSpeed": 1,
+          "Looping": true,
+          "AmbientSoundEventId": "SM_Pattern_Assembler_Hum_SFX",
+          "Gathering": {
+            "Breaking": {
+              "GatherType": "Rocks",
+              "Quantity": 1,
+              "DropList": "SM_Pattern_Assembler_Tier2"
+            },
+            "Physics": {
+              "DropList": "SM_Pattern_Assembler_Tier2"
+            }
+          }
+        },
+        "Tier3": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/pattern_assembler_tier3.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "Blocks/StrangeMatter/Automation/automation.png",
+              "Weight": 1
+            }
+          ],
+          "Gathering": {
+            "Breaking": {
+              "GatherType": "Rocks",
+              "Quantity": 1,
+              "DropList": "SM_Pattern_Assembler_Tier3"
+            },
+            "Physics": {
+              "DropList": "SM_Pattern_Assembler_Tier3"
+            }
+          }
+        },
+        "Tier3Working": {
+          "CustomModel": "Blocks/StrangeMatter/Automation/pattern_assembler_tier3.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "Blocks/StrangeMatter/Automation/automation_working.png",
+              "Weight": 1
+            }
+          ],
+          "CustomModelAnimation": "Blocks/StrangeMatter/Automation/pattern_assembler_working.blockyanim",
+          "CustomModelAnimationSpeed": 1,
+          "Looping": true,
+          "AmbientSoundEventId": "SM_Pattern_Assembler_Hum_SFX",
+          "Gathering": {
+            "Breaking": {
+              "GatherType": "Rocks",
+              "Quantity": 1,
+              "DropList": "SM_Pattern_Assembler_Tier3"
+            },
+            "Physics": {
+              "DropList": "SM_Pattern_Assembler_Tier3"
+            }
+          }
+        }
+      }
+    }
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "SubCategory": "SM_ProcessingMachines"
+}

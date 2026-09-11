@@ -1,9 +1,11 @@
 """Audit and convert the user's original Minecraft structure; no third-party NBT dependency."""
-import gzip, io, json, struct
+import gzip, io, json, struct, sys
 from collections import Counter
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
+sys.path.insert(0,str(ROOT/'tools/assets'))
+from fixture_toggles import apply as apply_fixture_toggle
 SOURCE=Path(r'C:/Users/gchou/Documents/Projects/StrangeMatter-1.20.1/strange-matter/src/main/resources/data/strangematter/structures/anomaly_scientist_lab.nbt')
 stream=io.BytesIO(gzip.decompress(SOURCE.read_bytes()))
 def take(fmt):return struct.unpack('>'+fmt,stream.read(struct.calcsize('>'+fmt)))[0]
@@ -86,6 +88,7 @@ for ident,path,hitbox,description in [
               'BlockParticleSetId':'Stone','ParticleColor':'#5eeeff','Gathering':{'Breaking':{'GatherType':'Rocks'}}},
           'Interactions':{'Primary':'Block_Primary','Secondary':'Block_Secondary'}}
     if 'Lamp' in ident:item['BlockType']['Light']={'Color':'#5ff','Radius':10}
+    apply_fixture_toggle(ident,item,ROOT/'src/main/resources')
     dest=ROOT/f'src/main/resources/Server/Item/Items/StrangeMatter/{ident}.json';dest.write_text(json.dumps(item,indent=2)+'\n',encoding='utf8')
 hitbox={'Boxes':[{'Min':{'X':0,'Y':0,'Z':0.46875},'Max':{'X':1,'Y':1,'Z':0.53125}}]}
 dest=ROOT/'src/main/resources/Server/Item/Block/Hitboxes/StrangeMatter/SM_Lab_Cyan_Glass.json';dest.parent.mkdir(parents=True,exist_ok=True)
