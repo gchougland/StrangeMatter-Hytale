@@ -17,9 +17,12 @@ public final class GameplayVerification {
         }
     }
     private static void verify() throws Exception {
+        PluginDataPathsVerification.main(new String[0]);
+        com.hexvane.strangematter.diagnostics.WorldStallDiagnosticsVerification.verify();
         network(); recipes();
         ResearchVerification.main(new String[0]);
         ResearchProgressionVerification.main(new String[0]);
+        ResearchPointsVerification.main(new String[0]);
         com.hexvane.strangematter.ui.LivePageVerification.main(new String[0]);
         AnomalyVerification.main(new String[0]);
         com.hexvane.strangematter.equipment.EquipmentVerification.main(new String[0]);
@@ -62,7 +65,7 @@ public final class GameplayVerification {
         check(detour.size()==1&&detour.getFirst().wires().size()==4,"Disabled shortest path reroutes through connected active conduits");
     }
     private static void recipes() throws Exception {
-        var recipes=ForgeRecipe.load();check(recipes.size()==11,"All original forge recipes");
+        var recipes=ForgeRecipe.load();check(recipes.size()==12,"All eleven original forge recipes and the Anomaly Nullifier");
         Set<String> ids=new HashSet<>();
         for(var recipe:recipes){
             check(ids.add(recipe.id)&&recipe.quantity>0,"Unique productive recipe");
@@ -71,6 +74,7 @@ public final class GameplayVerification {
             int expected=recipe.ingredients.values().stream().mapToInt(n->n).sum()+recipe.shards.values().stream().mapToInt(n->n).sum();
             check(recipe.totalCost().values().stream().mapToInt(n->n).sum()==expected,"Both ingredients and additional shard costs preserved");
         }
+        check(ids.containsAll(Set.of("chrono_blister","containment_capsule","echo_vacuum","echoform_imprinter","graviton_hammer","hoverboard","levitation_pad","resonance_condenser","rift_stabilizer","stasis_projector","warp_gun","anomaly_nullifier")),"Original forge recipe identities preserved beside the new device");
         check(ResearchCatalog.nodes().size()==26,"All original research nodes");
         for(var node:ResearchCatalog.nodes())for(String pre:node.prerequisites())check(ResearchCatalog.get(pre)!=null,"Research prerequisite exists");
     }

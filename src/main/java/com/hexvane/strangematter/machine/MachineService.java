@@ -25,7 +25,7 @@ import static com.hypixel.hytale.server.core.universe.world.SetBlockSettings.*;
 
 /** Persistent laboratory machines. All inventory and world operations run on their world thread. */
 public final class MachineService implements AutoCloseable {
-    public static final Set<String> IDS=Set.of("SM_Research_Machine","SM_Resonant_Burner","SM_Resonance_Condenser","SM_Reality_Forge","SM_Paradoxical_Energy_Cell","SM_Resonant_Conduit","SM_Rift_Stabilizer","SM_Stasis_Projector","SM_Levitation_Pad","SM_Time_Dilation_Block");
+    public static final Set<String> IDS=Set.of("SM_Research_Machine","SM_Resonant_Burner","SM_Resonance_Condenser","SM_Reality_Forge","SM_Paradoxical_Energy_Cell","SM_Resonant_Conduit","SM_Rift_Stabilizer","SM_Stasis_Projector","SM_Levitation_Pad","SM_Time_Dilation_Block","SM_Anomaly_Nullifier");
     private final Map<String,MachineState> machines=new LinkedHashMap<>();
     private final Set<String> welcomed=new HashSet<>();
     private final Set<String> spentCapsules=new HashSet<>();
@@ -40,6 +40,7 @@ public final class MachineService implements AutoCloseable {
     private boolean dirty;
     private record GroundingSite(String world,int x,int y,int z) {}
     private volatile List<GroundingSite> groundingSites=List.of();
+    private volatile List<GroundingSite> nullifierSites=List.of();
     private Predicate<String> capsuleReserved=token->false;
     private static final class Save { List<MachineState> machines=new ArrayList<>();Set<String> welcomed=new HashSet<>(),spentCapsules=new HashSet<>(); }
 
@@ -49,6 +50,8 @@ public final class MachineService implements AutoCloseable {
             var data=new GsonBuilder().create().fromJson(Files.readString(file),Save.class);
             if(data==null||data.machines==null)throw new IOException("Invalid machine save");
             for(var state:data.machines)if(state!=null&&IDS.contains(state.id)){
+                // Conduits are passive. Old GUI power switches must not leave inaccessible disabled wires.
+                if(state.id.equals("SM_Resonant_Conduit"))state.enabled=true;
                 var saved=state.selectedRecipes;state.selectedRecipes=new LinkedHashMap<>();
                 if(saved!=null&&state.id.equals("SM_Reality_Forge"))for(var selection:saved.entrySet()){
                     if(selection.getValue()==null||recipes.stream().noneMatch(r->r.id.equals(selection.getValue())))continue;
@@ -64,7 +67,22 @@ public final class MachineService implements AutoCloseable {
         }
         refreshGroundingSites();
     }
-    private void refreshGroundingSites(){groundingSites=machines.values().stream().filter(m->m.enabled&&m.id.equals("SM_Rift_Stabilizer")).map(m->new GroundingSite(m.world,m.x,m.y,m.z)).toList();}
+    private void refreshGroundingSites(){
+        groundingSites=machines.values().stream().filter(m->m.enabled&&m.id.equals("SM_Rift_Stabilizer")).map(m->new GroundingSite(m.world,m.x,m.y,m.z)).toList();
+        nullifierSites=machines.values().stream().filter(m->m.enabled&&m.id.equals("SM_Anomaly_Nullifier")).map(m->new GroundingSite(m.world,m.x,m.y,m.z)).toList();
+    }
+    /** Called under the anomaly monitor: immutable sites avoid reversing the machine/anomaly lock order. */
+    public boolean suppressed(World world,org.joml.Vector3d position,AnomalyType type){
+        if(!world.isInThread()||position==null||!position.isFinite())return false;
+        double radius=config.nullifierRadius;
+        for(var site:nullifierSites){
+            if(!site.world.equals(world.getName())||position.distanceSquared(site.x+.5,site.y+.5,site.z+.5)>radius*radius)continue;
+            // A saved registry entry alone is insufficient: unloaded or replaced blocks cannot suppress anything.
+            var chunk=world.getChunkIfInMemory(ChunkUtil.indexChunkFromBlock(site.x,site.z));
+            if(chunk!=null&&"SM_Anomaly_Nullifier".equals(baseId(chunk.getBlockType(site.x,site.y,site.z))))return true;
+        }
+        return false;
+    }
     /** Anomaly callbacks run under the anomaly lock: never acquire the machine lock here. */
     public boolean grounded(World world,org.joml.Vector3d position,double radius){
         for(var site:groundingSites){
@@ -87,7 +105,10 @@ public final class MachineService implements AutoCloseable {
         if(!IDS.contains(id))return null;
         String key=MachineState.key(world.getName(),pos.x,pos.y,pos.z);
         var current=machines.get(key);
-        if(current!=null&&current.id.equals(id))return current;
+        if(current!=null&&current.id.equals(id)){
+            if(id.equals("SM_Resonant_Conduit")&&!current.enabled){current.enabled=true;dirty=true;routes.clear();}
+            return current;
+        }
         var state=new MachineState(world.getName(),pos,id);machines.put(key,state);refreshGroundingSites();dirty=true;routes.clear();refreshConnections(world,pos);return state;
     }
     public synchronized boolean valid(World world,MachineState state) {
@@ -105,6 +126,13 @@ public final class MachineService implements AutoCloseable {
     public void open(PlayerRef player,Store<EntityStore> store,Vector3i pos) {
         var world=store.getExternalData().getWorld();var type=world.getBlockType(pos.x,pos.y,pos.z);
         if(type==null)return;var state=register(world,pos,baseId(type));if(state==null||!canUse(store,player,state))return;
+        if(state.id.equals("SM_Resonant_Conduit"))return;
+        if(state.id.equals("SM_Stasis_Projector")||state.id.equals("SM_Anomaly_Nullifier")){
+            toggle(state);save();
+            com.hexvane.strangematter.effects.GadgetEffects.sound(world,state.enabled?"SM_Stasis_Projector_On_SFX":"SM_Stasis_Projector_Off_SFX",state.center());
+            if(!state.enabled){state.active=false;MachineWorkEffects.stop(world,state);}
+            return;
+        }
         if(state.id.equals("SM_Research_Machine")){research.openMachine(player,store,pos);return;}
         var ref=player.getReference();var entity=store.getComponent(ref,Player.getComponentType());
         if(entity!=null)entity.getPageManager().openCustomPage(ref,store,new MachinePage(player,this,state));
@@ -136,7 +164,12 @@ public final class MachineService implements AutoCloseable {
             }
         }
     }
-    public synchronized void toggle(MachineState m){if(m.id.equals("SM_Levitation_Pad"))m.ascending=!m.ascending;else m.enabled=!m.enabled;refreshGroundingSites();dirty=true;routes.clear();}
+    public synchronized void toggle(MachineState m){
+        if(m.id.equals("SM_Resonant_Conduit"))m.enabled=true;
+        else if(m.id.equals("SM_Levitation_Pad"))m.ascending=!m.ascending;
+        else m.enabled=!m.enabled;
+        refreshGroundingSites();dirty=true;routes.clear();
+    }
     public synchronized int selectedRecipeIndex(MachineState state,UUID player){
         String selected=state.selectedRecipe(player);
         for(int i=0;i<recipes.size();i++)if(recipes.get(i).id.equals(selected))return i;
@@ -273,6 +306,7 @@ public final class MachineService implements AutoCloseable {
         for(var m:inWorld(world)) {
             if(world.getChunkIfInMemory(ChunkUtil.indexChunkFromBlock(m.x,m.z))==null)continue;
             if(!valid(world,m)){removed(world,m.block());continue;}
+            if(m.id.equals("SM_Resonant_Conduit")&&!m.enabled){m.enabled=true;dirty=true;routes.clear();}
             loaded.add(m);m.active=false;
             recoverInvalidFuel(m);
             if(tick%10==1&&m.id.equals("SM_Resonant_Conduit"))updateConduit(world,m.x,m.y,m.z);
@@ -285,6 +319,11 @@ public final class MachineService implements AutoCloseable {
                     if(consumeFuelTick(m)){m.energy=(int)Math.min(config.burnerCapacity,(long)m.energy+config.burnerGeneration);m.active=true;dirty=true;}
                 }
                 case "SM_Paradoxical_Energy_Cell" -> {m.energy=Integer.MAX_VALUE;m.active=true;}
+                case "SM_Anomaly_Nullifier" -> {
+                    var anomaly=anomalies.nearest(world,m.center(),config.nullifierRadius);
+                    m.active=anomaly.isPresent()&&world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock((int)Math.floor(anomaly.get().x),(int)Math.floor(anomaly.get().z)))!=null;
+                    if(m.active&&tick%20==0)ParticleUtil.spawnParticleEffect("SM_Nullifier_Field",new org.joml.Vector3d(m.x+.5,m.y+.65,m.z+.5),world.getEntityStore().getStore());
+                }
                 case "SM_Rift_Stabilizer" -> {
                     var anomaly=anomalies.nearest(world,m.center(),config.stabilizerRadius,AnomalyType.ENERGETIC_RIFT);
                     if(anomaly.isPresent()&&riftUsers.getOrDefault(anomaly.get().id,0)<config.maxStabilizersPerRift) {

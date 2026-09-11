@@ -168,6 +168,10 @@ public final class ScientistService {
             if(state.entity==null)continue;
             var ref=world.getEntityStore().getRefFromUUID(state.entity);if(ref==null||!ref.isValid())continue;
             var npc=store.getComponent(ref,NPCEntity.getComponentType());if(npc==null||!ROLE.equals(npc.getRoleName()))continue;
+            // The former stationary role omitted LeashPos from native saves. Its
+            // default zero vector is not the laboratory home; preserve all valid homes.
+            if(npc.getLeashPoint().lengthSquared()==0)
+                npc.setLeashPoint(new Vector3d(state.x+5.832658,state.y+1,state.z+2.335622));
             var model=store.getComponent(ref,ModelComponent.getComponentType());
             if(model!=null&&Set.of("Klops","Klops_Merchant").contains(model.getModel().getModelAssetId())) {
                 var asset=ModelAsset.getAssetMap().getAsset(APPEARANCE);
@@ -179,10 +183,18 @@ public final class ScientistService {
                 dirty|=state.restock(slot);
             StateSupport support=StateSupport.get(ref,store);
             if(support==null)continue;
+            boolean trading=false;
             for(var player:world.getPlayerRefs()) {
                 var playerEntity=player.getReference();if(playerEntity==null||!playerEntity.isValid())continue;
                 if(support.consumeInteraction(playerEntity))open(player,store,state.id);
+                var customer=store.getComponent(playerEntity,Player.getComponentType());
+                if(customer!=null&&customer.getPageManager().getCustomPage() instanceof ScientistPage page
+                        &&page.isTradingWith(state.id)&&near(state.id,player,store))trading=true;
             }
+            // Read the actual open pages so closing, disconnecting or changing worlds
+            // cannot leave a merchant stuck, and one customer cannot release another's trade.
+            boolean paused=support.inState(support.getStateHelper().getStateIndex("Trading"));
+            if(trading!=paused)support.setState(ref,trading?"Trading":"Idle",null,store);
         }
         save();
     }
@@ -194,7 +206,14 @@ public final class ScientistService {
     public synchronized boolean open(PlayerRef player,Store<EntityStore> store,UUID identity) {
         var ref=player.getReference();if(ref==null||!ref.isValid()||!near(identity,player,store))return false;
         var entity=store.getComponent(ref,Player.getComponentType());if(entity==null)return false;
-        entity.getPageManager().openCustomPage(ref,store,new ScientistPage(player,this,identity));return true;
+        entity.getPageManager().openCustomPage(ref,store,new ScientistPage(player,this,identity));
+        var merchant=store.getExternalData().getWorld().getEntityStore().getRefFromUUID(scientists.get(identity).entity);
+        if(merchant!=null&&merchant.isValid()) {
+            var support=StateSupport.get(merchant,store);
+            if(support!=null&&!support.inState(support.getStateHelper().getStateIndex("Trading")))
+                support.setState(merchant,"Trading",null,store);
+        }
+        return true;
     }
     private boolean near(UUID identity,PlayerRef player,Store<EntityStore> store) {
         var state=scientists.get(identity);var world=store.getExternalData().getWorld();

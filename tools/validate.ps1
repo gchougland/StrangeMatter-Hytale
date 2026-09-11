@@ -19,12 +19,12 @@ try {
         # Full --validate-assets also loads every vanilla instance. September's server rejects
         # its own zip-backed instance paths; opt in when diagnosing that independent engine issue.
         $validationFlags = if ($ValidateBaseInstances) { @('--validate-assets') } else { @() }
-        & java -Xmx4G -jar $serverJar --bare --assets "$gamePath/Assets.zip" @validationFlags --shutdown-after-validate --disable-sentry --disable-file-watcher --auth-mode offline --log "HytaleServer:INFO,PluginManager:INFO,StrangeMatter|P:INFO" 2>&1 | Tee-Object -FilePath asset-validation.log
+        & java -Xmx4G -jar $serverJar --bare --assets "$gamePath/Assets.zip" @validationFlags --shutdown-after-validate --disable-sentry --disable-file-watcher --auth-mode offline --log "HytaleServer:INFO,PluginManager:INFO,Strange Matter|P:INFO" 2>&1 | Tee-Object -FilePath asset-validation.log
         Copy-Item -LiteralPath asset-validation.log -Destination (Join-Path $validationRoot 'asset-validation.log')
         if ($LASTEXITCODE -ne 0) { throw "Hytale asset validation exited with code $LASTEXITCODE. See build/validation-run/asset-validation.log." }
         $text = Get-Content -LiteralPath asset-validation.log -Raw
         $records = [regex]::Split($text, '(?=\[\d{4}/\d{2}/\d{2})')
-        $failures = $records | Where-Object { $_ -match 'SM_|Hexvane:StrangeMatter|StrangeMatter\|P' -and $_ -match 'WARN|SEVERE|ERROR' }
+        $failures = $records | Where-Object { $_ -match 'SM_|Hexvane:Strange ?Matter|Strange ?Matter\|P' -and $_ -match 'WARN|SEVERE|ERROR' }
         if ($failures) { throw "Strange Matter asset warnings/errors remain. See build/validation-run/asset-validation.log." }
     } finally { Pop-Location }
 } finally { Pop-Location }

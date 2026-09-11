@@ -41,6 +41,112 @@
     "PlacementSettings": {
       "RotationMode": "StairFacingPlayer",
       "AllowRotationKey": true
+    },
+    "State": {
+      "Definitions": {
+        "Corner_Right": {
+          "CustomModel": "Blocks/StrangeMatter/resonite_tile_stairs_corner_right.blockymodel",
+          "HitboxType": "Stairs_Corner_Right",
+          "FlipType": "OrthogonalInverse",
+          "Supporting": {
+            "Down": [
+              {}
+            ]
+          },
+          "CustomModelTexture": [
+            {
+              "Texture": "Blocks/StrangeMatter/resonite_tile_stairs.png",
+              "Weight": 1
+            }
+          ]
+        },
+        "Inverted_Corner_Right": {
+          "CustomModel": "Blocks/StrangeMatter/resonite_tile_stairs_inverted_corner_right.blockymodel",
+          "HitboxType": "Stairs_Inverted_Corner_Right",
+          "FlipType": "OrthogonalInverse",
+          "Supporting": {
+            "Down": [
+              {}
+            ],
+            "North": [
+              {}
+            ],
+            "East": [
+              {}
+            ]
+          },
+          "CustomModelTexture": [
+            {
+              "Texture": "Blocks/StrangeMatter/resonite_tile_stairs.png",
+              "Weight": 1
+            }
+          ]
+        },
+        "Corner_Left": {
+          "CustomModel": "Blocks/StrangeMatter/resonite_tile_stairs_corner_left.blockymodel",
+          "HitboxType": "Stairs_Corner_Left",
+          "FlipType": "Orthogonal",
+          "Supporting": {
+            "Down": [
+              {}
+            ]
+          },
+          "CustomModelTexture": [
+            {
+              "Texture": "Blocks/StrangeMatter/resonite_tile_stairs.png",
+              "Weight": 1
+            }
+          ]
+        },
+        "Inverted_Corner_Left": {
+          "CustomModel": "Blocks/StrangeMatter/resonite_tile_stairs_inverted_corner_left.blockymodel",
+          "HitboxType": "Stairs_Inverted_Corner_Left",
+          "FlipType": "Orthogonal",
+          "Supporting": {
+            "Down": [
+              {}
+            ],
+            "North": [
+              {}
+            ],
+            "West": [
+              {}
+            ]
+          },
+          "CustomModelTexture": [
+            {
+              "Texture": "Blocks/StrangeMatter/resonite_tile_stairs.png",
+              "Weight": 1
+            }
+          ]
+        }
+      }
+    },
+    "ConnectedBlockRuleSet": {
+      "Type": "Stair",
+      "Corner_Left": {
+        "State": "Corner_Left"
+      },
+      "Corner_Right": {
+        "State": "Corner_Right"
+      },
+      "Inverted_Corner_Left": {
+        "State": "Inverted_Corner_Left"
+      },
+      "Inverted_Corner_Right": {
+        "State": "Inverted_Corner_Right"
+      },
+      "Straight": {
+        "State": "default"
+      }
+    },
+    "Supporting": {
+      "Down": [
+        {}
+      ],
+      "North": [
+        {}
+      ]
     }
   },
   "Interactions": {
@@ -61,7 +167,7 @@
         "Type": "Crafting",
         "Id": "SM_Laboratory",
         "Categories": [
-          "SM_Laboratory_All"
+          "SM_Laboratory_Building"
         ]
       }
     ],

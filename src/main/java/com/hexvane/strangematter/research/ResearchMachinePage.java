@@ -224,6 +224,7 @@ public final class ResearchMachinePage extends InteractiveCustomUIPage<ResearchP
         // Never advance a memory cue, physics step or instability clock while its previous
         // visible frame is awaiting acknowledgement. Slow links slow simulation, not input.
         if (!input.ready()) return;
+        if (session != null) session.advancePresentationClock(System.nanoTime());
         if (session == null || session.state() == ResearchSession.State.READY || resultRecorded) {
             if (dirty||notesDirty) {
                 UICommandBuilder cmd=new UICommandBuilder();UIEventBuilder events=new UIEventBuilder();
@@ -310,14 +311,14 @@ public final class ResearchMachinePage extends InteractiveCustomUIPage<ResearchP
         return session == null ? 50 : session.state() == ResearchSession.State.SUCCESS ? 0 : (int) Math.round(session.instability() * 100);
     }
     private static void renderCognition(UICommandBuilder cmd, ResearchSession.Panel p) {
-        for (int i = 0; i < 9; i++) cmd.set("#RuneGlow" + i + ".Visible", p.displaying && p.pattern[p.displayIndex] == i);
-        cmd.set("#CognitionReadout.Text", p.stable ? "Sequence locked" : p.displaying ? "Watch the glowing symbols" : "Repeat the symbols  " + p.inputCount + "/" + p.pattern.length);
+        for (int i = 0; i < 9; i++) cmd.set("#RuneGlow" + i + ".Visible", p.displaying && !p.displayGap && !p.stable && p.pattern[p.displayIndex] == i);
+        cmd.set("#CognitionReadout.Text", p.stable ? "Sequence locked" : p.cueEnded ? "Experiment ended" : !p.cueStarted ? "Begin to watch the pattern" : p.displaying ? (p.displayGap ? "Next symbol " : "Watch symbol ") + (p.displayIndex + 1) + " of " + p.pattern.length : "Repeat the symbols  " + p.inputCount + "/" + p.pattern.length);
     }
     private void renderEnergy(UICommandBuilder cmd, ResearchSession.Panel p) {
         for (int i = 0; i < 32; i++) {
             double phase = i / 31.0 * Math.PI * 4;
-            anchor(cmd, "#WaveTarget" + i, i * 7 + 5, 42 - (int) (Math.sin(phase / p.targetSecondary) * p.target * 23), 5, 3);
-            anchor(cmd, "#WaveLive" + i, i * 7 + 5, 42 - (int) (Math.sin(phase / p.secondary) * p.value * 23), 4, 4);
+            anchor(cmd, "#WaveTarget" + i, i * 7 + 4, 39 - (int) Math.round(Math.sin(phase / p.targetSecondary) * p.target * 23), 6, 6);
+            anchor(cmd, "#WaveLive" + i, i * 7 + 5, 40 - (int) Math.round(Math.sin(phase / p.secondary) * p.value * 23), 4, 4);
         }
         cmd.set("#EnergyReadout.Text", String.format(Locale.ROOT, "Amplitude %.2f  /  Period %.2f", p.value, p.secondary));
         cmd.set("#EnergyLock.Text", p.stable ? "Waves locked" : "Match cyan to purple; hold " + service.settings().energyRequiredAlignmentTicks / 20.0 + " seconds");
@@ -331,8 +332,8 @@ public final class ResearchMachinePage extends InteractiveCustomUIPage<ResearchP
         double target = Math.toRadians(p.target), live = Math.toRadians(p.value + 180);
         for (int i = 0; i < 12; i++) {
             double t = (i + 1) / 12.0;
-            anchor(cmd, "#ShadowTarget" + i, 125 + (int) (Math.cos(target) * p.targetSecondary * 2 * t), 45 - (int) (Math.sin(target) * p.targetSecondary * t), 6, 5);
-            anchor(cmd, "#ShadowLive" + i, 125 + (int) (Math.cos(live) * ResearchSession.shadowLength(p) * 2 * t), 45 - (int) (Math.sin(live) * ResearchSession.shadowLength(p) * t), 4, 4);
+            anchor(cmd, "#ShadowTarget" + i, 122 + (int) Math.round(Math.cos(target) * p.targetSecondary * 2 * t), 42 - (int) Math.round(Math.sin(target) * p.targetSecondary * t), 6, 6);
+            anchor(cmd, "#ShadowLive" + i, 123 + (int) Math.round(Math.cos(live) * ResearchSession.shadowLength(p) * 2 * t), 43 - (int) Math.round(Math.sin(live) * ResearchSession.shadowLength(p) * t), 4, 4);
         }
         double light = Math.toRadians(p.value);
         anchor(cmd, "#ShadowLight", 125 + (int) (Math.cos(light) * p.secondary * 1.5),
@@ -351,8 +352,8 @@ public final class ResearchMachinePage extends InteractiveCustomUIPage<ResearchP
     private void renderTime(UICommandBuilder cmd, ResearchSession.Panel p) {
         for (int i = 0; i < 12; i++) {
             double t = (i + 1) / 12.0, current = Math.toRadians(p.angle - 90), target = Math.toRadians(p.targetAngle - 90);
-            anchor(cmd, "#TimeTarget" + i, 113 + (int) (Math.cos(target) * 40 * t), 50 + (int) (Math.sin(target) * 40 * t), 4, 4);
-            anchor(cmd, "#TimeLive" + i, 113 + (int) (Math.cos(current) * 40 * t), 50 + (int) (Math.sin(current) * 40 * t), 3, 3);
+            anchor(cmd, "#TimeTarget" + i, 110 + (int) Math.round(Math.cos(target) * 40 * t), 47 + (int) Math.round(Math.sin(target) * 40 * t), 6, 6);
+            anchor(cmd, "#TimeLive" + i, 111 + (int) Math.round(Math.cos(current) * 40 * t), 48 + (int) Math.round(Math.sin(current) * 40 * t), 4, 4);
         }
         cmd.set("#TimePulse.Visible", session.ticks() / 20 % 2 == 0);
         cmd.set("#TimeReadout.Text", String.format(Locale.ROOT, "Clock speed %.2fx  /  Match the purple hand", p.value));

@@ -141,9 +141,10 @@ public final class LivePageVerification {
     /** Constructor-free network handler fixture; no unsafe/reflection appears in production. */
     private static final class RecordingGameHandler extends com.hypixel.hytale.server.core.io.handlers.game.GamePacketHandler {
         java.util.List<com.hypixel.hytale.protocol.ToClientPacket> sent;
+        boolean skipOutboundAdapter;
         private RecordingGameHandler() { super(null, null, null); }
         @Override public void write(com.hypixel.hytale.protocol.ToClientPacket packet) {
-            if (!com.hypixel.hytale.server.core.io.adapter.PacketAdapters.__handleOutbound(this, packet)) sent.add(packet);
+            if (skipOutboundAdapter || !com.hypixel.hytale.server.core.io.adapter.PacketAdapters.__handleOutbound(this, packet)) sent.add(packet);
         }
         @Override public void writeNoCache(com.hypixel.hytale.protocol.ToClientPacket packet) { write(packet); }
     }
@@ -190,8 +191,113 @@ public final class LivePageVerification {
             require(received.getLast().equals("fallback:begin"), "Actual native PageManager raw callback still routes a validated control when an adapter forwards it");
             nativeLease.close(); pageField.set(manager, null);
         }
+        nativeObservationRecovery(player, socket);
         com.hexvane.strangematter.ui.gadget.GadgetHudVerification.verify(player, socket.sent);
         System.out.println("PASS: actual native adapter + wire-decoded Insert/Close events, extra client fields, encoded page identity, and native Close under pending ACK.");
+    }
+    private static void nativeObservationRecovery(com.hypixel.hytale.server.core.universe.PlayerRef player,
+                                                   RecordingGameHandler socket) throws Exception {
+        var manager = new PageManager(); manager.init(player, null);
+        var page = new TestPage();
+        var pageField = PageManager.class.getDeclaredField("customPage"); pageField.setAccessible(true); pageField.set(manager, page);
+        var counterField = PageManager.class.getDeclaredField("customPageRequiredAcknowledgments"); counterField.setAccessible(true);
+        var nativeCounter = (AtomicInteger) counterField.get(manager);
+        var connectionField = LivePageTransport.Lease.class.getDeclaredField("connection"); connectionField.setAccessible(true);
+        var probeField = LivePageTransport.Lease.class.getDeclaredField("nativeProbe"); probeField.setAccessible(true);
+        var world = new WorldQueue(); var clock = new AtomicLong();
+        var inputs = new ArrayList<String>(); var probes = new ArrayList<String>();
+        try (var transport = new LivePageTransport()) {
+            var lease = transport.register(player, world, () -> manager.getCustomPage() == page,
+                    data -> inputs.add(data.action), clock::get);
+            var connection = (LivePageTransport.Connection) connectionField.get(lease);
+            page.fallback = lease::receiveFromNative;
+            probeField.set(lease, (java.util.function.Consumer<String>) raw -> {
+                probes.add(raw);
+                manager.handleEvent(null, null, new CustomPageEvent(CustomPageEventType.Data, raw));
+            });
+            var events = new UIEventBuilder(); lease.bind(events, "#Begin", "begin", "");
+            manager.updateCustomPage(new CustomPage(TestPage.class.getName(), true, true,
+                    page.getLifetime(), new UICommandBuilder().getCommands(), events.getEvents()));
+            require(!lease.ready() && probes.size() == 1 && nativeCounter.get() == 1,
+                    "First blocked frame probes the actual native Data gate without acknowledging it");
+            for (int i = 0; i < 500; i++) require(!lease.ready(), "Polling cannot bypass a genuinely pending native ACK");
+            require(probes.size() == 1, "Repeated render polls produce at most one native probe per second");
+            for (int i = 0; i < 4; i++) {
+                clock.addAndGet(1_000_000_000L);
+                require(!lease.ready() && nativeCounter.get() == 1, "Elapsed time alone never opens the visual gate");
+            }
+            require(probes.size() == 5 && inputs.isEmpty() && world.tasks.isEmpty(),
+                    "Rejected native probes neither queue work nor count as minigame input");
+            var click = new CustomPageEvent(CustomPageEventType.Data, events.getEvents()[0].data);
+            require(com.hypixel.hytale.server.core.io.adapter.PacketAdapters.__handleInbound(socket, click),
+                    "Real owned button input is intercepted while a frame is pending");
+            world.drain();
+            require(inputs.equals(List.of("begin")), "Button input still works during a genuine visual wait");
+            String copiedProbe = probes.getFirst();
+            require(com.hypixel.hytale.server.core.io.adapter.PacketAdapters.__handleInbound(socket,
+                    new CustomPageEvent(CustomPageEventType.Data, copiedProbe)), "Client-supplied internal probe is swallowed");
+            lease.receiveFromNative(copiedProbe); world.drain();
+            require(!lease.ready() && nativeCounter.get() == 1 && inputs.size() == 1,
+                    "A copied probe outside the synchronous native call cannot repair observations or become gameplay");
+
+            // Reproduce the visual freeze: Hytale consumes the real ACK, but the observation
+            // adapter misses it. No button press is needed to recover the next visual pulse.
+            manager.handleEvent(null, null, new CustomPageEvent(CustomPageEventType.Acknowledge, null));
+            require(nativeCounter.get() == 0 && !connection.ready(), "Missed inbound observation reproduces the stale visual gate");
+            clock.addAndGet(1_000_000_000L);
+            require(lease.ready() && nativeCounter.get() == 0 && inputs.size() == 1 && world.tasks.isEmpty(),
+                    "A native-approved no-op repairs only observation after an unobserved real ACK");
+
+            require(connection.reserve(), "Next visual frame reserves its transport slot");
+            socket.skipOutboundAdapter = true;
+            try {
+                manager.updateCustomPage(new CustomPage(TestPage.class.getName(), false, false,
+                        page.getLifetime(), new UICommandBuilder().getCommands(), new UIEventBuilder().getEvents()));
+            } finally { socket.skipOutboundAdapter = false; }
+            clock.addAndGet(1_000_000_000L);
+            require(!lease.ready() && nativeCounter.get() == 1, "Unobserved outbound frame still waits for its native ACK");
+            var ack = new CustomPageEvent(CustomPageEventType.Acknowledge, null);
+            require(!com.hypixel.hytale.server.core.io.adapter.PacketAdapters.__handleInbound(socket, ack), "Real ACK passes unchanged after omitted outbound observation");
+            manager.handleEvent(null, null, ack);
+            require(!connection.ready() && nativeCounter.get() == 0, "Missed outbound observation reproduces the reserved-slot stall");
+            clock.addAndGet(1_000_000_000L);
+            require(lease.ready() && inputs.size() == 1, "Native proof also releases a stale reserved slot without inventing an ACK");
+
+            // The repaired connection continues normal accounting. A late ACK from a genuinely
+            // delayed frame remains owned by Hytale and must not underflow its counter.
+            require(connection.reserve(), "Repaired connection permits the next ordinary frame");
+            manager.updateCustomPage(new CustomPage(TestPage.class.getName(), false, false,
+                    page.getLifetime(), new UICommandBuilder().getCommands(), new UIEventBuilder().getEvents()));
+            clock.addAndGet(1_000_000_000L);
+            require(!lease.ready() && nativeCounter.get() == 1, "Recovery does not open subsequent unacknowledged frames");
+            require(!com.hypixel.hytale.server.core.io.adapter.PacketAdapters.__handleInbound(socket, ack), "Delayed real ACK is never consumed by recovery");
+            manager.handleEvent(null, null, ack);
+            require(lease.ready() && nativeCounter.get() == 0, "Delayed ACK drains naturally with no unexpected acknowledgement");
+            lease.close(); int probeCount = probes.size();
+            clock.addAndGet(1_000_000_000L); lease.receiveFromNative(copiedProbe);
+            require(!lease.ready() && probes.size() == probeCount, "Closed lease never probes or revives its connection");
+
+            var replacement = new TestPage(); pageField.set(manager, replacement);
+            var nextLease = transport.register(player, world, () -> manager.getCustomPage() == replacement,
+                    data -> inputs.add(data.action), clock::get);
+            replacement.fallback = nextLease::receiveFromNative;
+            probeField.set(nextLease, (java.util.function.Consumer<String>) raw -> {
+                probes.add(raw); manager.handleEvent(null, null, new CustomPageEvent(CustomPageEventType.Data, raw));
+            });
+            manager.updateCustomPage(new CustomPage(TestPage.class.getName(), true, true,
+                    replacement.getLifetime(), new UICommandBuilder().getCommands(), new UIEventBuilder().getEvents()));
+            com.hypixel.hytale.server.core.io.adapter.PacketAdapters.__handleInbound(socket,
+                    new CustomPageEvent(CustomPageEventType.Data, copiedProbe)); world.drain();
+            require(!nextLease.ready() && nativeCounter.get() == 1 && inputs.size() == 1,
+                    "Old page probe cannot authorize a replacement page or trigger gameplay");
+            manager.clearCustomPageAcknowledgements(); connection.worldChanged(); pageField.set(manager, null);
+            clock.addAndGet(1_000_000_000L); probeCount = probes.size();
+            require(!nextLease.ready() && probes.size() == probeCount, "World epoch reset invalidates the old probe lease");
+            require(socket.sent.stream().filter(p -> p instanceof CustomPage).map(p -> (CustomPage) p)
+                    .flatMap(p -> Arrays.stream(p.eventBindings)).noneMatch(e -> e.data != null && e.data.contains("SMTransportProbe")),
+                    "Internal probe tokens are never sent as client UI event bindings");
+        } finally { socket.skipOutboundAdapter = false; }
+        System.out.println("PASS: native-gated visual recovery after skipped inbound/outbound observations, bounded probes, genuine pending ACK preservation, no probe gameplay and closed/replaced/world epoch rejection.");
     }
     private static void realCognitionUnderDelayedAck() throws Exception {
         var game = new com.hexvane.strangematter.research.ResearchSession(

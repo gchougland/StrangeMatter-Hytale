@@ -1,3 +1,17 @@
 {
-  "SM_Field_Scanner": {"yaw": 215, "pitch": 23}
+  "SM_Field_Scanner": {
+    "yaw": 215,
+    "pitch": 23
+  },
+  "SM_Anomaly_Resonator": {
+    "yaw": 180,
+    "pitch": 15
+  },
+  "SM_Resonite_Ceiling_Vent": {
+    "pitch": -25
+  },
+  "SM_Research_Tablet": {
+    "yaw": 215,
+    "pitch": 23
+  }
 }

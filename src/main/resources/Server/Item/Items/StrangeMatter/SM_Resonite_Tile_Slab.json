@@ -64,6 +64,13 @@
                 }
               }
             }
+          },
+          "Supporting": {
+            "BlockSides": [
+              {
+                "FaceType": "Full"
+              }
+            ]
           }
         }
       }
@@ -113,7 +120,7 @@
         "Type": "Crafting",
         "Id": "SM_Laboratory",
         "Categories": [
-          "SM_Laboratory_All"
+          "SM_Laboratory_Building"
         ]
       }
     ],

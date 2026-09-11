@@ -1,13 +1,12 @@
 {
-  "icons": 2,
+  "icons": 1,
   "size": [
     64,
     64
   ],
-  "sourceFilesVerifiedUnchanged": 260,
+  "sourceFilesVerifiedUnchanged": 324,
   "status": "PASS",
   "itemIds": [
-    "SM_Field_Scanner",
-    "SM_Graviton_Hammer"
+    "SM_Anomaly_Resonator"
   ]
 }

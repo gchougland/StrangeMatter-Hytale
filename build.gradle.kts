@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.hexvane"
-version = "0.8.2"
+version = "0.8.12"
 
 val hytaleHome = providers.environmentVariable("APPDATA").map { "$it/Hytale/install/release/package/game/latest" }
 val localServerJar = providers.gradleProperty("hytaleServerJar").orElse(hytaleHome.map { "$it/Server/HytaleServer.jar" })
@@ -79,6 +79,12 @@ val verifyMachineWork by tasks.registering(Exec::class) {
 val verifyHeldLights by tasks.registering(Exec::class) {
     commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/assets/test_held_light_fix.py")
 }
+val verifyResonatorGrip by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/assets/test_resonator_grip.py")
+}
+val verifyTabletGrip by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/assets/test_tablet_grip.py")
+}
 val verifyEnergeticPresentation by tasks.registering(Exec::class) {
     commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_energetic_presentation.py")
 }
@@ -97,7 +103,39 @@ val verifyThoughtwellHallucinations by tasks.registering(Exec::class) {
 val verifySeamlessTerrain by tasks.registering(Exec::class) {
     commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_seamless_terrain.py")
 }
-tasks.check { dependsOn(verifyGameplay, verifyRecipeAssets, verifyUiAssets, verifyLaboratoryUi, verifyCognitionGlyphs, verifyResearchTreeLayout, verifyTabletUi, verifyDisciplineIcons, verifyEffects, verifyPresentation, verifyMachineWork, verifyHeldLights, verifyEnergeticPresentation, verifyClientAnimations, verifyGrassStatusIcon, verifyThoughtwellEchoes, verifyThoughtwellHallucinations, verifySeamlessTerrain) }
+val verifyWarpBolts by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_warp_bolts.py")
+}
+val verifyPluginIdentity by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "-m", "unittest", "discover", "-s", "tools", "-p", "test_migrate_plugin_identity.py")
+}
+val verifyArchitectureSet by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/assets/validate_architecture_set.py")
+}
+val verifyFurnitureSet by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/test_validate_furniture_set.py")
+}
+val verifyRealityForge by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_reality_forge.py")
+}
+val verifyNullifierPresentation by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/test_validate_nullifier.py")
+}
+val verifyNullifierContent by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_nullifier_content.py")
+}
+val verifyWallSupport by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/test_block_support.py")
+}
+val verifyTexturePacking by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/assets/test_verify_texture_repack.py")
+}
+val verifyModelAtlases by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/test_validate_model_atlases.py")
+}
+tasks.check { dependsOn(verifyTexturePacking, verifyModelAtlases) }
+tasks.check { dependsOn(verifyArchitectureSet, verifyFurnitureSet, verifyResonatorGrip, verifyTabletGrip, verifyRealityForge, verifyNullifierPresentation, verifyNullifierContent, verifyWallSupport) }
+tasks.check { dependsOn(verifyGameplay, verifyRecipeAssets, verifyUiAssets, verifyLaboratoryUi, verifyCognitionGlyphs, verifyResearchTreeLayout, verifyTabletUi, verifyDisciplineIcons, verifyEffects, verifyPresentation, verifyMachineWork, verifyHeldLights, verifyEnergeticPresentation, verifyClientAnimations, verifyGrassStatusIcon, verifyThoughtwellEchoes, verifyThoughtwellHallucinations, verifySeamlessTerrain, verifyWarpBolts, verifyPluginIdentity) }
 // Match Aetherhaven: the editor changes build/resources/main during a development
 // run; copy those edits back only after the server exits. This is Copy, not Sync:
 // generated output must never delete source assets or overwrite manifest metadata.

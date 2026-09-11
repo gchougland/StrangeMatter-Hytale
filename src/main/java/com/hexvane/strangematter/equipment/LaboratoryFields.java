@@ -7,6 +7,10 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.builtin.mounts.NPCMountComponent;
 import com.hypixel.hytale.math.util.ChunkUtil;
+import com.hypixel.hytale.math.shape.Box;
+import com.hypixel.hytale.server.core.modules.entity.component.BoundingBox;
+import com.hypixel.hytale.server.core.modules.collision.CollisionModule;
+import com.hypixel.hytale.server.core.modules.collision.CollisionResult;
 import com.hypixel.hytale.protocol.BlockMaterial;
 import com.hypixel.hytale.protocol.ChangeVelocityType;
 import com.hypixel.hytale.protocol.GameMode;
@@ -68,7 +72,7 @@ final class LaboratoryFields {
         for(var m:machines.inWorld(world)) {
             if(!m.enabled||!machines.valid(world,m))continue;
             switch(m.id){
-                case "SM_Levitation_Pad"->lift(world,m,visual);
+                case "SM_Levitation_Pad"->lift(world,m,visual,dt);
                 case "SM_Stasis_Projector"->{active.add(m.key());stasis(world,m,now,visual,effect);}
                 case "SM_Time_Dilation_Block"->{
                     if(m.progress<=0)m.progress=200+random.nextInt(401);
@@ -94,20 +98,78 @@ final class LaboratoryFields {
         // Saving remaining simulation ticks avoids permanent blobs after restart or chunk unloading.
         if(temporalChanged&&(int)old/5!=(int)now/5)machines.save();
     }
-    private void lift(World world,MachineState m,boolean visual){
-        int ceiling=m.y+machines.config.levitationHeight;
-        for(int y=m.y+1;y<=ceiling+2&&y<ChunkUtil.HEIGHT;y++){var block=world.getBlockType(m.x,y,m.z);if(block!=null&&block.getMaterial()!=BlockMaterial.Empty){ceiling=y-3;break;}}
-        if(ceiling<=m.y)return;
-        var store=world.getEntityStore().getStore();var bottom=new Vector3d(m.x,m.y+.15,m.z);var top=new Vector3d(m.x+1,ceiling+1,m.z+1);
-        for(var ref:EquipmentQueries.inBox(store,bottom,top,true)){
-            if(!ref.isValid())continue;var velocity=store.getComponent(ref,Velocity.getComponentType());var transform=store.getComponent(ref,TransformComponent.getComponentType());if(velocity==null||transform==null)continue;
-            var player=store.getComponent(ref,Player.getComponentType());if(player!=null&&player.getGameMode()==GameMode.Creative)continue;
-            double y=m.ascending?Math.min(4,Math.max(0,(ceiling-transform.getPosition().y)*3)):-1;
-            if(player!=null){var v=new Vector3d(velocity.getClientVelocity());v.y=y;velocity.addInstruction(v,null,ChangeVelocityType.Set);}else velocity.set(velocity.getX(),y,velocity.getZ());
-        }
+    private static final double LIFT_SPEED = 4, LIFT_SKIN = .02;
+    private static final Box BEAM_PROBE = new Box(-.001,0,-.001,.001,.001,.001);
+    private void lift(World world,MachineState m,boolean visual,double dt){
+        var store=world.getEntityStore().getStore();
+        double maxFeet=Math.min(ChunkUtil.HEIGHT-1,(double)m.y+machines.config.levitationHeight);
+        double shaftTop=liftShaftTop(store,m,maxFeet);
+        if(shaftTop<=m.y+.2)return;
+        var bottom=new Vector3d(m.x,m.y+.15,m.z);var top=new Vector3d(m.x+1,shaftTop,m.z+1);
+        double bodyCeiling=shaftTop<maxFeet+1-1e-6?shaftTop:Double.POSITIVE_INFINITY;
+        for(var ref:EquipmentQueries.inBox(store,bottom,top,true))applyLift(store,ref,m.x+.5,m.z+.5,m.y,maxFeet,bodyCeiling,m.ascending,dt);
         Boolean previous=liftDirections.put(m.key(),m.ascending);var beamOrigin=new Vector3d(m.x+.5,m.y+.2,m.z+.5);
         if(previous==null||previous!=m.ascending)GadgetEffects.sound(world,(m.ascending?"SM_Levitation_Up":"SM_Levitation_Down")+"_SFX",beamOrigin);
-        if(visual)GadgetEffects.column(world,beamOrigin,Math.max(0,ceiling+1-beamOrigin.y),m.ascending);
+        if(visual)GadgetEffects.column(world,beamOrigin,Math.max(0,shaftTop-beamOrigin.y),m.ascending);
+    }
+    /** Actual shaft surface for both particle directions; native shapes also respect open doors and slabs. */
+    static double liftShaftTop(Store<EntityStore> store,MachineState m,double maxFeet){
+        var origin=new Vector3d(m.x+.5,m.y+1,m.z+.5);
+        double distance=Math.max(0,Math.min(ChunkUtil.HEIGHT-1,maxFeet+1)-origin.y);
+        return origin.y+clearVerticalDistance(store,BEAM_PROBE,origin,distance);
+    }
+    /** Velocity only: Hytale owns player movement, collision response and position updates. */
+    static void applyLift(Store<EntityStore> store,Ref<EntityStore> ref,double centerX,double centerZ,double floor,double maxFeet,double shaftTop,boolean ascending,double dt){
+        if(ref==null||!ref.isValid()||!Double.isFinite(dt)||dt<=0)return;
+        var velocity=store.getComponent(ref,Velocity.getComponentType());var transform=store.getComponent(ref,TransformComponent.getComponentType());
+        var bounds=store.getComponent(ref,BoundingBox.getComponentType());
+        if(velocity==null||transform==null||bounds==null)return;
+        var player=store.getComponent(ref,Player.getComponentType());if(player!=null&&player.getGameMode()==GameMode.Creative)return;
+        var box=bounds.getBoundingBox();var origin=transform.getPosition();
+        // Origin is not universally a feet position. Use the native body's actual min/max.
+        double target=ascending?Math.min(maxFeet,shaftTop-box.max.y-LIFT_SKIN):floor-box.min.y;
+        double requested=ascending?Math.max(0,target-origin.y):Math.min(0,target-origin.y);
+        double travel=clearVerticalDistance(store,box,origin,requested);
+        // At contact, native gravity and collision settling take over. Reissuing even
+        // tiny downward Set instructions wakes the body and repeats landing effects.
+        if(!ascending&&Math.abs(travel)<1e-6)return;
+        double y=Math.copySign(Math.min(LIFT_SPEED,Math.abs(travel)/Math.max(.001,dt)),travel);
+        if(player!=null){
+            var v=new Vector3d(velocity.getClientVelocity());
+            if(Math.abs(travel)>1e-6&&!LevitationInputSystem.wantsToMove(store,ref)){
+                // A damped, speed-limited correction catches released entry momentum.
+                // It yields entirely to native input and stops at the shaft endpoint.
+                double targetX=(centerX-origin.x)*2.4,targetZ=(centerZ-origin.z)*2.4;
+                double targetSpeed=Math.hypot(targetX,targetZ);
+                if(targetSpeed>.8){targetX*=.8/targetSpeed;targetZ*=.8/targetSpeed;}
+                double blend=1-Math.exp(-10*dt);
+                v.x+=(targetX-v.x)*blend;v.z+=(targetZ-v.z)*blend;
+                double speed=Math.hypot(v.x,v.z);if(speed>1){v.x/=speed;v.z/=speed;}
+                // A body may enter with only a sliver overlapping the shaft. Do not
+                // let leftover outward drift erase that overlap before the next tick.
+                // This only reduces passive components; deliberate input bypasses it.
+                if(v.x>0)v.x=Math.min(v.x,Math.max(0,(centerX+.5-origin.x-box.min.x-LIFT_SKIN)/dt));
+                else if(v.x<0)v.x=Math.max(v.x,Math.min(0,(centerX-.5-origin.x-box.max.x+LIFT_SKIN)/dt));
+                if(v.z>0)v.z=Math.min(v.z,Math.max(0,(centerZ+.5-origin.z-box.min.z-LIFT_SKIN)/dt));
+                else if(v.z<0)v.z=Math.max(v.z,Math.min(0,(centerZ-.5-origin.z-box.max.z+LIFT_SKIN)/dt));
+            }
+            v.y=y;velocity.addInstruction(v,null,ChangeVelocityType.Set);
+        }
+        else velocity.set(velocity.getX(),y,velocity.getZ());
+    }
+    /** A full swept collider includes neighbouring blocks touched by wide or off-centre bodies. */
+    private static double clearVerticalDistance(Store<EntityStore> store,Box box,Vector3d origin,double distance){
+        if(Math.abs(distance)<1e-9)return 0;
+        var result=new CollisionResult(false,false);
+        CollisionModule.findCollisions(box,origin,new Vector3d(0,distance,0),false,result,store);
+        double clear=Math.abs(distance);
+        for(int i=0;i<result.getBlockCollisionCount();i++){
+            var hit=result.getBlockCollision(i);
+            // Contact with the floor must not prevent moving away from it, or vice versa.
+            if(!hit.overlapping&&hit.collisionNormal.y*distance>=0)continue;
+            clear=Math.min(clear,Math.max(0,Math.abs(distance)*Math.max(0,hit.collisionStart)-LIFT_SKIN));
+        }
+        return Math.copySign(clear,distance);
     }
     private void stasis(World world,MachineState m,double now,boolean visual,boolean effects){
         var store=world.getEntityStore().getStore();var center=m.center().add(0,.25,0);var pair=specimens.computeIfAbsent(m.key(),k->new Specimens());
@@ -141,5 +203,5 @@ final class LaboratoryFields {
         if(effect!=null&&controller!=null)controller.addEffect(ref,effect,.7f,OverlapBehavior.OVERWRITE,store);
     }
     void toggleDoor(World world,Vector3i pos,BlockType type){var chunk=world.getChunkIfInMemory(ChunkUtil.indexChunkFromBlock(pos.x,pos.z));if(chunk!=null)chunk.setBlockInteractionState(pos,type,type.getId().contains("OpenDoor")?"CloseDoorIn":"OpenDoorIn");}
-    synchronized void cleanup(World world){ticks.remove(world.getName());specimens.entrySet().removeIf(e->e.getKey().startsWith(world.getName()+":"));liftDirections.keySet().removeIf(key->key.startsWith(world.getName()+":"));machines.save();}
+    synchronized void cleanup(World world){ticks.remove(world.getName());specimens.entrySet().removeIf(e->e.getKey().startsWith(world.getName()+":"));liftDirections.keySet().removeIf(key->key.startsWith(world.getName()+":"));LevitationInputSystem.cleanup(world);machines.save();}
 }

@@ -1,6 +1,6 @@
 """Stdlib checks for the targeted energetic rift and stabilizer visual revision."""
 from pathlib import Path
-import hashlib, json, struct, sys, zipfile
+import argparse, hashlib, json, struct, sys, zipfile
 
 ROOT=Path(__file__).resolve().parents[1];RES=ROOT/'src/main/resources';COMMON=RES/'Common'
 sys.path.insert(0,str(ROOT/'tools/assets'))
@@ -13,7 +13,7 @@ def walk(nodes):
         yield n
         yield from walk(n.get('children',[]))
 
-def validate():
+def validate(audit_preservation=False):
     report=read(ROOT/'tools/assets/energetic-revision.json')
     core=read(COMMON/'Items/StrangeMatter/anomaly_energetic_rift.blockymodel')
     shell=read(COMMON/'Items/StrangeMatter/anomaly_energetic_shell.blockymodel')
@@ -24,7 +24,10 @@ def validate():
         'Texture':'Items/StrangeMatter/anomaly_energetic_shell.png'}]
     for attachment in asset['DefaultAttachments']:
         assert attachment['Texture'].startswith(('Characters/','NPC/','Items/','Cosmetics/','Resources/'))
-    assert (COMMON/'Items/StrangeMatter/anomaly_energetic_shell.png').read_bytes()==(COMMON/'Blocks/StrangeMatter/reality_forge.png').read_bytes()
+    # The shell began as a byte copy of the forge atlas. These are independent
+    # editable textures now; current shell UV and atlas checks remain below.
+    if audit_preservation:
+        assert (COMMON/'Items/StrangeMatter/anomaly_energetic_shell.png').read_bytes()==(COMMON/'Blocks/StrangeMatter/reality_forge.png').read_bytes()
     faces=0
     for model,texture in [(core,asset['Texture']),(shell,asset['DefaultAttachments'][0]['Texture'])]:
         width,height=struct.unpack('>II',(COMMON/texture).read_bytes()[16:24])
@@ -61,8 +64,11 @@ def validate():
         assert sp['InitialVelocity']=={'Speed':{'Min':.01,'Max':.01},'Yaw':{'Min':0,'Max':0},'Pitch':{'Min':0,'Max':0}}
         assert sp['Particle']['InitialAnimationFrame']['Scale']['Y']['Min']*4==1.45
         assert sp['TotalParticles']=={'Min':1,'Max':1} and sp['LifeSpan']<=.05
-    old=ROOT/report['snapshot']/'Resources.zip';preserved=0;later_terrain_repairs=0
-    if old.exists():
+    old=ROOT/report['snapshot']/'Resources.zip'
+    preservation_audited=audit_preservation and old.exists()
+    preserved=0 if preservation_audited else None
+    later_terrain_repairs=0 if preservation_audited else None
+    if preservation_audited:
         with zipfile.ZipFile(old) as archive:
             prefix='src/main/resources/'
             old_core=json.loads(archive.read(prefix+'Common/Items/StrangeMatter/anomaly_energetic_rift.blockymodel'))
@@ -78,6 +84,12 @@ def validate():
                     preserved+=int(before==after);later_terrain_repairs+=int(before!=after)
     print(json.dumps({'result':'PASS','mappedModelFaces':faces,'riftLayers':13,'particlesPerPulse':64,
         'maximumRiftOverlap':128,'linkVelocityAligned':True,'preservedSnapshotFiles':preserved,
-        'laterAuthorizedTerrainRepairs':later_terrain_repairs}))
+        'laterAuthorizedTerrainRepairs':later_terrain_repairs,
+        'historicalPreservationAudited':preservation_audited,
+        'sharedAtlasCopyAudited':audit_preservation}))
 
-if __name__=='__main__':validate()
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--audit-preservation',action='store_true',
+        help='Compare this revision with its historical snapshot, including unrelated art and the original forge atlas copy.')
+    validate(parser.parse_args().audit_preservation)

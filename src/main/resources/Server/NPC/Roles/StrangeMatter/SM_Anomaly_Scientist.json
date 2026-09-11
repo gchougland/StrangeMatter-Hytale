@@ -27,6 +27,7 @@
       "MaxWalkSpeed": 7,
       "Gravity": 10,
       "RunThreshold": 0.3,
+      "RunThresholdRange": 0.05,
       "MaxFallSpeed": 15,
       "MaxRotationSpeed": 360,
       "Acceleration": 10
@@ -35,6 +36,54 @@
   "Instructions": [
     {
       "Instructions": [
+        {
+          "$Comment": "ScientistService owns this state while a nearby player has this scientist's trade page open.",
+          "Sensor": {
+            "Type": "State",
+            "State": "Trading",
+            "IgnoreMissingSetState": true
+          },
+          "Instructions": [
+            {
+              "Continue": true,
+              "Sensor": { "Type": "Any", "Once": true },
+              "Actions": [ { "Type": "PlayAnimation", "Slot": "Status" } ]
+            },
+            {
+              "Continue": true,
+              "Sensor": { "Type": "Player", "Range": 12 },
+              "HeadMotion": { "Type": "Watch" }
+            },
+            {
+              "Sensor": { "Type": "Any" },
+              "BodyMotion": { "Type": "Nothing" }
+            }
+          ]
+        },
+        {
+          "$Comment": "After being displaced, walk back close to the saved home before resuming the patrol.",
+          "Sensor": { "Type": "State", "State": "Returning" },
+          "Instructions": [
+            {
+              "Sensor": { "Type": "Leash", "Range": 0.75 },
+              "BodyMotion": {
+                "Type": "Seek",
+                "SlowDownDistance": 1,
+                "StopDistance": 0.5,
+                "RelativeSpeed": 0.2,
+                "UsePathfinder": true
+              }
+            },
+            {
+              "Sensor": { "Type": "Any" },
+              "Actions": [ { "Type": "State", "State": "Idle" } ]
+            }
+          ]
+        },
+        {
+          "Sensor": { "Type": "Leash", "Range": 4 },
+          "Actions": [ { "Type": "State", "State": "Returning" } ]
+        },
         {
           "$Comment": "Idle state - no player nearby",
           "Sensor": {
@@ -66,13 +115,29 @@
                 "Type": "Any"
               },
               "BodyMotion": {
-                "Type": "Nothing"
+                "Type": "Sequence",
+                "Looped": true,
+                "Motions": [
+                  {
+                    "Type": "Timer",
+                    "Time": [ 2, 4 ],
+                    "Motion": {
+                      "Type": "WanderInCircle",
+                      "Radius": 4,
+                      "RelativeSpeed": 0.2,
+                      "MinWalkTime": 1,
+                      "MaxWalkTime": 2,
+                      "MaxHeadingChange": 60
+                    }
+                  },
+                  { "Type": "Timer", "Time": [ 2, 5 ], "Motion": { "Type": "Nothing" } }
+                ]
               }
             }
           ]
         },
         {
-          "$Comment": "Watching state - player is nearby, just watch them",
+          "$Comment": "Watch nearby players while continuing a slow patrol until a trade page opens.",
           "Sensor": {
             "Type": "State",
             "State": "Watching"
@@ -134,7 +199,23 @@
                 "Type": "Any"
               },
               "BodyMotion": {
-                "Type": "Nothing"
+                "Type": "Sequence",
+                "Looped": true,
+                "Motions": [
+                  {
+                    "Type": "Timer",
+                    "Time": [ 2, 4 ],
+                    "Motion": {
+                      "Type": "WanderInCircle",
+                      "Radius": 4,
+                      "RelativeSpeed": 0.2,
+                      "MinWalkTime": 1,
+                      "MaxWalkTime": 2,
+                      "MaxHeadingChange": 60
+                    }
+                  },
+                  { "Type": "Timer", "Time": [ 2, 5 ], "Motion": { "Type": "Nothing" } }
+                ]
               }
             }
           ]

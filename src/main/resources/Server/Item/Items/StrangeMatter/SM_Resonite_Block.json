@@ -38,7 +38,14 @@
     "BlockParticleSetId": "Stone",
     "ParticleColor": "#243950",
     "BlockSoundSetId": "Stone",
-    "PhysicalMaterialId": "Stone"
+    "PhysicalMaterialId": "Stone",
+    "Supporting": {
+      "BlockSides": [
+        {
+          "FaceType": "Full"
+        }
+      ]
+    }
   },
   "Interactions": {
     "Primary": "Block_Primary",

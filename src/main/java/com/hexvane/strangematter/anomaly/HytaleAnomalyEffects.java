@@ -53,14 +53,33 @@ final class HytaleAnomalyEffects {
     private final Map<Ref<EntityStore>, Long> teleports = new HashMap<>();
     private final ThoughtwellConfusion thoughts = new ThoughtwellConfusion();
     private final GravityField gravity = new GravityField();
-    private record TemporaryModel(Model original, Model applied, long expires) {}
+    private final AnomalyEffectLeases effectLeases = new AnomalyEffectLeases();
+    private long modelOrder;
+    private static final class ModelContribution {
+        final Model model;final long order;double remaining;
+        ModelContribution(Model model,long order,double remaining){this.model=model;this.order=order;this.remaining=remaining;}
+    }
+    private static final class TemporaryModel {
+        final Model original;Model applied;
+        final Map<UUID,ModelContribution> sources=new HashMap<>();
+        TemporaryModel(Model original){this.original=original;this.applied=original;}
+    }
     private static final String[] DISGUISES = {"Chicken", "Cow", "Pig", "Sheep", "Zombie", "Skeleton", "Spider"};
     private static final String[] HOSTILES = {"Zombie", "Skeleton_Fighter", "Skeleton_Archer", "Spider"};
 
     List<Ref<EntityStore>> entities(World world, AnomalyRecord a) {
         // ParticleUtil reuses the same thread-local list; copy before any particle calls.
-        var result=new ArrayList<>(new LinkedHashSet<>(TargetUtil.getAllEntitiesInSphere(a.position(), a.type.radius, world.getEntityStore().getStore())));
+        var store=world.getEntityStore().getStore();double entryLift=a.type==AnomalyType.WARP_GATE?a.placementLift:0;
+        var result=new ArrayList<>(new LinkedHashSet<>(TargetUtil.getAllEntitiesInSphere(a.position(), a.type.radius+entryLift, store)));
         result.removeIf(cores::containsValue);
+        if(entryLift>0)result.removeIf(ref->{
+            if(!ref.isValid())return true;var transform=store.getComponent(ref,TransformComponent.getComponentType());if(transform==null)return true;
+            var p=transform.getPosition();double dx=p.x-a.x,dz=p.z-a.z;
+            // The native spatial tree indexes feet. Preserve ground entry by sweeping the
+            // old activation sphere upward with the raised gate, without widening it sideways.
+            double dy=p.y-Math.clamp(p.y,a.y-entryLift,a.y);
+            return dx*dx+dy*dy+dz*dz>a.type.radius*a.type.radius;
+        });
         return result;
     }
     void particle(World world, String id, Vector3d p) { ParticleUtil.spawnParticleEffect(id, p, world.getEntityStore().getStore()); }
@@ -99,22 +118,21 @@ final class HytaleAnomalyEffects {
         Ref<EntityStore> ref=cores.remove(id);
         if(ref!=null && ref.isValid()) world.getEntityStore().getStore().removeEntity(ref,RemoveReason.REMOVE);
     }
-    void cleanup(World world) {
+    void cleanup(World world,double dt) {
         var store=world.getEntityStore().getStore(); long now=System.currentTimeMillis();
+        effectLeases.tick(world,dt);
         models.entrySet().removeIf(e->{
             Ref<EntityStore> ref=e.getKey();
             if(!ref.isValid()) return true;
-            if(ref.getStore()!=store || e.getValue().expires>now) return false;
-            ModelComponent current=store.getComponent(ref,ModelComponent.getComponentType());
-            // Only undo our own last model; leave later cosmetic changes by another plugin intact.
-            if(current!=null && current.getModel()==e.getValue().applied)
-                store.putComponent(ref,ModelComponent.getComponentType(),new ModelComponent(e.getValue().original));
-            return true;
+            if(ref.getStore()!=store)return false;
+            e.getValue().sources.values().removeIf(source->{source.remaining-=dt;return source.remaining<=0;});
+            return !refreshModel(world,ref,e.getValue());
         });
         teleports.entrySet().removeIf(e->!e.getKey().isValid() || e.getValue()<now);
     }
     void restore(World world) {
         thoughts.clear(world);
+        effectLeases.clear(world);
         gravity.clear(world);
         var store=world.getEntityStore().getStore();
         for(var entry:new ArrayList<>(models.entrySet())) if(entry.getKey().isValid() && entry.getKey().getStore()==store) {
@@ -172,29 +190,61 @@ final class HytaleAnomalyEffects {
                     var effect=EntityEffect.getAssetMap().getAsset("SM_Cognitive_Dissonance");
                     var controller=store.getComponent(ref,EffectControllerComponent.getComponentType());
                     float duration=t==null?5:(float)(5+5*Math.max(0,1-Math.sqrt(a.distanceSquared(t.getPosition()))/6));
-                    if(effect!=null && controller!=null) {
-                        controller.addEffect(ref,effect,duration,OverlapBehavior.OVERWRITE,store);
+                    if(effect!=null && controller!=null && effectLeases.apply(world,a.id,ref,effect.getId(),duration)) {
                         thoughts.expose(world,ref,duration,t==null?0:Math.max(0,1-Math.sqrt(a.distanceSquared(t.getPosition()))/6));
                     }
                 }
             } else if(p==null && store.getComponent(ref,NPCEntity.getComponentType())!=null) {
                 ModelAsset asset=ModelAsset.getAssetMap().getAsset(DISGUISES[random.nextInt(DISGUISES.length)]);
-                if(asset!=null) temporaryModel(world,ref,Model.createUnitScaleModel(asset),5000);
-                effect(world,ref,"SM_Cognitive_Dissonance");
+                if(asset!=null) temporaryModel(world,a.id,ref,Model.createUnitScaleModel(asset),5);
+                ownedEffect(world,a,ref,"SM_Cognitive_Dissonance");
                 var targets=store.getComponent(ref,MarkedEntitySupport.getComponentType());
                 if(targets!=null && random.nextDouble()<.3)targets.setMarkedEntity("LockedTarget",null);
             }
         }
     }
     void tickThoughts(World world,double dt){thoughts.tick(world,dt);}
-    private void temporaryModel(World world,Ref<EntityStore> ref,Model model,long duration) {
+    private void temporaryModel(World world,UUID source,Ref<EntityStore> ref,Model model,double duration) {
         var store=world.getEntityStore().getStore();
         ModelComponent old=store.getComponent(ref,ModelComponent.getComponentType());
         if(old==null) return;
         TemporaryModel prior=models.get(ref);
-        models.put(ref,new TemporaryModel(prior==null?old.getModel():prior.original,model,System.currentTimeMillis()+duration));
+        if(prior==null||prior.applied!=old.getModel())prior=new TemporaryModel(old.getModel());
+        prior.sources.put(source,new ModelContribution(model,++modelOrder,duration));prior.applied=model;models.put(ref,prior);
         // PersistentModel remains original, so unloading/restart cannot make disguises permanent.
         store.putComponent(ref,ModelComponent.getComponentType(),new ModelComponent(model));
+    }
+    /** Returns whether this field still owns a live disguise; preserves a later outside model change. */
+    private boolean refreshModel(World world,Ref<EntityStore> ref,TemporaryModel model){
+        var store=world.getEntityStore().getStore();var current=store.getComponent(ref,ModelComponent.getComponentType());
+        if(current==null||current.getModel()!=model.applied)return false;
+        var latest=model.sources.values().stream().max(Comparator.comparingLong(source->source.order));
+        var next=latest.isPresent()?latest.get().model:model.original;
+        if(next!=model.applied)store.putComponent(ref,ModelComponent.getComponentType(),new ModelComponent(next));
+        model.applied=next;return latest.isPresent();
+    }
+    private void ownedEffect(World world,AnomalyRecord source,Ref<EntityStore> ref,String id){
+        var effect=EntityEffect.getAssetMap().getAsset(id);
+        if(effect!=null)effectLeases.apply(world,source.id,ref,id,effect.getDuration());
+    }
+    /** Suppression cancels ongoing contributions, without rewinding completed damage, growth or aging. */
+    boolean suppress(World world,AnomalyRecord source){
+        for(var ref:effectLeases.removeSource(world,source.id))thoughts.clear(world,ref);
+        var store=world.getEntityStore().getStore();
+        models.entrySet().removeIf(entry->{
+            var ref=entry.getKey();if(!ref.isValid())return true;if(ref.getStore()!=store)return false;
+            var model=entry.getValue();if(model.sources.remove(source.id)==null)return false;
+            return !refreshModel(world,ref,model);
+        });
+        boolean changed=false;
+        // Keep unloaded identities so their next appearance can be retired, without loading chunks.
+        var iterator=source.shadowMobs.iterator();
+        while(iterator.hasNext()){
+            UUID id=iterator.next();var ref=world.getEntityStore().getRefFromUUID(id);
+            if(ref==null||!ref.isValid())continue;
+            store.removeEntity(ref,RemoveReason.REMOVE);iterator.remove();source.shadowMobPositions.remove(id);changed=true;
+        }
+        return changed;
     }
     boolean temporalMobs(World world,AnomalyRecord a,Map<UUID,TemporalAge> ages) {
         var store=world.getEntityStore().getStore();
@@ -261,9 +311,9 @@ final class HytaleAnomalyEffects {
             if(removed)a.shadowMobPositions.remove(id);return removed;
         });
         for(var ref:entities(world,a)) if(ref.isValid()) {
-            if(store.getComponent(ref,Player.getComponentType())!=null) effect(world,ref,"SM_Shadow_Veil");
+            if(store.getComponent(ref,Player.getComponentType())!=null) ownedEffect(world,a,ref,"SM_Shadow_Veil");
             else if(store.getComponent(ref,NPCEntity.getComponentType())!=null) {
-                effect(world,ref,"SM_Shadow_Shelter");
+                ownedEffect(world,a,ref,"SM_Shadow_Shelter");
                 var controller=store.getComponent(ref,EffectControllerComponent.getComponentType());
                 int burning=EntityEffect.getAssetMap().getIndex("Burn");
                 if(controller!=null && burning>=0) controller.removeEffect(ref,burning,store);
@@ -285,7 +335,7 @@ final class HytaleAnomalyEffects {
     void teleport(World world,AnomalyRecord source,AnomalyRecord destination) {
         var store=world.getEntityStore().getStore();
         for(var ref:entities(world,source)) {
-            if(!ref.isValid() || teleports.containsKey(ref) || cores.containsValue(ref)) continue;
+            if(!ref.isValid() || teleports.containsKey(ref) || cores.containsValue(ref) || !WarpGateTeleport.eligible(store,ref)) continue;
             var transform=store.getComponent(ref,TransformComponent.getComponentType()); if(transform==null) continue;
             var bounds=store.getComponent(ref,BoundingBox.getComponentType());if(bounds==null)continue;
             Vector3d safe=null;
@@ -298,14 +348,16 @@ final class HytaleAnomalyEffects {
                 if(fitsAt(world,bounds,candidate))safe=candidate;
             }
             if(safe==null)continue;
+            if(!WarpGateTeleport.teleport(store,ref,safe))continue;
             teleports.put(ref,System.currentTimeMillis()+5000);
-            store.putComponent(ref,Teleport.getComponentType(),new Teleport(world,safe,transform.getRotation()));
             particle(world,"SM_Anomaly_Capture",source.position()); particle(world,"SM_Anomaly_Capture",safe);
         }
     }
-    private boolean fitsAt(World world,BoundingBox bounds,Vector3d position) {
+    boolean fitsAt(World world,BoundingBox bounds,Vector3d position) {
         var box=bounds.getBoundingBox();
-        if(box.width()>16 || box.height()>16 || box.depth()>16)return false;
+        if(!position.isFinite() || !box.min.isFinite() || !box.max.isFinite()
+                || box.width()>16 || box.height()>16 || box.depth()>16
+                || Math.abs(box.min.x)>16 || Math.abs(box.max.x)>16 || Math.abs(box.min.z)>16 || Math.abs(box.max.z)>16)return false;
         int minX=(int)Math.floor(position.x+box.getMin().x),maxX=(int)Math.floor(position.x+box.getMax().x);
         int minY=(int)Math.floor(position.y+box.getMin().y),maxY=(int)Math.floor(position.y+box.getMax().y);
         int minZ=(int)Math.floor(position.z+box.getMin().z),maxZ=(int)Math.floor(position.z+box.getMax().z);
@@ -317,9 +369,12 @@ final class HytaleAnomalyEffects {
                 var block=chunk.getBlockType(x,y,z);if(block==null || block.getDamageToEntities()>0)return false;
             }
             var support=chunk.getBlockType(x,minY-1,z);if(support!=null && support.getDamageToEntities()>0)return false;
+            if(chunk.getFluidId(x,minY-1,z)!=0)return false;
         }
         int result=CollisionModule.get().validatePosition(world,box,position,new CollisionResult());
-        return result!=CollisionModule.VALIDATE_INVALID;
+        // The heightmap records opacity, not support. Bread, moss and other noncolliding
+        // blocks must not turn an arbitrary airborne point into a supposedly safe landing.
+        return result!=CollisionModule.VALIDATE_INVALID && (result&CollisionModule.VALIDATE_ON_GROUND)!=0;
     }
     static Vector3d safeSurface(World world,int x,int z) {
         WorldChunk chunk=world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock(x,z));
@@ -362,7 +417,7 @@ final class HytaleAnomalyEffects {
             // Only newly generated pre-load chunks enter here. Never cross into an existing
             // adjacent chunk or retrofit terrain underneath player builds or released capsules.
             if(ChunkUtil.chunkCoordinate(x)!=chunk.getX() || ChunkUtil.chunkCoordinate(z)!=chunk.getZ())continue;
-            int ground=chunk.getHeight(x,z);if(Math.abs(ground-a.y)>8)continue;
+            int ground=chunk.getHeight(x,z);if(Math.abs(ground-a.terrainReferenceY())>8)continue;
             columns.add(new org.joml.Vector3i(x,ground-1,z));
             // Sand, clay, gravel, mud, ash, snow and every other unshaped native soil family
             // participate, including buried soil. Only the raw freshly generated holder is edited.
@@ -405,7 +460,7 @@ final class HytaleAnomalyEffects {
     void crops(World world,AnomalyRecord a,Random random) {
         // Crop mutation matches the original ±1..2 stages, five vertical levels, every five seconds.
         for(int dx=-8;dx<=8;dx++) for(int dz=-8;dz<=8;dz++) if(dx*dx+dz*dz<=64)
-            for(int dy=-3;dy<=2;dy++) changeCrop(world,(int)Math.floor(a.x)+dx,(int)Math.floor(a.y)+dy,(int)Math.floor(a.z)+dz,(random.nextBoolean()?1:-1)*(1+random.nextInt(2)));
+            for(int dy=-3;dy<=2;dy++) changeCrop(world,(int)Math.floor(a.x)+dx,(int)Math.floor(a.terrainReferenceY())+dy,(int)Math.floor(a.z)+dz,(random.nextBoolean()?1:-1)*(1+random.nextInt(2)));
     }
     static boolean changeCrop(World world,int x,int y,int z,int delta) {
         if(y<0 || y>=320) return false;

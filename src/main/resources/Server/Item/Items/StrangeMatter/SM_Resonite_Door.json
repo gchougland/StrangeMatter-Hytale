@@ -49,7 +49,7 @@
         "OpenDoorIn": {
           "CustomModelAnimation": "Blocks/StrangeMatter/Animations/resonite_door_OpenDoorIn.blockyanim",
           "HitboxType": "SM_Resonite_Door_Open_In",
-          "InteractionHitboxType": "SM_Resonite_Door_Open_In",
+          "InteractionHitboxType": "Door_Open_In_Interaction",
           "InteractionSoundEventId": "SFX_Door_Wooden_Open",
           "InteractionHint": "server.interactionHints.SM_Resonite_Door_Close",
           "SoundOcclusionOpacity": 0
@@ -64,7 +64,7 @@
         "OpenDoorOut": {
           "CustomModelAnimation": "Blocks/StrangeMatter/Animations/resonite_door_OpenDoorOut.blockyanim",
           "HitboxType": "SM_Resonite_Door_Open_Out",
-          "InteractionHitboxType": "SM_Resonite_Door_Open_Out",
+          "InteractionHitboxType": "Door_Open_Out_Interaction",
           "InteractionSoundEventId": "SFX_Door_Wooden_Open",
           "InteractionHint": "server.interactionHints.SM_Resonite_Door_Close",
           "SoundOcclusionOpacity": 0
@@ -98,7 +98,7 @@
         "Type": "Crafting",
         "Id": "SM_Laboratory",
         "Categories": [
-          "SM_Laboratory_All"
+          "SM_Laboratory_Building"
         ]
       }
     ],

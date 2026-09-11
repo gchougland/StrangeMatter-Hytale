@@ -46,6 +46,7 @@ public final class LivePageTransport implements AutoCloseable {
                         Store<EntityStore> store, Consumer<ResearchPageData> handler) {
         var world = store.getExternalData().getWorld();
         BooleanSupplier current = () -> {
+            if (!world.isInThread()) return false;
             if (!ref.isValid() || !ref.equals(playerRef.getReference()) || ref.getStore() != store) return false;
             Player player = store.getComponent(ref, Player.getComponentType());
             return player != null && player.getPageManager().getCustomPage() == page;
@@ -59,15 +60,26 @@ public final class LivePageTransport implements AutoCloseable {
                     page.getClass().getName(), false, false, page.getLifetime(),
                     cmd.getCommands(), events == null ? UIEventBuilder.EMPTY_EVENT_BINDING_ARRAY : events.getEvents()));
         };
+        lease.nativeProbe = raw -> {
+            // ready() is normally called by a page's world callback. Never access ECS or
+            // dispatch a native page event if a caller happens to poll it off that thread.
+            if (!world.isInThread() || !current.getAsBoolean()) return;
+            Player player = store.getComponent(ref, Player.getComponentType());
+            if (player != null) player.getPageManager().handleEvent(ref, store,
+                    new CustomPageEvent(CustomPageEventType.Data, raw));
+        };
         return lease;
     }
     Lease register(PlayerRef player, Executor world, BooleanSupplier current, Consumer<ResearchPageData> handler) {
+        return register(player, world, current, handler, System::nanoTime);
+    }
+    Lease register(PlayerRef player, Executor world, BooleanSupplier current, Consumer<ResearchPageData> handler, LongSupplier clock) {
         Connection connection;
         synchronized (connections) {
             if (closed) throw new IllegalStateException("Page transport is closed");
             connection = connections.computeIfAbsent(player, ignored -> new Connection());
         }
-        Lease lease = new Lease(connection, world, current, handler, System::nanoTime);
+        Lease lease = new Lease(connection, world, current, handler, clock);
         connection.activate(lease); return lease;
     }
 
@@ -182,13 +194,17 @@ public final class LivePageTransport implements AutoCloseable {
             reserved = true;
             return true;
         }
-        synchronized void nativeGateOpen() { outstanding = 0; reserved = false; }
+        synchronized void nativeGateOpen() { outstanding = 0; reserved = false; customOpen = true; }
     }
 
     @FunctionalInterface private interface FrameSender { void send(UICommandBuilder cmd, UIEventBuilder events); }
 
     public static final class Lease implements AutoCloseable {
+        private static final long PROBE_INTERVAL_NANOS = 1_000_000_000L;
         private final String nonce = UUID.randomUUID().toString();
+        // Server-local only: this value is never a client binding or outbound UI command.
+        private final String probeData = "{\"" + NONCE_KEY + "\":\"" + nonce
+                + "\",\"SMTransportProbe\":\"" + UUID.randomUUID() + "\"}";
         private final Connection connection;
         private final Executor world;
         private final BooleanSupplier current;
@@ -196,7 +212,10 @@ public final class LivePageTransport implements AutoCloseable {
         private final LongSupplier clock;
         private final ArrayDeque<ResearchPageData> queue = new ArrayDeque<>();
         private FrameSender sender;
+        private Consumer<String> nativeProbe;
         private boolean closed, scheduled, dispatching;
+        private boolean probing;
+        private long lastProbe = Long.MIN_VALUE;
         private double credit = 80;
         private long replenished;
         Lease(Connection connection, Executor world, BooleanSupplier current, Consumer<ResearchPageData> handler, LongSupplier clock) {
@@ -210,13 +229,36 @@ public final class LivePageTransport implements AutoCloseable {
         /** Native fallback remains validated and rate limited when another adapter forwards Data. */
         public void receiveFromNative(String raw) {
             if (isClosed() || !current.getAsBoolean()) return;
+            if (probeData.equals(raw)) {
+                // Only our synchronous call into the actual native gate can establish this
+                // proof. A copied, forged or delayed probe never becomes a gameplay event.
+                if (probing) connection.nativeGateOpen();
+                return;
+            }
             // Reaching the page via PageManager proves its native acknowledgement gate is zero.
             // Synchronize only our observation; never clear the native counter.
             connection.nativeGateOpen(); route(connection, raw);
         }
         /** True only inside a validated, bounded bridge dispatch; native fallback cannot bypass it. */
         public boolean accepts(ResearchPageData data) { return dispatching && data != null && nonce.equals(data.pageNonce) && !isClosed(); }
-        public boolean ready() { return !isClosed() && connection.ready(); }
+        public boolean ready() {
+            if (isClosed()) return false;
+            if (!connection.ready()) probeNativeGate();
+            return !isClosed() && connection.ready();
+        }
+        private void probeNativeGate() {
+            if (nativeProbe == null || probing) return;
+            long now = clock.getAsLong();
+            if (lastProbe != Long.MIN_VALUE && now - lastProbe < PROBE_INTERVAL_NANOS) return;
+            lastProbe = now;
+            if (!current.getAsBoolean()) return;
+            // An observation can be missed even though Hytale processed the real ACK. Ask
+            // Hytale through its normal Data gate; an actually outstanding ACK still blocks
+            // this call. Elapsed time alone never authorizes another visual frame.
+            probing = true;
+            try { nativeProbe.accept(probeData); }
+            finally { probing = false; }
+        }
         /** Called only on the world thread, after ready(). Structural changes travel with their bindings. */
         public boolean send(UICommandBuilder commands, UIEventBuilder events) {
             if (isClosed() || !current.getAsBoolean() || !connection.reserve()) return false;

@@ -112,12 +112,43 @@ public final class NativeLaboratorySelectionVerification {
                 require(has(reopening,"#Recipe.Text","Levitation Pad")&&value(binding(reopening,"#Craft")).equals(target.id),"Reopening restores the saved researched recipe and transaction binding");
                 require(has(reopening,"#ForgeScan.Visible","true"),"Crafting animation remains active beside the filtered list");
                 ui.click(reopened,binding(reopening,"#Close"));ui.ackAll();
+
+                // Reproduce an ACK delivered to Hytale without our observer seeing it. Both
+                // actual screens used to accept controls indefinitely without sending a frame.
+                var recoveryPage=new ResearchMachinePage(fixture.owner(),research,researchAt,selected);
+                var recoveryInitial=ui.open(recoveryPage);ui.ackNativeOnly();
+                var experiment=(ResearchSession)field(recoveryPage,"session");
+                require(experiment!=null,"Recovery fixture uses a real inventory note in the research machine");
+                ui.click(recoveryPage,binding(recoveryInitial,"#Begin"));
+                require(experiment.state()==ResearchSession.State.RUNNING,"Begin still works despite the unmatched observational ACK");
+                long beforeTicks=experiment.ticks();int beforeRecovery=fixture.packets().ofType(CustomPage.class).size();
+                var recoveredResearch=ui.frame(recoveryPage);
+                require(fixture.packets().ofType(CustomPage.class).size()==beforeRecovery+1&&experiment.ticks()==beforeTicks+4,
+                        "Actual research pulse reconciles with native readiness and resumes exactly one visible simulation batch");
+                require(!recoveredResearch.isInitial&&has(recoveredResearch,"#InstabilityFill.Anchor","Width"),
+                        "Recovered research frame updates the instability bar without rebuilding controls");
+                beforeTicks=experiment.ticks();ui.frame(recoveryPage);
+                require(experiment.ticks()==beforeTicks&&ui.pending()==1,"A genuinely unacknowledged recovery frame still pauses unseen research cues");
+                ui.click(recoveryPage,binding(recoveryInitial,"#Close"));ui.ackAll();
+
+                var recoveryForge=new MachinePage(fixture.owner(),machines,forge);
+                var recoveryForgeInitial=ui.open(recoveryForge);ui.ackNativeOnly();
+                require(!forge.recipe.isEmpty()&&!forge.reservedInputs.isEmpty(),"Forge recovery starts with real reserved crafting materials");
+                forge.progress+=7;beforeRecovery=fixture.packets().ofType(CustomPage.class).size();
+                var recoveredForge=ui.frame(recoveryForge);
+                require(fixture.packets().ofType(CustomPage.class).size()==beforeRecovery+1&&has(recoveredForge,"#ForgeScan.Visible","true"),
+                        "Actual forge frame resumes its active crafting display after an unobserved native ACK");
+                require(!commandData(recoveryForgeInitial,"#ForgeScan.Anchor").equals(commandData(recoveredForge,"#ForgeScan.Anchor"))
+                        &&!commandData(recoveryForgeInitial,"#ForgePreview.Anchor").equals(commandData(recoveredForge,"#ForgePreview.Anchor")),
+                        "Recovered forge updates both the scan line and floating output animation to current crafting progress");
+                require(recoveredForge.eventBindings.length==0,"Animation recovery keeps the existing recipe and transaction bindings");
+                ui.click(recoveryForge,binding(recoveryForgeInitial,"#Close"));ui.ackAll();
             } finally {ui.close();}
         } finally {
             world.setBlock(researchAt.x,researchAt.y,researchAt.z,"Empty");
             world.setBlock(forgeAt.x,forgeAt.y,forgeAt.z,"Empty");machines.removed(world,forgeAt);
         }
-        System.out.println("NATIVE_LABORATORY_SELECTION_VERIFICATION_PASSED: real icon rows, note selection/refresh/insert, hidden locked recipes and empty state, forged hidden events rejected, newly learned rows under held ACKs, stale selection rejection, real crafting reservation, saved selection, active chamber and native Close.");
+        System.out.println("NATIVE_LABORATORY_SELECTION_VERIFICATION_PASSED: real icon rows, note selection/refresh/insert, hidden locked recipes and empty state, forged hidden events rejected, newly learned rows under held ACKs, stale selection rejection, real crafting reservation, saved selection, active chamber, research and forge animation recovery after unobserved native ACK, genuine pending frame fairness and native Close.");
     }
     private static CustomUIEventBinding withAction(CustomUIEventBinding source,String action,String value){
         var json=JsonParser.parseString(source.data).getAsJsonObject();String old=json.get("Action").getAsString();
@@ -129,6 +160,7 @@ public final class NativeLaboratorySelectionVerification {
     private static CustomUIEventBinding binding(CustomPage page,String selector){return Arrays.stream(page.eventBindings).filter(b->b.selector.equals(selector)).findFirst().orElseThrow();}
     private static String value(CustomUIEventBinding binding){return JsonParser.parseString(binding.data).getAsJsonObject().get("Value").getAsString();}
     private static boolean has(CustomPage page,String selector,String text){return Arrays.stream(page.commands).anyMatch(c->selector.equals(c.selector)&&c.data!=null&&c.data.contains(text));}
+    private static String commandData(CustomPage page,String selector){return Arrays.stream(page.commands).filter(c->selector.equals(c.selector)).findFirst().orElseThrow().data;}
     private static Object field(Object value,String name)throws Exception{var field=value.getClass().getDeclaredField(name);field.setAccessible(true);return field.get(value);}
     private static void require(boolean value,String message){if(!value)throw new AssertionError(message);}
 
@@ -153,6 +185,7 @@ public final class NativeLaboratorySelectionVerification {
             observe();return last();
         }
         void ackAll()throws Exception{observe();while(pending()>0){var event=new CustomPageEvent(CustomPageEventType.Acknowledge,null);require(!PacketAdapters.__handleInbound(player.packets(),event),"Native ACK is forwarded unchanged");player.player().getPageManager().handleEvent(player.ref(),player.store(),event);}}
+        void ackNativeOnly()throws Exception{observe();require(pending()>0,"A real native frame is waiting before the observer gap");while(pending()>0)player.player().getPageManager().handleEvent(player.ref(),player.store(),new CustomPageEvent(CustomPageEventType.Acknowledge,null));}
         @Override public void close()throws Exception{player.player().getPageManager().setPage(player.ref(),player.store(),Page.None);observe();ackAll();}
     }
 }

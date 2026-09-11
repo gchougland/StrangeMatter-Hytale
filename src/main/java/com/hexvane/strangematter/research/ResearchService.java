@@ -110,6 +110,16 @@ public final class ResearchService implements AutoCloseable {
         next.setProperty(prefix(player) + "points." + type.getName(), Integer.toString(Math.addExact(points(player, type), amount)));
         commit(next);
     }
+    /** Apply one award to every discipline, or leave every balance unchanged on overflow. */
+    public synchronized void addPointsAll(UUID player, int amount) {
+        Objects.requireNonNull(player);
+        if (amount < 0) throw new IllegalArgumentException("Negative research award");
+        Properties next = copy();
+        for (ResearchType type : ResearchType.values()) {
+            next.setProperty(prefix(player) + "points." + type.getName(), Integer.toString(Math.addExact(points(player, type), amount)));
+        }
+        commit(next);
+    }
     public synchronized String availability(UUID player, ResearchNode node) {
         if (hasUnlocked(player, node.id())) return "Research already unlocked.";
         for (String prerequisite : node.prerequisites()) if (!hasUnlocked(player, prerequisite)) return "Requires " + node(prerequisite).name() + ".";

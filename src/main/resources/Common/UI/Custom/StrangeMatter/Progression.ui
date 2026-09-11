@@ -5,7 +5,7 @@ $C.@PageOverlay {
   Group { LayoutMode: Center;
     Group { Anchor: (Width: 850, Height: 780); Background: #0b1528(0.98); Padding: (Full: 28); LayoutMode: Top;
       Group { Anchor: (Height: 48); LayoutMode: Left;
-        Label { FlexWeight: 1; Text: "FIELD JOURNAL"; Style: (FontSize: 24, TextColor: #64edff, RenderBold: true); }
+        Label { FlexWeight: 1; Text: "ACHIEVEMENTS"; Style: (FontSize: 24, TextColor: #64edff, RenderBold: true); }
         $R.@Control #Close { Anchor: (Width: 90, Height: 32); Text: "CLOSE"; }
       }
       Label #Progress { Anchor: (Height: 36); Style: (FontSize: 14, TextColor: #bd93f9); }

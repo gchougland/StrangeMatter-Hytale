@@ -283,8 +283,8 @@ final class LaboratoryProjectiles {
     private void impact(World world,Shot shot,Vector3i position) {
         if(shot.chrono()){fields.temporal(world,position);GadgetEffects.use(world,"SM_Chrono_Impact",new Vector3d(position).add(.5,.5,.5));retire(shot);return;}
         boolean success;
-        if(shot.token==null){anomalies.spawn(shot.type,world,new Vector3d(position).add(.5,.5,.5),false);success=true;}
-        else success=anomalies.release(shot.token,world,new Vector3d(position).add(.5,.5,.5)).isPresent();
+        if(shot.token==null){anomalies.spawnRaised(shot.type,world,new Vector3d(position).add(.5,.5,.5),false);success=true;}
+        else success=anomalies.releaseRaised(shot.token,world,new Vector3d(position).add(.5,.5,.5)).isPresent();
         if(success){GadgetEffects.use(world,"SM_Capsule_Impact",new Vector3d(position).add(.5,.5,.5));retire(shot);}else if(!tokenValid(shot.token,shot.type))retire(shot);else refund(shot);
     }
     private void refund(Shot shot) {

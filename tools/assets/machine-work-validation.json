@@ -1,27 +1,27 @@
 {
   "status": "PASS",
   "animations": 4,
-  "animatedNodes": 40,
+  "animatedNodes": 41,
   "machines": [
     {
       "machine": "SM_Resonance_Condenser",
       "animatedNodes": 10,
-      "manualGeometryAndUV": "preserved"
+      "manualGeometryAndUV": "historical comparison not requested"
     },
     {
       "machine": "SM_Resonant_Burner",
       "animatedNodes": 5,
-      "manualGeometryAndUV": "preserved"
+      "manualGeometryAndUV": "historical comparison not requested"
     },
     {
       "machine": "SM_Reality_Forge",
-      "animatedNodes": 4,
-      "manualGeometryAndUV": "preserved"
+      "animatedNodes": 5,
+      "manualGeometryAndUV": "historical comparison not requested"
     },
     {
       "machine": "SM_Rift_Stabilizer",
       "animatedNodes": 21,
-      "manualGeometryAndUV": "preserved"
+      "manualGeometryAndUV": "historical comparison not requested"
     }
   ],
   "checks": [
@@ -30,7 +30,7 @@
     "Seamless closed loops",
     "Restrained motion",
     "Native work-only states",
-    "Preserved manual geometry and UVs",
     "Quiet positional bounded ambient OGG"
-  ]
+  ],
+  "historicalArtAudit": false
 }

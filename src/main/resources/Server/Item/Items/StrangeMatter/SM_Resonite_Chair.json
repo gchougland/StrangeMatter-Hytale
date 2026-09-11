@@ -1,0 +1,96 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Resonite_Chair.name",
+    "Description": "server.items.SM_Resonite_Chair.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Resonite_Chair.png",
+  "MaxStack": 25,
+  "Categories": [
+    "Furniture.Furniture",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Blocks_Stone",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "Furniture",
+      "StrangeMatter"
+    ],
+    "Family": [
+      "Resonite"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/StrangeMatter/Furniture/chair.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/Furniture/resonite_furniture.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Resonite_Chair",
+    "VariantRotation": "NESW",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Benches"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#263a54",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "Support": {
+      "Down": [
+        {
+          "FaceType": "Full"
+        }
+      ]
+    },
+    "Seats": [
+      {
+        "Offset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0.2
+        },
+        "Yaw": 0
+      }
+    ],
+    "Interactions": {
+      "Use": "Block_Seat"
+    },
+    "InteractionHint": "server.interactionHints.SM_Resonite_Chair"
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "SM_Resonite_Ingot",
+        "Quantity": 3
+      },
+      {
+        "ItemId": "Ingredient_Fabric_Scrap_Linen",
+        "Quantity": 3
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 3,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_Furniture"
+        ]
+      }
+    ],
+    "KnowledgeRequired": true
+  }
+}

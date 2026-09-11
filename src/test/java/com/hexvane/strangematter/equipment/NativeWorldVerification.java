@@ -33,6 +33,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public final class NativeWorldVerification extends JavaPlugin {
     private ResearchService research;private AnomalyService anomalies;private MachineService machines;
     private final AtomicBoolean finished=new AtomicBoolean();
+    private final com.hexvane.strangematter.anomaly.NativeNaturalGateVerification naturalGateVerification=new com.hexvane.strangematter.anomaly.NativeNaturalGateVerification();
     public NativeWorldVerification(JavaPluginInit init){super(init);}
     @Override protected void setup(){
         try {
@@ -43,6 +44,9 @@ public final class NativeWorldVerification extends JavaPlugin {
             getCodecRegistry(RandomTickProcedure.CODEC).register("SM_Anomalous_Grass",AnomalousGrassService.class,AnomalousGrassService.CODEC);
             getChunkStoreRegistry().registerSystem(new com.hexvane.strangematter.block.FixtureLightingRefresh());
             getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.equipment.HoverboardRiderPose.RestoreOnRemove());
+            getEntityStoreRegistry().registerSystem(new LevitationInputSystem());
+            getEntityStoreRegistry().registerSystem(new LevitationInputSystem.RemoveSystem());
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.anomaly.NativeWarpGateTeleportVerification.RequestObserver());
             getEntityStoreRegistry().registerSystem(anomalies.gravityInputSystem());
             getEntityStoreRegistry().registerSystem(anomalies.gravitySystem());
             getEntityStoreRegistry().registerSystem(anomalies.gravityCleanupSystem());
@@ -51,6 +55,7 @@ public final class NativeWorldVerification extends JavaPlugin {
             getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.anomaly.GravityTerrainEvents.Damage(anomalies));
             getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.anomaly.GravityTerrainEvents.EnvironmentBreak(anomalies));
             com.hexvane.strangematter.anomaly.ThoughtwellHallucinations.register(getEntityStoreRegistry());
+            getEventRegistry().registerGlobal(com.hypixel.hytale.server.core.universe.world.events.ChunkPreLoadProcessEvent.class,naturalGateVerification::onPreLoad);
         }catch(Exception ex){throw new IllegalStateException(ex);}
     }
     @Override protected void start(){
@@ -60,7 +65,7 @@ public final class NativeWorldVerification extends JavaPlugin {
             String name="sm_verification_"+UUID.randomUUID().toString().replace("-","");
             return Universe.get().makeWorld(name,Universe.get().validateWorldPath(name),config);
         }).thenCompose(world->CompletableFuture.allOf(world.getChunkAsync(ChunkUtil.indexChunk(0,0)),world.getChunkAsync(ChunkUtil.indexChunk(1,0)))
-                .thenRunAsync(()->verify(world),world))
+                .thenComposeAsync(ignored->{verify(world);return naturalGateVerification.verifyAsync(getDataDirectory());},world))
           .whenComplete((ignored,error)->finish(error));
     }
     private void verify(World world){
@@ -86,6 +91,8 @@ public final class NativeWorldVerification extends JavaPlugin {
         NativeHeldLightVerification.verify();
         com.hexvane.strangematter.block.NativeGrassStatusIconVerification.verify();
         try {com.hexvane.strangematter.block.NativeFixtureLightingVerification.verify(world);}
+        catch(Exception ex){throw new IllegalStateException(ex);}
+        try {NativeFurnitureVerification.verify(world);}
         catch(Exception ex){throw new IllegalStateException(ex);}
         com.hexvane.strangematter.machine.NativeMachineWorkVerification.verify(world,machines);
         world.setBlock(4,8,4,"SM_Resonant_Burner");
@@ -114,15 +121,41 @@ public final class NativeWorldVerification extends JavaPlugin {
         com.hexvane.strangematter.anomaly.NativeAnomalyRevisionVerification.verify(world);
         try {com.hexvane.strangematter.anomaly.NativeRiftHatVerification.verify(world);NativeMobilityRevisionVerification.verify(world);com.hexvane.strangematter.anomaly.NativeTerrainHostVerification.verify(world);}
         catch(Exception ex){throw new IllegalStateException(ex);}
-        try {
-            NativeHoverboardRiderVerification.verify(world);
-            NativeHoverboardPresentationVerification.verify(world);
-            com.hexvane.strangematter.anomaly.NativeThoughtwellVerification.verify(world);
-            com.hexvane.strangematter.anomaly.NativeGravityVerification.verify(world);
-            com.hexvane.strangematter.anomaly.NativeGravityTerrainVerification.verify(world);
-            com.hexvane.strangematter.anomaly.NativeRiftExposureVerification.verify(world);
+        var failures=new java.util.ArrayList<Throwable>();
+        verifyIndependent(failures,"Hoverboard rider",()->NativeHoverboardRiderVerification.verify(world));
+        verifyIndependent(failures,"Hoverboard presentation",()->NativeHoverboardPresentationVerification.verify(world));
+        verifyIndependent(failures,"Thoughtwell",()->com.hexvane.strangematter.anomaly.NativeThoughtwellVerification.verify(world));
+        verifyIndependent(failures,"Gravity",()->com.hexvane.strangematter.anomaly.NativeGravityVerification.verify(world));
+        verifyIndependent(failures,"Gravity terrain",()->com.hexvane.strangematter.anomaly.NativeGravityTerrainVerification.verify(world));
+        verifyIndependent(failures,"Rift exposure",()->com.hexvane.strangematter.anomaly.NativeRiftExposureVerification.verify(world));
+        // Full projectile flights advance every native system; keep them after fixtures
+        // that exercise short timing windows on this shared world's simulation clock.
+        verifyIndependent(failures,"Warp projectile",()->NativeWarpProjectileVerification.verify(world,anomalies));
+        verifyIndependent(failures,"Warp teleport protocol",()->com.hexvane.strangematter.anomaly.NativeWarpGateTeleportVerification.verify(world));
+        verifyIndependent(failures,"Warp landing",()->com.hexvane.strangematter.anomaly.NativeWarpLandingVerification.verify(world));
+        verifyIndependent(failures,"Warp Gun gate isolation",()->NativeGateIsolationVerification.verify(world));
+        verifyIndependent(failures,"Direct device controls",()->NativeDeviceControlVerification.verify(world));
+        verifyIndependent(failures,"Temporal disappearance color",NativeTemporalExpiryPresentationVerification::verify);
+        verifyIndependent(failures,"Nullifier acquisition",()->com.hexvane.strangematter.machine.NativeNullifierContentVerification.verify(world,machines));
+        verifyIndependent(failures,"Anomaly suppression",()->com.hexvane.strangematter.anomaly.NativeAnomalySuppressionVerification.verify(world));
+        verifyIndependent(failures,"Anomaly placement",()->com.hexvane.strangematter.anomaly.NativeAnomalyPlacementVerification.verify(world));
+        verifyIndependent(failures,"Levitation",()->NativeLevitationVerification.verify(world,machines));
+        verifyIndependent(failures,"Architecture",()->com.hexvane.strangematter.anomaly.NativeArchitectureVerification.verify(world));
+        verifyIndependent(failures,"Resonite wall mounts",()->NativeWallMountVerification.verify(world));
+        verifyIndependent(failures,"Scientist wandering",()->NativeScientistWanderVerification.verify(world));
+        if(!failures.isEmpty()){
+            var failure=new IllegalStateException("Native fixtures failed: "+failures.size());
+            failures.forEach(failure::addSuppressed);throw failure;
         }
-        catch(Exception ex){throw new IllegalStateException(ex);}
+    }
+    @FunctionalInterface private interface NativeCheck {void verify()throws Exception;}
+    /** Each fixture cleans up its own state. Report every failure without hiding later checks. */
+    private static void verifyIndependent(java.util.List<Throwable> failures,String name,NativeCheck check){
+        try{check.verify();}
+        catch(Exception|AssertionError failure){
+            var named=new IllegalStateException(name+": "+failure,failure);failures.add(named);
+            System.out.println("NATIVE_FIXTURE_FAILED: "+named.getMessage());
+        }
     }
     private void verifyConduits(World world) {
         int[][] faces={{1,0,0},{-1,0,0},{0,1,0},{0,-1,0},{0,0,1},{0,0,-1}};

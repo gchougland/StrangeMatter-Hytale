@@ -3,46 +3,103 @@
     {
       "id": "1",
       "name": "isolation_base",
-      "position": {"x": 0, "y": 1, "z": 0},
-      "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+      "position": {
+        "x": 0,
+        "y": 1,
+        "z": 0
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 1, "y": 1, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 27, "y": 2, "z": 27},
+          "size": {
+            "x": 27,
+            "y": 2,
+            "z": 27
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 1, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 30,
+              "y": 37
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 59, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 30,
+              "y": 33
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 225, "y": 33},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 33
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 30, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 37
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 65, "y": 1},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 65,
+              "y": 11
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 94, "y": 1},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 94,
+              "y": 11
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -55,46 +112,103 @@
     {
       "id": "2",
       "name": "bevelled_pad",
-      "position": {"x": 0, "y": 3, "z": 0},
-      "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+      "position": {
+        "x": 0,
+        "y": 3,
+        "z": 0
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 1, "y": 1, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 30, "y": 3, "z": 30},
+          "size": {
+            "x": 30,
+            "y": 3,
+            "z": 30
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 33, "y": 33},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 97,
+              "y": 6
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 97, "y": 33},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 97,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 1, "y": 33},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 65,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 65, "y": 33},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 65,
+              "y": 6
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 1, "y": 1},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 33,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 33, "y": 1},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 1
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -107,46 +221,103 @@
     {
       "id": "3",
       "name": "lens_bed",
-      "position": {"x": 0, "y": 4.65, "z": 0},
-      "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+      "position": {
+        "x": 0,
+        "y": 4.65,
+        "z": 0
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 1, "y": 0.3, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1,
+          "y": 0.3,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 22, "y": 1, "z": 22},
+          "size": {
+            "x": 22,
+            "y": 1,
+            "z": 22
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 81, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 25,
+              "y": 41
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 129, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 44
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 57, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 25,
+              "y": 44
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 105, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 41
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 123, "y": 1},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 83,
+              "y": 40
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 147, "y": 1},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 59,
+              "y": 40
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -159,46 +330,103 @@
     {
       "id": "4",
       "name": "containment_coil0",
-      "position": {"x": 0, "y": 5, "z": 10},
-      "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+      "position": {
+        "x": 0,
+        "y": 5,
+        "z": 10
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.95983, "y": 1, "z": 0.75},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.95983,
+          "y": 1,
+          "z": 0.75
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 6, "y": 1, "z": 2},
+          "size": {
+            "x": 6,
+            "y": 1,
+            "z": 2
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 161, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 9,
+              "y": 64
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 173, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 119
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 153, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 33,
+              "y": 61
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 169, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 88
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 88, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 33,
+              "y": 51
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 96, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 47
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -211,46 +439,103 @@
     {
       "id": "5",
       "name": "containment_coil1",
-      "position": {"x": 5, "y": 5, "z": 8.66025},
-      "orientation": {"x": 0, "y": 0.25882, "z": 0, "w": 0.96593},
+      "position": {
+        "x": 5,
+        "y": 5,
+        "z": 8.66025
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0.25882,
+        "z": 0,
+        "w": 0.96593
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.95983, "y": 1, "z": 0.75},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.95983,
+          "y": 1,
+          "z": 0.75
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 6, "y": 1, "z": 2},
+          "size": {
+            "x": 6,
+            "y": 1,
+            "z": 2
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 185, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 41,
+              "y": 55
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 197, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 79
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 177, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 58
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 193, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 97
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 104, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 107,
+              "y": 52
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 112, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 9,
+              "y": 51
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -263,46 +548,103 @@
     {
       "id": "6",
       "name": "containment_coil2",
-      "position": {"x": 8.66025, "y": 5, "z": 5},
-      "orientation": {"x": 0, "y": 0.5, "z": 0, "w": 0.86603},
+      "position": {
+        "x": 8.66025,
+        "y": 5,
+        "z": 5
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0.5,
+        "z": 0,
+        "w": 0.86603
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.95983, "y": 1, "z": 0.75},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.95983,
+          "y": 1,
+          "z": 0.75
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 6, "y": 1, "z": 2},
+          "size": {
+            "x": 6,
+            "y": 1,
+            "z": 2
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 209, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 61
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 221, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 104
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 201, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 41,
+              "y": 58
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 217, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 97
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 120, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 107,
+              "y": 56
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 128, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 115,
+              "y": 44
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -315,46 +657,103 @@
     {
       "id": "7",
       "name": "containment_coil3",
-      "position": {"x": 10, "y": 5, "z": 0},
-      "orientation": {"x": 0, "y": 0.70711, "z": 0, "w": 0.70711},
+      "position": {
+        "x": 10,
+        "y": 5,
+        "z": 0
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0.70711,
+        "z": 0,
+        "w": 0.70711
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.95983, "y": 1, "z": 0.75},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.95983,
+          "y": 1,
+          "z": 0.75
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 6, "y": 1, "z": 2},
+          "size": {
+            "x": 6,
+            "y": 1,
+            "z": 2
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 233, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 25,
+              "y": 58
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 245, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 76
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 225, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 55
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 241, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 97
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 136, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 107,
+              "y": 60
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 144, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 49,
+              "y": 53
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -367,46 +766,103 @@
     {
       "id": "8",
       "name": "containment_coil4",
-      "position": {"x": 8.66025, "y": 5, "z": -5},
-      "orientation": {"x": 0, "y": 0.86603, "z": 0, "w": 0.5},
+      "position": {
+        "x": 8.66025,
+        "y": 5,
+        "z": -5
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0.86603,
+        "z": 0,
+        "w": 0.5
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.95983, "y": 1, "z": 0.75},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.95983,
+          "y": 1,
+          "z": 0.75
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 6, "y": 1, "z": 2},
+          "size": {
+            "x": 6,
+            "y": 1,
+            "z": 2
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 1, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 33,
+              "y": 64
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 13, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 104
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 249, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 64
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 9, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 97
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 152, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 9,
+              "y": 47
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 160, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 25,
+              "y": 47
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -419,46 +875,103 @@
     {
       "id": "9",
       "name": "containment_coil5",
-      "position": {"x": 5, "y": 5, "z": -8.66025},
-      "orientation": {"x": 0, "y": 0.96593, "z": 0, "w": 0.25882},
+      "position": {
+        "x": 5,
+        "y": 5,
+        "z": -8.66025
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0.96593,
+        "z": 0,
+        "w": 0.25882
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.95983, "y": 1, "z": 0.75},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.95983,
+          "y": 1,
+          "z": 0.75
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 6, "y": 1, "z": 2},
+          "size": {
+            "x": 6,
+            "y": 1,
+            "z": 2
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 25, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 9,
+              "y": 55
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 37, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 107
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 17, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 9,
+              "y": 58
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 33, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 110
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 168, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 51
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 176, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 33,
+              "y": 47
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -471,46 +984,103 @@
     {
       "id": "10",
       "name": "containment_coil6",
-      "position": {"x": 0, "y": 5, "z": -10},
-      "orientation": {"x": 0, "y": 1, "z": 0, "w": 0},
+      "position": {
+        "x": 0,
+        "y": 5,
+        "z": -10
+      },
+      "orientation": {
+        "x": 0,
+        "y": 1,
+        "z": 0,
+        "w": 0
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.95983, "y": 1, "z": 0.75},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.95983,
+          "y": 1,
+          "z": 0.75
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 6, "y": 1, "z": 2},
+          "size": {
+            "x": 6,
+            "y": 1,
+            "z": 2
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 49, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 67
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 61, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 94
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 41, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 55
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 57, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 113
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 184, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 51
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 192, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 107,
+              "y": 48
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -523,46 +1093,103 @@
     {
       "id": "11",
       "name": "containment_coil7",
-      "position": {"x": -5, "y": 5, "z": -8.66025},
-      "orientation": {"x": 0, "y": 0.96593, "z": 0, "w": -0.25882},
+      "position": {
+        "x": -5,
+        "y": 5,
+        "z": -8.66025
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0.96593,
+        "z": 0,
+        "w": -0.25882
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.95983, "y": 1, "z": 0.75},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.95983,
+          "y": 1,
+          "z": 0.75
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 6, "y": 1, "z": 2},
+          "size": {
+            "x": 6,
+            "y": 1,
+            "z": 2
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 73, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 33,
+              "y": 58
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 85, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 85
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 65, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 33,
+              "y": 55
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 81, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 97
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 200, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 115,
+              "y": 48
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 208, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 25,
+              "y": 51
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -575,46 +1202,103 @@
     {
       "id": "12",
       "name": "containment_coil8",
-      "position": {"x": -8.66025, "y": 5, "z": -5},
-      "orientation": {"x": 0, "y": 0.86603, "z": 0, "w": -0.5},
+      "position": {
+        "x": -8.66025,
+        "y": 5,
+        "z": -5
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0.86603,
+        "z": 0,
+        "w": -0.5
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.95983, "y": 1, "z": 0.75},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.95983,
+          "y": 1,
+          "z": 0.75
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 6, "y": 1, "z": 2},
+          "size": {
+            "x": 6,
+            "y": 1,
+            "z": 2
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 97, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 25,
+              "y": 61
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 109, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 21,
+              "y": 67
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 89, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 41,
+              "y": 61
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 105, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 85
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 216, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 41,
+              "y": 47
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 224, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 41,
+              "y": 51
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -627,46 +1311,103 @@
     {
       "id": "13",
       "name": "containment_coil9",
-      "position": {"x": -10, "y": 5, "z": 0},
-      "orientation": {"x": 0, "y": -0.70711, "z": 0, "w": 0.70711},
+      "position": {
+        "x": -10,
+        "y": 5,
+        "z": 0
+      },
+      "orientation": {
+        "x": 0,
+        "y": -0.70711,
+        "z": 0,
+        "w": 0.70711
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.95983, "y": 1, "z": 0.75},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.95983,
+          "y": 1,
+          "z": 0.75
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 6, "y": 1, "z": 2},
+          "size": {
+            "x": 6,
+            "y": 1,
+            "z": 2
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 121, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 61
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 133, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 97
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 113, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 25,
+              "y": 55
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 129, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 113
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 232, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 115,
+              "y": 40
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 240, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 115,
+              "y": 52
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -679,46 +1420,103 @@
     {
       "id": "14",
       "name": "containment_coil10",
-      "position": {"x": -8.66025, "y": 5, "z": 5},
-      "orientation": {"x": 0, "y": -0.5, "z": 0, "w": 0.86603},
+      "position": {
+        "x": -8.66025,
+        "y": 5,
+        "z": 5
+      },
+      "orientation": {
+        "x": 0,
+        "y": -0.5,
+        "z": 0,
+        "w": 0.86603
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.95983, "y": 1, "z": 0.75},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.95983,
+          "y": 1,
+          "z": 0.75
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 6, "y": 1, "z": 2},
+          "size": {
+            "x": 6,
+            "y": 1,
+            "z": 2
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 145, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 64
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 157, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 19,
+              "y": 70
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 137, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 49,
+              "y": 57
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 153, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 85
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 248, "y": 38},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 47
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 1, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 115,
+              "y": 60
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -731,46 +1529,103 @@
     {
       "id": "15",
       "name": "containment_coil11",
-      "position": {"x": -5, "y": 5, "z": 8.66025},
-      "orientation": {"x": 0, "y": -0.25882, "z": 0, "w": 0.96593},
+      "position": {
+        "x": -5,
+        "y": 5,
+        "z": 8.66025
+      },
+      "orientation": {
+        "x": 0,
+        "y": -0.25882,
+        "z": 0,
+        "w": 0.96593
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.95983, "y": 1, "z": 0.75},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.95983,
+          "y": 1,
+          "z": 0.75
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 6, "y": 1, "z": 2},
+          "size": {
+            "x": 6,
+            "y": 1,
+            "z": 2
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 169, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 58
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 181, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 122
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 161, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 9,
+              "y": 61
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 177, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 94
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 9, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 49,
+              "y": 49
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 17, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 115,
+              "y": 56
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -783,46 +1638,103 @@
     {
       "id": "16",
       "name": "focus_aperture0",
-      "position": {"x": 0, "y": 5.3, "z": 6},
-      "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+      "position": {
+        "x": 0,
+        "y": 5.3,
+        "z": 6
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.90385, "y": 1, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.90385,
+          "y": 1,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 4, "y": 1, "z": 1},
+          "size": {
+            "x": 4,
+            "y": 1,
+            "z": 1
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 191, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 125
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 200, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 100
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 185, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 9,
+              "y": 67
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 197, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 109
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 203, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 86
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 209, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 83
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -835,46 +1747,103 @@
     {
       "id": "17",
       "name": "focus_aperture1",
-      "position": {"x": 3, "y": 5.3, "z": 5.19615},
-      "orientation": {"x": 0, "y": 0.25882, "z": 0, "w": 0.96593},
+      "position": {
+        "x": 3,
+        "y": 5.3,
+        "z": 5.19615
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0.25882,
+        "z": 0,
+        "w": 0.96593
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.90385, "y": 1, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.90385,
+          "y": 1,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 4, "y": 1, "z": 1},
+          "size": {
+            "x": 4,
+            "y": 1,
+            "z": 1
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 221, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 107
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 230, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 106
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 215, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 125
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 227, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 109
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 233, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 125
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 239, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 9,
+              "y": 67
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -887,46 +1856,103 @@
     {
       "id": "18",
       "name": "focus_aperture2",
-      "position": {"x": 5.19615, "y": 5.3, "z": 3},
-      "orientation": {"x": 0, "y": 0.5, "z": 0, "w": 0.86603},
+      "position": {
+        "x": 5.19615,
+        "y": 5.3,
+        "z": 3
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0.5,
+        "z": 0,
+        "w": 0.86603
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.90385, "y": 1, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.90385,
+          "y": 1,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 4, "y": 1, "z": 1},
+          "size": {
+            "x": 4,
+            "y": 1,
+            "z": 1
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 251, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 125
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 4, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 109
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 245, "y": 46},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 70
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 1, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 112
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 7, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 86
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 13, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 116
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -939,46 +1965,103 @@
     {
       "id": "19",
       "name": "focus_aperture3",
-      "position": {"x": 6, "y": 5.3, "z": 0},
-      "orientation": {"x": 0, "y": 0.70711, "z": 0, "w": 0.70711},
+      "position": {
+        "x": 6,
+        "y": 5.3,
+        "z": 0
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0.70711,
+        "z": 0,
+        "w": 0.70711
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.90385, "y": 1, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.90385,
+          "y": 1,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 4, "y": 1, "z": 1},
+          "size": {
+            "x": 4,
+            "y": 1,
+            "z": 1
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 25, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 80
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 34, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 112
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 19, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 80
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 31, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 103
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 37, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 83
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 43, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 110
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -991,46 +2074,103 @@
     {
       "id": "20",
       "name": "focus_aperture4",
-      "position": {"x": 5.19615, "y": 5.3, "z": -3},
-      "orientation": {"x": 0, "y": 0.86603, "z": 0, "w": 0.5},
+      "position": {
+        "x": 5.19615,
+        "y": 5.3,
+        "z": -3
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0.86603,
+        "z": 0,
+        "w": 0.5
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.90385, "y": 1, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.90385,
+          "y": 1,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 4, "y": 1, "z": 1},
+          "size": {
+            "x": 4,
+            "y": 1,
+            "z": 1
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 55, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 83
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 64, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 103
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 49, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 73
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 61, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 103
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 67, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 92
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 73, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 122
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -1043,46 +2183,103 @@
     {
       "id": "21",
       "name": "focus_aperture5",
-      "position": {"x": 3, "y": 5.3, "z": -5.19615},
-      "orientation": {"x": 0, "y": 0.96593, "z": 0, "w": 0.25882},
+      "position": {
+        "x": 3,
+        "y": 5.3,
+        "z": -5.19615
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0.96593,
+        "z": 0,
+        "w": 0.25882
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.90385, "y": 1, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.90385,
+          "y": 1,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 4, "y": 1, "z": 1},
+          "size": {
+            "x": 4,
+            "y": 1,
+            "z": 1
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 85, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 104
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 94, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 103
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 79, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 92
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 91, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 106
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 97, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 125
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 103, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 113
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -1095,46 +2292,103 @@
     {
       "id": "22",
       "name": "focus_aperture6",
-      "position": {"x": 0, "y": 5.3, "z": -6},
-      "orientation": {"x": 0, "y": 1, "z": 0, "w": 0},
+      "position": {
+        "x": 0,
+        "y": 5.3,
+        "z": -6
+      },
+      "orientation": {
+        "x": 0,
+        "y": 1,
+        "z": 0,
+        "w": 0
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.90385, "y": 1, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.90385,
+          "y": 1,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 4, "y": 1, "z": 1},
+          "size": {
+            "x": 4,
+            "y": 1,
+            "z": 1
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 115, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 86
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 124, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 103
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 109, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 86
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 121, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 106
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 127, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 95
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 133, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 107
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -1147,46 +2401,103 @@
     {
       "id": "23",
       "name": "focus_aperture7",
-      "position": {"x": -3, "y": 5.3, "z": -5.19615},
-      "orientation": {"x": 0, "y": 0.96593, "z": 0, "w": -0.25882},
+      "position": {
+        "x": -3,
+        "y": 5.3,
+        "z": -5.19615
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0.96593,
+        "z": 0,
+        "w": -0.25882
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.90385, "y": 1, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.90385,
+          "y": 1,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 4, "y": 1, "z": 1},
+          "size": {
+            "x": 4,
+            "y": 1,
+            "z": 1
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 145, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 86
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 154, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 106
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 139, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 86
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 151, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 103
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 157, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 101
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 163, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 86
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -1199,46 +2510,103 @@
     {
       "id": "24",
       "name": "focus_aperture8",
-      "position": {"x": -5.19615, "y": 5.3, "z": -3},
-      "orientation": {"x": 0, "y": 0.86603, "z": 0, "w": -0.5},
+      "position": {
+        "x": -5.19615,
+        "y": 5.3,
+        "z": -3
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0.86603,
+        "z": 0,
+        "w": -0.5
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.90385, "y": 1, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.90385,
+          "y": 1,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 4, "y": 1, "z": 1},
+          "size": {
+            "x": 4,
+            "y": 1,
+            "z": 1
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 175, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 122
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 184, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 103
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 169, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 89
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 181, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 100
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 187, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 86
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 193, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 110
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -1251,46 +2619,103 @@
     {
       "id": "25",
       "name": "focus_aperture9",
-      "position": {"x": -6, "y": 5.3, "z": 0},
-      "orientation": {"x": 0, "y": -0.70711, "z": 0, "w": 0.70711},
+      "position": {
+        "x": -6,
+        "y": 5.3,
+        "z": 0
+      },
+      "orientation": {
+        "x": 0,
+        "y": -0.70711,
+        "z": 0,
+        "w": 0.70711
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.90385, "y": 1, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.90385,
+          "y": 1,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 4, "y": 1, "z": 1},
+          "size": {
+            "x": 4,
+            "y": 1,
+            "z": 1
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 205, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 92
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 214, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 103
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 199, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 86
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 211, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 100
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 217, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 89
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 223, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 122
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -1303,46 +2728,103 @@
     {
       "id": "26",
       "name": "focus_aperture10",
-      "position": {"x": -5.19615, "y": 5.3, "z": 3},
-      "orientation": {"x": 0, "y": -0.5, "z": 0, "w": 0.86603},
+      "position": {
+        "x": -5.19615,
+        "y": 5.3,
+        "z": 3
+      },
+      "orientation": {
+        "x": 0,
+        "y": -0.5,
+        "z": 0,
+        "w": 0.86603
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.90385, "y": 1, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.90385,
+          "y": 1,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 4, "y": 1, "z": 1},
+          "size": {
+            "x": 4,
+            "y": 1,
+            "z": 1
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 235, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 86
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 244, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 103
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 229, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 119
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 241, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 100
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 247, "y": 49},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 98
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 1, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 86
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -1355,46 +2837,103 @@
     {
       "id": "27",
       "name": "focus_aperture11",
-      "position": {"x": -3, "y": 5.3, "z": 5.19615},
-      "orientation": {"x": 0, "y": -0.25882, "z": 0, "w": 0.96593},
+      "position": {
+        "x": -3,
+        "y": 5.3,
+        "z": 5.19615
+      },
+      "orientation": {
+        "x": 0,
+        "y": -0.25882,
+        "z": 0,
+        "w": 0.96593
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 0.90385, "y": 1, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 0.90385,
+          "y": 1,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 4, "y": 1, "z": 1},
+          "size": {
+            "x": 4,
+            "y": 1,
+            "z": 1
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 13, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 15,
+              "y": 67
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 22, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 103
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 7, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 70
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 19, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 103
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 25, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 107
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 31, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 70
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -1407,46 +2946,103 @@
     {
       "id": "28",
       "name": "upward_emitter",
-      "position": {"x": 0, "y": 5.3, "z": 0},
-      "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+      "position": {
+        "x": 0,
+        "y": 5.3,
+        "z": 0
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 1, "y": 0.6, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1,
+          "y": 0.6,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 6, "y": 1, "z": 6},
+          "size": {
+            "x": 6,
+            "y": 1,
+            "z": 6
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 45, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 49,
+              "y": 63
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 61, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 41,
+              "y": 64
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 37, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 49,
+              "y": 60
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 53, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 25,
+              "y": 64
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 171, "y": 1},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 107,
+              "y": 40
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 179, "y": 1},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 49,
+              "y": 41
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -1459,46 +3055,103 @@
     {
       "id": "29",
       "name": "corner_guard",
-      "position": {"x": -12, "y": 4.6, "z": -12},
-      "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+      "position": {
+        "x": -12,
+        "y": 4.6,
+        "z": -12
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 1, "y": 0.93333, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1,
+          "y": 0.93333,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 4, "y": 3, "z": 4},
+          "size": {
+            "x": 4,
+            "y": 3,
+            "z": 4
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 135, "y": 33},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 123,
+              "y": 58
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 147, "y": 33},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 85
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 129, "y": 33},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 120
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 141, "y": 33},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 90
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 187, "y": 1},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 59,
+              "y": 33
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 193, "y": 1},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 123,
+              "y": 17
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -1511,46 +3164,103 @@
     {
       "id": "30",
       "name": "status_light",
-      "position": {"x": -12, "y": 6, "z": -12},
-      "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+      "position": {
+        "x": -12,
+        "y": 6,
+        "z": -12
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 1, "y": 0.5, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1,
+          "y": 0.5,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 2, "y": 1, "z": 2},
+          "size": {
+            "x": 2,
+            "y": 1,
+            "z": 2
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 73, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 82
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 81, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 116
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 69, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 116
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 77, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 82
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 25, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 92
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 29, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 80
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -1563,46 +3273,103 @@
     {
       "id": "31",
       "name": "corner_guard",
-      "position": {"x": -12, "y": 4.6, "z": 12},
-      "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+      "position": {
+        "x": -12,
+        "y": 4.6,
+        "z": 12
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 1, "y": 0.93333, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1,
+          "y": 0.93333,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 4, "y": 3, "z": 4},
+          "size": {
+            "x": 4,
+            "y": 3,
+            "z": 4
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 159, "y": 33},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 70
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 171, "y": 33},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 7,
+              "y": 75
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 153, "y": 33},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 70
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 165, "y": 33},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 110
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 199, "y": 1},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 123,
+              "y": 41
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 205, "y": 1},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 123,
+              "y": 29
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -1615,46 +3382,103 @@
     {
       "id": "32",
       "name": "status_light",
-      "position": {"x": -12, "y": 6, "z": 12},
-      "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+      "position": {
+        "x": -12,
+        "y": 6,
+        "z": 12
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 1, "y": 0.5, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1,
+          "y": 0.5,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 2, "y": 1, "z": 2},
+          "size": {
+            "x": 2,
+            "y": 1,
+            "z": 2
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 89, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 19,
+              "y": 73
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 97, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 82
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 85, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 82
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 93, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 82
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 33, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 96
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 37, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 80
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -1667,46 +3491,103 @@
     {
       "id": "33",
       "name": "corner_guard",
-      "position": {"x": 12, "y": 4.6, "z": -12},
-      "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+      "position": {
+        "x": 12,
+        "y": 4.6,
+        "z": -12
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 1, "y": 0.93333, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1,
+          "y": 0.93333,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 4, "y": 3, "z": 4},
+          "size": {
+            "x": 4,
+            "y": 3,
+            "z": 4
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 183, "y": 33},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 115
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 195, "y": 33},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 123,
+              "y": 63
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 177, "y": 33},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 80
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 189, "y": 33},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 105
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 211, "y": 1},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 123,
+              "y": 35
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 217, "y": 1},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 123,
+              "y": 11
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -1719,46 +3600,103 @@
     {
       "id": "34",
       "name": "status_light",
-      "position": {"x": 12, "y": 6, "z": -12},
-      "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+      "position": {
+        "x": 12,
+        "y": 6,
+        "z": -12
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 1, "y": 0.5, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1,
+          "y": 0.5,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 2, "y": 1, "z": 2},
+          "size": {
+            "x": 2,
+            "y": 1,
+            "z": 2
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 105, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 19,
+              "y": 73
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 113, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 19,
+              "y": 73
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 101, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 125
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 109, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 91
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 41, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 84
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 45, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 76
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -1771,46 +3709,103 @@
     {
       "id": "35",
       "name": "corner_guard",
-      "position": {"x": 12, "y": 4.6, "z": 12},
-      "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+      "position": {
+        "x": 12,
+        "y": 4.6,
+        "z": 12
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 1, "y": 0.93333, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1,
+          "y": 0.93333,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 4, "y": 3, "z": 4},
+          "size": {
+            "x": 4,
+            "y": 3,
+            "z": 4
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 207, "y": 33},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 100
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 219, "y": 33},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 123,
+              "y": 53
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 201, "y": 33},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 95
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 213, "y": 33},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 1,
+              "y": 75
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 223, "y": 1},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 123,
+              "y": 47
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 229, "y": 1},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 123,
+              "y": 23
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },
@@ -1823,46 +3818,103 @@
     {
       "id": "36",
       "name": "status_light",
-      "position": {"x": 12, "y": 6, "z": 12},
-      "orientation": {"x": 0, "y": 0, "z": 0, "w": 1},
+      "position": {
+        "x": 12,
+        "y": 6,
+        "z": 12
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
       "shape": {
         "type": "box",
-        "offset": {"x": 0, "y": 0, "z": 0},
-        "stretch": {"x": 1, "y": 0.5, "z": 1},
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1,
+          "y": 0.5,
+          "z": 1
+        },
         "settings": {
           "isPiece": false,
-          "size": {"x": 2, "y": 1, "z": 2},
+          "size": {
+            "x": 2,
+            "y": 1,
+            "z": 2
+          },
           "isStaticBox": true
         },
         "textureLayout": {
           "back": {
-            "offset": {"x": 121, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 82
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "right": {
-            "offset": {"x": 129, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 82
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "front": {
-            "offset": {"x": 117, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 19,
+              "y": 73
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "left": {
-            "offset": {"x": 125, "y": 52},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 17,
+              "y": 82
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "top": {
-            "offset": {"x": 49, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 100
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           },
           "bottom": {
-            "offset": {"x": 53, "y": 42},
-            "mirror": {"x": false, "y": false},
+            "offset": {
+              "x": 13,
+              "y": 88
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
             "angle": 0
           }
         },

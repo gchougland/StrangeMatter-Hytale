@@ -50,7 +50,11 @@ public final class NativeGravityVerification {
             var originalChickenAnimation=chickenAnimations.getActiveAnimations()[AnimationSlot.Movement.ordinal()];
             var control=NPCPlugin.get().spawnNPC(store,"Cow",null,new Vector3d(31,65,20),new Rotation3f()).first();refs.add(control);
             var payload=new ItemStack("SM_Raw_Resonite",3).withMetadata("GravityProof",Codec.STRING,"retain exact drop");
-            var item=store.addEntity(ItemComponent.generateItemDrop(store,payload,new Vector3d(26,65,21),new Rotation3f(),0,0,0),AddReason.SPAWN);refs.add(item);
+            // The pickup delay isolates the specimen, so it need not start just
+            // two blocks inside the field boundary. Its real horizontal drift
+            // continues throughout the long wave and must stay inside the field
+            // until the later suppression comparison starts.
+            var item=store.addEntity(ItemComponent.generateItemDrop(store,payload,new Vector3d(22,65,22),new Rotation3f(),0,0,0),AddReason.SPAWN);refs.add(item);
             // Isolate the long suspension measurement from native pickup by nearby test players.
             store.getComponent(item,ItemComponent.getComponentType()).setPickupDelay(60);
             var itemControl=store.addEntity(ItemComponent.generateItemDrop(store,new ItemStack("SM_Raw_Resonite",1),new Vector3d(31,65,23),new Rotation3f(),0,0,0),AddReason.SPAWN);refs.add(itemControl);
@@ -119,15 +123,26 @@ public final class NativeGravityVerification {
             require(high-low>.35&&rose&&sank,"Native creature suspension gently rises and descends through the sine wave: range="+(high-low));
             require(cow.isValid()&&item.isValid(),"Long gravity wave retains its isolated NPC and drop: cow="+cow.isValid()+", item="+item.isValid());
             cowY=y(store,cow);itemY=y(store,item);
+            String suppressionStart="cow="+motionState(store,cow)+", item="+motionState(store,item);
+            require(store.getComponent(cow,TransformComponent.getComponentType()).getPosition().distanceSquared(field.position())<64
+                    &&store.getComponent(item,TransformComponent.getComponentType()).getPosition().distanceSquared(field.position())<64,
+                    "Suppression comparison must start with both specimens still inside the active field: "+suppressionStart+", field="+field.position());
 
             // Suppression stops our forces and normal physics resumes on the very next native tick.
             service.setSuppressionHook((w,p,t)->true);service.tick(world,.05);
             require(original.fly==fly&&original.horizontalFlySpeed==horizontal&&original.verticalFlySpeed==vertical,"Suppressed field restores original player settings");
             int stopped=forces(player).size();
-            for(int i=0;i<20;i++){store.tick(.05f);service.tick(world,.05);}
+            var suppressionTrace=new StringBuilder();
+            for(int i=0;i<20;i++){
+                store.tick(.05f);service.tick(world,.05);
+                if(i==0||i==4||i==9||i==19)suppressionTrace.append("; tick ").append(i+1).append(" cow=").append(motionState(store,cow)).append(", item=").append(motionState(store,item));
+            }
             require(forces(player).size()==stopped,"Suppression sends no further gravity-owned movement commands");
             require(java.util.Objects.equals(originalChickenAnimation,chickenAnimations.getActiveAnimations()[AnimationSlot.Movement.ordinal()]),"Suppression restores the creature's original native movement animation");
-            require(y(store,cow)<cowY-.5&&y(store,item)<itemY-.5,"NPC and item resume gravity after field suppression");
+            require(cow.isValid()&&item.isValid(),"Suppressed specimen unexpectedly removed: start "+suppressionStart+suppressionTrace);
+            double suppressedCowY=y(store,cow),suppressedItemY=y(store,item);
+            require(suppressedCowY<cowY-.5&&suppressedItemY<itemY-.5,
+                    "NPC and item resume gravity after field suppression: cowY="+cowY+" -> "+suppressedCowY+", itemY="+itemY+" -> "+suppressedItemY+"; start "+suppressionStart+suppressionTrace);
             service.setSuppressionHook((w,p,t)->false);service.tick(world,.05);
             store.tick(.05f);require(forces(player).size()>stopped,"Unsuppressed field resumes momentum-driven movement");
             var armor=store.getComponent(player.ref(),InventoryComponent.Armor.getComponentType()).getInventory();
@@ -331,6 +346,16 @@ public final class NativeGravityVerification {
         var history=java.util.List.of(new Vector3d(3,0,0),new Vector3d(2.95,0,0));
         require(GravityMomentum.residualAxes(new Vector3d(2.75,-20,0),history,0).lengthSquared()==0,"Ordinary native drag lies inside the residual deadzone");
         require(GravityMomentum.residualAxes(new Vector3d(300,0,300),history,0).lengthSquared()==0,"Large foreign velocity is not inferred as ordinary movement");
+    }
+    private static String motionState(Store<EntityStore> store,Ref<EntityStore> ref){
+        if(!ref.isValid())return "removed";
+        var transform=store.getComponent(ref,TransformComponent.getComponentType());
+        if(transform==null)return "no transform";
+        var position=transform.getPosition();var velocity=store.getComponent(ref,Velocity.getComponentType());
+        var below=store.getExternalData().getWorld().getBlockType((int)Math.floor(position.x),(int)Math.floor(position.y)-1,(int)Math.floor(position.z));
+        var npc=store.getComponent(ref,NPCEntity.getComponentType());
+        return "position="+position+", velocity="+(velocity==null?"none":velocity.getVelocity())+", below="+(below==null?"unloaded":below.getId())
+                +(npc==null||npc.getRole()==null?"":", external="+npc.getRole().getActiveMotionController().getExternalVelocity());
     }
     private static double y(Store<EntityStore> store,Ref<EntityStore> ref){return store.getComponent(ref,TransformComponent.getComponentType()).getPosition().y;}
     private static void require(boolean value,String message){if(!value)throw new AssertionError(message);}

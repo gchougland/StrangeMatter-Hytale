@@ -17,6 +17,7 @@
     ]
   },
   "BlockType": {
+    "InteractionHint": "",
     "Material": "Solid",
     "DrawType": "Model",
     "Opacity": "Transparent",
@@ -38,18 +39,6 @@
     "ParticleColor": "#243950",
     "BlockSoundSetId": "Stone",
     "PhysicalMaterialId": "Stone",
-    "Interactions": {
-      "Use": {
-        "Interactions": [
-          {
-            "Type": "SM_Use",
-            "Action": "machine"
-          }
-        ],
-        "RequireNewClick": true
-      }
-    },
-    "InteractionHint": "server.interactionHints.SM_Resonant_Conduit",
     "InteractionHitboxType": "SM_Resonant_Conduit_Connection00",
     "State": {
       "Definitions": {
@@ -378,16 +367,7 @@
   },
   "Interactions": {
     "Primary": "Block_Primary",
-    "Secondary": "Block_Secondary",
-    "Use": {
-      "Interactions": [
-        {
-          "Type": "SM_Use",
-          "Action": "machine"
-        }
-      ],
-      "RequireNewClick": true
-    }
+    "Secondary": "Block_Secondary"
   },
   "Recipe": {
     "Input": [

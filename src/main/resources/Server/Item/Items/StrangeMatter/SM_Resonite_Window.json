@@ -1,0 +1,87 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Resonite_Window.name",
+    "Description": "server.items.SM_Resonite_Window.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Resonite_Window.png",
+  "MaxStack": 25,
+  "Categories": [
+    "Furniture.Doors",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Blocks_Stone",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "Furniture",
+      "StrangeMatter"
+    ],
+    "Family": [
+      "Resonite"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/StrangeMatter/Furniture/window.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/Furniture/resonite_furniture.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Resonite_Window",
+    "VariantRotation": "Wall",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Benches"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#263a54",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "Supporting": {
+      "Up": [
+        {
+          "FaceType": "Window"
+        }
+      ],
+      "Down": [
+        {
+          "FaceType": "Window"
+        }
+      ]
+    }
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "SM_Resonite_Ingot",
+        "Quantity": 2
+      },
+      {
+        "ItemId": "Ingredient_Crystal_Cyan",
+        "Quantity": 2
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 3,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_Furniture"
+        ]
+      }
+    ],
+    "KnowledgeRequired": true
+  }
+}

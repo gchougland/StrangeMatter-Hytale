@@ -63,6 +63,8 @@ public final class ResearchTeaching {
             case "chrono_blister" -> "Hytale controls: fire at a surface to place the temporary time-dilation volume. The instrument HUD displays charge and impact feedback.";
             case "echoform_imprinter" -> "Hytale controls: hold primary on a living target for one second to imprint its appearance. Secondary or Use restores your original form.";
             case "hoverboard" -> "Hytale controls: deploy the board to enter the native mount controls. Normal movement steers it; dismount folds it away.";
+            case "stasis_projector" -> "Use the stasis projector to turn its beam on or off.";
+            case "rift_stabilizer" -> "This research also unlocks the Anomaly Nullifier. Use it to turn suppression on or off within 12 blocks. It needs no fuel or resonant power.";
             case "graviton_hammer" -> "Hytale controls: normal swings damage a 3 x 3 face using native mining rules. Charge for greater depth; crouch for a precise single-block strike.";
             default -> "Hytale recipes below use the current laboratory ingredients. Machine controls are available through the block's Use interaction. Research unlocks persist per player.";
         };

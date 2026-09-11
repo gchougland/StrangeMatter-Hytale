@@ -13,9 +13,11 @@ public final class AnomalyRecord {
     public AnomalyType type;
     public String world;
     public double x, y, z;
+    /** One-time placement lift. Grounded terrain/crop searches retain their previous anchor. */
+    public double placementLift;
     public boolean natural, released, contained, enabled = true;
     public UUID pairedGate, capsuleNonce;
-    /** Zero is a natural gate; player gun endpoints persist their cyan/violet identity. */
+    /** Zero is an ordinary anomaly gate; player gun endpoints persist their cyan/violet identity. */
     public int portalChannel;
     public Set<UUID> shadowMobs = new HashSet<>();
     public Map<UUID,double[]> shadowMobPositions = new HashMap<>();
@@ -28,6 +30,7 @@ public final class AnomalyRecord {
     }
     public void move(Vector3d position) { x=position.x; y=position.y; z=position.z; }
     public Vector3d position() { return new Vector3d(x,y,z); }
+    public double terrainReferenceY() { return y-placementLift; }
     public UUID id() { return id; }
     public AnomalyType type() { return type; }
     public boolean scannable() { return natural && !released && !contained; }

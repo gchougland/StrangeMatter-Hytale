@@ -1,0 +1,36 @@
+{
+  "sourceId": "reality_forge",
+  "id": "SM_Reality_Forge",
+  "block": true,
+  "model": "Blocks/StrangeMatter/reality_forge.blockymodel",
+  "texture": "Blocks/StrangeMatter/reality_forge.png",
+  "icon": "Icons/ItemsGenerated/SM_Reality_Forge.png",
+  "nodes": 99,
+  "boundsModelUnits": {
+    "min": [
+      -15.5,
+      0.0,
+      -14.5
+    ],
+    "max": [
+      15.5,
+      43.5,
+      15.45
+    ]
+  },
+  "atlas": [
+    256,
+    256
+  ],
+  "workingTexture": "Blocks/StrangeMatter/reality_forge_working.png",
+  "front": "+Z",
+  "animatedNodes": [
+    "hammer_ram",
+    "hammer_head",
+    "hammer_die",
+    "molten_reality",
+    "ember_bed"
+  ],
+  "nativeReference": "Blocks/Benches/Furnace.blockymodel and Furnace2.blockymodel: open lined hearth, extraction hood and chimney silhouette",
+  "footprintPreserved": true
+}

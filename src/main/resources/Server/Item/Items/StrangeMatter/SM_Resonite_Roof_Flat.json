@@ -1,0 +1,90 @@
+{
+  "Parent": "Metal_Iron_Roof_Flat",
+  "TranslationProperties": {
+    "Name": "server.items.SM_Resonite_Roof_Flat.name",
+    "Description": "server.items.SM_Resonite_Roof_Flat.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Resonite_Roof_Flat.png",
+  "IconProperties": {
+    "Scale": 0.58823,
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Translation": [
+      -1.1,
+      -4.1
+    ]
+  },
+  "MaxStack": 100,
+  "Quality": "Uncommon",
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Items_Metal",
+  "Set": "SM_Resonite",
+  "Categories": [
+    "Blocks.Metal",
+    "SM_StrangeMatter.All"
+  ],
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ],
+    "SubType": [
+      "Roof"
+    ],
+    "Family": [
+      "Resonite"
+    ]
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "SM_Resonite_Ingot",
+        "Quantity": 2
+      }
+    ],
+    "OutputQuantity": 4,
+    "TimeSeconds": 2,
+    "KnowledgeRequired": true,
+    "BenchRequirement": [
+      {
+        "Id": "SM_Laboratory",
+        "Type": "Crafting",
+        "Categories": [
+          "SM_Laboratory_Building"
+        ]
+      }
+    ]
+  },
+  "ResourceTypes": [],
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "BlockType": {
+    "CustomModel": "Blocks/StrangeMatter/Roofs/Resonite_Roof_Flat.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/Roofs/Resonite_Roof.png",
+        "Weight": 1
+      }
+    ],
+    "VariantRotation": "UpDownNESW",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks",
+        "ItemId": "SM_Resonite_Roof_Flat"
+      }
+    },
+    "BlockParticleSetId": "Metal",
+    "BlockSoundSetId": "Metal",
+    "PhysicalMaterialId": "Metal",
+    "ParticleColor": "#263c58",
+    "TextureComputedColor": "#263c58",
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "Group": "Roof"
+  }
+}

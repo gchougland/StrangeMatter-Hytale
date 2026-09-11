@@ -1,0 +1,106 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Resonite_Cabinet.name",
+    "Description": "server.items.SM_Resonite_Cabinet.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Resonite_Cabinet.png",
+  "MaxStack": 25,
+  "Categories": [
+    "Furniture.Containers",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Blocks_Stone",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "Furniture",
+      "StrangeMatter"
+    ],
+    "Family": [
+      "Resonite"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/StrangeMatter/Furniture/cabinet.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/Furniture/resonite_furniture.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Resonite_Cabinet",
+    "VariantRotation": "NESW",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Benches"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#263a54",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "Support": {
+      "Down": [
+        {
+          "FaceType": "Full"
+        }
+      ]
+    },
+    "BlockEntity": {
+      "Components": {
+        "ItemContainerBlock": {
+          "Capacity": 18
+        }
+      }
+    },
+    "Interactions": {
+      "Use": "Open_Container"
+    },
+    "InteractionHint": "server.interactionHints.SM_Resonite_Cabinet",
+    "State": {
+      "Definitions": {
+        "OpenWindow": {
+          "CustomModelAnimation": "Blocks/StrangeMatter/Furniture/Animations/cabinet_open.blockyanim",
+          "InteractionSoundEventId": "SFX_Chest_Wooden_Open"
+        },
+        "CloseWindow": {
+          "CustomModelAnimation": "Blocks/StrangeMatter/Furniture/Animations/cabinet_close.blockyanim",
+          "InteractionSoundEventId": "SFX_Chest_Wooden_Close"
+        }
+      }
+    },
+    "CustomModelAnimation": "Blocks/StrangeMatter/Furniture/Animations/cabinet_closed.blockyanim"
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "SM_Resonite_Ingot",
+        "Quantity": 4
+      },
+      {
+        "ResourceTypeId": "Wood_Planks",
+        "Quantity": 2
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 3,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_Furniture"
+        ]
+      }
+    ],
+    "KnowledgeRequired": true
+  }
+}

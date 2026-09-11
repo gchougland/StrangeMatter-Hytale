@@ -41,11 +41,12 @@ public final class EquipmentService {
     private final Map<String,Long> cooldowns=new ConcurrentHashMap<>();
     private final LaboratoryFields fields;
     private final LaboratoryProjectiles projectiles;
+    private final WarpProjectiles warpProjectiles;
     private final MobilityTools mobility;
     private final Map<String,Double> hudTime=new ConcurrentHashMap<>();
     private record Acquisition(String world,String item,String subject,UUID anomaly,ResearchType discipline,int amount,long began){}
     private record Aim(Vector3d eye,Vector3d direction,Vector3i block,Vector3i air,double distance){}
-    public EquipmentService(ResearchService research,AnomalyService anomalies,MachineService machines){this.research=research;this.anomalies=anomalies;this.machines=machines;fields=new LaboratoryFields(machines);projectiles=new LaboratoryProjectiles(anomalies,fields,machines.dataDirectory());mobility=new MobilityTools(research.hud(),machines.dataDirectory());}
+    public EquipmentService(ResearchService research,AnomalyService anomalies,MachineService machines){this.research=research;this.anomalies=anomalies;this.machines=machines;fields=new LaboratoryFields(machines);projectiles=new LaboratoryProjectiles(anomalies,fields,machines.dataDirectory());warpProjectiles=new WarpProjectiles(anomalies);mobility=new MobilityTools(research.hud(),machines.dataDirectory());}
     public boolean capsuleInFlight(String token){return projectiles.inFlight(token);}
     public void interact(InteractionContext context,String action){
         var ref=context.getEntity();if(ref==null||!ref.isValid())return;var store=ref.getStore();var world=store.getExternalData().getWorld();
@@ -180,22 +181,18 @@ public final class EquipmentService {
         say(p,v.type.displayName+" | "+Math.round(delta.length())+" blocks "+dir+" | elevation "+Math.round(v.y),ResearchType.fromName(v.type.researchType));
     }
     private void portal(PlayerRef p,Store<EntityStore> store,Aim aim,ItemContainer inv,short slot,ItemStack gun,String action){
-        String a=gun.getFromMetadataOrNull("SMPortalA",Codec.STRING),b=gun.getFromMetadataOrNull("SMPortalB",Codec.STRING);
-        if(action.equals("use")){if(!inv.setItemStackForSlot(slot,gun.withMetadata("SMPortalA",Codec.STRING,null).withMetadata("SMPortalB",Codec.STRING,null),false).succeeded())return;removePortal(a);removePortal(b);GadgetEffects.use(store.getExternalData().getWorld(),"SM_Warp_Impact_Purple",EquipmentQueries.handheldOrigin(aim.eye,aim.direction));say(p,"Personal warp pair cleared.");return;}
-        if(aim.block==null||aim.air==null){say(p,"Aim at a surface within 48 blocks.");return;}
+        if(action.equals("use")){
+            if(warpProjectiles.clear(store.getExternalData().getWorld(),inv,slot,gun)){
+                GadgetEffects.use(store.getExternalData().getWorld(),"SM_Warp_Impact_Purple",EquipmentQueries.handheldOrigin(aim.eye,aim.direction));
+                say(p,"Personal warp pair cleared.");
+            }
+            return;
+        }
+        if(!action.equals("primary")&&!action.equals("secondary"))return;
         boolean purple=action.equals("secondary");
-        var record=anomalies.spawn(AnomalyType.WARP_GATE,store.getExternalData().getWorld(),new Vector3d(aim.air).add(.5,.5,.5),false);
-        anomalies.setPortalChannel(record.id,purple?2:1);
-        var updated=gun.withMetadata(purple?"SMPortalB":"SMPortalA",Codec.STRING,record.id.toString());
-        var player=store.getComponent(p.getReference(),Player.getComponentType());if(player==null||player.getGameMode()!=GameMode.Creative)updated=updated.withDurability(Math.max(0,updated.getDurability()-1));
-        if(!inv.setItemStackForSlot(slot,updated,false).succeeded()){anomalies.remove(record.id);return;}
-        removePortal(purple?b:a);String other=purple?a:b;if(other!=null)try{anomalies.pair(record.id,UUID.fromString(other));}catch(IllegalArgumentException ignored){}
-        anomalies.save();
-        GadgetEffects.use(store.getExternalData().getWorld(),purple?"SM_Warp_Muzzle_Purple":"SM_Warp_Muzzle_Cyan",EquipmentQueries.handheldOrigin(aim.eye,aim.direction));
-        GadgetEffects.use(store.getExternalData().getWorld(),purple?"SM_Warp_Impact_Purple":"SM_Warp_Impact_Cyan",record.position());
-        say(p,(purple?"Purple":"Cyan")+" warp aperture projected.");
+        if(warpProjectiles.launch(p,store,aim.eye,aim.direction,inv,slot,gun,purple))say(p,(purple?"Purple":"Cyan")+" warp bolt launched.");
+        else say(p,"The warp bolt could not launch. Try firing again.");
     }
-    private void removePortal(String id){if(id!=null)try{anomalies.remove(UUID.fromString(id));}catch(IllegalArgumentException ignored){}}
     /** A complete orthogonal mining plane, including when looking straight up or down. */
     static float hammerDamageScale(String action) { return switch(action) { case "hammer1" -> 2f; case "hammer2" -> 3f; case "hammer3" -> 4f; default -> 1f; }; }
     static List<Vector3i> hammerCells(Vector3i origin,int axis,int sign,int radius,int depth){
@@ -289,7 +286,7 @@ public final class EquipmentService {
                 if(nearest.isPresent()){var field=nearest.get();var delta=field.position().sub(aim.eye);String compass=Math.abs(delta.x)>Math.abs(delta.z)?delta.x>0?"east":"west":delta.z>0?"south":"north";detail=field.type.displayName+" / "+Math.round(delta.length())+" blocks "+compass+" / elevation "+Math.round(field.y)+". Secondary changes frequency.";}
                 else detail="No surveyed field on this frequency. Secondary changes frequency.";
             }
-            case "SM_Warp_Gun"->{status="Cyan: "+portalStatus(held,"SMPortalA")+" / Purple: "+portalStatus(held,"SMPortalB");detail="Primary: cyan aperture. Secondary: purple aperture. Use: clear the linked pair.";}
+            case "SM_Warp_Gun"->{status="Cyan: "+portalStatus(held,"SMPortalA")+" / Purple: "+portalStatus(held,"SMPortalB");detail="Primary fires cyan. Secondary fires purple. Hit a surface within 48 blocks to open a portal. Use clears the pair.";}
             case "SM_Chrono_Blister"->{status="Temporal projector ready";detail="Hold primary to charge, then release a temporal blister. Nearby matter slows inside its impact field.";}
             case "SM_Graviton_Hammer"->{status="Thorium mining strength / 3 x 3 face";detail="Primary: area swing. Crouch-primary: one block. Hold secondary 1 / 2 / 3s: depth 3 / 6 / 9, mining power 2 / 3 / 4x and a stronger forward slam.";}
             case "SM_Hoverboard","SM_Echoform_Imprinter"->{mobility.present(p,store,id);return;}
@@ -299,6 +296,7 @@ public final class EquipmentService {
         research.hud().update(p,store,title,status,detail,progress,discipline);
     }
     private String portalStatus(ItemStack gun,String key){
+        if(warpProjectiles.inFlight(gun.getFromMetadataOrNull(WarpProjectiles.flightKey("SMPortalB".equals(key)),Codec.STRING)))return "in flight";
         String id=gun.getFromMetadataOrNull(key,Codec.STRING);if(id==null)return "unset";
         try{return anomalies.get(UUID.fromString(id)).filter(a->!a.contained).isPresent()?"projected":"expired";}catch(IllegalArgumentException ignored){return "unset";}
     }
@@ -310,6 +308,7 @@ public final class EquipmentService {
     public void tick(World world,double dt){
         // A bad field or disconnected HUD must not starve durable flight acknowledgements.
         tickPart(world,"projectiles",()->projectiles.tick(world,dt));
+        tickPart(world,"warp bolts",()->warpProjectiles.tick(world,dt));
         tickPart(world,"fields",()->fields.tick(world,dt));
         tickPart(world,"mobility",()->mobility.tick(world,dt));
         var store=world.getEntityStore().getStore();double old=hudTime.getOrDefault(world.getName(),0d),now=old+dt;hudTime.put(world.getName(),now);boolean present=(int)(old*5)!=(int)(now*5);
@@ -324,5 +323,5 @@ public final class EquipmentService {
         });
         tickPart(world,"gadget HUD",()->research.hud().tick(world,dt));
     }
-    public void cleanup(World world){projectiles.cleanup(world);fields.cleanup(world);mobility.cleanup(world);research.hud().cleanup(world);hudTime.remove(world.getName());acquisitions.entrySet().removeIf(e->e.getValue().world.equals(world.getName()));}
+    public void cleanup(World world){projectiles.cleanup(world);warpProjectiles.cleanup(world);fields.cleanup(world);mobility.cleanup(world);research.hud().cleanup(world);hudTime.remove(world.getName());acquisitions.entrySet().removeIf(e->e.getValue().world.equals(world.getName()));}
 }

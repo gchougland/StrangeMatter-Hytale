@@ -8,6 +8,8 @@ import argparse, collections, json, pathlib, re, sys
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'tools/assets'))
 from content_policy import descriptions as item_descriptions, family_light, model_reference
+from nullifier_content import apply as apply_nullifier_content, add_recipe as add_nullifier_recipe
+from block_support import apply as apply_block_support
 RES = ROOT / 'src/main/resources'
 DEFAULT_MC = pathlib.Path('C:/Users/gchou/Documents/Projects/StrangeMatter-1.20.1/strange-matter')
 DEFAULT_ASSETS = ROOT.parent / 'HytaleSourceCode/hytale-shared-source/HytaleAssets'
@@ -28,9 +30,8 @@ INTERACTION_PROMPTS = {
     'SM_Resonance_Condenser':'open the resonance condenser',
     'SM_Reality_Forge':'open the Reality Forge',
     'SM_Paradoxical_Energy_Cell':'inspect the paradoxical energy cell',
-    'SM_Resonant_Conduit':'inspect the resonant conduit',
     'SM_Rift_Stabilizer':'inspect the rift stabilizer',
-    'SM_Stasis_Projector':'configure the stasis projector',
+    'SM_Stasis_Projector':'turn the stasis projector on or off',
     'SM_Levitation_Pad':'configure the levitation pad',
     'SM_Laboratory_Bench':'open the laboratory bench',
     'SM_Resonite_Door_Open':'open the resonite door',
@@ -90,18 +91,21 @@ def main():
             b={'Material':'Solid','DrawType':'Model','Opacity':'Transparent','CustomModel':f'Blocks/StrangeMatter/{name}.blockymodel','CustomModelTexture':[{'Texture':f'Blocks/StrangeMatter/{name}.png','Weight':1}],'HitboxType':i,'VariantRotation':'NESW','Gathering':{'Breaking':{'GatherType':'Rocks'}},'BlockParticleSetId':'Stone','ParticleColor':'#243950','BlockSoundSetId':'Stone','PhysicalMaterialId':'Stone'}
             if name.endswith('_ore'):
                 drop=hid('raw_resonite' if name=='resonite_ore' else name[:-4]); b['Gathering']['Breaking']['DropList']={'Container':{'Type':'Single','Item':{'ItemId':drop}}}
-            if name in MACHINES or name in ('resonite_door','resonite_trapdoor'):
+            if (name in MACHINES and name!='resonant_conduit') or name in ('resonite_door','resonite_trapdoor'):
                 b['Interactions']={'Use':{'Interactions':[{'Type':'SM_Use','Action':'machine'}]}}
             if i in INTERACTION_PROMPTS:b['InteractionHint']='server.interactionHints.'+i
+            if name=='resonant_conduit':b['InteractionHint']=''
             if name.endswith(('_lamp','_lantern','_crystal')):
                 fixture=name.endswith(('_lamp','_lantern'))
                 b['Light']={'Color':family_light(name.split('_')[0],fixture),'Radius':0 if fixture else 5}
             if name=='time_dilation_block':
                 b['Material']='Empty'
+                b['ParticleColor']='#ffda68'
                 b.pop('Gathering',None)
                 b.pop('Interactions',None)
                 b.pop('InteractionHint',None)
             b['CustomModel']=model_reference(b['CustomModel'])
+            apply_block_support(name,b)
             d['BlockType']=b
             if name=='laboratory_bench':
                 b['Bench']={'Type':'Crafting','Id':'SM_Laboratory','Categories':[{
@@ -113,7 +117,7 @@ def main():
                 b['State']={'Definitions':{'CraftCompleted':{},'CraftCompletedInstant':{}}}
                 d['MaxStack']=1
             d['Interactions']={'Primary':'Block_Primary','Secondary':'Block_Secondary'}
-            if name in MACHINES and name!='time_dilation_block': d['Interactions']['Use']={'Interactions':[{'Type':'SM_Use','Action':'machine'}]}
+            if name in MACHINES and name not in ('time_dilation_block','resonant_conduit'): d['Interactions']['Use']={'Interactions':[{'Type':'SM_Use','Action':'machine'}]}
             height=2 if name=='resonite_door' else .5 if name.endswith('_slab') else .22 if name in ('levitation_pad','stasis_projector','resonite_trapdoor') else 1
             write(RES/f'Server/Item/Block/Hitboxes/StrangeMatter/{i}.json', {'Boxes':[{'Min':{'X':0,'Y':0,'Z':0},'Max':{'X':1,'Y':height,'Z':1}}]})
         else:
@@ -158,10 +162,12 @@ def main():
     lang.extend(['benchCategories.sm.laboratory=Strange Matter','ui.itemcategory.SM_StrangeMatter=Strange Matter'])
     p=RES/'Server/Languages/en-US/server.lang';p.parent.mkdir(parents=True,exist_ok=True)
     generated={line.split('=',1)[0] for line in lang}
-    if p.exists(): lang.extend(line for line in p.read_text(encoding='utf8').splitlines() if '=' in line and line.split('=',1)[0] not in generated and not line.startswith(('interactionHints.SM_Till_Grass=','sm.interact=')))
+    if p.exists(): lang.extend(line for line in p.read_text(encoding='utf8').splitlines() if '=' in line and line.split('=',1)[0] not in generated and not line.startswith(('interactionHints.SM_Till_Grass=','interactionHints.SM_Resonant_Conduit=','sm.interact=')))
     p.write_text('\n'.join(lang)+'\n',encoding='utf8')
     write(RES/'Server/StrangeMatter/recipes.json',recipes)
-    write(ROOT/'docs/content-mapping.json',{'sourceItems':len(items),'sourceBlocks':len(blocks),'recipes':len(recipes),'portAddedItems':['SM_Laboratory_Bench'],'nativeCraftingBench':'SM_Laboratory','vanillaIngredientMapping':MAP,'ingredientTagResources':RESOURCE_TAGS,'items':{n:hid(n) for n in items}})
+    apply_nullifier_content(RES)
+    add_nullifier_recipe(recipes)
+    write(ROOT/'docs/content-mapping.json',{'sourceItems':len(items),'sourceBlocks':len(blocks),'recipes':len(recipes),'portAddedItems':['SM_Laboratory_Bench','SM_Anomaly_Nullifier'],'nativeCraftingBench':'SM_Laboratory','vanillaIngredientMapping':MAP,'ingredientTagResources':RESOURCE_TAGS,'items':{n:hid(n) for n in items}})
     print(f'Generated {len(items)} items, {len(blocks)-1} placeable block types and {len(recipes)} audited recipes.')
 
 if __name__=='__main__':main()

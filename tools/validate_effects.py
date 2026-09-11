@@ -33,5 +33,7 @@ def main():
     assert clips>=6 and particles>=35, 'Effect resources were not generated.'
     if errors:raise SystemExit('\n'.join(errors))
     print(f'Effect graphs PASS: {particles} finite particle systems, {clips} mono clips, fully spatial sound events.')
+    from validate_temporal_expiry import main as validate_temporal_expiry
+    validate_temporal_expiry()
 
 if __name__=='__main__':main()

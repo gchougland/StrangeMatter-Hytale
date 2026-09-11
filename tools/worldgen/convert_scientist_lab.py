@@ -67,17 +67,13 @@ prefab={'version':8,'blockIdVersion':11,'anchorX':0,'anchorY':0,'anchorZ':0,'blo
 dest=ROOT/'src/main/resources/Server/Prefabs/StrangeMatter/Anomaly_Scientist_Lab.prefab.json';dest.parent.mkdir(parents=True,exist_ok=True)
 dest.write_text(json.dumps(prefab,indent=2)+'\n',encoding='utf8')
 
-assets=Path(r'C:/Users/gchou/Documents/HytaleModding/HytaleSourceCode/hytale-shared-source/HytaleAssets')
-role=json.loads((assets/'Server/NPC/Roles/Intelligent/Passive/Klops_Merchant.json').read_text())
-role['DisplayNames']=['Anomaly Scientist'];role['NameTranslationKey']='server.npcRoles.SM_Anomaly_Scientist.name'
-role['MaxHealth']=100 # Source villager20 health on source player20 scale; native player100 scale.
-role.pop('DropList',None) # The source villager has no special loot.
-role.pop('BusyStates',None)
-role['Instructions'][0]['Instructions']=[instruction for instruction in role['Instructions'][0]['Instructions'] if instruction.get('Sensor',{}).get('State')!='$Interaction']
-role['InteractionInstruction']['Instructions']=role['InteractionInstruction']['Instructions'][:2]
-role['$Comment']='ScientistService consumes native StateSupport interactions and opens tiered trade UI.'
-dest=ROOT/'src/main/resources/Server/NPC/Roles/StrangeMatter/SM_Anomaly_Scientist.json';dest.parent.mkdir(parents=True,exist_ok=True)
-dest.write_text(json.dumps(role,indent=2)+'\n',encoding='utf8')
+# The canonical role is maintained with ScientistService: its native wandering,
+# home return, trading state and appearance must survive laboratory regeneration.
+# Never replace it with the stock stationary Klops_Merchant template.
+role_path=ROOT/'src/main/resources/Server/NPC/Roles/StrangeMatter/SM_Anomaly_Scientist.json'
+if not role_path.is_file():
+    raise FileNotFoundError('Restore the canonical scientist role before converting the laboratory: '+str(role_path))
+json.loads(role_path.read_text(encoding='utf-8-sig'))
 
 for ident,path,hitbox,description in [
     ('SM_Lab_Cyan_Glass','lab_cyan_glass','SM_Lab_Cyan_Glass','Cyan glazing from an anomaly scientist laboratory.'),
@@ -99,7 +95,7 @@ labels={'npcRoles.SM_Anomaly_Scientist.name':'Anomaly Scientist','items.SM_Lab_C
 lines=language.read_text(encoding='utf8').splitlines() if language.exists() else []
 lines=[line for line in lines if line.split('=',1)[0].strip() not in labels]
 language.write_text('\n'.join(lines)+'\n'+'\n'.join(f'{key} = {value}' for key,value in labels.items())+'\n',encoding='utf8')
-print(f'Converted native prefab: {len(converted)} cells, source layout {data["size"]}; role and laboratory fixtures exported.')
+print(f'Converted native prefab: {len(converted)} cells, source layout {data["size"]}; canonical role preserved, laboratory fixtures exported.')
 
 # The native editor paste path uses NO_SET_FILLER; export the same checked native collision cells as runtime generation.
 import validate_scientist_lab

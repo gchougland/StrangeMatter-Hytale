@@ -29,52 +29,69 @@ try {
     $manifest.Main = 'com.hexvane.strangematter.equipment.NativeWorldVerification'
     $manifest.Dependencies = @{ 'Hytale:Universe' = '*' }
     $manifest | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath (Join-Path $manifestPath 'manifest.json') -Encoding utf8
-    & $jarCommand --update --file $testJar -C $testClasses $testClass -C $manifestPath manifest.json
-    if ($LASTEXITCODE -ne 0) { throw "Could not package the native world test jar: exit $LASTEXITCODE" }
-    & $jarCommand --update --file $testJar -C $testClasses 'com/hexvane/strangematter/research/ResearchNoteVerification.class'
-    if ($LASTEXITCODE -ne 0) { throw 'Could not package the native research note fixture' }
+    # Select exactly the same fixtures before updating the archive once. Keep the
+    # wildcard scope local to each package, including matching inner classes.
+    $fixtureClasses = [System.Collections.Generic.List[string]]::new()
+    $fixtureClasses.Add($testClass)
+    $fixtureClasses.Add('com/hexvane/strangematter/research/ResearchNoteVerification.class')
     $researchFixturePath = Join-Path $testClasses 'com/hexvane/strangematter/research'
     foreach ($fixture in Get-ChildItem -LiteralPath $researchFixturePath -Filter 'ResearchUnlockVerification*.class') {
-        & $jarCommand --update --file $testJar -C $testClasses "com/hexvane/strangematter/research/$($fixture.Name)"
-        if ($LASTEXITCODE -ne 0) { throw "Could not package native research fixture $($fixture.Name)" }
+        $fixtureClasses.Add("com/hexvane/strangematter/research/$($fixture.Name)")
     }
-    & $jarCommand --update --file $testJar -C $testClasses 'com/hexvane/strangematter/machine/NativeMachineVerification.class'
-    if ($LASTEXITCODE -ne 0) { throw 'Could not package the native machine fixture' }
-    & $jarCommand --update --file $testJar -C $testClasses 'com/hexvane/strangematter/machine/NativeMachineWorkVerification.class'
-    if ($LASTEXITCODE -ne 0) { throw 'Could not package the native machine working-state fixture' }
-    & $jarCommand --update --file $testJar -C $testClasses 'com/hexvane/strangematter/machine/MachineControlsVerification.class'
-    if ($LASTEXITCODE -ne 0) { throw 'Could not package the machine controls fixture' }
+    $fixtureClasses.Add('com/hexvane/strangematter/machine/NativeMachineVerification.class')
+    $fixtureClasses.Add('com/hexvane/strangematter/machine/NativeMachineWorkVerification.class')
+    $machineFixturePath = Join-Path $testClasses 'com/hexvane/strangematter/machine'
+    foreach ($fixture in Get-ChildItem -LiteralPath $machineFixturePath -Filter 'NativeNullifierContentVerification*.class') {
+        $fixtureClasses.Add("com/hexvane/strangematter/machine/$($fixture.Name)")
+    }
+    $fixtureClasses.Add('com/hexvane/strangematter/machine/MachineControlsVerification.class')
     $anomalyFixturePath = Join-Path $testClasses 'com/hexvane/strangematter/anomaly'
     foreach ($fixture in Get-ChildItem -LiteralPath $anomalyFixturePath -Filter 'Native*.class') {
-        & $jarCommand --update --file $testJar -C $testClasses "com/hexvane/strangematter/anomaly/$($fixture.Name)"
-        if ($LASTEXITCODE -ne 0) { throw "Could not package native anomaly fixture $($fixture.Name)" }
+        $fixtureClasses.Add("com/hexvane/strangematter/anomaly/$($fixture.Name)")
     }
     $equipmentFixturePath = Join-Path $testClasses 'com/hexvane/strangematter/equipment'
     $uiFixturePath = Join-Path $testClasses 'com/hexvane/strangematter/ui'
     foreach ($fixture in Get-ChildItem -LiteralPath $uiFixturePath -Filter 'Native*.class') {
-        & $jarCommand --update --file $testJar -C $testClasses "com/hexvane/strangematter/ui/$($fixture.Name)"
-        if ($LASTEXITCODE -ne 0) { throw "Could not package native UI fixture $($fixture.Name)" }
+        $fixtureClasses.Add("com/hexvane/strangematter/ui/$($fixture.Name)")
     }
     $effectsFixturePath = Join-Path $testClasses 'com/hexvane/strangematter/effects'
     foreach ($fixture in Get-ChildItem -LiteralPath $effectsFixturePath -Filter 'Native*.class') {
-        & $jarCommand --update --file $testJar -C $testClasses "com/hexvane/strangematter/effects/$($fixture.Name)"
-        if ($LASTEXITCODE -ne 0) { throw "Could not package native effects fixture $($fixture.Name)" }
+        $fixtureClasses.Add("com/hexvane/strangematter/effects/$($fixture.Name)")
     }
     $blockFixturePath = Join-Path $testClasses 'com/hexvane/strangematter/block'
     foreach ($fixture in Get-ChildItem -LiteralPath $blockFixturePath -Filter 'Native*.class') {
-        & $jarCommand --update --file $testJar -C $testClasses "com/hexvane/strangematter/block/$($fixture.Name)"
-        if ($LASTEXITCODE -ne 0) { throw "Could not package native block fixture $($fixture.Name)" }
+        $fixtureClasses.Add("com/hexvane/strangematter/block/$($fixture.Name)")
     }
     foreach ($fixture in Get-ChildItem -LiteralPath $equipmentFixturePath -Filter 'Native*.class') {
-        & $jarCommand --update --file $testJar -C $testClasses "com/hexvane/strangematter/equipment/$($fixture.Name)"
-        if ($LASTEXITCODE -ne 0) { throw "Could not package native equipment fixture $($fixture.Name)" }
+        $fixtureClasses.Add("com/hexvane/strangematter/equipment/$($fixture.Name)")
     }
+    $jarArguments = [System.Collections.Generic.List[string]]::new()
+    foreach ($argument in @('--update', '--file', $testJar)) { $jarArguments.Add($argument) }
+    $selectedFixtures = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::Ordinal)
+    foreach ($relativeClass in $fixtureClasses) {
+        # NativeWorldVerification is also matched by equipment/Native*.class.
+        # Repeated old updates replaced the same entry; one update needs it once.
+        if (-not $selectedFixtures.Add($relativeClass)) { continue }
+        if (-not (Test-Path -LiteralPath (Join-Path $testClasses $relativeClass) -PathType Leaf)) {
+            throw "Missing native world fixture: $relativeClass"
+        }
+        foreach ($argument in @('-C', $testClasses, $relativeClass)) { $jarArguments.Add($argument) }
+    }
+    foreach ($argument in @('-C', $manifestPath, 'manifest.json')) { $jarArguments.Add($argument) }
+    # A UTF8 argument file avoids Windows command length limits. Quote every token
+    # using jar's argument file grammar, not shell interpolation. Preserve spaces,
+    # backslashes and the dollar signs in compiled inner class filenames.
+    $jarArgsPath = Join-Path $runPath 'package-native-world.args'
+    $argumentLines = [string[]]@($jarArguments | ForEach-Object { '"' + $_.Replace('\', '\\').Replace('"', '\"') + '"' })
+    [System.IO.File]::WriteAllLines($jarArgsPath, $argumentLines, [System.Text.UTF8Encoding]::new($false))
+    & $jarCommand ("@" + $jarArgsPath)
+    if ($LASTEXITCODE -ne 0) { throw "Could not package the native world test jar: exit $LASTEXITCODE" }
     # This avoids Hytale 0.6.4's bare-mode first-run temporary-writer bug; this isolated file grants no user permissions.
     Set-Content -LiteralPath (Join-Path $runPath 'permissions.json') -Value '{"users":{},"groups":{}}' -Encoding utf8
     Push-Location $runPath
     try {
         # Bare mode skips network-port binding and normal worlds. The test creates one flat world and shuts down after assertions.
-        & $javaCommand -Xmx3G -jar $serverJar --bare --assets $assetsZip --disable-sentry --disable-file-watcher --auth-mode offline --log 'HytaleServer:INFO,PluginManager:INFO,StrangeMatter|P:INFO' *> native-world.log
+        & $javaCommand -Xmx3G -jar $serverJar --bare --assets $assetsZip --disable-sentry --disable-file-watcher --auth-mode offline --log 'HytaleServer:INFO,PluginManager:INFO,Strange Matter|P:INFO' *> native-world.log
         $serverExit = $LASTEXITCODE
         $logPath = Join-Path $runPath 'native-world.log'
         Copy-Item -LiteralPath $logPath -Destination (Join-Path $runRoot 'native-world.log')

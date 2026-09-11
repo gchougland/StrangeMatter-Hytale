@@ -1,0 +1,14 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Nullifier_Collapse"
+    },
+    {
+      "SpawnerId": "SM_Nullifier_Motes"
+    }
+  ],
+  "LifeSpan": 1.25,
+  "CullDistance": 28,
+  "BoundingRadius": 0.8,
+  "IsImportant": false
+}

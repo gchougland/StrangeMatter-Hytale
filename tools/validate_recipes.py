@@ -77,15 +77,22 @@ def validate(mod, native, minecraft):
     membership = collections.defaultdict(set)
     tags = collections.defaultdict(set)
     benches = collections.defaultdict(set)
-    def inspect_benches(block):
+    def inspect_benches(block, location=None):
         if not isinstance(block, dict):
             return  # Native state aliases are strings rather than block overrides.
         bench = block.get('Bench', {})
         if bench.get('Id') and bench.get('Type'):
             categories = {c['Id'] for c in bench.get('Categories', []) if 'Id' in c}
             benches[(bench['Id'], bench['Type'])].update(categories)
+            if location is not None:
+                for category in bench.get('Categories', []):
+                    icon = category.get('Icon')
+                    check(isinstance(icon, str) and icon.startswith('Icons/CraftingCategories/') and '..' not in Path(icon).parts,
+                          location + ': bench category icons must remain under Icons/CraftingCategories/')
+                    check(bool(icon) and (mod.exists('Common/' + str(icon)) or native.exists('Common/' + str(icon))),
+                          location + ': bench category icon is missing or unresolved')
         for state in block.get('State', {}).get('Definitions', {}).values():
-            inspect_benches(state)
+            inspect_benches(state, location)
 
     for key in items:
         item = inherit(key)
@@ -98,7 +105,7 @@ def validate(mod, native, minecraft):
                 tags[group + '=' + value].add(key)
             if values:
                 tags[group].add(key)
-        inspect_benches(item.get('BlockType', {}))
+        inspect_benches(item.get('BlockType', {}), owned_items.get(key))
 
     for key, name in owned_items.items():
         recipe = items[key].get('Recipe')

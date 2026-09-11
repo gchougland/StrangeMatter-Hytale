@@ -12,7 +12,7 @@ public final class ResearchSession {
         public double angle, targetAngle, drift, secondaryDrift, driftTarget, secondaryDriftTarget;
         public int[] pattern = new int[0], input = new int[0];
         public int inputCount, displayIndex, displayTicks, redisplayTicks;
-        public boolean displaying;
+        public boolean displaying, displayGap, cueStarted, cueEnded;
     }
     private final EnumMap<ResearchType, Panel> panels = new EnumMap<>(ResearchType.class);
     private final Random random;
@@ -23,6 +23,9 @@ public final class ResearchSession {
     private long ticks;
     private boolean externalInputClock;
     private long inputClockNanos;
+    private boolean presentationClock;
+    private long cueVisibleSince = Long.MIN_VALUE;
+    private static final int CUE_GAP_TICKS = 6;
     public ResearchSession(ResearchNode node, long seed) {
         this(node, seed, new ResearchSettings());
     }
@@ -34,15 +37,32 @@ public final class ResearchSession {
             var p = new Panel(); panels.put(type, p);
             switch (type) {
                 case COGNITION -> newPattern(p);
-                case ENERGY -> { p.value = .5; p.secondary = 1.5; p.target = .5 + random.nextDouble(); p.targetSecondary = 1 + random.nextDouble() * .25; }
-                case GRAVITY -> p.target = nonzeroGravity();
-                case SHADOW -> { p.target = 120 + random.nextDouble() * 120; p.targetSecondary = 16 + random.nextDouble() * 24; p.value = -60 + random.nextDouble() * 120; p.secondary = 20 + random.nextDouble() * 30; }
-                case SPACE -> p.value = (random.nextBoolean() ? .8 : 0) + random.nextDouble() * .2;
-                case TIME -> { p.value = (random.nextBoolean() ? .3 : 1.3) + random.nextDouble() * .4; p.target = 1; }
+                case ENERGY -> {
+                    p.target = randomGrid(.5, 1.5, settings.energyAmplitudeStep);
+                    p.targetSecondary = randomGrid(1, 1.25, settings.energyPeriodStep);
+                    p.value = apart(p.target, .5, 1.5); p.secondary = apart(p.targetSecondary, 1, 1.25);
+                }
+                case GRAVITY -> { p.target = nonzeroGravity(); p.position = p.target > 0 ? .9 : .1; }
+                case SHADOW -> {
+                    double angle = randomGrid(-60, 60, settings.shadowRotationStep), distance = randomGrid(20, 50, 5);
+                    p.target = angle + 180; p.targetSecondary = (70 - distance) * .8;
+                    p.value = apart(angle, -60, 60); p.secondary = apart(distance, 20, 50);
+                }
+                case SPACE -> p.value = Math.min(1, Math.max(.65, settings.spaceStabilityThreshold + .2) + random.nextDouble() * .2);
+                case TIME -> {
+                    p.target = 1; double offset = Math.ceil(Math.max(.6, settings.timeSpeedThreshold + .2) / settings.timeSpeedAdjustment) * settings.timeSpeedAdjustment;
+                    p.value = clamp(1 + (offset <= 1 && random.nextBoolean() ? offset : -offset), -2, 2);
+                    p.angle = 180; p.targetAngle = 0;
+                }
             }
         }
     }
-    public void begin() { if (state == State.READY) state = settings.enableMinigames ? State.RUNNING : State.SUCCESS; }
+    public void begin() {
+        if (state != State.READY) return;
+        state = settings.enableMinigames ? State.RUNNING : State.SUCCESS;
+        var p = panels.get(ResearchType.COGNITION);
+        if (p != null && state == State.RUNNING) startCue(p);
+    }
     public State state() { return state; }
     public double instability() { return instability; }
     public long ticks() { return ticks; }
@@ -81,6 +101,10 @@ public final class ResearchSession {
         instability = clamp(instability + (allStable ? -settings.instabilityDecreaseRate : settings.instabilityBaseIncreaseRate / panels.size()), 0, 1);
         if (instability <= .05) state = State.SUCCESS;
         else if (instability >= .95) state = State.FAILURE;
+        if (state != State.RUNNING) {
+            var cognition = panels.get(ResearchType.COGNITION);
+            if (cognition != null) { cognition.displaying = false; cognition.displayGap = false; cognition.cueEnded = true; }
+        }
     }
 
     /** Only fixed control names and bounded integer values are accepted. */
@@ -96,13 +120,13 @@ public final class ResearchSession {
                 p.input[p.inputCount++] = direction;
                 if (p.inputCount == p.pattern.length) {
                     p.stable = Arrays.equals(p.pattern, p.input);
-                    if (p.stable) p.driftTicks = 0;
+                    if (p.stable) { p.driftTicks = 0; p.displaying = false; p.displayGap = false; cueVisibleSince = Long.MIN_VALUE; }
                     else p.inputCount = 0;
                 }
             }
             case ENERGY -> {
-                if (control.equals("amplitude")) p.value = clamp(p.value + sign * settings.energyAmplitudeStep, .5, 1.5);
-                else if (control.equals("period")) p.secondary = clamp(p.secondary + sign * settings.energyPeriodStep, 1, 1.25);
+                if (control.equals("amplitude")) p.value = stepGrid(p.value, sign, .5, 1.5, settings.energyAmplitudeStep);
+                else if (control.equals("period")) p.secondary = stepGrid(p.secondary, sign, 1, 1.25, settings.energyPeriodStep);
                 else accepted = false;
             }
             case GRAVITY -> {
@@ -110,8 +134,8 @@ public final class ResearchSession {
                 p.value = direction; p.driftTicks = 0;
             }
             case SHADOW -> {
-                if (control.equals("angle")) p.value = clamp(p.value + sign * settings.shadowRotationStep, -60, 60);
-                else if (control.equals("distance")) p.secondary = clamp(p.secondary + sign * 5, 20, 50);
+                if (control.equals("angle")) p.value = stepGrid(p.value, sign, -60, 60, settings.shadowRotationStep);
+                else if (control.equals("distance")) p.secondary = stepGrid(p.secondary, sign, 20, 50, 5);
                 else accepted = false;
                 p.driftTicks = 0; p.drift = 0;
             }
@@ -122,7 +146,7 @@ public final class ResearchSession {
             case TIME -> {
                 if (!control.equals("speed")) return false;
                 p.value = clamp(p.value + sign * settings.timeSpeedAdjustment, -2, 2);
-                if (Math.abs(p.value - p.target) < settings.timeSnapThreshold) p.value = p.target;
+                if (Math.abs(p.value - p.target) < settings.timeSnapThreshold) { p.value = p.target; p.angle = p.targetAngle; }
             }
         }
         if (accepted) p.cooldown = type == ResearchType.ENERGY || type == ResearchType.GRAVITY ? 1 : 5;
@@ -132,13 +156,46 @@ public final class ResearchSession {
         p.pattern = new int[settings.cognitionDifficulty]; p.input = new int[p.pattern.length];
         List<Integer> available = new ArrayList<>(); for (int i = 0; i < 9; i++) available.add(i);
         for (int i = 0; i < p.pattern.length; i++) p.pattern[i] = available.remove(random.nextInt(available.size()));
-        p.inputCount = 0; p.displayIndex = 0; p.displayTicks = 0; p.redisplayTicks = 0; p.displaying = true; p.stable = false;
+        p.inputCount = 0; p.displayIndex = 0; p.displayTicks = 0; p.redisplayTicks = 0;
+        p.displaying = false; p.displayGap = false; p.cueStarted = false; p.stable = false;
+        cueVisibleSince = Long.MIN_VALUE;
+        if (state == State.RUNNING) startCue(p);
+    }
+    private void startCue(Panel p) {
+        p.displaying = true; p.displayGap = true; p.cueStarted = true;
+        p.displayIndex = 0; p.displayTicks = 0; p.redisplayTicks = 0;
+        cueVisibleSince = Long.MIN_VALUE;
+    }
+    private int cueDuration(Panel p) { return !p.displaying ? 100 : p.displayGap ? CUE_GAP_TICKS : settings.cognitionMatchDuration; }
+    private void nextCuePhase(Panel p) {
+        p.displayTicks = 0; p.redisplayTicks = 0; cueVisibleSince = Long.MIN_VALUE;
+        if (!p.displaying) { startCue(p); return; }
+        if (p.displayGap) { p.displayGap = false; return; }
+        if (++p.displayIndex == p.pattern.length) { p.displaying = false; p.displayIndex = 0; p.displayGap = false; }
+        else p.displayGap = true;
+    }
+    /**
+     * Called only after the page's actual acknowledgement gate opens. The first such
+     * callback confirms the current cue reached the client; its visible hold starts then.
+     * Later callbacks may advance ONE phase, never skip unseen symbols or dark gaps.
+     * Repeated visual packets do not multiply a cue's duration by network round trips.
+     * Instability and instrument physics remain on their separate acknowledged tick clock.
+     */
+    public void advancePresentationClock(long nowNanos) {
+        presentationClock = true;
+        var p = panels.get(ResearchType.COGNITION);
+        if (state != State.RUNNING || p == null || p.stable) return;
+        if (cueVisibleSince == Long.MIN_VALUE) { cueVisibleSince = nowNanos; return; }
+        long elapsed = Math.max(0, nowNanos - cueVisibleSince) / 50_000_000L;
+        if (p.displaying) p.displayTicks = (int) Math.min(elapsed, cueDuration(p));
+        else p.redisplayTicks = (int) Math.min(elapsed, cueDuration(p));
+        if (elapsed >= cueDuration(p)) nextCuePhase(p);
     }
     private void cognitionTick(Panel p) {
-        if (p.displaying) {
-            if (++p.displayTicks >= settings.cognitionMatchDuration) { p.displayTicks = 0; if (++p.displayIndex >= p.pattern.length) { p.displaying = false; p.displayIndex = 0; } }
-        } else if (++p.redisplayTicks >= 100) { p.displaying = true; p.displayIndex = 0; p.displayTicks = 0; p.redisplayTicks = 0; }
-        if (p.stable && ++p.driftTicks >= 600) { newPattern(p); p.driftTicks = 0; }
+        if (p.stable) { if (++p.driftTicks >= 600) { newPattern(p); p.driftTicks = 0; } return; }
+        if (presentationClock) return;
+        int elapsed = p.displaying ? ++p.displayTicks : ++p.redisplayTicks;
+        if (elapsed >= cueDuration(p)) nextCuePhase(p);
     }
     private void energyTick(Panel p) {
         boolean aligned = Math.abs(p.value - p.target) < .1 && Math.abs(p.secondary - p.targetSecondary) < .1;
@@ -157,7 +214,7 @@ public final class ResearchSession {
         p.velocity *= force == 0 ? .9 : .95;
         p.position = clamp(p.position + p.velocity, 0, 1);
         if (p.position <= 0 || p.position >= 1) p.velocity = 0;
-        boolean equilibrium = Math.abs(p.position - .5) < settings.gravityBalanceThreshold;
+        boolean equilibrium = force == 0 && Math.abs(p.position - .5) < settings.gravityBalanceThreshold;
         if (equilibrium) { if (++p.stableTicks >= 100 && ++p.driftTicks >= settings.gravityDriftDelayTicks) { p.target = nonzeroGravity(); p.driftTicks = 0; } }
         else { p.stableTicks = 0; p.driftTicks = 0; }
         p.stable = equilibrium && p.stableTicks >= 100;
@@ -184,6 +241,18 @@ public final class ResearchSession {
         } else p.stableTicks = 0;
     }
     public static double shadowLength(Panel p) { return (70 - p.secondary) * .8; }
+    private static double apart(double target, double min, double max) { return target < (min + max) / 2 ? max : min; }
+    private double randomGrid(double min, double max, double step) {
+        return clamp(min + random.nextInt((int) Math.ceil((max - min) / step) + 1) * step, min, max);
+    }
+    // Drift may leave a dial between stops. The next press selects the next physical stop
+    // in that direction, so every generated target remains exactly reachable after drift.
+    private static double stepGrid(double value, int direction, double min, double max, double step) {
+        if (direction == 0) return value;
+        double index = (value - min) / step;
+        double next = direction > 0 ? Math.floor(index + 1e-8) + 1 : Math.ceil(index - 1e-8) - 1;
+        return clamp(min + next * step, min, max);
+    }
     private int nonzeroGravity() { int v; do { v = random.nextInt(11) - 5; } while (v == 0); return v; }
     private static double clamp(double v, double min, double max) { return Math.max(min, Math.min(max, v)); }
 }

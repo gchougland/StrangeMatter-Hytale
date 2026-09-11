@@ -1,0 +1,207 @@
+{
+  "Parent": "Metal_Iron_Roof_Steep",
+  "TranslationProperties": {
+    "Name": "server.items.SM_Resonite_Roof_Steep.name",
+    "Description": "server.items.SM_Resonite_Roof_Steep.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Resonite_Roof_Steep.png",
+  "IconProperties": {
+    "Scale": 0.35,
+    "Rotation": [
+      22.5,
+      45.0,
+      22.5
+    ],
+    "Translation": [
+      0.0,
+      -34.5
+    ]
+  },
+  "MaxStack": 100,
+  "Quality": "Uncommon",
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Items_Metal",
+  "Set": "SM_Resonite",
+  "Categories": [
+    "Blocks.Metal",
+    "SM_StrangeMatter.All"
+  ],
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ],
+    "SubType": [
+      "Roof"
+    ],
+    "Family": [
+      "Resonite"
+    ]
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "SM_Resonite_Ingot",
+        "Quantity": 2
+      }
+    ],
+    "OutputQuantity": 2,
+    "TimeSeconds": 2,
+    "KnowledgeRequired": true,
+    "BenchRequirement": [
+      {
+        "Id": "SM_Laboratory",
+        "Type": "Crafting",
+        "Categories": [
+          "SM_Laboratory_Building"
+        ]
+      }
+    ]
+  },
+  "ResourceTypes": [],
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "BlockType": {
+    "CustomModel": "Blocks/StrangeMatter/Roofs/Resonite_Roof_Steep.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/Roofs/Resonite_Roof.png",
+        "Weight": 1
+      }
+    ],
+    "VariantRotation": "UpDownNESW",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks",
+        "ItemId": "SM_Resonite_Roof_Steep"
+      }
+    },
+    "BlockParticleSetId": "Metal",
+    "BlockSoundSetId": "Metal",
+    "PhysicalMaterialId": "Metal",
+    "ParticleColor": "#263c58",
+    "State": {
+      "Definitions": {
+        "Corner_Right": {
+          "CustomModel": "Blocks/StrangeMatter/Roofs/Resonite_Roof_Steep_Corner_Right.blockymodel",
+          "HitboxType": "Stairs_Corner_Steep_Right",
+          "FlipType": "Orthogonal",
+          "Supporting": {
+            "Down": [
+              {}
+            ]
+          },
+          "CustomModelTexture": [
+            {
+              "Texture": "Blocks/StrangeMatter/Roofs/Resonite_Roof.png",
+              "Weight": 1
+            }
+          ],
+          "Gathering": {
+            "Breaking": {
+              "GatherType": "Rocks",
+              "ItemId": "SM_Resonite_Roof_Steep",
+              "Quantity": 1
+            }
+          }
+        },
+        "Corner_Left": {
+          "CustomModel": "Blocks/StrangeMatter/Roofs/Resonite_Roof_Steep_Corner_Left.blockymodel",
+          "HitboxType": "Stairs_Corner_Steep_Left",
+          "FlipType": "Orthogonal",
+          "Supporting": {
+            "Down": [
+              {}
+            ]
+          },
+          "CustomModelTexture": [
+            {
+              "Texture": "Blocks/StrangeMatter/Roofs/Resonite_Roof.png",
+              "Weight": 1
+            }
+          ],
+          "Gathering": {
+            "Breaking": {
+              "GatherType": "Rocks",
+              "ItemId": "SM_Resonite_Roof_Steep",
+              "Quantity": 1
+            }
+          }
+        },
+        "Inverted_Corner_Right": {
+          "CustomModel": "Blocks/StrangeMatter/Roofs/Resonite_Roof_Steep_Corner_Inverted_Right.blockymodel",
+          "HitboxType": "Roof_Corner_Steep_Inverted_Right",
+          "FlipType": "Orthogonal",
+          "Supporting": {
+            "Down": [
+              {}
+            ]
+          },
+          "CustomModelTexture": [
+            {
+              "Texture": "Blocks/StrangeMatter/Roofs/Resonite_Roof.png",
+              "Weight": 1
+            }
+          ],
+          "Gathering": {
+            "Breaking": {
+              "GatherType": "Rocks",
+              "ItemId": "SM_Resonite_Roof_Steep",
+              "Quantity": 1
+            }
+          }
+        },
+        "Inverted_Corner_Left": {
+          "CustomModel": "Blocks/StrangeMatter/Roofs/Resonite_Roof_Steep_Corner_Inverted_Left.blockymodel",
+          "HitboxType": "Roof_Corner_Steep_Inverted_Left",
+          "FlipType": "Orthogonal",
+          "Supporting": {
+            "Down": [
+              {}
+            ]
+          },
+          "CustomModelTexture": [
+            {
+              "Texture": "Blocks/StrangeMatter/Roofs/Resonite_Roof.png",
+              "Weight": 1
+            }
+          ],
+          "Gathering": {
+            "Breaking": {
+              "GatherType": "Rocks",
+              "ItemId": "SM_Resonite_Roof_Steep",
+              "Quantity": 1
+            }
+          }
+        }
+      }
+    },
+    "ConnectedBlockRuleSet": {
+      "Type": "Roof",
+      "Regular": {
+        "Straight": {
+          "State": "default"
+        },
+        "Corner_Right": {
+          "State": "Corner_Right"
+        },
+        "Corner_Left": {
+          "State": "Corner_Left"
+        },
+        "Inverted_Corner_Right": {
+          "State": "Inverted_Corner_Right"
+        },
+        "Inverted_Corner_Left": {
+          "State": "Inverted_Corner_Left"
+        }
+      },
+      "MaterialName": "Roof_Steep"
+    },
+    "TextureComputedColor": "#263c58",
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "Group": "Roof"
+  }
+}

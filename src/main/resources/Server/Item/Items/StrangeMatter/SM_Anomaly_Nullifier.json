@@ -1,0 +1,83 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Anomaly_Nullifier.name",
+    "Description": "server.items.SM_Anomaly_Nullifier.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Anomaly_Nullifier.png",
+  "MaxStack": 25,
+  "Categories": [
+    "Furniture.Benches",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/StrangeMatter/anomaly_nullifier.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/anomaly_nullifier.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Anomaly_Nullifier",
+    "VariantRotation": "NESW",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#243950",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "SM_Use",
+            "Action": "machine"
+          }
+        ],
+        "RequireNewClick": true
+      }
+    },
+    "InteractionHint": "server.interactionHints.SM_Anomaly_Nullifier",
+    "State": {
+      "Definitions": {
+        "Working": {
+          "Looping": true,
+          "CustomModelTexture": [
+            {
+              "Texture": "Blocks/StrangeMatter/anomaly_nullifier_working.png",
+              "Weight": 1
+            }
+          ],
+          "CustomModelAnimation": "Blocks/StrangeMatter/anomaly_nullifier_working.blockyanim",
+          "CustomModelAnimationSpeed": 1,
+          "AmbientSoundEventId": "SM_Nullifier_Hum_SFX"
+        }
+      }
+    }
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary",
+    "Use": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "machine"
+        }
+      ],
+      "RequireNewClick": true
+    }
+  }
+}

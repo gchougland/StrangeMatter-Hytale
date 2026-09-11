@@ -32,6 +32,7 @@ public final class ResearchVerification {
         ResearchSession idle = new ResearchSession(ResearchCatalog.get("cognitive_anomalies"), 90); idle.begin();
         for (int i = 0; i < 500; i++) idle.tick();
         require(idle.state() == ResearchSession.State.FAILURE, "Unattended experiments fail at original upper threshold");
+        require(!idle.panel(ResearchType.COGNITION).displaying && idle.panel(ResearchType.COGNITION).cueEnded, "Failure cannot freeze the last highlighted rune forever");
         ResearchSession unsafe = new ResearchSession(six, 3); unsafe.begin();
         require(!unsafe.control(ResearchType.COGNITION, "symbol", 99), "Reject out-of-range rune events");
         require(!unsafe.control(ResearchType.GRAVITY, "force", Integer.MAX_VALUE), "Reject out-of-range force events");
@@ -60,9 +61,67 @@ public final class ResearchVerification {
             require(service.profile(player).scannedCount() == 1, "Scan ledger persists across restart");
             require(!service.scan(player, "natural-anomaly-01", ResearchType.ENERGY, 5), "Deduplication survives restart");
         }
+        verifyStartingStates(six);
+        verifyExactShadow();
+        verifyExactTime();
         verifyCatalogExtensions();
         verifyStoppedWorldReleasesReservations();
         System.out.println("Research verification passed: " + solved + " solved seeded experiments; config, failure, input validation, costs, prerequisites, scan deduplication and persistence.");
+    }
+    private static void verifyStartingStates(ResearchNode six) {
+        for (int seed = 0; seed < 2000; seed++) {
+            var game = new ResearchSession(six, seed);
+            var cognition = game.panel(ResearchType.COGNITION);
+            require(!cognition.displaying && cognition.inputCount == 0, "Ready notes have no frozen first memory highlight");
+            var energy = game.panel(ResearchType.ENERGY);
+            require(Math.abs(energy.value-energy.target)>=.49 && Math.abs(energy.secondary-energy.targetSecondary)>=.124,
+                    "Both energy controls start visibly out of alignment");
+            var gravity = game.panel(ResearchType.GRAVITY);
+            require(gravity.target!=0 && Math.abs(gravity.position-.5)>=.39,"Gravity begins off centre with uncancelled force");
+            var shadow = game.panel(ResearchType.SHADOW);
+            require(Math.abs(shadow.value+180-shadow.target)>=59.99 && Math.abs(ResearchSession.shadowLength(shadow)-shadow.targetSecondary)>=11.99,
+                    "Shadow begins with both a visibly incorrect angle and length");
+            require(game.panel(ResearchType.SPACE).value>=.65,"Space never starts with a nearly restored lattice");
+            require(Math.abs(game.panel(ResearchType.TIME).value-1)>=.59 && game.panel(ResearchType.TIME).angle!=game.panel(ResearchType.TIME).targetAngle,
+                    "Time begins with visibly different speed and hand positions");
+            game.begin();for(int i=0;i<20;i++)game.tick();
+            require(game.activeTypes().stream().noneMatch(type->game.panel(type).stable),"No instrument auto solves without a control input: "+seed);
+        }
+    }
+    private static void verifyExactShadow() {
+        var node = new ResearchNode("shadow_test","general","Shadow","",Map.of(ResearchType.SHADOW,1),List.of());
+        for(double step:List.of(15.0,7.0,17.5,90.0))for(int seed=0;seed<500;seed++){
+            var settings=new ResearchSettings();settings.shadowRotationStep=step;
+            var game=new ResearchSession(node,seed,settings);game.begin();var p=game.panel(ResearchType.SHADOW);
+            for(int press=0;press<200 && Math.abs(p.value+180-p.target)>1e-8;press++){
+                require(game.control(ResearchType.SHADOW,"angle",p.value+180<p.target?1:-1),"Valid discrete angle control");
+                for(int i=0;i<5;i++)game.tick();
+            }
+            for(int press=0;press<20 && Math.abs(ResearchSession.shadowLength(p)-p.targetSecondary)>1e-8;press++){
+                require(game.control(ResearchType.SHADOW,"distance",ResearchSession.shadowLength(p)>p.targetSecondary?1:-1),"Valid discrete distance control");
+                for(int i=0;i<5;i++)game.tick();
+            }
+            require(Math.abs(p.value+180-p.target)<1e-8 && Math.abs(ResearchSession.shadowLength(p)-p.targetSecondary)<1e-8,
+                    "Exact shadow overlay is reachable through real buttons: "+step+"/"+seed);
+            // Real drift leaves fractional angles. A corrective button still reaches the same stop.
+            if(p.value>-59.9 && p.value<59.9){
+                p.value+=.37;p.cooldown=0;
+                require(game.control(ResearchType.SHADOW,"angle",-1) && Math.abs(p.value+180-p.target)<1e-8,
+                        "Fractional drift cannot permanently offset the control grid");
+            }
+        }
+        System.out.println("PASS: 2,000 unsolved six-instrument starts and 2,000 exactly reachable shadow targets, including non-dividing dial steps and drift recovery.");
+    }
+    private static void verifyExactTime() {
+        var node=new ResearchNode("clock_test","general","Time","",Map.of(ResearchType.TIME,1),List.of());
+        var game=new ResearchSession(node,13);game.begin();var p=game.panel(ResearchType.TIME);
+        // Enter the source tolerance at 0.9x, then let a real phase difference accumulate.
+        p.value=.8;require(game.control(ResearchType.TIME,"speed",1),"Real speed control enters the tolerance band");
+        for(int i=0;i<30;i++)game.tick();
+        require(p.stable&&Math.abs(p.value-.9)<1e-8&&Math.abs(p.angle-p.targetAngle)>1,"Stable does not imply an exactly matched speed or phase");
+        require(game.control(ResearchType.TIME,"speed",1)&&p.value==p.target&&p.angle==p.targetAngle,
+                "Selecting exact clock speed also aligns the hands even when already stable");
+        for(int i=0;i<20;i++){game.tick();require(p.angle==p.targetAngle,"Exact clock alignment persists on real simulation ticks");}
     }
     private static void verifyStoppedWorldReleasesReservations() throws Exception {
         try (var service = new ResearchService(Files.createTempDirectory("strangematter-page-stop-"))) {

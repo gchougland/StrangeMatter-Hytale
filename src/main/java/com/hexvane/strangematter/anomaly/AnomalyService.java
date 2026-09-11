@@ -93,6 +93,20 @@ public final class AnomalyService {
         AnomalyRecord a=new AnomalyRecord(UUID.randomUUID(),type,world.getName(),new Vector3d(position),natural);
         records.put(a.id,a);dirty=true; effects.core(world,a);return a;
     }
+    /** Raise a newly ground-placed field once; exact-position spawn remains available for warp bolts. */
+    public synchronized AnomalyRecord spawnRaised(AnomalyType type,World world,Vector3d previousCenter,boolean natural) {
+        Objects.requireNonNull(type);var a=raisedRecord(type,world.getName(),previousCenter,natural);
+        worlds.put(world.getName(),world);records.put(a.id,a);dirty=true;effects.core(world,a);return a;
+    }
+    private static AnomalyRecord raisedRecord(AnomalyType type,String world,Vector3d previousCenter,boolean natural){
+        var position=raisedPosition(previousCenter);
+        var a=new AnomalyRecord(UUID.randomUUID(),type,world,position,natural);a.placementLift=position.y-previousCenter.y;return a;
+    }
+    private static Vector3d raisedPosition(Vector3d previousCenter){
+        validate(previousCenter);
+        // A capsule at the build ceiling must remain recoverable instead of throwing after impact.
+        return new Vector3d(previousCenter.x,Math.min(Math.nextDown((double)ChunkUtil.HEIGHT),previousCenter.y+1),previousCenter.z);
+    }
     public synchronized Optional<CapturedAnomaly> capture(UUID id) {
         AnomalyRecord a=records.get(id);
         if(a==null || !a.active()) return Optional.empty();
@@ -104,12 +118,20 @@ public final class AnomalyService {
     }
     /** Single-use bearer token; caller consumes the capsule only when this succeeds. */
     public synchronized Optional<AnomalyRecord> release(String token,World world,Vector3d position) {
+        return releaseAt(token,world,position,0);
+    }
+    /** Capsule impact places its existing identity one block above the former landing center. */
+    public synchronized Optional<AnomalyRecord> releaseRaised(String token,World world,Vector3d previousCenter) {
+        if(token==null)return Optional.empty();var position=raisedPosition(previousCenter);
+        return releaseAt(token,world,position,position.y-previousCenter.y);
+    }
+    private Optional<AnomalyRecord> releaseAt(String token,World world,Vector3d position,double placementLift) {
         if(token==null) return Optional.empty(); validate(position);
         String[] parts=token.split(":",-1);if(parts.length!=2) return Optional.empty();
         UUID id,nonce;try {id=UUID.fromString(parts[0]);nonce=UUID.fromString(parts[1]);}catch(IllegalArgumentException e){return Optional.empty();}
         AnomalyRecord a=records.get(id);
         if(a==null || !a.contained || !nonce.equals(a.capsuleNonce)) return Optional.empty();
-        a.world=world.getName();a.move(position);a.contained=false;a.released=true;a.capsuleNonce=null;a.enabled=true;
+        a.world=world.getName();a.move(position);a.placementLift=placementLift;a.contained=false;a.released=true;a.capsuleNonce=null;a.enabled=true;
         worlds.put(world.getName(),world);dirty=true;effects.core(world,a);effects.particle(world,"SM_Anomaly_Capture",position);save();return Optional.of(a);
     }
     /** Retires exactly one contained identity after its capsule is consumed as a completed crafting ingredient. */
@@ -120,7 +142,7 @@ public final class AnomalyService {
         AnomalyRecord a=records.get(id);
         if(a==null||!a.contained||!nonce.equals(a.capsuleNonce))return false;
         // Contained fields already have no live core; retiring a crafting ingredient needs no foreign-world ECS access.
-        records.remove(id);unlink(a);dirty=true;save();return true;
+        records.remove(id);suppressedSources.remove(id);unlink(a);dirty=true;save();return true;
     }
     /** Allows an inventory transaction failure to restore the captured field without changing scan provenance. */
     public synchronized boolean cancelCapture(String token) {
@@ -131,8 +153,14 @@ public final class AnomalyService {
     }
     public synchronized boolean pair(UUID first,UUID second) {
         var a=records.get(first);var b=records.get(second);
-        if(a==null || b==null || a==b || a.type!=AnomalyType.WARP_GATE || b.type!=AnomalyType.WARP_GATE || !a.world.equals(b.world)) return false;
+        if(!compatibleGates(a,b)) return false;
         unlink(a);unlink(b);a.pairedGate=b.id;b.pairedGate=a.id;dirty=true;return true;
+    }
+    /** Gun endpoints only link explicitly to the opposite gun channel; ordinary anomalies link to each other. */
+    private static boolean compatibleGates(AnomalyRecord a,AnomalyRecord b) {
+        if(a==null || b==null || a==b || a.type!=AnomalyType.WARP_GATE || b.type!=AnomalyType.WARP_GATE || !a.world.equals(b.world))return false;
+        return a.portalChannel==0 ? b.portalChannel==0
+            : (a.portalChannel==1 && b.portalChannel==2) || (a.portalChannel==2 && b.portalChannel==1);
     }
     /** Called on the owning world thread when a gun creates or replaces an endpoint. */
     public synchronized void setPortalChannel(UUID id,int channel) {
@@ -140,7 +168,9 @@ public final class AnomalyService {
         var a=records.get(id);if(a==null||a.type!=AnomalyType.WARP_GATE||a.portalChannel==channel)return;
         a.portalChannel=channel;a.particles=0;dirty=true;
         var world=worlds.get(a.world);
-        if(world!=null){effects.removeCore(world,a.id);if(a.active())effects.core(world,a);}
+        if(a.pairedGate!=null && !compatibleGates(a,records.get(a.pairedGate)))unlink(a);
+        a.creatingPair=false;
+        if(world!=null){gateLoads.cancel(world,a.id);effects.removeCore(world,a.id);if(a.active())effects.core(world,a);}
     }
     private void unlink(AnomalyRecord a) {
         if(a.pairedGate!=null) {var b=records.get(a.pairedGate);if(b!=null && a.id.equals(b.pairedGate)) b.pairedGate=null;}
@@ -151,14 +181,13 @@ public final class AnomalyService {
         if(!enabled) {var w=worlds.get(a.world);if(w!=null) {effects.removeCore(w,id);stopGravity(w,a);}}
     }
     public synchronized boolean remove(UUID id) {
-        var a=records.remove(id);if(a==null)return false;unlink(a);dirty=true;
+        var a=records.remove(id);if(a==null)return false;suppressedSources.remove(id);unlink(a);dirty=true;
         var w=worlds.get(a.world);if(w!=null){effects.removeCore(w,id);stopGravity(w,a);}return true;
     }
     private void stopGravity(World world,AnomalyRecord anomaly){if(anomaly.type==AnomalyType.GRAVITY){effects.removeGravity(world,anomaly.id);gravityTerrain.remove(world,anomaly.id);}}
     public synchronized void tick(World world,double dt) {
         if(!Double.isFinite(dt) || dt<=0)return;dt=Math.min(dt,.25);
-        worlds.put(world.getName(),world);effects.cleanup(world);
-        effects.tickThoughts(world,dt);
+        worlds.put(world.getName(),world);effects.cleanup(world,dt);
         dirty|=effects.tickAges(world,temporalAges,dt);
         double survey=surveyClocks.getOrDefault(world.getName(),0.0)+dt;
         if(survey>=2) {survey=0;if(naturalGeneration) discover(world);}
@@ -168,6 +197,16 @@ public final class AnomalyService {
         var gravityFields=new ArrayList<AnomalyRecord>();
         for(AnomalyRecord a:new ArrayList<>(records.values())) {
             if(!a.world.equals(world.getName()))continue;
+            boolean suppressed=a.active()&&suppressed(world,a);
+            if(suppressed){
+                dirty|=effects.suppress(world,a);
+                if(suppressedSources.add(a.id)){
+                    gateLoads.cancel(world,a.id);a.creatingPair=false;stopGravity(world,a);
+                }
+            }else if(suppressedSources.remove(a.id)){
+                // Removing the final overlapping nullifier resumes normal field schedules promptly.
+                a.primary=0;a.secondary=0;
+            }
             boolean nearby=playerPositions.stream().anyMatch(p->a.distanceSquared(p)<128*128);
             if(!a.active() || !nearby || world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock((int)Math.floor(a.x),(int)Math.floor(a.z)))==null) {effects.removeCore(world,a.id);continue;}
             effects.core(world,a);a.age+=dt;a.particles-=dt;a.primary-=dt;a.secondary-=dt;a.sound-=dt;
@@ -176,7 +215,7 @@ public final class AnomalyService {
                 for(var ref:effects.entities(world,a))if(ref.isValid()) {var p=store.getComponent(ref,PlayerRef.getComponentType());if(p!=null)observeContact(p.getUuid(),a);}
             }
             if(a.sound<=0) {effects.sound(world,a);a.sound=a.type==AnomalyType.GRAVITY?6.074535:4;}
-            if(suppressionHook.suppressed(world,a.position(),a.type))continue;
+            if(suppressed)continue;
             switch(a.type) {
                 case GRAVITY -> gravityFields.add(a);
                 case TEMPORAL_BLOOM -> {
@@ -199,24 +238,41 @@ public final class AnomalyService {
                 case WARP_GATE -> {if(a.primary<=0) {tickGate(world,a);a.primary=.1;}}
             }
         }
+        // Reconcile suppressed cognitive sources before they can emit another private cue.
+        effects.tickThoughts(world,dt);
         effects.gravity(world,gravityFields);
         gravityTerrain.tick(world,gravityFields,dt);
         saveClock+=dt;if(saveClock>=30) {saveClock=0;save();}
     }
+    private final WarpLandingLoads gateLoads=new WarpLandingLoads();
+    private final Set<UUID> suppressedSources=new HashSet<>();
+    private boolean suppressed(World world,AnomalyRecord source){return suppressionHook.suppressed(world,source.position(),source.type);}
     private void tickGate(World world,AnomalyRecord a) {
-        AnomalyRecord paired=a.pairedGate==null?null:records.get(a.pairedGate);
+        if(suppressed(world,a))return;
+        var candidate=a.pairedGate==null?null:records.get(a.pairedGate);
+        if(a.pairedGate!=null && (!compatibleGates(a,candidate) || !a.id.equals(candidate.pairedGate))) {
+            unlink(a);dirty=true;a.creatingPair=false;gateLoads.cancel(world,a.id);
+        }
+        final AnomalyRecord paired=a.pairedGate==null?null:candidate;
         if(paired!=null) {
-            if(!paired.active() || !paired.world.equals(world.getName())) return;
-            long index=ChunkUtil.indexChunkFromBlock((int)Math.floor(paired.x),(int)Math.floor(paired.z));
-            if(world.getChunkIfLoaded(index)==null) {
-                if(!a.creatingPair && !effects.entities(world,a).isEmpty()) {
-                    a.creatingPair=true;world.getChunkAsync(index).whenComplete((chunk,error)->world.execute(()->{synchronized(this){a.creatingPair=false;}}));
-                }
-            } else effects.teleport(world,a,paired);
+            if(!paired.active() || !paired.world.equals(world.getName()) || suppressed(world,paired)) return;
+            if(a.creatingPair || effects.entities(world,a).stream().noneMatch(ref->WarpGateTeleport.eligible(world.getEntityStore().getStore(),ref)))return;
+            if(gateLoads.ready(world,paired.position()))effects.teleport(world,a,paired);
+            else {
+                var sourcePosition=a.position();var targetPosition=paired.position();
+                a.creatingPair=gateLoads.request(world,a.id,targetPosition,success->{synchronized(this){
+                    a.creatingPair=false;
+                    if(!gateRequestCurrent(world,a,sourcePosition,paired,targetPosition))return;
+                    // Never teleport from a completion: the next tick rechecks bodies, pairing and chunks.
+                    a.primary=success?0:5;
+                }});
+            }
             return;
         }
+        // A single Warp Gun endpoint waits for the other shot from its own gun.
+        if(a.portalChannel!=0)return;
         // Distant pair first, as in the source. Linking is symmetric and preserves identity through capture.
-        var existing=records.values().stream().filter(b->b!=a && b.type==AnomalyType.WARP_GATE && b.active() && b.pairedGate==null && b.world.equals(a.world) && a.distanceSquared(b.position())>=500*500)
+        var existing=records.values().stream().filter(b->b!=a && b.type==AnomalyType.WARP_GATE && b.portalChannel==0 && b.active() && b.pairedGate==null && b.world.equals(a.world) && !suppressed(world,b) && a.distanceSquared(b.position())>=500*500)
             .min(Comparator.comparingDouble(b->a.distanceSquared(b.position())));
         if(existing.isPresent()) {pair(a.id,existing.get().id);return;}
         if(a.creatingPair || effects.entities(world,a).isEmpty())return;
@@ -224,19 +280,31 @@ public final class AnomalyService {
         createDistantPair(world,a,0);
     }
     private void createDistantPair(World world,AnomalyRecord a,int attempt) {
+        if(a.portalChannel!=0 || suppressed(world,a)){a.creatingPair=false;return;}
         if(attempt>=5) {a.creatingPair=false;a.primary=5;return;}
         Random rng=new Random(a.id.getMostSignificantBits()+attempt*7919L);
         double angle=rng.nextDouble()*Math.PI*2,distance=1000+rng.nextInt(4001);
         int x=(int)Math.floor(a.x+Math.cos(angle)*distance),z=(int)Math.floor(a.z+Math.sin(angle)*distance);
-        world.getChunkAsync(ChunkUtil.indexChunkFromBlock(x,z)).whenComplete((chunk,error)->world.execute(()->{
+        var sourcePosition=a.position();var targetPosition=new Vector3d(x+.5,0,z+.5);
+        boolean started=gateLoads.request(world,a.id,targetPosition,success->{
             synchronized(this) {
-                if(!a.active() || a.pairedGate!=null) {a.creatingPair=false;return;}
-                Vector3d surface=error==null?HytaleAnomalyEffects.safeSurface(world,x,z):null;
+                if(!gateRequestCurrent(world,a,sourcePosition,null,null)) {a.creatingPair=false;return;}
+                if(!success){a.creatingPair=false;a.primary=5;return;}
+                Vector3d surface=gateLoads.ready(world,targetPosition)?HytaleAnomalyEffects.safeSurface(world,x,z):null;
                 if(surface==null) {createDistantPair(world,a,attempt+1);return;}
-                AnomalyRecord partner=spawn(AnomalyType.WARP_GATE,world,surface.add(0,1.5,0),true);
+                if(suppressionHook.suppressed(world,new Vector3d(surface).add(0,2.5,0),AnomalyType.WARP_GATE)){a.creatingPair=false;a.primary=5;return;}
+                AnomalyRecord partner=spawnRaised(AnomalyType.WARP_GATE,world,surface.add(0,1.5,0),true);
                 pair(a.id,partner.id);a.creatingPair=false;save();
             }
-        }));
+        });
+        if(!started){a.creatingPair=false;a.primary=5;}
+    }
+    private boolean gateRequestCurrent(World world,AnomalyRecord source,Vector3d position,AnomalyRecord target,Vector3d targetPosition){
+        if(records.get(source.id)!=source || !source.active() || suppressed(world,source) || worlds.get(source.world)!=world
+                || !source.world.equals(world.getName()) || !source.position().equals(position))return false;
+        if(target==null)return source.portalChannel==0 && source.pairedGate==null;
+        return records.get(target.id)==target && compatibleGates(source,target) && target.active() && !suppressed(world,target) && target.world.equals(source.world)
+                && target.id.equals(source.pairedGate) && source.id.equals(target.pairedGate) && target.position().equals(targetPosition);
     }
     private void discover(World world) {
         // Native adventure/temporary instances are intentionally excluded; this is the Overworld analogue.
@@ -262,7 +330,7 @@ public final class AnomalyService {
                     Vector3d surface=HytaleAnomalyEffects.safeSurface(world,x,z);
                     if(surface==null || nearest(world,surface,24).isPresent())continue;
                     // Matching density is universal by default; no Minecraft biome was excluded in original config.
-                    AnomalyRecord anomaly=spawn(type,world,surface.add(0,type==AnomalyType.WARP_GATE?1.5:1,0),true);
+                    AnomalyRecord anomaly=spawnRaised(type,world,surface.add(0,type==AnomalyType.WARP_GATE?1.5:1,0),true);
                 }
             }
         }
@@ -293,7 +361,7 @@ public final class AnomalyService {
                 Vector3d position=new Vector3d(x+.5,y+(type==AnomalyType.WARP_GATE?1.5:1),z+.5);
                 if(nearest(world,position,24).isPresent())continue;
                 // No live entities or world-store accesses are needed in this asynchronous pre-load event.
-                var anomaly=new AnomalyRecord(UUID.randomUUID(),type,worldName,position,true);
+                var anomaly=raisedRecord(type,worldName,position,true);
                 records.put(anomaly.id,anomaly);
                 if(generationSettings.terrainPatches)effects.terrainGenerated(chunk,anomaly,rng,generationSettings);
             }
@@ -301,7 +369,7 @@ public final class AnomalyService {
     }
     private static long mix(long v) {v=(v^(v>>>30))*0xbf58476d1ce4e5b9L;v=(v^(v>>>27))*0x94d049bb133111ebL;return v^(v>>>31);}
     private static void validate(Vector3d p) {if(p==null || !Double.isFinite(p.x) || !Double.isFinite(p.y) || !Double.isFinite(p.z) || p.y<0 || p.y>=320)throw new IllegalArgumentException("Anomaly position must be finite and inside build height");}
-    public synchronized void stopWorld(World world) {effects.restore(world);gravityTerrain.stopWorld(world);save();worlds.remove(world.getName());}
+    public synchronized void stopWorld(World world) {gateLoads.clear(world);for(var a:records.values())if(a.world.equals(world.getName())){a.creatingPair=false;suppressedSources.remove(a.id);}effects.restore(world);gravityTerrain.stopWorld(world);save();worlds.remove(world.getName());}
     public synchronized void save() {
         if(!dirty)return;
         try {
@@ -316,11 +384,18 @@ public final class AnomalyService {
         try(Reader reader=Files.newBufferedReader(saveFile,StandardCharsets.UTF_8)) {
             SaveData data=GSON.fromJson(reader,SaveData.class);
             if(data==null || data.version!=1 || data.anomalies==null)throw new IOException("Unsupported or invalid anomaly save");
-            for(var a:data.anomalies) {if(a.id==null || a.type==null || a.world==null)throw new IOException("Invalid anomaly identity");validate(a.position());if(a.shadowMobs==null)a.shadowMobs=new HashSet<>();if(a.shadowMobPositions==null)a.shadowMobPositions=new HashMap<>();records.put(a.id,a);}
+            for(var a:data.anomalies) {if(a.id==null || a.type==null || a.world==null||!Double.isFinite(a.placementLift)||a.placementLift<0||a.placementLift>1)throw new IOException("Invalid anomaly identity");validate(a.position());if(a.shadowMobs==null)a.shadowMobs=new HashSet<>();if(a.shadowMobPositions==null)a.shadowMobPositions=new HashMap<>();records.put(a.id,a);}
             if(data.surveyed!=null)surveyed.putAll(data.surveyed);
             if(data.temporalAges!=null)temporalAges.putAll(data.temporalAges);
             if(data.firstContacts!=null)firstContacts.putAll(data.firstContacts);
         }catch(IOException e){throw new UncheckedIOException("Cannot load anomaly save; original file preserved",e);}
+        // Earlier versions let automatic pairing claim gun endpoints. Repair only invalid links;
+        // unlink preserves an unrelated valid pair when an old record has a one-way reference.
+        for(var a:records.values())if(a.pairedGate!=null) {
+            var b=records.get(a.pairedGate);
+            if(!compatibleGates(a,b) || !a.id.equals(b.pairedGate)){unlink(a);dirty=true;}
+        }
+        save();
     }
     private record SaveData(int version,List<AnomalyRecord> anomalies,Map<String,Set<Long>> surveyed,Map<UUID,TemporalAge> temporalAges,Map<UUID,Set<AnomalyType>> firstContacts) {}
 }

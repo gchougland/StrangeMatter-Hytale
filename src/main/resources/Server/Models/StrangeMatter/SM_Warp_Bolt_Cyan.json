@@ -1,0 +1,50 @@
+{
+  "Model": "Items/Projectiles/Projectile.blockymodel",
+  "Texture": "Items/Projectiles/Projectile_default.png",
+  "MinScale": 1,
+  "MaxScale": 1,
+  "EyeHeight": 0,
+  "HitBox": {
+    "Min": {
+      "X": -0.09,
+      "Y": -0.09,
+      "Z": -0.09
+    },
+    "Max": {
+      "X": 0.09,
+      "Y": 0.09,
+      "Z": 0.09
+    }
+  },
+  "Light": {
+    "Color": "#3af"
+  },
+  "Particles": [
+    {
+      "SystemId": "SM_Warp_Bolt_Cyan_Core",
+      "TargetEntityPart": "Self",
+      "TargetNodeName": "",
+      "Scale": 1,
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "DetachedFromModel": false,
+      "ClearParticlesOnRemove": true
+    },
+    {
+      "SystemId": "SM_Warp_Bolt_Cyan_Trail",
+      "TargetEntityPart": "Self",
+      "TargetNodeName": "",
+      "Scale": 1,
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "DetachedFromModel": false,
+      "ClearParticlesOnRemove": false
+    }
+  ]
+}

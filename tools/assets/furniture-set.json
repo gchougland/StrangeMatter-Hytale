@@ -1,0 +1,881 @@
+{
+  "items": [
+    {
+      "id": "SM_Resonite_Chair",
+      "name": "Resonite Chair",
+      "description": "Take a seat between experiments. A padded chair with a sturdy resonite frame.",
+      "research": "resonite",
+      "itemFile": "Server/Item/Items/StrangeMatter/SM_Resonite_Chair.json",
+      "model": "Blocks/StrangeMatter/Furniture/chair.blockymodel",
+      "texture": "Blocks/StrangeMatter/Furniture/resonite_furniture.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Chair.png",
+      "recipe": {
+        "Input": [
+          {
+            "ItemId": "SM_Resonite_Ingot",
+            "Quantity": 3
+          },
+          {
+            "ItemId": "Ingredient_Fabric_Scrap_Linen",
+            "Quantity": 3
+          }
+        ],
+        "OutputQuantity": 1,
+        "TimeSeconds": 3,
+        "BenchRequirement": [
+          {
+            "Type": "Crafting",
+            "Id": "SM_Laboratory",
+            "Categories": [
+              "SM_Laboratory_Furniture"
+            ]
+          }
+        ],
+        "KnowledgeRequired": true
+      },
+      "hitbox": "SM_Resonite_Chair",
+      "boundsModelUnits": {
+        "min": [
+          -12.5,
+          0.0,
+          -13.53707
+        ],
+        "max": [
+          12.5,
+          39.10201,
+          12.6
+        ]
+      },
+      "capacity": null,
+      "seats": 1,
+      "interactionHint": "Press [{key}] to sit"
+    },
+    {
+      "id": "SM_Resonite_Stool",
+      "name": "Resonite Stool",
+      "description": "A compact padded seat for your laboratory. Place it beside a work table.",
+      "research": "resonite",
+      "itemFile": "Server/Item/Items/StrangeMatter/SM_Resonite_Stool.json",
+      "model": "Blocks/StrangeMatter/Furniture/stool.blockymodel",
+      "texture": "Blocks/StrangeMatter/Furniture/resonite_furniture.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Stool.png",
+      "recipe": {
+        "Input": [
+          {
+            "ItemId": "SM_Resonite_Ingot",
+            "Quantity": 2
+          },
+          {
+            "ItemId": "Ingredient_Fabric_Scrap_Linen",
+            "Quantity": 2
+          }
+        ],
+        "OutputQuantity": 1,
+        "TimeSeconds": 3,
+        "BenchRequirement": [
+          {
+            "Type": "Crafting",
+            "Id": "SM_Laboratory",
+            "Categories": [
+              "SM_Laboratory_Furniture"
+            ]
+          }
+        ],
+        "KnowledgeRequired": true
+      },
+      "hitbox": "SM_Resonite_Stool",
+      "boundsModelUnits": {
+        "min": [
+          -12.5,
+          0.0,
+          -12.0
+        ],
+        "max": [
+          12.5,
+          16.0,
+          12.6
+        ]
+      },
+      "capacity": null,
+      "seats": 1,
+      "interactionHint": "Press [{key}] to sit"
+    },
+    {
+      "id": "SM_Resonite_Sofa",
+      "name": "Resonite Sofa",
+      "description": "Sit with a fellow scientist. Two padded seats share a resonite frame.",
+      "research": "resonite",
+      "itemFile": "Server/Item/Items/StrangeMatter/SM_Resonite_Sofa.json",
+      "model": "Blocks/StrangeMatter/Furniture/sofa.blockymodel",
+      "texture": "Blocks/StrangeMatter/Furniture/resonite_furniture.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Sofa.png",
+      "recipe": {
+        "Input": [
+          {
+            "ItemId": "SM_Resonite_Ingot",
+            "Quantity": 5
+          },
+          {
+            "ItemId": "Ingredient_Fabric_Scrap_Linen",
+            "Quantity": 5
+          }
+        ],
+        "OutputQuantity": 1,
+        "TimeSeconds": 3,
+        "BenchRequirement": [
+          {
+            "Type": "Crafting",
+            "Id": "SM_Laboratory",
+            "Categories": [
+              "SM_Laboratory_Furniture"
+            ]
+          }
+        ],
+        "KnowledgeRequired": true
+      },
+      "hitbox": "SM_Resonite_Sofa",
+      "boundsModelUnits": {
+        "min": [
+          -14.5,
+          0.0,
+          -13.53707
+        ],
+        "max": [
+          46.5,
+          39.10201,
+          12.6
+        ]
+      },
+      "capacity": null,
+      "seats": 2,
+      "interactionHint": "Press [{key}] to sit"
+    },
+    {
+      "id": "SM_Resonite_Table",
+      "name": "Resonite Table",
+      "description": "A large work table with a soft surface and reinforced legs. Occupies a square of four blocks.",
+      "research": "resonite",
+      "itemFile": "Server/Item/Items/StrangeMatter/SM_Resonite_Table.json",
+      "model": "Blocks/StrangeMatter/Furniture/table.blockymodel",
+      "texture": "Blocks/StrangeMatter/Furniture/resonite_furniture.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Table.png",
+      "recipe": {
+        "Input": [
+          {
+            "ItemId": "SM_Resonite_Ingot",
+            "Quantity": 5
+          },
+          {
+            "ResourceTypeId": "Wood_Planks",
+            "Quantity": 4
+          }
+        ],
+        "OutputQuantity": 1,
+        "TimeSeconds": 3,
+        "BenchRequirement": [
+          {
+            "Type": "Crafting",
+            "Id": "SM_Laboratory",
+            "Categories": [
+              "SM_Laboratory_Furniture"
+            ]
+          }
+        ],
+        "KnowledgeRequired": true
+      },
+      "hitbox": "SM_Resonite_Table",
+      "boundsModelUnits": {
+        "min": [
+          -15.0,
+          0.0,
+          -13.0
+        ],
+        "max": [
+          47.0,
+          29.05,
+          45.0
+        ]
+      },
+      "capacity": null,
+      "seats": 0,
+      "interactionHint": null
+    },
+    {
+      "id": "SM_Resonite_Desk",
+      "name": "Resonite Desk",
+      "description": "Organize your next experiment at a desk with a monitor, notes and sample flask. Decorative furniture.",
+      "research": "resonite",
+      "itemFile": "Server/Item/Items/StrangeMatter/SM_Resonite_Desk.json",
+      "model": "Blocks/StrangeMatter/Furniture/desk.blockymodel",
+      "texture": "Blocks/StrangeMatter/Furniture/resonite_furniture.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Desk.png",
+      "recipe": {
+        "Input": [
+          {
+            "ItemId": "SM_Resonite_Ingot",
+            "Quantity": 6
+          },
+          {
+            "ResourceTypeId": "Wood_Planks",
+            "Quantity": 4
+          },
+          {
+            "ItemId": "SM_Resonant_Circuit",
+            "Quantity": 1
+          }
+        ],
+        "OutputQuantity": 1,
+        "TimeSeconds": 3,
+        "BenchRequirement": [
+          {
+            "Type": "Crafting",
+            "Id": "SM_Laboratory",
+            "Categories": [
+              "SM_Laboratory_Furniture"
+            ]
+          }
+        ],
+        "KnowledgeRequired": true
+      },
+      "hitbox": "SM_Resonite_Desk",
+      "boundsModelUnits": {
+        "min": [
+          -15.0,
+          0.0,
+          -14.5
+        ],
+        "max": [
+          47.0,
+          47.75,
+          14.5
+        ]
+      },
+      "capacity": null,
+      "seats": 0,
+      "interactionHint": null
+    },
+    {
+      "id": "SM_Resonite_Bed",
+      "name": "Resonite Bed",
+      "description": "Rest after a long experiment and set your respawn point using the normal bed controls.",
+      "research": "resonite",
+      "itemFile": "Server/Item/Items/StrangeMatter/SM_Resonite_Bed.json",
+      "model": "Blocks/StrangeMatter/Furniture/bed.blockymodel",
+      "texture": "Blocks/StrangeMatter/Furniture/resonite_furniture.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Bed.png",
+      "recipe": {
+        "Input": [
+          {
+            "ItemId": "SM_Resonite_Ingot",
+            "Quantity": 6
+          },
+          {
+            "ItemId": "Ingredient_Fabric_Scrap_Linen",
+            "Quantity": 8
+          }
+        ],
+        "OutputQuantity": 1,
+        "TimeSeconds": 3,
+        "BenchRequirement": [
+          {
+            "Type": "Crafting",
+            "Id": "SM_Laboratory",
+            "Categories": [
+              "SM_Laboratory_Furniture"
+            ]
+          }
+        ],
+        "KnowledgeRequired": true
+      },
+      "hitbox": "SM_Resonite_Bed",
+      "boundsModelUnits": {
+        "min": [
+          -15.5,
+          0.0,
+          -15.5
+        ],
+        "max": [
+          15.55,
+          40.0,
+          48.25
+        ]
+      },
+      "capacity": null,
+      "seats": 0,
+      "interactionHint": "Press [{key}] to sleep"
+    },
+    {
+      "id": "SM_Resonite_Chest",
+      "name": "Resonite Chest",
+      "description": "Store 18 stacks of supplies. Place two matching chests side by side to combine them into one large chest.",
+      "research": "resonite",
+      "itemFile": "Server/Item/Items/StrangeMatter/SM_Resonite_Chest.json",
+      "model": "Blocks/StrangeMatter/Furniture/chest.blockymodel",
+      "texture": "Blocks/StrangeMatter/Furniture/resonite_furniture.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Chest.png",
+      "recipe": {
+        "Input": [
+          {
+            "ItemId": "SM_Resonite_Ingot",
+            "Quantity": 4
+          },
+          {
+            "ResourceTypeId": "Wood_Planks",
+            "Quantity": 2
+          }
+        ],
+        "OutputQuantity": 1,
+        "TimeSeconds": 3,
+        "BenchRequirement": [
+          {
+            "Type": "Crafting",
+            "Id": "SM_Laboratory",
+            "Categories": [
+              "SM_Laboratory_Furniture"
+            ]
+          }
+        ],
+        "KnowledgeRequired": true
+      },
+      "hitbox": "SM_Resonite_Chest",
+      "boundsModelUnits": {
+        "min": [
+          -15.5,
+          0.0,
+          -13.5
+        ],
+        "max": [
+          15.5,
+          25.75,
+          15.45
+        ]
+      },
+      "capacity": 18,
+      "seats": 0,
+      "interactionHint": "Press [{key}] to open the chest"
+    },
+    {
+      "id": "SM_Resonite_Wardrobe",
+      "name": "Resonite Wardrobe",
+      "description": "Store 36 stacks of clothing and equipment behind a pair of sturdy cabinet doors.",
+      "research": "resonite",
+      "itemFile": "Server/Item/Items/StrangeMatter/SM_Resonite_Wardrobe.json",
+      "model": "Blocks/StrangeMatter/Furniture/wardrobe.blockymodel",
+      "texture": "Blocks/StrangeMatter/Furniture/resonite_furniture.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Wardrobe.png",
+      "recipe": {
+        "Input": [
+          {
+            "ItemId": "SM_Resonite_Ingot",
+            "Quantity": 6
+          },
+          {
+            "ResourceTypeId": "Wood_Planks",
+            "Quantity": 4
+          }
+        ],
+        "OutputQuantity": 1,
+        "TimeSeconds": 3,
+        "BenchRequirement": [
+          {
+            "Type": "Crafting",
+            "Id": "SM_Laboratory",
+            "Categories": [
+              "SM_Laboratory_Furniture"
+            ]
+          }
+        ],
+        "KnowledgeRequired": true
+      },
+      "hitbox": "SM_Resonite_Wardrobe",
+      "boundsModelUnits": {
+        "min": [
+          -15.0,
+          0.0,
+          -13.3
+        ],
+        "max": [
+          15.0,
+          62.0,
+          15.15
+        ]
+      },
+      "capacity": 36,
+      "seats": 0,
+      "interactionHint": "Press [{key}] to open the wardrobe"
+    },
+    {
+      "id": "SM_Resonite_Bookshelf",
+      "name": "Resonite Bookshelf",
+      "description": "Keep research books and sealed samples on display. Decorative furniture.",
+      "research": "resonite",
+      "itemFile": "Server/Item/Items/StrangeMatter/SM_Resonite_Bookshelf.json",
+      "model": "Blocks/StrangeMatter/Furniture/bookshelf.blockymodel",
+      "texture": "Blocks/StrangeMatter/Furniture/resonite_furniture.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Bookshelf.png",
+      "recipe": {
+        "Input": [
+          {
+            "ItemId": "SM_Resonite_Ingot",
+            "Quantity": 5
+          },
+          {
+            "ResourceTypeId": "Wood_Planks",
+            "Quantity": 4
+          },
+          {
+            "ItemId": "SM_Resonite_Nugget",
+            "Quantity": 3
+          }
+        ],
+        "OutputQuantity": 1,
+        "TimeSeconds": 3,
+        "BenchRequirement": [
+          {
+            "Type": "Crafting",
+            "Id": "SM_Laboratory",
+            "Categories": [
+              "SM_Laboratory_Furniture"
+            ]
+          }
+        ],
+        "KnowledgeRequired": true
+      },
+      "hitbox": "SM_Resonite_Bookshelf",
+      "boundsModelUnits": {
+        "min": [
+          -15.5,
+          0.0,
+          -9.5
+        ],
+        "max": [
+          15.5,
+          63.0,
+          10.4
+        ]
+      },
+      "capacity": null,
+      "seats": 0,
+      "interactionHint": null
+    },
+    {
+      "id": "SM_Resonite_Wall_Shelf",
+      "name": "Resonite Wall Shelf",
+      "description": "Mount books and a glowing sample flask on your laboratory wall. Decorative furniture.",
+      "research": "resonite",
+      "itemFile": "Server/Item/Items/StrangeMatter/SM_Resonite_Wall_Shelf.json",
+      "model": "Blocks/StrangeMatter/Furniture/wall_shelf.blockymodel",
+      "texture": "Blocks/StrangeMatter/Furniture/resonite_furniture.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Wall_Shelf.png",
+      "recipe": {
+        "Input": [
+          {
+            "ItemId": "SM_Resonite_Ingot",
+            "Quantity": 2
+          },
+          {
+            "ResourceTypeId": "Wood_Planks",
+            "Quantity": 2
+          },
+          {
+            "ItemId": "SM_Resonite_Nugget",
+            "Quantity": 3
+          }
+        ],
+        "OutputQuantity": 1,
+        "TimeSeconds": 3,
+        "BenchRequirement": [
+          {
+            "Type": "Crafting",
+            "Id": "SM_Laboratory",
+            "Categories": [
+              "SM_Laboratory_Furniture"
+            ]
+          }
+        ],
+        "KnowledgeRequired": true
+      },
+      "hitbox": "SM_Resonite_Wall_Shelf",
+      "boundsModelUnits": {
+        "min": [
+          -15.5,
+          1.5,
+          -15.5
+        ],
+        "max": [
+          15.5,
+          28.5,
+          5.75
+        ]
+      },
+      "capacity": null,
+      "seats": 0,
+      "interactionHint": null
+    },
+    {
+      "id": "SM_Resonite_Cabinet",
+      "name": "Resonite Cabinet",
+      "description": "Store 18 stacks of supplies in a compact cabinet with opening doors.",
+      "research": "resonite",
+      "itemFile": "Server/Item/Items/StrangeMatter/SM_Resonite_Cabinet.json",
+      "model": "Blocks/StrangeMatter/Furniture/cabinet.blockymodel",
+      "texture": "Blocks/StrangeMatter/Furniture/resonite_furniture.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Cabinet.png",
+      "recipe": {
+        "Input": [
+          {
+            "ItemId": "SM_Resonite_Ingot",
+            "Quantity": 4
+          },
+          {
+            "ResourceTypeId": "Wood_Planks",
+            "Quantity": 2
+          }
+        ],
+        "OutputQuantity": 1,
+        "TimeSeconds": 3,
+        "BenchRequirement": [
+          {
+            "Type": "Crafting",
+            "Id": "SM_Laboratory",
+            "Categories": [
+              "SM_Laboratory_Furniture"
+            ]
+          }
+        ],
+        "KnowledgeRequired": true
+      },
+      "hitbox": "SM_Resonite_Cabinet",
+      "boundsModelUnits": {
+        "min": [
+          -15.0,
+          0.0,
+          -13.0
+        ],
+        "max": [
+          15.0,
+          30.0,
+          15.15
+        ]
+      },
+      "capacity": 18,
+      "seats": 0,
+      "interactionHint": "Press [{key}] to open the cabinet"
+    },
+    {
+      "id": "SM_Resonite_Wall_Monitor",
+      "name": "Resonite Wall Monitor",
+      "description": "A glowing display of unusual readings for your laboratory wall. Decorative furniture.",
+      "research": "resonite",
+      "itemFile": "Server/Item/Items/StrangeMatter/SM_Resonite_Wall_Monitor.json",
+      "model": "Blocks/StrangeMatter/Furniture/wall_monitor.blockymodel",
+      "texture": "Blocks/StrangeMatter/Furniture/resonite_furniture.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Wall_Monitor.png",
+      "recipe": {
+        "Input": [
+          {
+            "ItemId": "SM_Resonite_Ingot",
+            "Quantity": 3
+          },
+          {
+            "ItemId": "SM_Resonant_Circuit",
+            "Quantity": 1
+          }
+        ],
+        "OutputQuantity": 1,
+        "TimeSeconds": 3,
+        "BenchRequirement": [
+          {
+            "Type": "Crafting",
+            "Id": "SM_Laboratory",
+            "Categories": [
+              "SM_Laboratory_Furniture"
+            ]
+          }
+        ],
+        "KnowledgeRequired": true
+      },
+      "hitbox": "SM_Resonite_Wall_Monitor",
+      "boundsModelUnits": {
+        "min": [
+          -15.5,
+          4.17157,
+          -15.5
+        ],
+        "max": [
+          15.5,
+          31.0,
+          -5.0
+        ]
+      },
+      "capacity": null,
+      "seats": 0,
+      "interactionHint": null
+    },
+    {
+      "id": "SM_Resonite_Ceiling_Vent",
+      "name": "Resonite Ceiling Vent",
+      "description": "Finish your laboratory ceiling with metal louvers and small cyan status lights. Decorative furniture.",
+      "research": "resonite",
+      "itemFile": "Server/Item/Items/StrangeMatter/SM_Resonite_Ceiling_Vent.json",
+      "model": "Blocks/StrangeMatter/Furniture/ceiling_vent.blockymodel",
+      "texture": "Blocks/StrangeMatter/Furniture/resonite_furniture.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Ceiling_Vent.png",
+      "recipe": {
+        "Input": [
+          {
+            "ItemId": "SM_Resonite_Ingot",
+            "Quantity": 2
+          }
+        ],
+        "OutputQuantity": 1,
+        "TimeSeconds": 3,
+        "BenchRequirement": [
+          {
+            "Type": "Crafting",
+            "Id": "SM_Laboratory",
+            "Categories": [
+              "SM_Laboratory_Furniture"
+            ]
+          }
+        ],
+        "KnowledgeRequired": true
+      },
+      "hitbox": "SM_Resonite_Ceiling_Vent",
+      "boundsModelUnits": {
+        "min": [
+          -15.5,
+          27.25822,
+          -15.5
+        ],
+        "max": [
+          15.5,
+          32.0,
+          15.5
+        ]
+      },
+      "capacity": null,
+      "seats": 0,
+      "interactionHint": null
+    },
+    {
+      "id": "SM_Resonite_Ladder",
+      "name": "Resonite Ladder",
+      "description": "Climb between laboratory floors. Stack sections against a wall to extend the ladder.",
+      "research": "resonite",
+      "itemFile": "Server/Item/Items/StrangeMatter/SM_Resonite_Ladder.json",
+      "model": "Blocks/StrangeMatter/Furniture/ladder.blockymodel",
+      "texture": "Blocks/StrangeMatter/Furniture/resonite_furniture.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Ladder.png",
+      "recipe": {
+        "Input": [
+          {
+            "ItemId": "SM_Resonite_Ingot",
+            "Quantity": 2
+          }
+        ],
+        "OutputQuantity": 1,
+        "TimeSeconds": 3,
+        "BenchRequirement": [
+          {
+            "Type": "Crafting",
+            "Id": "SM_Laboratory",
+            "Categories": [
+              "SM_Laboratory_Furniture"
+            ]
+          }
+        ],
+        "KnowledgeRequired": true
+      },
+      "hitbox": "SM_Resonite_Ladder",
+      "boundsModelUnits": {
+        "min": [
+          -13.5,
+          0.0,
+          -16.0
+        ],
+        "max": [
+          13.5,
+          32.0,
+          -7.45
+        ]
+      },
+      "capacity": null,
+      "seats": 0,
+      "interactionHint": null
+    },
+    {
+      "id": "SM_Resonite_Window",
+      "name": "Resonite Window",
+      "description": "Look through pale cyan glass held in a strong resonite frame.",
+      "research": "resonite",
+      "itemFile": "Server/Item/Items/StrangeMatter/SM_Resonite_Window.json",
+      "model": "Blocks/StrangeMatter/Furniture/window.blockymodel",
+      "texture": "Blocks/StrangeMatter/Furniture/resonite_furniture.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Window.png",
+      "recipe": {
+        "Input": [
+          {
+            "ItemId": "SM_Resonite_Ingot",
+            "Quantity": 2
+          },
+          {
+            "ItemId": "Ingredient_Crystal_Cyan",
+            "Quantity": 2
+          }
+        ],
+        "OutputQuantity": 1,
+        "TimeSeconds": 3,
+        "BenchRequirement": [
+          {
+            "Type": "Crafting",
+            "Id": "SM_Laboratory",
+            "Categories": [
+              "SM_Laboratory_Furniture"
+            ]
+          }
+        ],
+        "KnowledgeRequired": true
+      },
+      "hitbox": "SM_Resonite_Window",
+      "boundsModelUnits": {
+        "min": [
+          -16.0,
+          0.0,
+          -3.0
+        ],
+        "max": [
+          16.0,
+          32.0,
+          3.6
+        ]
+      },
+      "capacity": null,
+      "seats": 0,
+      "interactionHint": null
+    },
+    {
+      "id": "SM_Resonite_Sign",
+      "name": "Resonite Sign",
+      "description": "Mark your laboratory with a glowing flask plaque. This decorative sign cannot be edited.",
+      "research": "resonite",
+      "itemFile": "Server/Item/Items/StrangeMatter/SM_Resonite_Sign.json",
+      "model": "Blocks/StrangeMatter/Furniture/sign.blockymodel",
+      "texture": "Blocks/StrangeMatter/Furniture/resonite_furniture.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Sign.png",
+      "recipe": {
+        "Input": [
+          {
+            "ItemId": "SM_Resonite_Ingot",
+            "Quantity": 2
+          },
+          {
+            "ItemId": "SM_Resonite_Nugget",
+            "Quantity": 3
+          }
+        ],
+        "OutputQuantity": 1,
+        "TimeSeconds": 3,
+        "BenchRequirement": [
+          {
+            "Type": "Crafting",
+            "Id": "SM_Laboratory",
+            "Categories": [
+              "SM_Laboratory_Furniture"
+            ]
+          }
+        ],
+        "KnowledgeRequired": true
+      },
+      "hitbox": "SM_Resonite_Sign",
+      "boundsModelUnits": {
+        "min": [
+          -15.0,
+          8.0,
+          -15.5
+        ],
+        "max": [
+          15.0,
+          28.0,
+          -8.25
+        ]
+      },
+      "capacity": null,
+      "seats": 0,
+      "interactionHint": null
+    },
+    {
+      "id": "SM_Resonite_Chest_Large",
+      "name": "Large Resonite Chest",
+      "description": "Store 36 stacks of supplies in a joined chest. Breaking it returns two regular chests and its contents.",
+      "research": "resonite",
+      "itemFile": "Server/Item/Items/StrangeMatter/SM_Resonite_Chest_Large.json",
+      "model": "Blocks/StrangeMatter/Furniture/chest_large.blockymodel",
+      "texture": "Blocks/StrangeMatter/Furniture/resonite_furniture.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonite_Chest_Large.png",
+      "recipe": null,
+      "hitbox": "SM_Resonite_Chest_Large",
+      "boundsModelUnits": {
+        "min": [
+          -47.0,
+          0.0,
+          -13.5
+        ],
+        "max": [
+          15.0,
+          25.75,
+          15.45
+        ]
+      },
+      "capacity": 36,
+      "seats": 0,
+      "interactionHint": "Press [{key}] to open the large chest",
+      "variant": true
+    }
+  ],
+  "modelUnitsPerBlock": 32,
+  "atlas": [
+    512,
+    512
+  ],
+  "materials": [
+    "navy",
+    "edge",
+    "dark",
+    "steel",
+    "cyan",
+    "purple",
+    "teal",
+    "plum",
+    "paper",
+    "wood",
+    "copper",
+    "cloth",
+    "screen",
+    "vent",
+    "amber",
+    "glass"
+  ],
+  "interactionHints": {
+    "interactionHints.SM_Resonite_Chair": "Press [{key}] to sit",
+    "interactionHints.SM_Resonite_Stool": "Press [{key}] to sit",
+    "interactionHints.SM_Resonite_Sofa": "Press [{key}] to sit",
+    "interactionHints.SM_Resonite_Bed": "Press [{key}] to sleep",
+    "interactionHints.SM_Resonite_Chest": "Press [{key}] to open the chest",
+    "interactionHints.SM_Resonite_Wardrobe": "Press [{key}] to open the wardrobe",
+    "interactionHints.SM_Resonite_Cabinet": "Press [{key}] to open the cabinet",
+    "interactionHints.SM_Resonite_Chest_Large": "Press [{key}] to open the large chest"
+  },
+  "nativeBehaviorSources": [
+    "Furniture_Village_Chair",
+    "Furniture_Crude_Stool",
+    "Furniture_Village_Bench",
+    "Furniture_Village_Bed",
+    "Furniture_Village_Chest_Small",
+    "Furniture_Village_Ladder",
+    "Furniture_Village_Window",
+    "Furniture_Village_Sign"
+  ],
+  "signEditable": false,
+  "notes": "Sign editing is not present in the supplied native furniture schema. Storage uses standard native container grids."
+}

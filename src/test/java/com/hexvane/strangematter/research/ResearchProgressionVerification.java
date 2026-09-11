@@ -27,7 +27,11 @@ public final class ResearchProgressionVerification {
                 require(!teaching.isEmpty() && teaching.stream().allMatch(p -> !p.title().isBlank() && !p.content().isBlank()), "Every topic has substantive unlocked teaching pages");
                 for (var page : teaching) if (page.recipe() != null) require(ResearchTeaching.recipe(page.recipe()) != null, "Teaching recipe uses the current Hytale ingredients: " + page.recipe());
             }
-            require(pages == 56, "All 56 original teaching pages are retained across 26 topics");
+            require(pages >= 58, "The original guides and new furniture and building pages remain available");
+            var buildingGuides = ResearchTeaching.pages(service.node("resonite"));
+            require(buildingGuides.stream().anyMatch(p -> "resonite_chair".equals(p.recipe()))
+                    && buildingGuides.stream().anyMatch(p -> "resonite_roof".equals(p.recipe())),
+                    "Resonite research teaches the new furniture and roof recipes");
             var command = new StrangeMatterCommand(service, null, null, null, null);
             require(command.getSubCommands().keySet().containsAll(Set.of("help", "journal", "status", "points", "spawn", "research", "unlock")), "Native command tree exposes discoverable subcommands");
             var unlock = command.getSubCommands().get("research").getSubCommands().get("unlock");

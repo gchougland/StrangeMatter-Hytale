@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.*;
 
-/** Original advancement criteria, including their actual AND/OR requirement groups. No currency rewards. */
+/** Achievement criteria preserve the original AND/OR requirement groups. No currency rewards. */
 public final class ProgressionService {
     public record Criterion(String trigger, Set<String> values) {}
     public record Definition(String id,String parent,String title,String description,String icon,
@@ -29,13 +29,14 @@ public final class ProgressionService {
     private boolean dirty;
 
     public ProgressionService(Path dataDirectory) {
+        // Keep the existing save filename so renaming the UI preserves earned achievements.
         file=dataDirectory.resolve("advancements.properties");
         try(InputStream input=getClass().getResourceAsStream("/Server/StrangeMatter/Progression/advancements.json")) {
-            if(input==null)throw new IOException("Missing advancement catalogue");
+            if(input==null)throw new IOException("Missing achievement catalogue");
             definitions=List.of(new Gson().fromJson(new InputStreamReader(input,StandardCharsets.UTF_8),Definition[].class));
         }catch(IOException e){throw new UncheckedIOException(e);}
         if(Files.exists(file))try(Reader reader=Files.newBufferedReader(file,StandardCharsets.UTF_8)){ledger.load(reader);}
-        catch(IOException e){throw new UncheckedIOException("Cannot load original advancement progress",e);}
+        catch(IOException e){throw new UncheckedIOException("Cannot load achievement progress",e);}
     }
     /** Called after the normal first-survival-join tablet grant; this service does not issue another tablet. */
     public synchronized void joined(UUID player){event(player,"joined","");}
@@ -93,7 +94,7 @@ public final class ProgressionService {
             var notices=pending.remove(player.getUuid());if(notices==null)continue;
             for(Definition d:notices) {
                 if(d.toast)NotificationUtil.sendNotification(player.getPacketHandler(),"Strange Matter: "+d.title,d.description);
-                if(d.chat)for(var recipient:world.getPlayerRefs())recipient.sendMessage(Message.raw(player.getUsername()+" has made the advancement ["+d.title+"]"));
+                if(d.chat)for(var recipient:world.getPlayerRefs())recipient.sendMessage(Message.raw(player.getUsername()+" earned the achievement ["+d.title+"]"));
             }
         }
     }
@@ -101,9 +102,9 @@ public final class ProgressionService {
         if(!dirty)return;
         try {
             Files.createDirectories(file.getParent());Path next=file.resolveSibling(file.getFileName()+".tmp");
-            try(Writer writer=Files.newBufferedWriter(next,StandardCharsets.UTF_8)){ledger.store(writer,"Strange Matter original advancement criteria");}
+            try(Writer writer=Files.newBufferedWriter(next,StandardCharsets.UTF_8)){ledger.store(writer,"Strange Matter achievement progress");}
             try{Files.move(next,file,StandardCopyOption.REPLACE_EXISTING,StandardCopyOption.ATOMIC_MOVE);}
             catch(AtomicMoveNotSupportedException e){Files.move(next,file,StandardCopyOption.REPLACE_EXISTING);}dirty=false;
-        }catch(IOException e){throw new UncheckedIOException("Cannot save advancement progress",e);}
+        }catch(IOException e){throw new UncheckedIOException("Cannot save achievement progress",e);}
     }
 }

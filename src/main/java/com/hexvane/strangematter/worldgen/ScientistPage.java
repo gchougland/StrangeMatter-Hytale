@@ -18,6 +18,7 @@ public final class ScientistPage extends InteractiveCustomUIPage<ResearchPageDat
     private boolean initialized;
     private String message="Trade resonite discoveries for Life Essence, and train this scientist to unlock more offers.";
     public ScientistPage(PlayerRef player,ScientistService service,UUID merchant){super(player,CustomPageLifetime.CanDismissOrCloseThroughInteraction,ResearchPageData.CODEC);this.service=service;this.merchant=merchant;}
+    boolean isTradingWith(UUID identity){return merchant.equals(identity);}
     @Override public void build(Ref<EntityStore> ref,UICommandBuilder cmd,UIEventBuilder events,Store<EntityStore> store) {
         if(!initialized){cmd.append("StrangeMatter/ScientistTrade.ui");bind(events,"#Close","close","");initialized=true;}
         var state=service.record(merchant);if(state==null){close();return;}

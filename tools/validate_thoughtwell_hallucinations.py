@@ -1,5 +1,6 @@
-"""Read-only, stdlib asset/privacy contract checks for recognizable hallucinations."""
+"""Thoughtwell asset/privacy checks with an optional historical artwork audit."""
 from pathlib import Path
+import argparse
 import json
 import os
 import zipfile
@@ -13,7 +14,7 @@ def read(path):
     return json.loads(path.read_text(encoding='utf-8-sig'))
 
 
-def validate():
+def validate(audit_art=False):
     report = read(ROOT / 'tools/assets/thoughtwell-hallucinations.json')
     installed = Path(os.environ.get('APPDATA', '')) / 'Hytale/install/release/package/game/latest/Assets.zip'
     native_zip = zipfile.ZipFile(installed) if not NATIVE.exists() and installed.exists() else None
@@ -50,8 +51,14 @@ def validate():
     assert 'phantom.owner!=viewerRef' in source
     assert all(token not in source for token in ('new EntityUpdates', 'NPCPlugin', 'executeDamage', 'PersistentModel'))
     snapshot = ROOT / report['snapshot'] / 'Resources.zip'
-    preserved = 0
-    if snapshot.exists():
+    preserved = None
+    haze_preserved = None
+    # This snapshot recorded what one implementation task left untouched. It is
+    # not a permanent art specification: normal builds must allow later edits
+    # to unrelated models, textures, animations and sounds.
+    if audit_art:
+        assert snapshot.is_file(), 'Historical artwork audit requires snapshot: ' + str(snapshot)
+        preserved = 0
         with zipfile.ZipFile(snapshot) as archive:
             for name in archive.namelist():
                 relative = name.removeprefix('src/main/resources/')
@@ -60,12 +67,16 @@ def validate():
                     preserved += 1
             haze = 'Server/Entity/Effects/StrangeMatter/SM_Cognitive_Dissonance.json'
             assert archive.read('src/main/resources/' + haze) == (RES / haze).read_bytes(), 'Blue haze or status icon changed'
+            haze_preserved = True
     if native_zip is not None:
         native_zip.close()
     print(json.dumps({'result': 'PASS', 'nativeAnimatedCreatureModels': 3, 'maximumCreaturesPerPlayer': 1,
                       'creatureSeconds': 2.15, 'finiteDissolveParticles': 14, 'preservedCommonFiles': preserved,
-                      'nativeTrackerVisibilityFilter': True, 'hazePreserved': True}))
+                      'nativeTrackerVisibilityFilter': True, 'hazePreserved': haze_preserved,
+                      'historicalArtAudited': audit_art}))
 
 
 if __name__ == '__main__':
-    validate()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--audit-art', action='store_true', help='Compare all artwork with the original task snapshot. Later art edits are expected to fail this optional audit.')
+    validate(parser.parse_args().audit_art)

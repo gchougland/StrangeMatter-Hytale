@@ -35,10 +35,10 @@ public final class StrangeMatterCommand extends AbstractCommandCollection {
         addSubCommand(new Help());
         var journal=new PlayerAction("journal","Open the research archive",false);journal.addAliases("tablet");addSubCommand(journal);
         addSubCommand(new PlayerAction("status","Show observations and unlocked research",false));
-        addSubCommand(new PlayerAction("milestones","Open the milestone journal",false));
+        var achievements=new PlayerAction("achievements","Open your achievements",false);achievements.addAliases("milestones");addSubCommand(achievements);
         addSubCommand(new PlayerAction("kit","Give laboratory starter instruments",true));
         addSubCommand(new PlayerAction("scientist","Spawn a laboratory scientist nearby",true));
-        addSubCommand(new Save());addSubCommand(new Spawn());addSubCommand(new Locate());addSubCommand(new Points());
+        addSubCommand(new Save());addSubCommand(new Spawn());addSubCommand(new Locate());addSubCommand(new Points());addSubCommand(new AllPoints());
         addSubCommand(new ResearchCommands());addSubCommand(new Unlock("unlock"));
     }
     private final class Help extends CommandBase {
@@ -46,51 +46,65 @@ public final class StrangeMatterCommand extends AbstractCommandCollection {
         @Override protected void executeSync(CommandContext context){
             context.sendMessage(Message.raw("Scan natural anomalies, buy notes in the tablet, then stabilize them at a Research Machine. Select an unlocked topic to read its field guide. Use --help after any subcommand for typed arguments."));
             context.sendMessage(StrangeMatterCommand.this.getFullUsage(context.sender()));
-            if(context.sender().hasPermission(ADMIN))context.sendMessage(Message.raw("Admin examples: /sm research unlock hoverboard | /sm research unlock all --player PlayerName | /sm points energy 25 --player <UUID>. Unlock includes prerequisites; --strict requires them to be completed."));
+            if(context.sender().hasPermission(ADMIN))context.sendMessage(Message.raw("Admin examples: /sm research unlock hoverboard | /sm research unlock all --player PlayerName | /sm points energy 25 | /sm points all 25 --player PlayerName. Unlock includes prerequisites; --strict requires them to be completed."));
         }
     }
     private final class PlayerAction extends AbstractPlayerCommand {
         private final String action;
-        PlayerAction(String action,String description,boolean admin){super(action,description);this.action=action;if(admin)requirePermission(ADMIN);else setPermissionGroups(HytalePermissionsProvider.GROUP_ADVENTURER);}
+        PlayerAction(String action,String description,boolean admin){super(action,description);this.action=action;if(admin){setPermissionGroups();requirePermission(ADMIN);}else setPermissionGroups(HytalePermissionsProvider.GROUP_ADVENTURER);}
         @Override protected void execute(CommandContext context,Store<EntityStore> store,Ref<EntityStore> ref,PlayerRef player,World world){
             switch(action){
                 case "journal"->research.openTablet(player,store);
-                case "milestones"->progression.open(player,store);
+                case "achievements"->progression.open(player,store);
                 case "status"->{var p=research.profile(player.getUuid());context.sendMessage(Message.raw("Research: "+p.points()+" | "+p.unlocked().size()+" topics | "+p.scannedCount()+" observations"));}
                 case "scientist"->{var transform=store.getComponent(ref,TransformComponent.getComponentType());if(transform==null)return;var id=scientists.spawnScientist(world,new Vector3d(transform.getPosition()).add(0,0,3));context.sendMessage(Message.raw("Spawned laboratory scientist ("+id+")."));}
-                case "kit"->{var inv=InventoryComponent.getCombined(store,ref,InventoryComponent.HOTBAR_FIRST);int delivered=0;for(String id:List.of("SM_Research_Tablet","SM_Field_Scanner","SM_Research_Machine","SM_Anomaly_Resonator","SM_Resonant_Burner","SM_Resonance_Condenser","SM_Reality_Forge","SM_Paradoxical_Energy_Cell","SM_Echo_Vacuum","SM_Containment_Capsule","SM_Resonant_Conduit","SM_Rift_Stabilizer","SM_Stasis_Projector","SM_Levitation_Pad"))if(InventoryOps.give(inv,new ItemStack(id,1)))delivered++;context.sendMessage(Message.raw("Delivered "+delivered+" laboratory instruments; remaining items need inventory space."));}
+                case "kit"->{var inv=InventoryComponent.getCombined(store,ref,InventoryComponent.HOTBAR_FIRST);int delivered=0;for(String id:List.of("SM_Research_Tablet","SM_Field_Scanner","SM_Research_Machine","SM_Anomaly_Resonator","SM_Resonant_Burner","SM_Resonance_Condenser","SM_Reality_Forge","SM_Paradoxical_Energy_Cell","SM_Echo_Vacuum","SM_Containment_Capsule","SM_Resonant_Conduit","SM_Rift_Stabilizer","SM_Stasis_Projector","SM_Levitation_Pad","SM_Anomaly_Nullifier"))if(InventoryOps.give(inv,new ItemStack(id,1)))delivered++;context.sendMessage(Message.raw("Delivered "+delivered+" laboratory instruments; remaining items need inventory space."));}
             }
         }
     }
     private final class Save extends CommandBase {
-        Save(){super("save","Save laboratory world state");requirePermission(ADMIN);}
+        Save(){super("save","Save laboratory world state");setPermissionGroups();requirePermission(ADMIN);}
         @Override protected void executeSync(CommandContext context){machines.save();anomalies.save();scientists.save();progression.save();context.sendMessage(Message.raw("Saved Strange Matter world state."));}
     }
     private final class Spawn extends AbstractPlayerCommand {
         private final RequiredArg<AnomalyType> type=withRequiredArg("type","Anomaly type to spawn",ArgTypes.forEnum("Anomaly type",AnomalyType.class));
-        Spawn(){super("spawn","Spawn a natural anomaly nearby");requirePermission(ADMIN);}
-        @Override protected void execute(CommandContext context,Store<EntityStore> store,Ref<EntityStore> ref,PlayerRef player,World world){var transform=store.getComponent(ref,TransformComponent.getComponentType());if(transform==null)return;var a=anomalies.spawn(type.get(context),world,new Vector3d(transform.getPosition()).add(0,1,4),true);anomalies.save();context.sendMessage(Message.raw("Spawned "+a.type.displayName+" ("+a.id+")."));}
+        Spawn(){super("spawn","Spawn a natural anomaly nearby");setPermissionGroups();requirePermission(ADMIN);}
+        @Override protected void execute(CommandContext context,Store<EntityStore> store,Ref<EntityStore> ref,PlayerRef player,World world){var transform=store.getComponent(ref,TransformComponent.getComponentType());if(transform==null)return;var a=anomalies.spawnRaised(type.get(context),world,new Vector3d(transform.getPosition()).add(0,1,4),true);anomalies.save();context.sendMessage(Message.raw("Spawned "+a.type.displayName+" ("+a.id+")."));}
     }
     private final class Locate extends AbstractPlayerCommand {
         private final OptionalArg<AnomalyType> type=withOptionalArg("type","Restrict to an anomaly type",ArgTypes.forEnum("Anomaly type",AnomalyType.class));
-        Locate(){super("locate","Locate a discovered anomaly; optional --type");requirePermission(ADMIN);}
+        Locate(){super("locate","Locate a discovered anomaly; optional --type");setPermissionGroups();requirePermission(ADMIN);}
         @Override protected void execute(CommandContext context,Store<EntityStore> store,Ref<EntityStore> ref,PlayerRef player,World world){var t=store.getComponent(ref,TransformComponent.getComponentType());if(t==null)return;var a=anomalies.nearest(world,t.getPosition(),100000,type.get(context));context.sendMessage(Message.raw(a.map(v->v.type.displayName+" at "+(int)v.x+", "+(int)v.y+", "+(int)v.z).orElse("No discovered anomaly matches this frequency.")));}
     }
     private final class Points extends CommandBase {
-        private final RequiredArg<ResearchType> type=withRequiredArg("discipline","Research discipline",ArgTypes.forEnum("Research discipline",ResearchType.class));
+        private final RequiredArg<String> type=withRequiredArg("discipline","Research discipline or all",disciplineArgument());
         private final RequiredArg<Integer> amount=withRequiredArg("amount","Observations to add, 1 to 100000",ArgTypes.INTEGER);
         private final OptionalArg<UUID> target=withOptionalArg("player","Online name or offline UUID; defaults to you",playerArgument());
-        Points(){super("points","Award research observations");requirePermission(ADMIN);}
-        @Override protected void executeSync(CommandContext context){UUID id=target(context,target);if(id==null)return;int count=amount.get(context);if(count<1||count>100000){context.sendMessage(Message.raw("Amount must be from 1 to 100000."));return;}try{research.addPoints(id,type.get(context),count);context.sendMessage(Message.raw("Added "+count+" "+type.get(context).displayName()+" observations for "+id+"."));}catch(ArithmeticException overflow){context.sendMessage(Message.raw("The observation balance is at its supported maximum."));}}
+        Points(){super("points","Award research observations");setPermissionGroups();requirePermission(ADMIN);}
+        @Override protected void executeSync(CommandContext context){awardPoints(context,target,amount.get(context),ResearchType.fromName(type.get(context)));}
+    }
+    private final class AllPoints extends CommandBase {
+        private final RequiredArg<Integer> amount=withRequiredArg("amount","Points to add to every discipline, 1 to 100000",ArgTypes.INTEGER);
+        private final OptionalArg<UUID> target=withOptionalArg("player","Online name or offline UUID; defaults to you",playerArgument());
+        AllPoints(){super("pointsall","Add the same number of points to every research discipline");setPermissionGroups();requirePermission(ADMIN);}
+        @Override protected void executeSync(CommandContext context){awardPoints(context,target,amount.get(context),null);}
+    }
+    private void awardPoints(CommandContext context,OptionalArg<UUID> target,int count,ResearchType type){
+        UUID id=target(context,target);if(id==null)return;
+        if(count<1||count>100000){context.sendMessage(Message.raw("Amount must be from 1 to 100000."));return;}
+        try{
+            if(type==null)research.addPointsAll(id,count);else research.addPoints(id,type,count);
+            context.sendMessage(Message.raw("Added "+count+" "+(type==null?"points to every discipline":type.displayName()+" points")+" for "+id+"."));
+        }catch(ArithmeticException overflow){context.sendMessage(Message.raw("The point balance is at its supported maximum. No points were added."));}
     }
     private final class ResearchCommands extends AbstractCommandCollection {
-        ResearchCommands(){super("research","Administer research progression");requirePermission(ADMIN);addSubCommand(new Unlock("unlock"));}
+        ResearchCommands(){super("research","Administer research progression");setPermissionGroups();requirePermission(ADMIN);addSubCommand(new Unlock("unlock"));}
     }
     private final class Unlock extends CommandBase {
         private final RequiredArg<String> node=withRequiredArg("node","Research node ID or all",researchArgument());
         private final OptionalArg<UUID> target=withOptionalArg("player","Online name or offline UUID; defaults to you",playerArgument());
         private final FlagArg strict=withFlagArg("strict","Require prerequisites instead of unlocking them too");
-        Unlock(String name){super(name,"Unlock one topic and its prerequisites, or all topics");requirePermission(ADMIN);}
+        Unlock(String name){super(name,"Unlock one topic and its prerequisites, or all topics");setPermissionGroups();requirePermission(ADMIN);}
         @Override protected void executeSync(CommandContext context){
             UUID id=target(context,target);if(id==null)return;
             try{
@@ -106,6 +120,7 @@ public final class StrangeMatterCommand extends AbstractCommandCollection {
     }
     private static UUID target(CommandContext context,OptionalArg<UUID> argument){UUID id=argument.get(context);if(id!=null)return id;if(context.isPlayer())return context.senderAs(PlayerRef.class).getUuid();context.sendMessage(Message.raw("The console must specify --player <online name or UUID>."));return null;}
     public SingleArgumentType<String> researchArgument(){return choices("Research node",()->{var ids=new ArrayList<>(research.nodes().stream().map(ResearchNode::id).toList());ids.add("all");return ids;});}
+    public static SingleArgumentType<String> disciplineArgument(){return choices("Research discipline",()->{var names=new ArrayList<>(Arrays.stream(ResearchType.values()).map(ResearchType::getName).toList());names.add("all");return names;});}
     static SingleArgumentType<String> choices(String name,Supplier<Collection<String>> values){
         return new SingleArgumentType<>(name,Message.raw(name)){
             @Override public String parse(String input,ParseResult result){String id=input.toLowerCase(Locale.ROOT);if(values.get().contains(id))return id;result.fail(Message.raw("Unknown "+name.toLowerCase(Locale.ROOT)+": "+input+". Use autocomplete to choose a value."));return null;}

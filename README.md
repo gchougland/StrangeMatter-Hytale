@@ -24,13 +24,17 @@ Start with a Laboratory Bench, then grow your workshop into a room full of stran
 
 The Reality Forge turns materials and shards into equipment you have learned to make. Capture anomalies in containment capsules and move them where you need them.
 
+Make the laboratory your home with matching Resonite furniture. Rest in a bed, gather around a table and store your supplies in chests and cabinets. Add shelves, windows and glowing wall displays, then finish your building with matching roofs and stairs.
+
 Energetic Rifts are dangerous to approach. An active Rift Stabilizer draws power from a nearby rift and stops it from shocking nearby creatures. A Tinfoil Hat can also protect you from its shocks.
+
+Place an Anomaly Nullifier near an anomaly to stop its effects within 12 blocks. The anomaly stays visible and can still be studied. Use the nullifier to turn it on or off.
 
 ## Put your discoveries to work
 
 Link distant places with the Warp Gun. Move heavy stone with the Graviton Hammer. Ride across the land on a Hoverboard, lift yourself with Levitation Pads or borrow another creature's appearance with the Echoform Imprinter.
 
-Keep unusual finds floating above a Stasis Projector and fill your laboratory with glowing crystals, lamps and lanterns. Trade Life Essence with Anomaly Scientists as you explore what else the world has to offer.
+Keep unusual finds floating above a Stasis Projector. Use the pad to switch it on or off. Fill your laboratory with glowing crystals, lamps and lanterns, and trade Life Essence with Anomaly Scientists as you explore what else the world has to offer.
 
 ## Begin your first experiment
 

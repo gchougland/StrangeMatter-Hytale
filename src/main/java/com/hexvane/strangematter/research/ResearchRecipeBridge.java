@@ -20,6 +20,7 @@ public final class ResearchRecipeBridge {
             Map.entry("SM_Echoform_Imprinter", "echoform_imprinter"), Map.entry("SM_Warp_Gun", "warp_gun"),
             Map.entry("SM_Chrono_Blister", "chrono_blister"), Map.entry("SM_Graviton_Hammer", "graviton_hammer"),
             Map.entry("SM_Stasis_Projector", "stasis_projector"), Map.entry("SM_Rift_Stabilizer", "rift_stabilizer"),
+            Map.entry("SM_Anomaly_Nullifier", "rift_stabilizer"),
             Map.entry("SM_Levitation_Pad", "levitation_pad"), Map.entry("SM_Hoverboard", "hoverboard"));
     public static String requirement(String item) {
         if (item == null) return null;

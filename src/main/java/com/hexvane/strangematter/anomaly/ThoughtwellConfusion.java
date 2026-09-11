@@ -135,5 +135,10 @@ final class ThoughtwellConfusion {
         }
         ThoughtwellHallucinations.remove(phantom);
     }
+    void clear(World world,Ref<EntityStore> player){
+        for(var entry:exposures.entrySet())if(entry.getValue().world==world&&entry.getValue().player==player){
+            removePhantom(entry.getValue(),false);exposures.remove(entry.getKey(),entry.getValue());
+        }
+    }
     void clear(World world){for(var entry:exposures.entrySet())if(entry.getValue().world==world){removePhantom(entry.getValue(),false);exposures.remove(entry.getKey(),entry.getValue());}}
 }

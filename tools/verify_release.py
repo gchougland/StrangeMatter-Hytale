@@ -22,6 +22,7 @@ with zipfile.ZipFile(jar) as z, zipfile.ZipFile(run / 'mods/StrangeMatter-Smoke.
     names = set(z.namelist())
     assert len(names) == len(z.namelist()), 'Duplicate ZIP entry'
     manifest = json.loads(z.read('manifest.json'))
+    assert manifest['Name'] == 'Strange Matter', 'Native mod lists must display the spaced name'
     assert manifest['Version'] == version
     assert manifest.get('IncludesAssetPack') is True, 'Native UI documents and images must be advertised to clients'
     assert z.read('META-INF/LICENSE.txt') == (ROOT / 'LICENSE.txt').read_bytes(), 'Packaged license differs from repository license'
@@ -57,7 +58,7 @@ with zipfile.ZipFile(jar) as z, zipfile.ZipFile(run / 'mods/StrangeMatter-Smoke.
     assert not names.intersection(test_names), 'Test fixture leaked into release'
 
 report = {
-    'version': version, 'jar': str(jar), 'bytes': jar.stat().st_size,
+    'name': manifest['Name'], 'version': version, 'jar': str(jar), 'bytes': jar.stat().st_size,
     'sha256': hashlib.sha256(jar.read_bytes()).hexdigest(),
     'sourceResourcesMatched': len(resources), 'compiledClassesMatched': len(classes),
     'testFixturesExcluded': True, 'nativeWorld': 'PASS', 'nativeAssets': 'PASS',

@@ -1,0 +1,17 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Warp_Bolt_Purple_Star"
+    },
+    {
+      "SpawnerId": "SM_Warp_Bolt_Purple_Halo"
+    },
+    {
+      "SpawnerId": "SM_Warp_Bolt_Purple_Vortex"
+    }
+  ],
+  "LifeSpan": 3.35,
+  "CullDistance": 96,
+  "BoundingRadius": 8,
+  "IsImportant": true
+}

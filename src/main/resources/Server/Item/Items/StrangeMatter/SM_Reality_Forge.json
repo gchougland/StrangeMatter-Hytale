@@ -55,7 +55,13 @@
         "Working": {
           "Looping": true,
           "CustomModelAnimation": "Blocks/StrangeMatter/reality_forge_working.blockyanim",
-          "CustomModelAnimationSpeed": 1
+          "CustomModelAnimationSpeed": 1,
+          "CustomModelTexture": [
+            {
+              "Texture": "Blocks/StrangeMatter/reality_forge_working.png",
+              "Weight": 1
+            }
+          ]
         }
       }
     }

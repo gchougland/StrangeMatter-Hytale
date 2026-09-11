@@ -1,0 +1,38 @@
+{
+  "Model": "SM_Warp_Bolt_Cyan",
+  "LaunchForce": 24,
+  "SpawnOffset": {
+    "X": 0,
+    "Y": 0,
+    "Z": 0
+  },
+  "SpawnRotationOffset": {
+    "Yaw": 0,
+    "Pitch": 0,
+    "Roll": 0
+  },
+  "Interactions": {
+    "ProjectileMiss": {
+      "Cooldown": {
+        "Cooldown": 0
+      },
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0
+        }
+      ]
+    }
+  },
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 0,
+    "Bounciness": 0,
+    "BounceCount": 0,
+    "SticksVertically": true,
+    "AllowRolling": false,
+    "TerminalVelocityAir": 24,
+    "TerminalVelocityWater": 24,
+    "HitWaterImpulseLoss": 0
+  }
+}

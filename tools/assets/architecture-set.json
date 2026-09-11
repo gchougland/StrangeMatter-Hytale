@@ -1,0 +1,232 @@
+{
+  "items": [
+    {
+      "id": "SM_Resonite_Roof",
+      "name": "Resonite Roof",
+      "description": "Navy metal roofing. Automatically joins into inner corners, outer corners and ridge caps.",
+      "model": "Blocks/StrangeMatter/Roofs/Resonite_Roof.blockymodel",
+      "texture": "Blocks/StrangeMatter/Roofs/Resonite_Roof.png",
+      "recipe": {
+        "Input": [
+          {
+            "ItemId": "SM_Resonite_Ingot",
+            "Quantity": 2
+          }
+        ],
+        "OutputQuantity": 4,
+        "TimeSeconds": 2,
+        "KnowledgeRequired": true,
+        "BenchRequirement": [
+          {
+            "Id": "SM_Laboratory",
+            "Type": "Crafting",
+            "Categories": [
+              "SM_Laboratory_Building"
+            ]
+          }
+        ]
+      },
+      "category": "SM_Laboratory_Building",
+      "research": "resonite",
+      "nativeParent": "Metal_Iron_Roof",
+      "states": [
+        "Corner_Right",
+        "Corner_Left",
+        "Inverted_Corner_Right",
+        "Inverted_Corner_Left",
+        "Topper"
+      ]
+    },
+    {
+      "id": "SM_Resonite_Roof_Shallow",
+      "name": "Shallow Resonite Roof",
+      "description": "A broad, gentle metal roof slope. Place matching roofs beside it to form corners.",
+      "model": "Blocks/StrangeMatter/Roofs/Resonite_Roof_Shallow.blockymodel",
+      "texture": "Blocks/StrangeMatter/Roofs/Resonite_Roof.png",
+      "recipe": {
+        "Input": [
+          {
+            "ItemId": "SM_Resonite_Ingot",
+            "Quantity": 2
+          }
+        ],
+        "OutputQuantity": 2,
+        "TimeSeconds": 2,
+        "KnowledgeRequired": true,
+        "BenchRequirement": [
+          {
+            "Id": "SM_Laboratory",
+            "Type": "Crafting",
+            "Categories": [
+              "SM_Laboratory_Building"
+            ]
+          }
+        ]
+      },
+      "category": "SM_Laboratory_Building",
+      "research": "resonite",
+      "nativeParent": "Metal_Iron_Roof_Shallow",
+      "states": [
+        "Corner_Right",
+        "Corner_Left",
+        "Inverted_Corner_Right",
+        "Inverted_Corner_Left"
+      ]
+    },
+    {
+      "id": "SM_Resonite_Roof_Steep",
+      "name": "Steep Resonite Roof",
+      "description": "A tall metal roof slope for sharp laboratory gables. Joins into inner and outer corners.",
+      "model": "Blocks/StrangeMatter/Roofs/Resonite_Roof_Steep.blockymodel",
+      "texture": "Blocks/StrangeMatter/Roofs/Resonite_Roof.png",
+      "recipe": {
+        "Input": [
+          {
+            "ItemId": "SM_Resonite_Ingot",
+            "Quantity": 2
+          }
+        ],
+        "OutputQuantity": 2,
+        "TimeSeconds": 2,
+        "KnowledgeRequired": true,
+        "BenchRequirement": [
+          {
+            "Id": "SM_Laboratory",
+            "Type": "Crafting",
+            "Categories": [
+              "SM_Laboratory_Building"
+            ]
+          }
+        ]
+      },
+      "category": "SM_Laboratory_Building",
+      "research": "resonite",
+      "nativeParent": "Metal_Iron_Roof_Steep",
+      "states": [
+        "Corner_Right",
+        "Corner_Left",
+        "Inverted_Corner_Right",
+        "Inverted_Corner_Left"
+      ]
+    },
+    {
+      "id": "SM_Resonite_Roof_Flat",
+      "name": "Flat Resonite Roof",
+      "description": "A low metal roof panel for flat laboratory roofs, ledges and transitions.",
+      "model": "Blocks/StrangeMatter/Roofs/Resonite_Roof_Flat.blockymodel",
+      "texture": "Blocks/StrangeMatter/Roofs/Resonite_Roof.png",
+      "recipe": {
+        "Input": [
+          {
+            "ItemId": "SM_Resonite_Ingot",
+            "Quantity": 2
+          }
+        ],
+        "OutputQuantity": 4,
+        "TimeSeconds": 2,
+        "KnowledgeRequired": true,
+        "BenchRequirement": [
+          {
+            "Id": "SM_Laboratory",
+            "Type": "Crafting",
+            "Categories": [
+              "SM_Laboratory_Building"
+            ]
+          }
+        ]
+      },
+      "category": "SM_Laboratory_Building",
+      "research": "resonite",
+      "nativeParent": "Metal_Iron_Roof_Flat",
+      "states": []
+    }
+  ],
+  "nativeModelCopies": {
+    "Blocks/StrangeMatter/Roofs/Resonite_Roof.blockymodel": {
+      "native": "Blocks/Structures/Roofs/Metal_Roof.blockymodel",
+      "sha256": "e3a77ade932b307b56e193a8c7d75aaaece63c6cbe5d01d7b32c4fd482bfb9a1"
+    },
+    "Blocks/StrangeMatter/Roofs/Resonite_Roof_Corner_Right.blockymodel": {
+      "native": "Blocks/Structures/Roofs/Metal_Roof_Corner_Right.blockymodel",
+      "sha256": "bfbeb1a58dcf1416425fb64e9b2633d3f6a142375d128b3d44e74b63360561f7"
+    },
+    "Blocks/StrangeMatter/Roofs/Resonite_Roof_Corner_Left.blockymodel": {
+      "native": "Blocks/Structures/Roofs/Metal_Roof_Corner_Left.blockymodel",
+      "sha256": "d177fc1261534f2968452f019563026d55a6a766b135b28660d6181fca22cacb"
+    },
+    "Blocks/StrangeMatter/Roofs/Resonite_Roof_Corner_Inverted_Right.blockymodel": {
+      "native": "Blocks/Structures/Roofs/Metal_Roof_Corner_Inverted_Right.blockymodel",
+      "sha256": "546186589ec1b3dd5f16d065f328c378f40408316f9d3e51f0e75bc300a99f7a"
+    },
+    "Blocks/StrangeMatter/Roofs/Resonite_Roof_Corner_Inverted_Left.blockymodel": {
+      "native": "Blocks/Structures/Roofs/Metal_Roof_Corner_Inverted_Left.blockymodel",
+      "sha256": "82d150f592bc9a8cb4eab0befa095753ff9c42c9d6a7aa0f7f5cbf7e82f65ae3"
+    },
+    "Blocks/StrangeMatter/Roofs/Resonite_Roof_Ridge_Topper.blockymodel": {
+      "native": "Blocks/Structures/Roofs/Metal_Roof_Ridge_Topper.blockymodel",
+      "sha256": "fac907481914114a6e5993e7d9247fdf9a7e4fee0bf9f6eed74f2f8bafc6c8a4"
+    },
+    "Blocks/StrangeMatter/Roofs/Resonite_Roof_Shallow.blockymodel": {
+      "native": "Blocks/Structures/Roofs/Metal_Roof_Shallow.blockymodel",
+      "sha256": "589be18b5e3d8af98b57711c4caea638cb15540c918fa85e9f36ce9eb1231208"
+    },
+    "Blocks/StrangeMatter/Roofs/Resonite_Roof_Shallow_Corner_Right.blockymodel": {
+      "native": "Blocks/Structures/Roofs/Metal_Roof_Shallow_Corner_Right.blockymodel",
+      "sha256": "fa55b643d231629becac6d02b67196851ae21502946628eb352b4707b16a00bf"
+    },
+    "Blocks/StrangeMatter/Roofs/Resonite_Roof_Shallow_Corner_Left.blockymodel": {
+      "native": "Blocks/Structures/Roofs/Metal_Roof_Shallow_Corner_Left.blockymodel",
+      "sha256": "1c22bb9847ab00ca258ea06dab310c2ccb3ffdc727e09fcde6e09b65a4f78cb4"
+    },
+    "Blocks/StrangeMatter/Roofs/Resonite_Roof_Shallow_Corner_Inverted_Right.blockymodel": {
+      "native": "Blocks/Structures/Roofs/Metal_Roof_Shallow_Corner_Inverted_Right.blockymodel",
+      "sha256": "c269e6cf1005c0698f0ab56cbb6dfac808cc34108987c7efa224636347a1ceeb"
+    },
+    "Blocks/StrangeMatter/Roofs/Resonite_Roof_Shallow_Corner_Inverted_Left.blockymodel": {
+      "native": "Blocks/Structures/Roofs/Metal_Roof_Shallow_Corner_Inverted_Left.blockymodel",
+      "sha256": "ac34fd72209c536c7742fc91a8d3251e393af6f3e6668b4297f0fd12c461e726"
+    },
+    "Blocks/StrangeMatter/Roofs/Resonite_Roof_Steep.blockymodel": {
+      "native": "Blocks/Structures/Roofs/Metal_Roof_Steep.blockymodel",
+      "sha256": "632d0e578890744f144f077ba26b0306ea1384a9d712f86845a79a140781a82c"
+    },
+    "Blocks/StrangeMatter/Roofs/Resonite_Roof_Steep_Corner_Right.blockymodel": {
+      "native": "Blocks/Structures/Roofs/Metal_Roof_Steep_Corner_Right.blockymodel",
+      "sha256": "231a3fef58cfb83885d146cca2739c7eb61b8c3e40d84ae6e48bc11f4154c212"
+    },
+    "Blocks/StrangeMatter/Roofs/Resonite_Roof_Steep_Corner_Left.blockymodel": {
+      "native": "Blocks/Structures/Roofs/Metal_Roof_Steep_Corner_Left.blockymodel",
+      "sha256": "7a7906c6c0520dfa7479fbc15b927ea6162ca6aa70ecd23dfe74912bf002fe80"
+    },
+    "Blocks/StrangeMatter/Roofs/Resonite_Roof_Steep_Corner_Inverted_Right.blockymodel": {
+      "native": "Blocks/Structures/Roofs/Metal_Roof_Steep_Corner_Inverted_Right.blockymodel",
+      "sha256": "61e7ff0ae301602fe31dfc74f9efff1e96038340d99788f7aca53141b7bf721a"
+    },
+    "Blocks/StrangeMatter/Roofs/Resonite_Roof_Steep_Corner_Inverted_Left.blockymodel": {
+      "native": "Blocks/Structures/Roofs/Metal_Roof_Steep_Corner_Inverted_Left.blockymodel",
+      "sha256": "384529279f9a45d2f6145a93823ba35318f410626347a09474b8262c327dd45a"
+    },
+    "Blocks/StrangeMatter/Roofs/Resonite_Roof_Flat.blockymodel": {
+      "native": "Blocks/Structures/Roofs/Metal_Roof_Flat.blockymodel",
+      "sha256": "f800768ff066319e47c00e123fab27b48f69a21fa23d9e76b38e128439240d0f"
+    }
+  },
+  "nativeAtlas": "C:\\Users\\gchou\\Documents\\HytaleModding\\HytaleSourceCode\\Assets\\Common\\Blocks\\Structures\\Roofs\\Metal_Roofs\\Metal_Iron.png",
+  "preservedExistingArt": {
+    "Blocks/StrangeMatter/resonite_door.png": "24544ea1fcae79d1ab355bee669757f8e75451706fbe7782674b39997ea02d86",
+    "Blocks/StrangeMatter/resonite_trapdoor.png": "65a0075bf971951607e47e4af6d7720f4281890db875ef0388df224bcd2c3de8",
+    "Blocks/StrangeMatter/resonite_tile_stairs.png": "a12cbf7ebf4b997466d07d92706ef99e1cf50c49e618cdd75c50bfe959dd006e",
+    "Blocks/StrangeMatter/resonite_door.blockymodel": "19b7fb392a3f544d41a5cef43c4e51e3d0d361eb7fcac160f1aaa95bf8d68743",
+    "Blocks/StrangeMatter/resonite_tile_stairs.blockymodel": "a7a8220db9b1846e7584366333ccff01bfacebbede2f884fc48cff85537ee98d"
+  },
+  "targetedFixes": {
+    "doorInwardSlideModelUnits": 4.5,
+    "hatchHinge": [
+      -13,
+      3,
+      0
+    ],
+    "hatchOpenAxis": "Z",
+    "hatchOpenDegrees": 90
+  }
+}

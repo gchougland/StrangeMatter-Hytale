@@ -35,7 +35,8 @@ public final class StrangeMatterPlugin extends JavaPlugin {
     private EquipmentService equipment;
     private ScientistService scientists;
     private ProgressionService progression;
-    public StrangeMatterPlugin(JavaPluginInit init){super(init);}
+    private volatile com.hexvane.strangematter.diagnostics.WorldStallDiagnostics diagnostics;
+    public StrangeMatterPlugin(JavaPluginInit init){super(PluginDataPaths.preserveLegacyDirectory(init));}
     public static StrangeMatterPlugin instance(){return instance;}
     public EquipmentService equipment(){return equipment;}
     public ProgressionService progression(){return progression;}
@@ -45,6 +46,7 @@ public final class StrangeMatterPlugin extends JavaPlugin {
             research=new ResearchService(getDataDirectory());anomalies=new AnomalyService(getDataDirectory());
             machines=new MachineService(getDataDirectory(),config,research,anomalies);equipment=new EquipmentService(research,anomalies,machines);
             anomalies.setGroundingHook(machines::grounded);
+            anomalies.setSuppressionHook(machines::suppressed);
             machines.setCapsuleReservationCheck(equipment::capsuleInFlight);
             scientists=new ScientistService(getDataDirectory());progression=new ProgressionService(getDataDirectory());
             scientists.setMachineRegistrar((world,position,id)->machines.register(world,position,id));
@@ -58,6 +60,8 @@ public final class StrangeMatterPlugin extends JavaPlugin {
             getEntityStoreRegistry().registerSystem(new MachineEvents.EnvironmentBreak(machines));
             getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.research.ResearchCraftGate(research));
             getEntityStoreRegistry().registerSystem(new LaboratoryTick());
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.equipment.LevitationInputSystem());
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.equipment.LevitationInputSystem.RemoveSystem());
             getEntityStoreRegistry().registerSystem(anomalies.gravityInputSystem());
             getEntityStoreRegistry().registerSystem(anomalies.gravitySystem());
             getEntityStoreRegistry().registerSystem(anomalies.gravityCleanupSystem());
@@ -81,6 +85,7 @@ public final class StrangeMatterPlugin extends JavaPlugin {
         }catch(Exception e){throw new IllegalStateException("Strange Matter initialization failed",e);}
     }
     @Override protected void start(){
+        diagnostics=new com.hexvane.strangematter.diagnostics.WorldStallDiagnostics(message->getLogger().atWarning().log("%s",message));
         // Loaded chunk lighting can outlive changes to block asset colors.
         for(var world:Universe.get().getWorlds().values())if(world.isAlive())
             world.execute(()->{if(instance==this)FixtureLightingRefresh.refreshLoaded(world);});
@@ -89,6 +94,7 @@ public final class StrangeMatterPlugin extends JavaPlugin {
         private final Set<String> pending=ConcurrentHashMap.newKeySet();
         private final java.util.Map<String,Long> lastErrors=new ConcurrentHashMap<>();
         private void tickSubsystem(World world,String name,Runnable tick) {
+            if(diagnostics!=null)diagnostics.stage(world.getName(),"Strange Matter "+name);
             try { tick.run(); }
             catch(Exception e) {
                 long now=System.currentTimeMillis();String key=world.getName()+":"+name;
@@ -100,6 +106,7 @@ public final class StrangeMatterPlugin extends JavaPlugin {
         }
         @Override public void tick(float dt,int index,Store<EntityStore> store){
             var world=store.getExternalData().getWorld();
+            if(diagnostics!=null)diagnostics.observe(world.getName(),world,world::isAlive);
             if(!pending.add(world.getName()))return;
             world.execute(()->{try{if(instance!=null){
                 // A broken field must not starve capsule inventory receipts or mounted movement.
@@ -108,10 +115,11 @@ public final class StrangeMatterPlugin extends JavaPlugin {
                 tickSubsystem(world,"equipment",()->equipment.tick(world,dt));
                 tickSubsystem(world,"scientists",()->scientists.tick(world,dt));
                 tickSubsystem(world,"progression",()->progression.tick(world,dt));
-            }}finally{pending.remove(world.getName());}});
+            }}finally{pending.remove(world.getName());if(diagnostics!=null)diagnostics.stage(world.getName(),"native world or another plugin");}});
         }
     }
     @Override protected void shutdown(){
+        if(diagnostics!=null)diagnostics.close();
         instance=null;
         if(research!=null)research.close();
         if(anomalies!=null){
@@ -123,6 +131,7 @@ public final class StrangeMatterPlugin extends JavaPlugin {
         if(progression!=null)progression.save();
     }
     private void cleanupWorld(World world){
+        if(diagnostics!=null)diagnostics.forget(world.getName());
         if(equipment==null||anomalies==null)return;
         Runnable cleanup=()->{equipment.cleanup(world);anomalies.stopWorld(world);if(machines!=null)machines.cleanupPresentation(world);};
         if(world.isInThread()){cleanup.run();return;}

@@ -39,6 +39,7 @@ def descriptions():
       'anomalous_dirt': 'Anomaly-saturated subsoil. The spectral veins remain after excavation; use it beneath anomalous grass or in laboratory terrain displays.',
       'anomalous_grass': 'Grass touched by unstable matter. Slowly spreads to nearby grass; a solid opaque covering turns it back to dirt.',
       'anomaly_resonator': 'Locate the nearest surveyed anomaly. Secondary cycles the six field frequencies or searches for any type.',
+      'anomaly_nullifier': 'Suppresses anomaly effects within 12 blocks. Use to turn it on or off. Needs no fuel or resonant power.',
       'chrono_blister': 'Launch a temporal blister. Its impact leaves a ragged field that slows creatures and fades after 10 to 30 seconds.',
       'containment_capsule': 'An empty anomaly vessel. Carry it while using the Echo Vacuum to seal a field inside.',
       'echo_vacuum': 'Hold primary on an anomaly for two seconds to capture it. Requires an empty capsule and room for the filled vessel.',

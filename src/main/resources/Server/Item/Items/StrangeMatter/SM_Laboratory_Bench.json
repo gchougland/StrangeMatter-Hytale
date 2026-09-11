@@ -52,6 +52,16 @@
           "Id": "SM_Laboratory_Shards",
           "Icon": "Icons/CraftingCategories/SM_Laboratory_Shards.png",
           "Name": "server.benchCategories.sm.shards"
+        },
+        {
+          "Id": "SM_Laboratory_Furniture",
+          "Icon": "Icons/CraftingCategories/SM_Laboratory_Furniture.png",
+          "Name": "server.benchCategories.sm.furniture"
+        },
+        {
+          "Id": "SM_Laboratory_Building",
+          "Icon": "Icons/CraftingCategories/SM_Laboratory_Building.png",
+          "Name": "server.benchCategories.sm.building"
         }
       ],
       "LocalOpenSoundEventId": "SFX_Workbench_Open",

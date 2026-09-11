@@ -1,0 +1,17 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Warp_Bolt_Cyan_Star"
+    },
+    {
+      "SpawnerId": "SM_Warp_Bolt_Cyan_Halo"
+    },
+    {
+      "SpawnerId": "SM_Warp_Bolt_Cyan_Vortex"
+    }
+  ],
+  "LifeSpan": 3.35,
+  "CullDistance": 96,
+  "BoundingRadius": 8,
+  "IsImportant": true
+}

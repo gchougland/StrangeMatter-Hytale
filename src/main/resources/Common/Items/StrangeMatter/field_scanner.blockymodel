@@ -73,8 +73,8 @@
             "textureLayout": {
               "back": {
                 "offset": {
-                  "x": 18,
-                  "y": 1
+                  "x": 1,
+                  "y": 42
                 },
                 "mirror": {
                   "x": false,
@@ -84,8 +84,8 @@
               },
               "right": {
                 "offset": {
-                  "x": 45,
-                  "y": 1
+                  "x": 37,
+                  "y": 19
                 },
                 "mirror": {
                   "x": false,
@@ -96,7 +96,7 @@
               "front": {
                 "offset": {
                   "x": 1,
-                  "y": 1
+                  "y": 27
                 },
                 "mirror": {
                   "x": false,
@@ -106,7 +106,7 @@
               },
               "left": {
                 "offset": {
-                  "x": 35,
+                  "x": 38,
                   "y": 1
                 },
                 "mirror": {
@@ -117,8 +117,8 @@
               },
               "top": {
                 "offset": {
-                  "x": 127,
-                  "y": 1
+                  "x": 18,
+                  "y": 27
                 },
                 "mirror": {
                   "x": false,
@@ -128,7 +128,7 @@
               },
               "bottom": {
                 "offset": {
-                  "x": 144,
+                  "x": 21,
                   "y": 1
                 },
                 "mirror": {
@@ -182,8 +182,8 @@
                 "textureLayout": {
                   "back": {
                     "offset": {
-                      "x": 62,
-                      "y": 1
+                      "x": 34,
+                      "y": 42
                     },
                     "mirror": {
                       "x": false,
@@ -193,8 +193,8 @@
                   },
                   "right": {
                     "offset": {
-                      "x": 77,
-                      "y": 1
+                      "x": 53,
+                      "y": 4
                     },
                     "mirror": {
                       "x": false,
@@ -204,8 +204,8 @@
                   },
                   "front": {
                     "offset": {
-                      "x": 55,
-                      "y": 1
+                      "x": 41,
+                      "y": 42
                     },
                     "mirror": {
                       "x": false,
@@ -215,8 +215,8 @@
                   },
                   "left": {
                     "offset": {
-                      "x": 69,
-                      "y": 1
+                      "x": 47,
+                      "y": 19
                     },
                     "mirror": {
                       "x": false,
@@ -226,7 +226,7 @@
                   },
                   "top": {
                     "offset": {
-                      "x": 229,
+                      "x": 65,
                       "y": 1
                     },
                     "mirror": {
@@ -237,8 +237,8 @@
                   },
                   "bottom": {
                     "offset": {
-                      "x": 236,
-                      "y": 1
+                      "x": 64,
+                      "y": 14
                     },
                     "mirror": {
                       "x": false,
@@ -291,8 +291,8 @@
                 "textureLayout": {
                   "back": {
                     "offset": {
-                      "x": 101,
-                      "y": 1
+                      "x": 18,
+                      "y": 50
                     },
                     "mirror": {
                       "x": false,
@@ -302,8 +302,8 @@
                   },
                   "right": {
                     "offset": {
-                      "x": 122,
-                      "y": 1
+                      "x": 53,
+                      "y": 52
                     },
                     "mirror": {
                       "x": false,
@@ -313,8 +313,8 @@
                   },
                   "front": {
                     "offset": {
-                      "x": 85,
-                      "y": 1
+                      "x": 18,
+                      "y": 37
                     },
                     "mirror": {
                       "x": false,
@@ -324,8 +324,8 @@
                   },
                   "left": {
                     "offset": {
-                      "x": 117,
-                      "y": 1
+                      "x": 48,
+                      "y": 52
                     },
                     "mirror": {
                       "x": false,
@@ -335,8 +335,8 @@
                   },
                   "top": {
                     "offset": {
-                      "x": 41,
-                      "y": 16
+                      "x": 34,
+                      "y": 37
                     },
                     "mirror": {
                       "x": false,
@@ -346,8 +346,8 @@
                   },
                   "bottom": {
                     "offset": {
-                      "x": 57,
-                      "y": 16
+                      "x": 21,
+                      "y": 19
                     },
                     "mirror": {
                       "x": false,
@@ -400,8 +400,8 @@
                 "textureLayout": {
                   "back": {
                     "offset": {
-                      "x": 174,
-                      "y": 1
+                      "x": 48,
+                      "y": 42
                     },
                     "mirror": {
                       "x": false,
@@ -411,8 +411,8 @@
                   },
                   "right": {
                     "offset": {
-                      "x": 190,
-                      "y": 1
+                      "x": 63,
+                      "y": 48
                     },
                     "mirror": {
                       "x": false,
@@ -422,8 +422,8 @@
                   },
                   "front": {
                     "offset": {
-                      "x": 161,
-                      "y": 1
+                      "x": 48,
+                      "y": 42
                     },
                     "mirror": {
                       "x": false,
@@ -433,8 +433,8 @@
                   },
                   "left": {
                     "offset": {
-                      "x": 187,
-                      "y": 1
+                      "x": 63,
+                      "y": 48
                     },
                     "mirror": {
                       "x": false,
@@ -444,8 +444,8 @@
                   },
                   "top": {
                     "offset": {
-                      "x": 179,
-                      "y": 16
+                      "x": 34,
+                      "y": 56
                     },
                     "mirror": {
                       "x": false,
@@ -455,8 +455,8 @@
                   },
                   "bottom": {
                     "offset": {
-                      "x": 192,
-                      "y": 16
+                      "x": 34,
+                      "y": 56
                     },
                     "mirror": {
                       "x": false,
@@ -509,8 +509,8 @@
                 "textureLayout": {
                   "back": {
                     "offset": {
-                      "x": 222,
-                      "y": 16
+                      "x": 1,
+                      "y": 62
                     },
                     "mirror": {
                       "x": false,
@@ -520,8 +520,8 @@
                   },
                   "right": {
                     "offset": {
-                      "x": 244,
-                      "y": 16
+                      "x": 72,
+                      "y": 6
                     },
                     "mirror": {
                       "x": false,
@@ -531,7 +531,7 @@
                   },
                   "front": {
                     "offset": {
-                      "x": 205,
+                      "x": 21,
                       "y": 16
                     },
                     "mirror": {
@@ -542,8 +542,8 @@
                   },
                   "left": {
                     "offset": {
-                      "x": 239,
-                      "y": 16
+                      "x": 58,
+                      "y": 62
                     },
                     "mirror": {
                       "x": false,
@@ -553,8 +553,8 @@
                   },
                   "top": {
                     "offset": {
-                      "x": 73,
-                      "y": 16
+                      "x": 1,
+                      "y": 57
                     },
                     "mirror": {
                       "x": false,
@@ -564,8 +564,8 @@
                   },
                   "bottom": {
                     "offset": {
-                      "x": 90,
-                      "y": 16
+                      "x": 21,
+                      "y": 11
                     },
                     "mirror": {
                       "x": false,
@@ -618,8 +618,8 @@
                 "textureLayout": {
                   "back": {
                     "offset": {
-                      "x": 127,
-                      "y": 16
+                      "x": 1,
+                      "y": 17
                     },
                     "mirror": {
                       "x": false,
@@ -629,8 +629,8 @@
                   },
                   "right": {
                     "offset": {
-                      "x": 155,
-                      "y": 16
+                      "x": 34,
+                      "y": 59
                     },
                     "mirror": {
                       "x": false,
@@ -640,8 +640,8 @@
                   },
                   "front": {
                     "offset": {
-                      "x": 107,
-                      "y": 16
+                      "x": 1,
+                      "y": 22
                     },
                     "mirror": {
                       "x": false,
@@ -651,8 +651,8 @@
                   },
                   "left": {
                     "offset": {
-                      "x": 147,
-                      "y": 16
+                      "x": 65,
+                      "y": 9
                     },
                     "mirror": {
                       "x": false,
@@ -663,7 +663,7 @@
                   "top": {
                     "offset": {
                       "x": 1,
-                      "y": 16
+                      "y": 9
                     },
                     "mirror": {
                       "x": false,
@@ -673,8 +673,8 @@
                   },
                   "bottom": {
                     "offset": {
-                      "x": 21,
-                      "y": 16
+                      "x": 1,
+                      "y": 1
                     },
                     "mirror": {
                       "x": false,
@@ -727,8 +727,8 @@
                 "textureLayout": {
                   "back": {
                     "offset": {
-                      "x": 16,
-                      "y": 24
+                      "x": 38,
+                      "y": 16
                     },
                     "mirror": {
                       "x": false,
@@ -738,8 +738,8 @@
                   },
                   "right": {
                     "offset": {
-                      "x": 34,
-                      "y": 24
+                      "x": 50,
+                      "y": 38
                     },
                     "mirror": {
                       "x": false,
@@ -749,8 +749,8 @@
                   },
                   "front": {
                     "offset": {
-                      "x": 1,
-                      "y": 24
+                      "x": 48,
+                      "y": 1
                     },
                     "mirror": {
                       "x": false,
@@ -760,8 +760,8 @@
                   },
                   "left": {
                     "offset": {
-                      "x": 31,
-                      "y": 24
+                      "x": 61,
+                      "y": 14
                     },
                     "mirror": {
                       "x": false,
@@ -771,8 +771,8 @@
                   },
                   "top": {
                     "offset": {
-                      "x": 37,
-                      "y": 24
+                      "x": 35,
+                      "y": 34
                     },
                     "mirror": {
                       "x": false,
@@ -782,7 +782,7 @@
                   },
                   "bottom": {
                     "offset": {
-                      "x": 52,
+                      "x": 21,
                       "y": 24
                     },
                     "mirror": {
@@ -836,8 +836,8 @@
                 "textureLayout": {
                   "back": {
                     "offset": {
-                      "x": 197,
-                      "y": 1
+                      "x": 61,
+                      "y": 4
                     },
                     "mirror": {
                       "x": false,
@@ -847,8 +847,8 @@
                   },
                   "right": {
                     "offset": {
-                      "x": 206,
-                      "y": 1
+                      "x": 55,
+                      "y": 28
                     },
                     "mirror": {
                       "x": false,
@@ -858,8 +858,8 @@
                   },
                   "front": {
                     "offset": {
-                      "x": 193,
-                      "y": 1
+                      "x": 61,
+                      "y": 38
                     },
                     "mirror": {
                       "x": false,
@@ -869,8 +869,8 @@
                   },
                   "left": {
                     "offset": {
-                      "x": 201,
-                      "y": 1
+                      "x": 58,
+                      "y": 52
                     },
                     "mirror": {
                       "x": false,
@@ -880,8 +880,8 @@
                   },
                   "top": {
                     "offset": {
-                      "x": 163,
-                      "y": 16
+                      "x": 50,
+                      "y": 33
                     },
                     "mirror": {
                       "x": false,
@@ -891,8 +891,8 @@
                   },
                   "bottom": {
                     "offset": {
-                      "x": 167,
-                      "y": 16
+                      "x": 42,
+                      "y": 59
                     },
                     "mirror": {
                       "x": false,
@@ -945,8 +945,8 @@
                 "textureLayout": {
                   "back": {
                     "offset": {
-                      "x": 215,
-                      "y": 1
+                      "x": 60,
+                      "y": 18
                     },
                     "mirror": {
                       "x": false,
@@ -956,8 +956,8 @@
                   },
                   "right": {
                     "offset": {
-                      "x": 224,
-                      "y": 1
+                      "x": 48,
+                      "y": 4
                     },
                     "mirror": {
                       "x": false,
@@ -967,8 +967,8 @@
                   },
                   "front": {
                     "offset": {
-                      "x": 211,
-                      "y": 1
+                      "x": 60,
+                      "y": 28
                     },
                     "mirror": {
                       "x": false,
@@ -978,8 +978,8 @@
                   },
                   "left": {
                     "offset": {
-                      "x": 219,
-                      "y": 1
+                      "x": 55,
+                      "y": 18
                     },
                     "mirror": {
                       "x": false,
@@ -989,8 +989,8 @@
                   },
                   "top": {
                     "offset": {
-                      "x": 171,
-                      "y": 16
+                      "x": 63,
+                      "y": 58
                     },
                     "mirror": {
                       "x": false,
@@ -1000,8 +1000,8 @@
                   },
                   "bottom": {
                     "offset": {
-                      "x": 175,
-                      "y": 16
+                      "x": 72,
+                      "y": 1
                     },
                     "mirror": {
                       "x": false,

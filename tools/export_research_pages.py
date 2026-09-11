@@ -1,6 +1,7 @@
 """Import the user's original teaching pages without modifying the Minecraft source."""
 from pathlib import Path
 import json, re
+from nullifier_content import add_teaching as add_nullifier_teaching
 
 source = Path(r"C:/Users/gchou/Documents/Projects/StrangeMatter-1.20.1/strange-matter/src/main")
 screen = (source / "java/com/hexvane/strangematter/client/screen/ResearchNodeInfoScreen.java").read_text(encoding="utf-8")
@@ -34,6 +35,7 @@ for node, method in methods.items():
         pages.append(page)
     assert pages, node
     output[node] = pages
+add_nullifier_teaching(output)
 target = Path(__file__).resolve().parents[1] / "src/main/resources/Server/StrangeMatter/Research/Teaching.json"
 target.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-print(f"Imported {sum(map(len, output.values()))} original teaching pages for {len(output)} research topics.")
+print(f"Imported {sum(map(len, output.values())) - 1} original teaching pages and the Anomaly Nullifier guide for {len(output)} research topics.")

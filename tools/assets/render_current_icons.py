@@ -19,15 +19,18 @@ def resolve(path):
 def vec(value,default=0):return np.array([value.get(k,default) for k in 'xyz'],float)
 
 def uv_corners(layout,width,height):
-    uv=np.array([[0,1],[1,1],[1,0],[0,0]],float)
+    # Native blockymodel offsets are signed corner origins, not the minimum
+    # of a normalized rectangle. Hypixel's Blockbench codec rotates signed
+    # spans around this origin (src/blockymodel.ts, parse UV section).
+    uv=np.array([[0,1],[1,1],[1,0],[0,0]],float)*[width,height]
+    uv+=(np.array([width,height])/2-uv)*.00001
     mirror=layout.get('mirror',{})
-    if mirror.get('x'):uv[:,0]=1-uv[:,0]
-    if mirror.get('y'):uv[:,1]=1-uv[:,1]
+    if mirror.get('x'):uv[:,0]*=-1
+    if mirror.get('y'):uv[:,1]*=-1
     angle=int(round(layout.get('angle',0)))%360
     if angle%90:raise ValueError('Unsupported non-cardinal native UV angle '+str(angle))
-    for _ in range(angle//90):uv=np.column_stack((1-uv[:,1],uv[:,0]))
-    if angle%180:width,height=height,width
-    return uv*np.array([max(0,width-.01),max(0,height-.01)])+np.array([layout['offset']['x'],layout['offset']['y']])
+    for _ in range(angle//90):uv=np.column_stack((-uv[:,1],uv[:,0]))
+    return uv+np.array([layout['offset']['x'],layout['offset']['y']])
 
 def model_faces(model,texture,initial_rotation=None,initial_position=None):
     faces=[]; atlas=np.asarray(texture.convert('RGBA'))
@@ -137,11 +140,11 @@ def render(faces,size=256,yaw=35,pitch=23):
             target[mask]=blended[mask];depth[y0:y1+1,x0:x1+1][mask]=z[mask]
     return Image.fromarray(output)
 
-def contact(entries,path,cols=3,cell=280):
+def contact(entries,path,cols=3,cell=280,views=None):
     rows=math.ceil(len(entries)/cols);sheet=Image.new('RGB',(cols*cell,rows*(cell+40)),(17,25,42));draw=ImageDraw.Draw(sheet)
     font=ImageFont.truetype('C:/Windows/Fonts/consola.ttf',13)
     for index,(name,faces) in enumerate(entries):
-        x=index%cols*cell;y=index//cols*(cell+40);pic=render(faces,cell-14)
+        x=index%cols*cell;y=index//cols*(cell+40);pic=render(faces,cell-14,**(views or {}).get(name,{}))
         sheet.paste(pic,(x+7,y+3),pic);lines=['']
         for word in name.split():
             text=(lines[-1]+' '+word).strip()
@@ -188,7 +191,8 @@ def main():
     report_name='selected-icon-validation.json' if args.items else 'current-icon-validation.json'
     (ROOT/'tools/assets'/report_name).write_text(json.dumps(report,indent=2)+'\n')
     if args.preview:
-        contact(entries,ROOT/('docs/art/selected-item-icons.png' if args.items else 'docs/art/current-item-icons.png'),cols=min(6,len(entries)),cell=180)
+        preview_views={p.stem.removeprefix('SM_').replace('_',' '):views.get(p.stem,{}) for p in paths}
+        contact(entries,ROOT/('docs/art/selected-item-icons.png' if args.items else 'docs/art/current-item-icons.png'),cols=min(6,len(entries)),cell=180,views=preview_views)
         if not args.items:hat_fit_preview()
     print(json.dumps(report))
 

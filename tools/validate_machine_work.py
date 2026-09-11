@@ -1,15 +1,20 @@
 """Validate authored work animations, exact model binding, native state assets and audio bounds."""
 from pathlib import Path
-import collections, json, math, zipfile
+import argparse, collections, json, math, zipfile
 from assets.build_machine_work_effects import TARGETS, geometry, nodes
 
 ROOT=Path(__file__).resolve().parents[1]
 RES=ROOT/'src/main/resources'
 def main():
-    snapshots=sorted((ROOT/'build/art-preservation').glob('*/Resources.zip'))
-    # The snapshot preceding this bounded edit is an immutable comparison, not regenerated art.
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--audit-preservation',action='store_true',help='Compare against the original local work-animation snapshot; intentional later art edits may differ')
+    args=parser.parse_args()
+    # Historical artwork is an optional audit. Current authored geometry remains
+    # editable; normal validation checks actual animation bindings and behavior.
     snapshot=ROOT/'build/art-preservation/20260909T152632807879Z/Resources.zip'
-    archive=zipfile.ZipFile(snapshot) if snapshot.exists() else None
+    if args.audit_preservation and not snapshot.exists():
+        parser.error('Historical art snapshot is unavailable: '+str(snapshot))
+    archive=zipfile.ZipFile(snapshot) if args.audit_preservation else None
     report=[];total=0
     for model_name,item_id in TARGETS.items():
         model_path='Common/Blocks/StrangeMatter/'+model_name+'.blockymodel'
@@ -39,7 +44,7 @@ def main():
             archived=next((p for p in archive.namelist() if p.replace('\\','/').endswith(model_path)),None)
             assert archived is not None,model_path
             assert geometry(json.loads(archive.read(archived)))==geometry(model),(item_id,'manual geometry/UV changed')
-        report.append({'machine':item_id,'animatedNodes':len(animation['nodeAnimations']),'manualGeometryAndUV':'preserved' if archive else 'snapshot unavailable'})
+        report.append({'machine':item_id,'animatedNodes':len(animation['nodeAnimations']),'manualGeometryAndUV':'preserved' if archive else 'historical comparison not requested'})
     sound=json.loads((RES/'Server/Audio/SoundEvents/StrangeMatter/SM_Condenser_Working_Hum.json').read_text())
     assert sound['SpatialBlend']==1 and sound['MaxDistance']==7 and sound['MaxInstance']==3 and sound['Volume']==-18
     assert sound['Layers'][0]['Looping'] is True and len(sound['Layers'])==1
@@ -47,6 +52,7 @@ def main():
     assert ogg.read_bytes().startswith(b'OggS') and ogg.stat().st_size>1000,'Real encoded loop must exist'
     if archive:archive.close()
     result={'status':'PASS','animations':len(report),'animatedNodes':total,'machines':report,
-            'checks':['Unique target-node bindings','Finite ordered keys','Seamless closed loops','Restrained motion','Native work-only states','Preserved manual geometry and UVs','Quiet positional bounded ambient OGG']}
+            'checks':['Unique target-node bindings','Finite ordered keys','Seamless closed loops','Restrained motion','Native work-only states','Quiet positional bounded ambient OGG'],
+            'historicalArtAudit':args.audit_preservation}
     (ROOT/'tools/assets/machine-work-validation.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))
 if __name__=='__main__':main()

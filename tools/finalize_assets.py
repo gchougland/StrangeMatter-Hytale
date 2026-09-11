@@ -9,6 +9,7 @@ import numpy as np
 sys.path.insert(0,str(Path(__file__).resolve().parent/'assets'))
 import build_assets as art
 from content_policy import FAMILIES, family_light
+from block_support import apply as apply_block_support
 ROOT=art.ROOT;RES=ROOT/'src/main/resources';COMMON=art.COMMON
 ITEMS=RES/'Server/Item/Items/StrangeMatter';HIT=RES/'Server/Item/Block/Hitboxes/StrangeMatter'
 VANILLA=ROOT.parent/'HytaleSourceCode/hytale-shared-source/HytaleAssets'
@@ -152,12 +153,17 @@ def source_parity(source,item):
             path=COMMON/f'BlockTextures/StrangeMatter/Anomalous_Grass_{label}.png';path.parent.mkdir(parents=True,exist_ok=True)
             art.paint(32,32,mat,'anomalous_grass/0/'+{'Top':'top','Side':'front','Soil':'bottom'}[label]).save(path)
     if source=='time_dilation_block':
-        b.update({'Opacity':'Solid','VariantRotation':'None','Light':{'Color':'#a72','Radius':10}})
+        b.update({'Opacity':'Solid','VariantRotation':'None','ParticleColor':'#ffda68','Light':{'Color':'#a72','Radius':10}})
+    apply_block_support(source,b)
 
 
 def conduit_states():
     path=COMMON/'Blocks/StrangeMatter/resonant_conduit_full.blockymodel';full=read(path)
     item=read(ITEMS/'SM_Resonant_Conduit.json');b=item['BlockType'];definitions={}
+    # Conduits connect passively. Keep ordinary placement but never reintroduce a Use target.
+    item.get('Interactions',{}).pop('Use',None)
+    b.get('Interactions',{}).pop('Use',None);b['InteractionHint']=''
+    if not b.get('Interactions'):b.pop('Interactions',None)
     for mask in range(64):
         nodes=[n for n in full['nodes'] if n['name'].startswith('hub_') or mask & int(re.match(r'arm(\d+)',n['name'])[1])]
         model={**full,'nodes':nodes};name=f'resonant_conduit_connection{mask:02d}'

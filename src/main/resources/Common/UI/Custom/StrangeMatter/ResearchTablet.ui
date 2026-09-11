@@ -23,7 +23,7 @@ $C.@PageOverlay {
     $R.@Control #Forge { Text: "REALITY FORGE"; Anchor: (Left: 2, Top: 2, Right: 2, Bottom: 2); TextTooltipStyle: $C.@DefaultTextTooltipStyle; }
    }
    Label { Anchor: (Left: 546, Top: 112, Width: 352, Height: 18); Text: "Hover for details. Select a node to continue."; Style: (FontSize: 11, TextColor: #8ea5b3); }
-   $R.@Control #Journal { Text: "FIELD JOURNAL"; Anchor: (Left: 928, Top: 104, Width: 160, Height: 35); }
+   $R.@Control #Journal { Text: "ACHIEVEMENTS"; Anchor: (Left: 928, Top: 104, Width: 160, Height: 35); }
    $R.@Control #Close { Text: "CLOSE"; Anchor: (Left: 1100, Top: 104, Width: 94, Height: 35); }
    Group { Anchor: (Left: 46, Top: 153, Width: 764, Height: 542); Background: #304a51; Padding: (Full: 1);
     Group { Background: #091e26;

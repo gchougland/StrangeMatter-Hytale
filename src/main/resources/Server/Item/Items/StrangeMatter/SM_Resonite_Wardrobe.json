@@ -1,0 +1,106 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Resonite_Wardrobe.name",
+    "Description": "server.items.SM_Resonite_Wardrobe.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Resonite_Wardrobe.png",
+  "MaxStack": 25,
+  "Categories": [
+    "Furniture.Containers",
+    "SM_StrangeMatter.All"
+  ],
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Blocks_Stone",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "Furniture",
+      "StrangeMatter"
+    ],
+    "Family": [
+      "Resonite"
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/StrangeMatter/Furniture/wardrobe.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/Furniture/resonite_furniture.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Resonite_Wardrobe",
+    "VariantRotation": "NESW",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Benches"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#263a54",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "Support": {
+      "Down": [
+        {
+          "FaceType": "Full"
+        }
+      ]
+    },
+    "BlockEntity": {
+      "Components": {
+        "ItemContainerBlock": {
+          "Capacity": 36
+        }
+      }
+    },
+    "Interactions": {
+      "Use": "Open_Container"
+    },
+    "InteractionHint": "server.interactionHints.SM_Resonite_Wardrobe",
+    "State": {
+      "Definitions": {
+        "OpenWindow": {
+          "CustomModelAnimation": "Blocks/StrangeMatter/Furniture/Animations/wardrobe_open.blockyanim",
+          "InteractionSoundEventId": "SFX_Chest_Wooden_Open"
+        },
+        "CloseWindow": {
+          "CustomModelAnimation": "Blocks/StrangeMatter/Furniture/Animations/wardrobe_close.blockyanim",
+          "InteractionSoundEventId": "SFX_Chest_Wooden_Close"
+        }
+      }
+    },
+    "CustomModelAnimation": "Blocks/StrangeMatter/Furniture/Animations/wardrobe_closed.blockyanim"
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "SM_Resonite_Ingot",
+        "Quantity": 6
+      },
+      {
+        "ResourceTypeId": "Wood_Planks",
+        "Quantity": 4
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 3,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_Furniture"
+        ]
+      }
+    ],
+    "KnowledgeRequired": true
+  }
+}

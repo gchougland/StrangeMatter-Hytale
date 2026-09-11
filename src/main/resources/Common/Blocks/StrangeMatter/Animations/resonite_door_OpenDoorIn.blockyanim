@@ -4,7 +4,26 @@
   "holdLastKeyframe": true,
   "nodeAnimations": {
     "SM_Hinge": {
-      "position": [],
+      "position": [
+        {
+          "time": 0,
+          "delta": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "interpolationType": "smooth"
+        },
+        {
+          "time": 14,
+          "delta": {
+            "x": 4.5,
+            "y": 0,
+            "z": 0
+          },
+          "interpolationType": "smooth"
+        }
+      ],
       "orientation": [
         {
           "time": 0,

@@ -96,6 +96,16 @@
       "title": "Resonant Circuit",
       "content": "BREAKTHROUGH ACHIEVEMENT!\nThe Resonant Circuit\nrepresents the pinnacle\nof resonite technology!\n\nThis advanced component\ncan process multiple\nanomaly frequencies\nsimultaneously and\nstabilize complex\nenergy patterns.\n\nEssential for advanced\nresearch equipment!",
       "recipe": "resonant_circuit"
+    },
+    {
+      "title": "A Home for Strange Science",
+      "content": "Resonite can make more than machines. Open the Furniture tab at your Laboratory Bench to craft beds, seats, storage and wall fittings.\n\nSit down after a long experiment, sleep in your new bed or keep your discoveries safe in a chest. Place two matching chests side by side to make a large chest. Shelves and monitors bring the room to life.",
+      "recipe": "resonite_chair"
+    },
+    {
+      "title": "Building Your Laboratory",
+      "content": "The Building tab holds floors, stairs, doors and matching roof pieces. Place stairs beside one another to form corners. Roofs also join as you build.\n\nUse shallow roofs for a broad shelter and steep roofs for a tall laboratory. Matching flat pieces finish the top.",
+      "recipe": "resonite_roof"
     }
   ],
   "resonant_energy": [
@@ -219,6 +229,11 @@
     {
       "title": "Installation & Operation",
       "content": "INSTALLATION PROTOCOLS FOR OPTIMAL RESULTS:\n\n1. Locate an active Energetic Rift anomaly\n2. Place stabilizer within detection range\n3. FRONT FACE (intake) must point at rift!\n4. BACK FACE (output) connects to machines\n\nWhen properly aligned, you'll witness a magnificent electrical beam connecting the rift directly to the stabilizer!\n\nRight-click the block to check current power generation status and stored energy levels.\n\nThe device requires NO fuel and operates continuously as long as the rift remains active and within range!"
+    },
+    {
+      "title": "Anomaly Nullifier",
+      "content": "The Anomaly Nullifier keeps a laboratory safe from nearby anomaly effects. Its field reaches 12 blocks in every direction.\n\nPlace it near the area you want to protect. Use the device to turn it on or off. It needs no fuel or resonant power.\n\nSuppression leaves the anomalies intact. Turning the device off restores their effects. The glowing core shows when it is suppressing a nearby anomaly.",
+      "recipe": "anomaly_nullifier"
     }
   ],
   "levitation_pad": [

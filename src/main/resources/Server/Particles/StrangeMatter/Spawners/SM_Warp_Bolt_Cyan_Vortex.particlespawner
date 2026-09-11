@@ -1,0 +1,175 @@
+{
+  "Shape": "Sphere",
+  "RenderMode": "BlendAdd",
+  "LifeSpan": 0.04,
+  "TotalParticles": {
+    "Min": 1,
+    "Max": 1
+  },
+  "MaxConcurrentParticles": 1,
+  "ParticleLifeSpan": {
+    "Min": 3.3,
+    "Max": 3.3
+  },
+  "SpawnRate": {
+    "Min": 1,
+    "Max": 1
+  },
+  "SpawnBurst": true,
+  "EmitOffset": {
+    "X": {
+      "Min": 0,
+      "Max": 0
+    },
+    "Y": {
+      "Min": 0,
+      "Max": 0
+    },
+    "Z": {
+      "Min": 0,
+      "Max": 0
+    }
+  },
+  "ParticleRotationInfluence": "Billboard",
+  "ParticleRotateWithSpawner": false,
+  "TrailSpawnerPositionMultiplier": 0,
+  "TrailSpawnerRotationMultiplier": 1,
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 0,
+      "Max": 0
+    },
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": -90,
+      "Max": 90
+    }
+  },
+  "Particle": {
+    "Texture": "Particles/StrangeMatter/vortex.png",
+    "FrameSize": {
+      "Width": 128,
+      "Height": 128
+    },
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "InitialAnimationFrame": {
+      "Color": "#ffffff",
+      "Opacity": 1,
+      "Scale": {
+        "X": {
+          "Min": 0.16,
+          "Max": 0.16
+        },
+        "Y": {
+          "Min": 0.16,
+          "Max": 0.16
+        }
+      },
+      "FrameIndex": {
+        "Min": 0,
+        "Max": 0
+      }
+    },
+    "Animation": {
+      "0": {
+        "Color": "#62faff",
+        "Opacity": 0.9,
+        "Scale": {
+          "X": {
+            "Min": 1,
+            "Max": 1
+          },
+          "Y": {
+            "Min": 1,
+            "Max": 1
+          }
+        },
+        "Rotation": {
+          "Z": {
+            "Min": 0.0,
+            "Max": 0.0
+          }
+        }
+      },
+      "25": {
+        "Scale": {
+          "X": {
+            "Min": 1.1,
+            "Max": 1.1
+          },
+          "Y": {
+            "Min": 1.1,
+            "Max": 1.1
+          }
+        },
+        "Rotation": {
+          "Z": {
+            "Min": 270.0,
+            "Max": 270.0
+          }
+        }
+      },
+      "50": {
+        "Scale": {
+          "X": {
+            "Min": 0.95,
+            "Max": 0.95
+          },
+          "Y": {
+            "Min": 0.95,
+            "Max": 0.95
+          }
+        },
+        "Rotation": {
+          "Z": {
+            "Min": 540.0,
+            "Max": 540.0
+          }
+        }
+      },
+      "75": {
+        "Scale": {
+          "X": {
+            "Min": 1.1,
+            "Max": 1.1
+          },
+          "Y": {
+            "Min": 1.1,
+            "Max": 1.1
+          }
+        },
+        "Rotation": {
+          "Z": {
+            "Min": 810.0,
+            "Max": 810.0
+          }
+        }
+      },
+      "100": {
+        "Opacity": 0.9,
+        "Scale": {
+          "X": {
+            "Min": 1,
+            "Max": 1
+          },
+          "Y": {
+            "Min": 1,
+            "Max": 1
+          }
+        },
+        "Rotation": {
+          "Z": {
+            "Min": 1080.0,
+            "Max": 1080.0
+          }
+        }
+      }
+    }
+  }
+}

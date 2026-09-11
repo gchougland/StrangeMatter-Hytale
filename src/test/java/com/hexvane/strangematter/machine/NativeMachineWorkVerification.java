@@ -71,7 +71,8 @@ public final class NativeMachineWorkVerification {
             require(working!=null&&MachineService.baseId(working).equals(id),"Native working variant keeps base identity: "+id);
             require(idle.getCustomModelAnimation()==null&&idle.getAmbientSoundEventIndex()==SoundEvent.EMPTY_ID,"Idle item/block has no animation or ambient sound: "+id);
             var packet=working.toPacket();require(packet.looping&&packet.modelAnimation!=null&&packet.modelAnimation.endsWith("_working.blockyanim"),"Native asset packet carries a looping working animation: "+id);
-            require(packet.ambientSoundEventIndex==(id.equals("SM_Resonance_Condenser")?hum:SoundEvent.EMPTY_ID),"Only working condenser emits the quiet hum: "+id);
+            int expectedHum=id.equals("SM_Resonance_Condenser")?hum:id.equals("SM_Anomaly_Nullifier")?SoundEvent.getAssetMap().getIndex("SM_Nullifier_Hum_SFX"):SoundEvent.EMPTY_ID;
+            require(packet.ambientSoundEventIndex==expectedHum,"Working machine resolves its expected ambient loop: "+id);
             var bytes=MemorySegment.ofArray(new byte[packet.computeSize()]);require(packet.serialize(bytes,0)==bytes.byteSize(),"Native block packet size: "+id);
             var decoded=com.hypixel.hytale.protocol.BlockType.toObject(bytes);
             require(decoded.looping&&decoded.modelAnimation.equals(packet.modelAnimation)&&decoded.ambientSoundEventIndex==packet.ambientSoundEventIndex,"Animation and ambient routing survive actual native wire encoding: "+id);

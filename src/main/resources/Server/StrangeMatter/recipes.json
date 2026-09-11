@@ -856,5 +856,303 @@
     "research": "",
     "seconds": 2.0,
     "station": "workbench"
+  },
+  {
+    "id": "resonite_chair",
+    "source": "Hytale furniture and building set/SM_Resonite_Chair",
+    "output": "SM_Resonite_Chair",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 3,
+      "Ingredient_Fabric_Scrap_Linen": 3
+    },
+    "shards": {},
+    "research": "resonite",
+    "seconds": 3,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_stool",
+    "source": "Hytale furniture and building set/SM_Resonite_Stool",
+    "output": "SM_Resonite_Stool",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 2,
+      "Ingredient_Fabric_Scrap_Linen": 2
+    },
+    "shards": {},
+    "research": "resonite",
+    "seconds": 3,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_sofa",
+    "source": "Hytale furniture and building set/SM_Resonite_Sofa",
+    "output": "SM_Resonite_Sofa",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 5,
+      "Ingredient_Fabric_Scrap_Linen": 5
+    },
+    "shards": {},
+    "research": "resonite",
+    "seconds": 3,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_table",
+    "source": "Hytale furniture and building set/SM_Resonite_Table",
+    "output": "SM_Resonite_Table",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 5,
+      "resource:Wood_Planks": 4
+    },
+    "shards": {},
+    "research": "resonite",
+    "seconds": 3,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_desk",
+    "source": "Hytale furniture and building set/SM_Resonite_Desk",
+    "output": "SM_Resonite_Desk",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 6,
+      "resource:Wood_Planks": 4,
+      "SM_Resonant_Circuit": 1
+    },
+    "shards": {},
+    "research": "resonite",
+    "seconds": 3,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_bed",
+    "source": "Hytale furniture and building set/SM_Resonite_Bed",
+    "output": "SM_Resonite_Bed",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 6,
+      "Ingredient_Fabric_Scrap_Linen": 8
+    },
+    "shards": {},
+    "research": "resonite",
+    "seconds": 3,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_chest",
+    "source": "Hytale furniture and building set/SM_Resonite_Chest",
+    "output": "SM_Resonite_Chest",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 4,
+      "resource:Wood_Planks": 2
+    },
+    "shards": {},
+    "research": "resonite",
+    "seconds": 3,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_wardrobe",
+    "source": "Hytale furniture and building set/SM_Resonite_Wardrobe",
+    "output": "SM_Resonite_Wardrobe",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 6,
+      "resource:Wood_Planks": 4
+    },
+    "shards": {},
+    "research": "resonite",
+    "seconds": 3,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_bookshelf",
+    "source": "Hytale furniture and building set/SM_Resonite_Bookshelf",
+    "output": "SM_Resonite_Bookshelf",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 5,
+      "resource:Wood_Planks": 4,
+      "SM_Resonite_Nugget": 3
+    },
+    "shards": {},
+    "research": "resonite",
+    "seconds": 3,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_wall_shelf",
+    "source": "Hytale furniture and building set/SM_Resonite_Wall_Shelf",
+    "output": "SM_Resonite_Wall_Shelf",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 2,
+      "resource:Wood_Planks": 2,
+      "SM_Resonite_Nugget": 3
+    },
+    "shards": {},
+    "research": "resonite",
+    "seconds": 3,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_cabinet",
+    "source": "Hytale furniture and building set/SM_Resonite_Cabinet",
+    "output": "SM_Resonite_Cabinet",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 4,
+      "resource:Wood_Planks": 2
+    },
+    "shards": {},
+    "research": "resonite",
+    "seconds": 3,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_wall_monitor",
+    "source": "Hytale furniture and building set/SM_Resonite_Wall_Monitor",
+    "output": "SM_Resonite_Wall_Monitor",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 3,
+      "SM_Resonant_Circuit": 1
+    },
+    "shards": {},
+    "research": "resonite",
+    "seconds": 3,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_ceiling_vent",
+    "source": "Hytale furniture and building set/SM_Resonite_Ceiling_Vent",
+    "output": "SM_Resonite_Ceiling_Vent",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 2
+    },
+    "shards": {},
+    "research": "resonite",
+    "seconds": 3,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_ladder",
+    "source": "Hytale furniture and building set/SM_Resonite_Ladder",
+    "output": "SM_Resonite_Ladder",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 2
+    },
+    "shards": {},
+    "research": "resonite",
+    "seconds": 3,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_window",
+    "source": "Hytale furniture and building set/SM_Resonite_Window",
+    "output": "SM_Resonite_Window",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 2,
+      "Ingredient_Crystal_Cyan": 2
+    },
+    "shards": {},
+    "research": "resonite",
+    "seconds": 3,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_sign",
+    "source": "Hytale furniture and building set/SM_Resonite_Sign",
+    "output": "SM_Resonite_Sign",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 2,
+      "SM_Resonite_Nugget": 3
+    },
+    "shards": {},
+    "research": "resonite",
+    "seconds": 3,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_roof",
+    "source": "Hytale furniture and building set/SM_Resonite_Roof",
+    "output": "SM_Resonite_Roof",
+    "quantity": 4,
+    "ingredients": {
+      "SM_Resonite_Ingot": 2
+    },
+    "shards": {},
+    "research": "resonite",
+    "seconds": 2,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_roof_shallow",
+    "source": "Hytale furniture and building set/SM_Resonite_Roof_Shallow",
+    "output": "SM_Resonite_Roof_Shallow",
+    "quantity": 2,
+    "ingredients": {
+      "SM_Resonite_Ingot": 2
+    },
+    "shards": {},
+    "research": "resonite",
+    "seconds": 2,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_roof_steep",
+    "source": "Hytale furniture and building set/SM_Resonite_Roof_Steep",
+    "output": "SM_Resonite_Roof_Steep",
+    "quantity": 2,
+    "ingredients": {
+      "SM_Resonite_Ingot": 2
+    },
+    "shards": {},
+    "research": "resonite",
+    "seconds": 2,
+    "station": "workbench"
+  },
+  {
+    "id": "resonite_roof_flat",
+    "source": "Hytale furniture and building set/SM_Resonite_Roof_Flat",
+    "output": "SM_Resonite_Roof_Flat",
+    "quantity": 4,
+    "ingredients": {
+      "SM_Resonite_Ingot": 2
+    },
+    "shards": {},
+    "research": "resonite",
+    "seconds": 2,
+    "station": "workbench"
+  },
+  {
+    "id": "anomaly_nullifier",
+    "source": "hytale:anomaly_nullifier",
+    "output": "SM_Anomaly_Nullifier",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Rift_Stabilizer": 1,
+      "SM_Resonant_Circuit": 2
+    },
+    "shards": {
+      "gravitic": 1,
+      "chrono": 1,
+      "energetic": 1,
+      "spatial": 1,
+      "shade": 1,
+      "insight": 1
+    },
+    "research": "rift_stabilizer",
+    "seconds": 5.0,
+    "station": "forge"
   }
 ]

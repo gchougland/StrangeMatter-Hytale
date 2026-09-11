@@ -8,7 +8,7 @@ import com.hypixel.hytale.server.core.ui.builder.*;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
-/** Native journal presentation of the original advancement criteria. */
+/** Native journal presentation of earned achievements. */
 public final class ProgressionPage extends InteractiveCustomUIPage<ResearchPageData> {
     private final ProgressionService service;
     public ProgressionPage(PlayerRef player,ProgressionService service){super(player,CustomPageLifetime.CanDismissOrCloseThroughInteraction,ResearchPageData.CODEC);this.service=service;}
@@ -17,7 +17,7 @@ public final class ProgressionPage extends InteractiveCustomUIPage<ResearchPageD
         events.addEventBinding(CustomUIEventBindingType.Activating,"#Close",EventData.of("Action","close"),false);
         int index=0;
         var milestones=service.snapshot(playerRef.getUuid());
-        cmd.set("#Progress.Text",milestones.stream().filter(ProgressionService.Milestone::complete).count()+" / "+milestones.size()+" milestones completed");
+        cmd.set("#Progress.Text",milestones.stream().filter(ProgressionService.Milestone::complete).count()+" / "+milestones.size()+" achievements completed");
         for(var milestone:milestones){
             cmd.append("#Milestones","StrangeMatter/ProgressionRow.ui");String selector="#Milestones["+index+++"]";
             cmd.set(selector+" #Name.Text",milestone.title());

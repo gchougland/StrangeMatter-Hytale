@@ -105,7 +105,7 @@ final class GravityTerrain {
         }
     }
     private List<Cell> findBlock(World world,AnomalyRecord a,int x,int z){
-        for(int y=Math.min(ChunkUtil.HEIGHT-5,(int)Math.floor(a.y)+1);y>=Math.max(2,(int)Math.floor(a.y)-7);y--){
+        for(int y=Math.min(ChunkUtil.HEIGHT-5,(int)Math.floor(a.terrainReferenceY())+1);y>=Math.max(2,(int)Math.floor(a.terrainReferenceY())-7);y--){
             var source=chunk(world,x,z);if(source==null)return List.of();
             var block=source.getBlockType(x,y,z);
             if(block==null||!natural(block.getId())||placed.getOrDefault(world.getName(),Set.of()).contains(new Placed(x,y,z))

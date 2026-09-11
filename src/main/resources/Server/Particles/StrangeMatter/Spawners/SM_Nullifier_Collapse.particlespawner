@@ -1,0 +1,133 @@
+{
+  "Shape": "Sphere",
+  "RenderMode": "BlendAdd",
+  "LifeSpan": 0.1,
+  "TotalParticles": {
+    "Min": 1,
+    "Max": 1
+  },
+  "MaxConcurrentParticles": 1,
+  "ParticleLifeSpan": {
+    "Min": 0.65,
+    "Max": 0.8
+  },
+  "SpawnRate": {
+    "Min": 1,
+    "Max": 1
+  },
+  "SpawnBurst": true,
+  "EmitOffset": {
+    "X": {
+      "Min": 0,
+      "Max": 0
+    },
+    "Y": {
+      "Min": 0,
+      "Max": 0
+    },
+    "Z": {
+      "Min": 0,
+      "Max": 0
+    }
+  },
+  "ParticleRotationInfluence": "None",
+  "ParticleRotateWithSpawner": false,
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 0,
+      "Max": 0
+    },
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": -90,
+      "Max": 90
+    }
+  },
+  "Particle": {
+    "Texture": "Particles/StrangeMatter/ring.png",
+    "FrameSize": {
+      "Width": 128,
+      "Height": 128
+    },
+    "ScaleRatioConstraint": "None",
+    "UVOption": "None",
+    "Animation": {
+      "0": {
+        "Color": "#81edf1",
+        "Opacity": 0,
+        "Scale": {
+          "X": {
+            "Min": 1,
+            "Max": 1
+          },
+          "Y": {
+            "Min": 1,
+            "Max": 1
+          }
+        }
+      },
+      "15": {
+        "Opacity": 0.38
+      },
+      "75": {
+        "Opacity": 0.26
+      },
+      "100": {
+        "Opacity": 0,
+        "Scale": {
+          "X": {
+            "Min": 0.16,
+            "Max": 0.16
+          },
+          "Y": {
+            "Min": 0.16,
+            "Max": 0.16
+          }
+        },
+        "Rotation": {
+          "Z": {
+            "Min": 35,
+            "Max": 35
+          }
+        }
+      }
+    },
+    "InitialAnimationFrame": {
+      "Color": "#ffffff",
+      "Opacity": 1,
+      "Scale": {
+        "X": {
+          "Min": 0.14,
+          "Max": 0.14
+        },
+        "Y": {
+          "Min": 0.14,
+          "Max": 0.14
+        }
+      },
+      "FrameIndex": {
+        "Min": 0,
+        "Max": 0
+      },
+      "Rotation": {
+        "X": {
+          "Min": 90,
+          "Max": 90
+        },
+        "Y": {
+          "Min": 0,
+          "Max": 0
+        },
+        "Z": {
+          "Min": 0,
+          "Max": 0
+        }
+      }
+    }
+  }
+}
