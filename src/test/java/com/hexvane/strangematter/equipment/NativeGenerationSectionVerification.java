@@ -111,6 +111,7 @@ public final class NativeGenerationSectionVerification {
         require(pending.isEmpty() && cubicBlocks.get(2, 641, 3) == stone, "Independent cubic generation does not retrofit a column or wait for unrelated sections");
         require(world.getChunkStore().getChunkReference(index) == null && world.getChunkStore().getChunkSectionReference(cx, 1, cz) == null,
                 "Every tested edit remains in unpublished holders, without new loaded chunks");
+        com.hexvane.strangematter.anomaly.NativeAnomalyGenerationConcurrencyVerification.verify(world,raw,column);
         System.out.println("NATIVE_GENERATION_SECTION_VERIFICATION_PASSED: actual asynchronous preload events, exact holder/cache identity, single complete column, raw fluids, native transparent height, furnishing holders and metadata, filler exclusion, saved-column and independent cubic isolation; no test chunks loaded.");
     }
 

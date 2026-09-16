@@ -60,7 +60,7 @@ public final class ResearchTabletPage extends InteractiveCustomUIPage<ResearchPa
         for(int i=0;i<tree.nodes().size();i++){
             var node=tree.nodes().get(i);String selector="#Nodes["+i+"]";cmd.append("#Nodes","StrangeMatter/ResearchTreeNode.ui");
             position(cmd,selector,node.x(),node.y(),ResearchTreeLayout.NODE_WIDTH,ResearchTreeLayout.NODE_HEIGHT);
-            cmd.set(selector+" #NodeIcon.ItemId",icon(node.research()));cmd.set(selector+" #NodeName.Text",node.research().name());
+            cmd.set(selector+" #NodeIcon.ItemId",icon(node.research()));cmd.set(selector+" #NodeName.Text",ResearchTreeLayout.caption(node.research()));
             var discipline=ResearchType.forResearchNode(node.research().id());
             cmd.set(selector+" #NodeIcon.Visible",discipline==null);cmd.set(selector+" #NodeDisciplineIcon.Visible",discipline!=null);
             if(discipline!=null)ResearchDisciplineUi.icon(cmd,selector+" #NodeDisciplineIcon",discipline);

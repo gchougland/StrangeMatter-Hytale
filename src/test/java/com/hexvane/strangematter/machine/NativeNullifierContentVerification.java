@@ -30,7 +30,7 @@ public final class NativeNullifierContentVerification {
             var recipe=machines.recipes.stream().filter(r->r.id.equals("anomaly_nullifier")).findFirst().orElseThrow();
             require(recipe.output.equals("SM_Anomaly_Nullifier")&&recipe.quantity==1&&recipe.totalCost().size()==8,
                     "One obtainable nullifier has eight visible material rows");
-            require(research.nodes().size()==30&&"rift_stabilizer".equals(research.requiredResearchForItem(recipe.output)),
+            require(research.nodes().size()==33&&"rift_stabilizer".equals(research.requiredResearchForItem(recipe.output)),
                     "Existing Rift Stabilizer research gates the new device without another tree node");
             require(ResearchTeaching.pages(research.node("rift_stabilizer")).stream().anyMatch(p->"anomaly_nullifier".equals(p.recipe())&&p.content().contains("12 blocks")),
                     "Unlocked field guide exposes the real nullifier recipe and range");

@@ -148,7 +148,7 @@ public final class TubeService implements AutoCloseable {
         if(source==null||target==null||ledger.blocked(source)||ledger.blocked(target)||!endpoints.mayAccess(source,f.owner)||!endpoints.mayAccess(target,f.owner))return false;
         var stack=source.port().inventory().getItemStack(f.slot);if(!Objects.equals(f.original,TubeStacks.encode(stack)))return false;
         var extracting=from.component.face(f.fromFace);var inserting=to.component.face(f.toFace);
-        if(extracting.mode!=TubeConfiguration.Mode.EXTRACT||inserting.mode!=TubeConfiguration.Mode.INSERT||!extracting.accepts(stack)||!inserting.accepts(stack)||!target.port().acceptsInsert().test(stack))return false;
+        if(extracting.mode!=TubeConfiguration.Mode.EXTRACT||inserting.mode!=TubeConfiguration.Mode.INSERT||!source.port().extractable()||!source.port().acceptsExtract().test(stack)||!extracting.accepts(stack)||!inserting.accepts(stack)||!target.port().acceptsInsert().test(stack))return false;
         if(extracting.count(source.port().inventory())-reservedSource(ws,source,null,extracting)<extracting.leaveBehind)return false;
         return inserting.fillUpTo==0||inserting.count(target.port().inventory())+reservedTarget(ws,target,null,inserting)<=inserting.fillUpTo;
     }
@@ -171,7 +171,7 @@ public final class TubeService implements AutoCloseable {
         if(ws.flights.stream().filter(f->paths.containsKey(f.fromTube)).count()>=MAX_FLIGHTS)return;
         for(short slot=0;slot<source.port().inventory().getCapacity()&&ws.work>0;slot++){
             ws.work--;
-            var stack=source.port().inventory().getItemStack(slot);if(!config.accepts(stack))continue;
+            var stack=source.port().inventory().getItemStack(slot);if(!config.accepts(stack)||!source.port().acceptsExtract().test(stack))continue;
             final short sourceSlot=slot;
             int slotReserved=ws.flights.stream().filter(f->sameEndpoint(source,f.source)&&f.slot==sourceSlot).mapToInt(f->f.quantity).sum();
             int available=Math.min(stack.getQuantity()-slotReserved,config.count(source.port().inventory())-reservedSource(ws,source,null,config)-config.leaveBehind);

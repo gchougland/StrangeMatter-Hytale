@@ -6,7 +6,9 @@ import java.util.*;
 /** Executable headless regression checks; no live Hytale client required. */
 public final class ResearchVerification {
     public static void main(String[] args) throws Exception {
-        require(ResearchCatalog.nodes().size() == 30, "Original research nodes and four automation discoveries are present");
+        require(ResearchCatalog.nodes().size() == 33, "Original research nodes, automation and three gadget discoveries are present");
+        GadgetEnergyResearchVerification.verifyLedger();
+        ResearchBootstrapVerification.verify();
         require(ResearchCatalog.get("reality_forge").costs().equals(Map.of(ResearchType.ENERGY, 5, ResearchType.SPACE, 5, ResearchType.TIME, 5)), "Forge's original multi-discipline cost");
         require(ResearchCatalog.get("hoverboard").prerequisites().equals(List.of("containment_basics")), "Hoverboard prerequisite");
         for (ResearchNode node : ResearchCatalog.nodes()) for (String id : node.prerequisites()) require(ResearchCatalog.get(id) != null, "Resolvable prerequisite " + id);
@@ -151,12 +153,12 @@ public final class ResearchVerification {
             ]}
             """);
         try(var service=new ResearchService(directory)){
-            require(service.nodes().size()==31,"Extension keeps defaults and adds a node");
+            require(service.nodes().size()==34,"Extension keeps defaults and adds a node");
             require(service.node("hoverboard").name().equals("Experimental Board"),"Existing node name override");
             require(service.node("hoverboard").costs().equals(Map.of(ResearchType.GRAVITY,7)),"Existing costs replaced and zero-cost disciplines omitted");
             require(service.node("hoverboard").prerequisites().equals(List.of("containment_basics")),"Omitted override fields preserved");
             require(service.availability(UUID.randomUUID(),service.node("custom_laboratory")).contains("Experimental Board"),"Custom prerequisite gates use configured catalog");
-            require(ResearchCatalog.nodes().size()==30&&ResearchCatalog.get("hoverboard").costs().size()==2,"Default catalog and other service instances remain unchanged");
+            require(ResearchCatalog.nodes().size()==33&&ResearchCatalog.get("hoverboard").costs().size()==2,"Default catalog and other service instances remain unchanged");
             for(String bad:List.of(
                     "{\"id\":\"custom\",\"name\":\"Bad\",\"costs\":{\"time\":-1}}",
                     "{\"id\":\"custom\",\"name\":\"Bad\",\"costs\":{\"time\":1.5}}",
@@ -166,7 +168,7 @@ public final class ResearchVerification {
                 Files.writeString(config,"{\"nodes\":["+bad+"]}");boolean rejected=false;
                 try{ResearchCatalog.load(directory);}catch(java.io.IOException expected){rejected=true;}
                 require(rejected,"Invalid customization rejected atomically: "+bad);
-                require(service.nodes().size()==31&&service.node("hoverboard").name().equals("Experimental Board"),"Invalid config cannot alter live catalog");
+                require(service.nodes().size()==34&&service.node("hoverboard").name().equals("Experimental Board"),"Invalid config cannot alter live catalog");
             }
         }
     }

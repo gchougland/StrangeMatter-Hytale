@@ -59,7 +59,7 @@ final class TubeTransferLedger implements AutoCloseable {
     }
     static Intent plan(TubeEndpoints.Endpoint source,TubeEndpoints.Endpoint destination,short slot,int quantity){
         if(source.port().inventory()==destination.port().inventory()||quantity<1||quantity>5)return null;
-        var original=source.port().inventory().getItemStack(slot);if(ItemStack.isEmpty(original)||original.getQuantity()<quantity||!destination.port().acceptsInsert().test(original))return null;
+        var original=source.port().inventory().getItemStack(slot);if(ItemStack.isEmpty(original)||original.getQuantity()<quantity||!source.port().extractable()||!source.port().acceptsExtract().test(original)||!destination.port().acceptsInsert().test(original))return null;
         if(!TubeStacks.removable(source.port().inventory(),slot))return null;
         var portion=TubeStacks.quantity(original,quantity);
         // canAdd's first flag is fullStacks: false includes room in occupied stacks.

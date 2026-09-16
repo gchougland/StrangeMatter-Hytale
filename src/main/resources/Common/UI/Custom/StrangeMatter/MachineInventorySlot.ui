@@ -16,6 +16,17 @@ Group #InventoryCell {
     RenderEmptySlots: true;
     DisplayItemQuantity: true;
   }
+  Group #ChargeMeter {
+    Anchor: (Left: 4, Top: 37, Width: 34, Height: 3);
+    Visible: false;
+    HitTestVisible: false;
+    Background: #132432;
+    Group #ChargeFill {
+      Anchor: (Left: 0, Top: 0, Width: 0, Height: 3);
+      HitTestVisible: false;
+      Background: #62efff;
+    }
+  }
   TextField #DisplayRevision {
     Visible: false;
     Value: "0";

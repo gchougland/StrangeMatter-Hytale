@@ -48,12 +48,15 @@ import com.hypixel.hytale.server.npc.role.support.MarkedEntitySupport;
 import com.hypixel.hytale.server.npc.systems.RoleChangeSystem;
 import org.joml.Vector3d;
 import java.util.*;
+import java.util.function.LongSupplier;
 
 /** All Hytale ECS mutations run on the owning world thread. */
 final class HytaleAnomalyEffects {
     private final Map<UUID, Ref<EntityStore>> cores = new HashMap<>();
     private final Map<Ref<EntityStore>, TemporaryModel> models = new HashMap<>();
     private final Map<Ref<EntityStore>, Long> teleports = new HashMap<>();
+    private final LongSupplier teleportClock;
+    private static final long WARP_COOLDOWN_NANOS = 5_000_000_000L;
     private final ThoughtwellConfusion thoughts = new ThoughtwellConfusion();
     private final GravityField gravity = new GravityField();
     private final AnomalyEffectLeases effectLeases = new AnomalyEffectLeases();
@@ -69,6 +72,32 @@ final class HytaleAnomalyEffects {
     }
     private static final String[] DISGUISES = {"Chicken", "Cow", "Pig", "Sheep", "Zombie", "Skeleton", "Spider"};
     private static final String[] HOSTILES = {"Zombie", "Skeleton_Fighter", "Skeleton_Archer", "Spider"};
+
+    HytaleAnomalyEffects() { this(System::nanoTime); }
+    HytaleAnomalyEffects(LongSupplier teleportClock) { this.teleportClock=Objects.requireNonNull(teleportClock); }
+
+    boolean warpCoolingDown(Ref<EntityStore> traveler) {
+        var until=teleports.get(traveler);
+        return until!=null && teleportClock.getAsLong()-until<0;
+    }
+
+    /** Cooldown belongs to each traveler; a busy player must not close the gate for others. */
+    void gateParticles(World world, AnomalyRecord gate, boolean unavailable) {
+        var store=world.getEntityStore().getStore();
+        var open=new ArrayList<Ref<EntityStore>>();var closed=new ArrayList<Ref<EntityStore>>();
+        for(var player:world.getPlayerRefs()) {
+            var ref=player.getReference();if(ref==null || !ref.isValid() || ref.getStore()!=store)continue;
+            var transform=store.getComponent(ref,TransformComponent.getComponentType());
+            if(transform==null || gate.distanceSquared(transform.getPosition())>96*96)continue;
+            (unavailable || warpCoolingDown(ref) || !WarpGateTeleport.eligible(store,ref)?closed:open).add(ref);
+        }
+        // Explicit recipient lists keep the open and collapsed apertures private.
+        // Finite one-shot assets own their lifetime. Do not additionally shorten
+        // client initialization with a packet duration; particles fade in .25s
+        // and the system has a .5s cleanup bound even after a delayed FX update.
+        if(!open.isEmpty())ParticleUtil.spawnParticleEffect(gate.particleId()+"_Open",gate.position(),open,store);
+        if(!closed.isEmpty())ParticleUtil.spawnParticleEffect(gate.particleId()+"_Closed",gate.position(),closed,store);
+    }
 
     List<Ref<EntityStore>> entities(World world, AnomalyRecord a) {
         // ParticleUtil reuses the same thread-local list; copy before any particle calls.
@@ -122,7 +151,7 @@ final class HytaleAnomalyEffects {
         if(ref!=null && ref.isValid()) world.getEntityStore().getStore().removeEntity(ref,RemoveReason.REMOVE);
     }
     void cleanup(World world,double dt) {
-        var store=world.getEntityStore().getStore(); long now=System.currentTimeMillis();
+        var store=world.getEntityStore().getStore(); long now=teleportClock.getAsLong();
         effectLeases.tick(world,dt);
         models.entrySet().removeIf(e->{
             Ref<EntityStore> ref=e.getKey();
@@ -131,13 +160,14 @@ final class HytaleAnomalyEffects {
             e.getValue().sources.values().removeIf(source->{source.remaining-=dt;return source.remaining<=0;});
             return !refreshModel(world,ref,e.getValue());
         });
-        teleports.entrySet().removeIf(e->!e.getKey().isValid() || e.getValue()<now);
+        teleports.entrySet().removeIf(e->!e.getKey().isValid() || now-e.getValue()>=0);
     }
     void restore(World world) {
         thoughts.clear(world);
         effectLeases.clear(world);
         gravity.clear(world);
         var store=world.getEntityStore().getStore();
+        teleports.keySet().removeIf(ref->!ref.isValid() || ref.getStore()==store);
         for(var entry:new ArrayList<>(models.entrySet())) if(entry.getKey().isValid() && entry.getKey().getStore()==store) {
             var current=store.getComponent(entry.getKey(),ModelComponent.getComponentType());
             if(current!=null && current.getModel()==entry.getValue().applied) store.putComponent(entry.getKey(),ModelComponent.getComponentType(),new ModelComponent(entry.getValue().original));
@@ -335,10 +365,11 @@ final class HytaleAnomalyEffects {
             }
         }
     }
-    void teleport(World world,AnomalyRecord source,AnomalyRecord destination) {
+    boolean teleport(World world,AnomalyRecord source,AnomalyRecord destination) {
         var store=world.getEntityStore().getStore();
+        boolean moved=false;
         for(var ref:entities(world,source)) {
-            if(!ref.isValid() || teleports.containsKey(ref) || cores.containsValue(ref) || !WarpGateTeleport.eligible(store,ref)) continue;
+            if(!ref.isValid() || warpCoolingDown(ref) || cores.containsValue(ref) || !WarpGateTeleport.eligible(store,ref)) continue;
             var transform=store.getComponent(ref,TransformComponent.getComponentType()); if(transform==null) continue;
             var bounds=store.getComponent(ref,BoundingBox.getComponentType());if(bounds==null)continue;
             Vector3d safe=null;
@@ -352,9 +383,11 @@ final class HytaleAnomalyEffects {
             }
             if(safe==null)continue;
             if(!WarpGateTeleport.teleport(store,ref,safe))continue;
-            teleports.put(ref,System.currentTimeMillis()+5000);
+            teleports.put(ref,teleportClock.getAsLong()+WARP_COOLDOWN_NANOS);
+            moved=true;
             particle(world,"SM_Anomaly_Capture",source.position()); particle(world,"SM_Anomaly_Capture",safe);
         }
+        return moved;
     }
     boolean fitsAt(World world,BoundingBox bounds,Vector3d position) {
         var box=bounds.getBoundingBox();
@@ -411,56 +444,9 @@ final class HytaleAnomalyEffects {
     }
     void terrainGenerated(WorldChunk chunk,AnomalyRecord a,Random random,AnomalyGenerationSettings settings) {terrainGenerated(GenerationColumn.loaded(chunk),a,random,settings);}
     void terrainGenerated(GenerationColumn terrain,AnomalyRecord a,Random random,AnomalyGenerationSettings settings) {
-        var chunk=terrain.chunk;
-        if(!settings.terrainPatches)return;
-        String shard=shardOre(a.type);
-        int radius=a.type==AnomalyType.WARP_GATE?5:4,resonitePlaced=0,shardsPlaced=0;
-        List<org.joml.Vector3i> columns=new ArrayList<>();
-        for(int dx=-radius;dx<=radius;dx++)for(int dz=-radius;dz<=radius;dz++) {
-            if(dx*dx+dz*dz>radius*radius)continue;
-            int x=(int)Math.floor(a.x)+dx,z=(int)Math.floor(a.z)+dz;
-            // Only newly generated pre-load chunks enter here. Never cross into an existing
-            // adjacent chunk or retrofit terrain underneath player builds or released capsules.
-            if(ChunkUtil.chunkCoordinate(x)!=chunk.getX() || ChunkUtil.chunkCoordinate(z)!=chunk.getZ())continue;
-            int ground=terrain.height(x,z);if(Math.abs(ground-a.terrainReferenceY())>8)continue;
-            columns.add(new org.joml.Vector3i(x,ground-1,z));
-            // Sand, clay, gravel, mud, ash, snow and every other unshaped native soil family
-            // participate, including buried soil. Only the raw freshly generated holder is edited.
-            for(int y=ground;y>0;y--) {
-                var soil=terrain.type(x,y,z);
-                if(soil!=null&&AnomalyTerrain.soil(soil.getId()))
-                    setGeneratedBlock(terrain,x,y,z,y==ground?"SM_Anomalous_Grass":"SM_Anomalous_Dirt");
-            }
-            if(random.nextDouble()<settings.resoniteColumnChance)resonitePlaced+=oreColumn(terrain,x,ground-1,z,"SM_Resonite_Ore",random);
-            if(random.nextDouble()<settings.shardColumnChance)shardsPlaced+=oreColumn(terrain,x,ground-1,z,shard,random);
-        }
-        // Preserve the source density rolls, but each generated field with suitable geology
-        // also guarantees its two advertised resources. An explicit zero chance still disables it.
-        Collections.shuffle(columns,random);
-        for(var c:columns) {
-            if(resonitePlaced==0 && settings.resoniteColumnChance>0)resonitePlaced+=oreColumn(terrain,c.x,c.y,c.z,"SM_Resonite_Ore",random);
-            if(shardsPlaced==0 && settings.shardColumnChance>0)shardsPlaced+=oreColumn(terrain,c.x,c.y,c.z,shard,random);
-            if((resonitePlaced>0||settings.resoniteColumnChance<=0)&&(shardsPlaced>0||settings.shardColumnChance<=0))break;
-        }
+        AnomalyTerrainPatches.generate(terrain,a,random,settings);
     }
     static boolean oreHost(String name) { return AnomalyTerrain.rock(name); }
-    private int oreColumn(GenerationColumn terrain,int x,int y,int z,String id,Random random) {
-        if(BlockType.getAssetMap().getAsset(id)==null)return 0;
-        int length=1+random.nextInt(3),placed=0;
-        // The source walks to the world's bottom; a shallow arbitrary 24-block cap missed
-        // the bedrock under Hytale's deep soil/sediment layers and cave ceilings.
-        for(int blockY=y;blockY>0 && placed<length;blockY--) {
-            var old=terrain.type(x,blockY,z);if(old==null)continue;
-            if(!oreHost(old.getId())) {if(placed>0)break;continue;}
-            setGeneratedBlock(terrain,x,blockY,z,id);placed++;
-        }
-        return placed;
-    }
-    private void setGeneratedBlock(GenerationColumn terrain,int x,int y,int z,String id) {
-        int blockId=BlockType.getAssetMap().getIndex(id);if(blockId<0)return;
-        // Direct holder mutation is the worldgen path: no live ECS, drops, inventory, or player placement is touched.
-        terrain.set(x,y,z,id);
-    }
     void crops(World world,AnomalyRecord a,Random random) {
         // Crop mutation matches the original ±1..2 stages, five vertical levels, every five seconds.
         for(int dx=-8;dx<=8;dx++) for(int dz=-8;dz<=8;dz++) if(dx*dx+dz*dz<=64)

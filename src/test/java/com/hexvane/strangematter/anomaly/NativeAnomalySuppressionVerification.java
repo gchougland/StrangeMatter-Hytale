@@ -54,7 +54,8 @@ public final class NativeAnomalySuppressionVerification {
             require("Cow".equals(store.getComponent(cow,NPCEntity.getComponentType()).getRoleName()),"Suppressed temporal field performs no juvenile role transition");
             for(var field:fields.values()){
                 require(field.primary<0&&field.active()&&field.scannable(),"Suppressed "+field.type+" retains its identity while its gameplay schedule stays unexecuted");
-                require(player.packets().ofType(SpawnParticleSystem.class).stream().anyMatch(packet->field.particleId().equals(packet.particleSystemId)),"Suppressed "+field.type+" retains its ambient field particles");
+                String ambient=field.particleId()+(field.type==AnomalyType.WARP_GATE?"_Closed":"");
+                require(player.packets().ofType(SpawnParticleSystem.class).stream().anyMatch(packet->ambient.equals(packet.particleSystemId)),"Suppressed "+field.type+" retains its ambient identity with an unavailable gate visibly closed");
                 require(corePresent(world,field),"Suppressed "+field.type+" retains its native visual core");
             }
             require(gate.pairedGate.equals(partner.id)&&partner.pairedGate.equals(gate.id),"Suppression leaves both paired gate identities intact");
@@ -122,17 +123,18 @@ public final class NativeAnomalySuppressionVerification {
         var service=new AnomalyService(Files.createTempDirectory("sm-nullifier-warp-"));service.naturalGeneration=false;
         boolean[] suppressed={false};service.setSuppressionHook((w,p,t)->suppressed[0]);
         var pending=new ArrayList<CompletableFuture<Object>>();
-        var loads=new WarpLandingLoads((w,index)->{var future=new CompletableFuture<Object>();pending.add(future);return future;},System::nanoTime);
+        var clock=new java.util.concurrent.atomic.AtomicLong();
+        var loads=new WarpLandingLoads((w,index)->{var future=new CompletableFuture<Object>();pending.add(future);return future;},clock::get);
         var field=AnomalyService.class.getDeclaredField("gateLoads");field.setAccessible(true);field.set(service,loads);
         var create=AnomalyService.class.getDeclaredMethod("createDistantPair",World.class,AnomalyRecord.class,int.class);create.setAccessible(true);
         try{
             var source=service.spawn(AnomalyType.WARP_GATE,world,new Vector3d(16,240,16),true);source.creatingPair=true;create.invoke(service,world,source,0);
-            require(pending.size()==9&&source.creatingPair,"Natural warp has a real pending destination batch before suppression");
+            require(pending.size()==1&&source.creatingPair,"Natural warp has one pending center probe before suppression");
             suppressed[0]=true;service.tick(world,.05);require(!source.creatingPair,"Suppression cancels the source's outstanding preparation state");
             for(var future:pending)future.complete(Boolean.TRUE);world.consumeTaskQueue();
-            require(service.all().size()==1&&source.pairedGate==null&&pending.size()==9,"Late natural generation completion cannot create a partner for the suppressed source");
-            suppressed[0]=false;source.creatingPair=true;create.invoke(service,world,source,0);
-            require(pending.size()==18&&source.creatingPair,"An unsuppressed source can prepare its destination again after cancelled work");
+            require(service.all().size()==1&&source.pairedGate==null&&pending.size()==1,"Late natural generation completion cannot create a partner for the suppressed source");
+            clock.addAndGet(WarpLandingLoads.START_INTERVAL_NANOS);suppressed[0]=false;source.creatingPair=true;create.invoke(service,world,source,0);
+            require(pending.size()==2&&source.creatingPair,"An unsuppressed source can prepare its destination again after cancelled work");
         }finally{service.stopWorld(world);for(var future:pending)future.complete(Boolean.TRUE);world.consumeTaskQueue();}
     }
     private static boolean corePresent(World world,AnomalyRecord field){

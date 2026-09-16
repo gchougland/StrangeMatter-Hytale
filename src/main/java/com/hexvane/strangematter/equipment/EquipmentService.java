@@ -40,16 +40,21 @@ public final class EquipmentService {
     private final ResearchService research;private final AnomalyService anomalies;private final MachineService machines;
     private final Map<UUID,Acquisition> acquisitions=new ConcurrentHashMap<>();
     private final Map<UUID,Integer> frequencies=new ConcurrentHashMap<>();
+    private record ResonancePulse(String world,String detail,ResearchType discipline){}
+    private final Map<UUID,ResonancePulse> resonancePulses=new ConcurrentHashMap<>();
     private final Map<String,Long> cooldowns=new ConcurrentHashMap<>();
     private final LaboratoryFields fields;
     private final LaboratoryProjectiles projectiles;
     private final WarpProjectiles warpProjectiles;
     private final MobilityTools mobility;
+    private final BatteryPackService batteries=new BatteryPackService();
+    private final AdvancedGadgets advanced;
     private com.hexvane.strangematter.automation.TubeService tubes;
     private final Map<String,Double> hudTime=new ConcurrentHashMap<>();
     private record Acquisition(String world,String item,String subject,UUID anomaly,ResearchType discipline,int amount,long began){}
     private record Aim(Vector3d eye,Vector3d direction,Vector3i block,Vector3i air,double distance){}
-    public EquipmentService(ResearchService research,AnomalyService anomalies,MachineService machines){this.research=research;this.anomalies=anomalies;this.machines=machines;fields=new LaboratoryFields(machines);projectiles=new LaboratoryProjectiles(anomalies,fields,machines.dataDirectory());warpProjectiles=new WarpProjectiles(anomalies);mobility=new MobilityTools(research.hud(),machines.dataDirectory());}
+    public EquipmentService(ResearchService research,AnomalyService anomalies,MachineService machines){this.research=research;this.anomalies=anomalies;this.machines=machines;GadgetEnergy.configure(machines.dataDirectory());fields=new LaboratoryFields(machines);projectiles=new LaboratoryProjectiles(anomalies,fields,machines.dataDirectory());warpProjectiles=new WarpProjectiles(anomalies);mobility=new MobilityTools(research.hud(),machines.dataDirectory());advanced=new AdvancedGadgets(machines.dataDirectory(),research.hud());}
+    public AdvancedGadgets advancedGadgets(){return advanced;}
     public boolean capsuleInFlight(String token){return projectiles.inFlight(token);}
     public void setTubeService(com.hexvane.strangematter.automation.TubeService tubes){this.tubes=tubes;}
     public void interact(InteractionContext context,String action){
@@ -75,7 +80,6 @@ public final class EquipmentService {
             var motion=store.getComponent(ref,MovementStatesComponent.getComponentType());
             boolean crouching=motion!=null&&motion.getMovementStates().crouching;
             boolean restoring=restoresEchoform(id,action,crouching);
-            if(actual.getMaxDurability()>0&&actual.isBroken()&&!action.equals("cancel")&&!restoring&&!(id.equals("SM_Warp_Gun")&&action.equals("use"))){say(p,"This tool is depleted. Repair it before using it again.");return;}
             long now=System.nanoTime();if(now<cooldowns.getOrDefault(cd,0L))return;cooldowns.put(cd,now+(action.startsWith("hammer")?HAMMER_SWING_NANOS:150_000_000L));
             if(restoring){mobility.useImprinter(p,store,null,"imprint_revert");return;}
             var aim=aim(ref,store,id.equals("SM_Warp_Gun")||id.equals("SM_Chrono_Blister")?48:12);if(aim==null)return;
@@ -84,13 +88,14 @@ public final class EquipmentService {
                 case "SM_Research_Notes"->research.useNotes(p,store,actual,TargetUtil.getTargetBlockOrigin(ref,8,store));
                 case "SM_Field_Scanner"->{if(action.equals("scan_start"))begin(p,store,aim,id,false);else if(action.equals("scan_complete"))completeScan(p,store,aim);else if(action.equals("cancel"))acquisitions.remove(p.getUuid());}
                 case "SM_Echo_Vacuum"->{if(action.equals("vacuum_start"))begin(p,store,aim,id,true);else if(action.equals("vacuum_complete"))completeCapture(p,store,aim);else if(action.equals("cancel"))acquisitions.remove(p.getUuid());}
-                case "SM_Anomaly_Resonator"->resonate(p,world,aim,action);
+                case "SM_Anomaly_Resonator"->{if(pay(p,store,"resonate"))resonate(p,world,aim,action);}
                 case "SM_Containment_Capsule"->say(p,"Use the Echo Vacuum while carrying an empty capsule to extract a field safely.");
                 case "SM_Warp_Gun"->portal(p,store,aim,container,slot,actual,action);
-                case "SM_Chrono_Blister"->{if(action.equals("chrono_fire")&&wear(container,slot,actual,1,player.getGameMode()==GameMode.Creative)){projectiles.chrono(world,p.getUuid(),aim.eye,aim.direction);GadgetEffects.use(world,"SM_Chrono_Muzzle",EquipmentQueries.handheldOrigin(aim.eye,aim.direction));say(p,"Temporal blister launched.");}}
+                case "SM_Chrono_Blister"->{if(action.equals("chrono_fire"))try(var debit=reserve(p,store,"chrono")){if(debit!=null){projectiles.chrono(world,p.getUuid(),aim.eye,aim.direction);debit.commit();GadgetEffects.use(world,"SM_Chrono_Muzzle",EquipmentQueries.handheldOrigin(aim.eye,aim.direction));say(p,"Temporal blister launched.");}}}
                 case "SM_Graviton_Hammer"->{if(action.startsWith("hammer"))hammer(p,store,aim,container,slot,actual,action);}
                 case "SM_Hoverboard"->mobility.useHoverboard(p,store);
                 case "SM_Echoform_Imprinter"->mobility.useImprinter(p,store,TargetUtil.getTargetEntity(ref,5,store),action);
+                case "SM_Gravitic_Manipulator","SM_Arc_Projector"->advanced.interact(p,store,container,slot,actual,action);
                 default->{if(id.startsWith("SM_Containment_Capsule_"))release(p,store,aim,container,slot,actual);}
             }
         });
@@ -149,8 +154,13 @@ public final class EquipmentService {
     private void completeScan(PlayerRef p,Store<EntityStore> store,Aim aim){
         var a=ready(p,store,aim,"SM_Field_Scanner");if(a==null)return;
         if(a.anomaly!=null&&!anomalies.get(a.anomaly).map(AnomalyRecord::scannable).orElse(false))return;
-        boolean fresh=research.scan(p.getUuid(),a.subject,a.discipline,a.amount);say(p,fresh?"Recorded +"+a.amount+" "+a.discipline.displayName()+" observations.":"This subject has already been recorded.",a.discipline);
+        if(research.hasScanned(p.getUuid(),a.subject)){say(p,"This subject has already been recorded.",a.discipline);return;}
+        try(var debit=reserve(p,store,"scan")){
+        if(debit==null)return;
+        boolean fresh=research.scan(p.getUuid(),a.subject,a.discipline,a.amount);if(fresh)debit.commit();
+        say(p,fresh?"Recorded +"+a.amount+" "+a.discipline.displayName()+" observations.":"This subject has already been recorded.",a.discipline);
         if(fresh)GadgetEffects.use(store.getExternalData().getWorld(),"SM_Scanner_Complete",EquipmentQueries.handheldOrigin(aim.eye,aim.direction));
+        }
     }
     private void completeCapture(PlayerRef p,Store<EntityStore> store,Aim aim){
         var a=ready(p,store,aim,"SM_Echo_Vacuum");if(a==null||a.anomaly==null)return;var inventory=inventory(p,store);
@@ -160,6 +170,8 @@ public final class EquipmentService {
         short slot=-1;boolean freeSlot=false;for(short i=0;i<inventory.getCapacity();i++){var s=inventory.getItemStack(i);if(s==null||s.isEmpty()){freeSlot=true;continue;}if("SM_Containment_Capsule".equals(s.getItemId())&&(slot<0||s.getQuantity()==1))slot=i;}
         if(slot<0)return;var empty=inventory.getItemStack(slot);
         if(empty.getQuantity()>1&&!freeSlot){say(p,"Make room for the filled capsule.");return;}
+        try(var debit=reserve(p,store,"capture")){
+        if(debit==null)return;
         var captured=anomalies.capture(a.anomaly);if(captured.isEmpty()){say(p,"This anomaly is no longer available for containment.");return;}
         var token=captured.get();var full=new ItemStack(token.itemId(),1).withMetadata("SMAnomaly",Codec.STRING,token.token());
         if(empty.getQuantity()==1){if(!inventory.setItemStackForSlot(slot,full,false).succeeded()){anomalies.cancelCapture(token.token());return;}}
@@ -169,7 +181,8 @@ public final class EquipmentService {
                 inventory.setItemStackForSlot(slot,empty,false);anomalies.cancelCapture(token.token());return;
             }
         }
-        anomalies.save();GadgetEffects.use(store.getExternalData().getWorld(),"SM_Vacuum_Capture",EquipmentQueries.handheldOrigin(aim.eye,aim.direction));say(p,"Contained "+token.type().displayName+". Its identity is preserved in the capsule.",a.discipline);
+        debit.commit();anomalies.save();GadgetEffects.use(store.getExternalData().getWorld(),"SM_Vacuum_Capture",EquipmentQueries.handheldOrigin(aim.eye,aim.direction));say(p,"Contained "+token.type().displayName+". Its identity is preserved in the capsule.",a.discipline);
+        }
     }
     private void release(PlayerRef p,Store<EntityStore> store,Aim aim,ItemContainer container,short slot,ItemStack item){
         var player=store.getComponent(p.getReference(),Player.getComponentType());boolean creative=player!=null&&player.getGameMode()==GameMode.Creative;
@@ -186,9 +199,10 @@ public final class EquipmentService {
     private void resonate(PlayerRef p,World world,Aim aim,String action){
         int frequency=frequencies.getOrDefault(p.getUuid(),0);if(action.equals("secondary")){frequency=(frequency+1)%7;frequencies.put(p.getUuid(),frequency);}GadgetEffects.use(world,"SM_Scanner_Lock",EquipmentQueries.handheldOrigin(aim.eye,aim.direction));
         AnomalyType type=frequency==0?null:AnomalyType.values()[frequency-1];var a=anomalies.nearest(world,aim.eye,100000,type);
-        if(a.isEmpty()){say(p,"Frequency "+(type==null?"ALL":type.displayName)+": no surveyed field in range.",type==null?null:ResearchType.fromName(type.researchType));return;}
+        if(a.isEmpty()){String message="Frequency "+(type==null?"ALL":type.displayName)+": no surveyed field in range.";var discipline=type==null?null:ResearchType.fromName(type.researchType);resonancePulses.put(p.getUuid(),new ResonancePulse(world.getName(),message,discipline));say(p,message,discipline);return;}
         var v=a.get();var delta=v.position().sub(aim.eye);String dir=Math.abs(delta.x)>Math.abs(delta.z)?delta.x>0?"east":"west":delta.z>0?"south":"north";
-        say(p,v.type.displayName+" | "+Math.round(delta.length())+" blocks "+dir+" | elevation "+Math.round(v.y),ResearchType.fromName(v.type.researchType));
+        String message=v.type.displayName+" | "+Math.round(delta.length())+" blocks "+dir+" | elevation "+Math.round(v.y);var discipline=ResearchType.fromName(v.type.researchType);
+        resonancePulses.put(p.getUuid(),new ResonancePulse(world.getName(),message,discipline));say(p,message,discipline);
     }
     private void portal(PlayerRef p,Store<EntityStore> store,Aim aim,ItemContainer inv,short slot,ItemStack gun,String action){
         if(action.equals("use")){
@@ -215,7 +229,8 @@ public final class EquipmentService {
         return cells;
     }
     private void hammer(PlayerRef p,Store<EntityStore> store,Aim aim,ItemContainer inv,short slot,ItemStack hammer,String action){
-        if(!action.equals("hammer0"))chargedHammer(p.getReference(),store,aim,action);
+        boolean charged=!action.equals("hammer0");
+        if(charged){if(!pay(p,store,action))return;chargedHammer(p.getReference(),store,aim,action);}
         if(aim.block==null||aim.distance>6)return;
         int depth=switch(action){case "hammer1"->3;case "hammer2"->6;case "hammer3"->9;default->1;};
         var direction=aim.direction;int axis=Math.abs(direction.y)>Math.max(Math.abs(direction.x),Math.abs(direction.z))?1:Math.abs(direction.x)>Math.abs(direction.z)?0:2;
@@ -231,8 +246,9 @@ public final class EquipmentService {
         }
         var thorium=Item.getAssetMap().getAsset("Tool_Pickaxe_Thorium");
         if(thorium==null||thorium.getTool()==null||targets.isEmpty())return;
+        if(!charged&&!pay(p,store,action))return;
         // Use the actual native tier/power and normal health, gathering, protection events, and
-        // durability path. One area swing consumes one tool hit, never forcibly breaks stone.
+        // gathering path. Energy is paid once per swing, never per affected block.
         int broken=BlockHarvestUtils.performBlockDamage(p.getReference(),p.getReference(),targets,new Vector3i(aim.block),hammer,thorium.getTool(),null,false,hammerDamageScale(action),0,false,false,store,world.getChunkStore().getStore());
         GadgetEffects.use(world,"SM_Hammer_Pulse",EquipmentQueries.handheldOrigin(aim.eye,aim.direction));
         GadgetEffects.use(world,"SM_Hammer_Impact",new Vector3d(aim.block).add(.5,.5,.5));
@@ -268,7 +284,14 @@ public final class EquipmentService {
         GadgetEffects.use(world,"SM_Hammer_Pulse",EquipmentQueries.handheldOrigin(aim.eye,aim.direction));
         GadgetEffects.use(world,"SM_Hammer_Impact",end);
     }
-    private static boolean wear(ItemContainer inv,short slot,ItemStack item,int amount,boolean creative){return creative||item.getMaxDurability()<=0||inv.setItemStackForSlot(slot,item.withDurability(Math.max(0,item.getDurability()-amount)),false).succeeded();}
+    private boolean pay(PlayerRef player,Store<EntityStore> store,String action){try(var debit=reserve(player,store,action)){if(debit==null)return false;debit.commit();return true;}}
+    private GadgetEnergy.Debit reserve(PlayerRef player,Store<EntityStore> store,String action){
+        var hotbar=store.getComponent(player.getReference(),InventoryComponent.Hotbar.getComponentType());var entity=store.getComponent(player.getReference(),Player.getComponentType());
+        if(hotbar==null||entity==null)return null;short slot=hotbar.getActiveSlot();if(slot<0)return null;
+        var debit=GadgetEnergy.reserve(hotbar.getInventory(),slot,hotbar.getInventory().getItemStack(slot),GadgetEnergy.cost(action),entity.getGameMode()==GameMode.Creative);
+        if(debit==null)research.hud().notice(player,store,"Gadget energy","Insufficient Resonant Energy","Recharge in a burner or charging station. Resonant Energy Fundamentals costs 5 Energy observations.",true);
+        return debit;
+    }
     private static ItemContainer inventory(PlayerRef p,Store<EntityStore> store){return InventoryComponent.getCombined(store,p.getReference(),InventoryComponent.BACKPACK_STORAGE_HOTBAR);}
     private void say(PlayerRef p,String text){say(p,text,null);}
     private void say(PlayerRef p,String text,ResearchType discipline){
@@ -291,16 +314,18 @@ public final class EquipmentService {
             }
             case "SM_Anomaly_Resonator"->{
                 int f=frequencies.getOrDefault(p.getUuid(),0);AnomalyType type=f==0?null:AnomalyType.values()[f-1];
-                var nearest=anomalies.nearest(store.getExternalData().getWorld(),aim.eye,100000,type);
-                discipline=type==null?nearest.map(t->ResearchType.fromName(t.type.researchType)).orElse(null):ResearchType.fromName(type.researchType);
                 status="Frequency: "+(type==null?"ALL":type.displayName);
-                if(nearest.isPresent()){var field=nearest.get();var delta=field.position().sub(aim.eye);String compass=Math.abs(delta.x)>Math.abs(delta.z)?delta.x>0?"east":"west":delta.z>0?"south":"north";detail=field.type.displayName+" / "+Math.round(delta.length())+" blocks "+compass+" / elevation "+Math.round(field.y)+". Secondary changes frequency.";}
-                else detail="No surveyed field on this frequency. Secondary changes frequency.";
+                var pulse=resonancePulses.get(p.getUuid());
+                if(pulse!=null&&pulse.world().equals(store.getExternalData().getWorld().getName())){discipline=pulse.discipline();detail="Last pulse: "+pulse.detail()+". Activate to refresh. Secondary changes frequency.";}
+                else detail="Activate to send a paid locator pulse. Secondary changes frequency and pulses.";
             }
             case "SM_Warp_Gun"->{status="Cyan: "+portalStatus(held,"SMPortalA")+" / Purple: "+portalStatus(held,"SMPortalB");detail="Primary fires cyan. Secondary fires purple. Hit a surface within 48 blocks to open a portal. Use clears the pair.";}
             case "SM_Chrono_Blister"->{status="Temporal projector ready";detail="Hold primary to charge, then release a temporal blister. Nearby matter slows inside its impact field.";}
             case "SM_Graviton_Hammer"->{status="Thorium mining strength / 3 x 3 face";detail="Primary: area swing. Crouch-primary: one block. Hold secondary 1 / 2 / 3s: depth 3 / 6 / 9, mining power 2 / 3 / 4x and a stronger forward slam.";}
             case "SM_Hoverboard","SM_Echoform_Imprinter"->{mobility.present(p,store,id);return;}
+            case "SM_Gravitic_Manipulator"->{status="Gravitic Manipulator";detail="Secondary: acquire or release a block or creature. Primary: launch. Holding consumes energy.";}
+            case "SM_Arc_Projector"->{status="Arc Projector";detail="Hold primary to discharge electricity. Bolts chain through up to four hostile targets.";}
+            case "SM_Resonant_Battery_Pack"->{status="Portable resonant reserve";detail="Equip in the chest slot to charge inventory gadgets. Recharge in a burner or charging station.";}
             case "SM_Containment_Capsule"->{status="Empty containment chamber";detail="Carry this capsule and hold the Echo Vacuum on an anomaly for two seconds.";}
             default->{if(!id.startsWith("SM_Containment_Capsule_"))return;status=projectiles.status(held.getFromMetadataOrNull("SMAnomaly",Codec.STRING));detail="Primary or secondary: throw. The original field returns at the impact point.";}
         }
@@ -322,6 +347,8 @@ public final class EquipmentService {
         tickPart(world,"warp bolts",()->warpProjectiles.tick(world,dt));
         tickPart(world,"fields",()->fields.tick(world,dt));
         tickPart(world,"mobility",()->mobility.tick(world,dt));
+        tickPart(world,"advanced gadgets",()->advanced.tick(world,dt));
+        tickPart(world,"battery packs",()->batteries.tick(world,dt));
         var store=world.getEntityStore().getStore();double old=hudTime.getOrDefault(world.getName(),0d),now=old+dt;hudTime.put(world.getName(),now);boolean present=(int)(old*5)!=(int)(now*5);
         for(var p:world.getPlayerRefs())tickPart(world,"instrument feedback",()->{
             var ref=p.getReference();if(ref==null||!ref.isValid()||ref.getStore()!=store){acquisitions.remove(p.getUuid());return;}
@@ -330,9 +357,9 @@ public final class EquipmentService {
                 if(held==null||!a.item.equals(held.getItemId())||aim==null||!stillAimed(a,world,aim)||(a.item.equals("SM_Echo_Vacuum")&&!anomalies.canCapture(a.anomaly))||System.nanoTime()-a.began>5_000_000_000L)acquisitions.remove(p.getUuid());
                 else if(present&&a.anomaly!=null)anomalies.get(a.anomaly).ifPresent(r->GadgetEffects.beam(world,a.item.equals("SM_Echo_Vacuum")?"SM_Vacuum_Intake":"SM_Scanner_Lock",EquipmentQueries.handheldOrigin(aim.eye,aim.direction),r.position()));
             }
-            if(present){heldReadout(p,store,held,aim);research.refreshNotes(store,ref);}
+            if(present){heldReadout(p,store,held,aim);if(!GadgetEnergy.powered(held))mobility.presentActive(p,store);research.refreshNotes(store,ref);}
         });
         tickPart(world,"gadget HUD",()->research.hud().tick(world,dt));
     }
-    public void cleanup(World world){projectiles.cleanup(world);warpProjectiles.cleanup(world);fields.cleanup(world);mobility.cleanup(world);research.hud().cleanup(world);hudTime.remove(world.getName());acquisitions.entrySet().removeIf(e->e.getValue().world.equals(world.getName()));}
+    public void cleanup(World world){projectiles.cleanup(world);warpProjectiles.cleanup(world);fields.cleanup(world);mobility.cleanup(world);advanced.cleanup(world);batteries.cleanup(world);research.hud().cleanup(world);hudTime.remove(world.getName());resonancePulses.values().removeIf(p->p.world().equals(world.getName()));acquisitions.entrySet().removeIf(e->e.getValue().world.equals(world.getName()));}
 }

@@ -56,6 +56,10 @@ public final class GenerationColumn {
     public void set(int x,int y,int z,String id){set(x,y,z,id,0,0);}
     public void set(int x,int y,int z,String id,int rotation,int filler){
         int index=BlockType.getAssetMap().getIndex(id);if(index<0)throw new IllegalArgumentException("Missing generation block "+id);
+        set(x,y,z,index,rotation,filler);
+    }
+    /** Native IDs are resolved once per terrain pass, rather than once per replaced soil block. */
+    public void set(int x,int y,int z,int index,int rotation,int filler){
         var section=section(y);if(section==null)throw new IllegalStateException("Generation section missing");
         boolean different=section.get(x,y,z)!=index||section.getFiller(x,y,z)!=filler;
         section.set(x,y,z,index,rotation,filler);

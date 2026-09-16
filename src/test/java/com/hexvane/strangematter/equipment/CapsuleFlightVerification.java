@@ -56,7 +56,7 @@ public final class CapsuleFlightVerification {
         try{LaboratoryProjectiles.readFlights(file);}catch(RuntimeException expected){rejected=true;}
         require(rejected&&bad.equals(Files.readString(file)),"Duplicate queue identities are rejected without rewriting the user's ledger");
         LaboratoryProjectiles.writeFlights(file,List.of());require(LaboratoryProjectiles.readFlights(file).isEmpty(),"Durable retirement leaves no replayable shot");
-        Files.delete(file);Files.delete(directory.resolve("anomalies.json"));Files.delete(directory);
+        Files.delete(file);Files.delete(directory.resolve("anomalies.json"));Files.delete(directory.resolve("anomaly-generation.json"));Files.delete(directory);
         System.out.println("PASS: capsule full-BSON/trajectory persistence, forced-save gates, refund retries, queue exclusion and nonce consumption replay.");
     }
     private static void require(boolean condition,String message){if(!condition)throw new AssertionError(message);}

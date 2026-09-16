@@ -36,11 +36,11 @@
       }
     },
     "BlockParticleSetId": "Stone",
-    "ParticleColor": "#243950",
+    "ParticleColor": "#3abde8",
     "BlockSoundSetId": "Stone",
     "PhysicalMaterialId": "Stone",
     "Light": {
-      "Color": "#0ff",
+      "Color": "#0bf",
       "Radius": 0
     },
     "InteractionHitboxType": "SM_Energetic_Shard_Lamp",
@@ -67,7 +67,7 @@
         "On": {
           "CustomModel": "Blocks/StrangeMatter/Shared/shard_lamp_f9d17c298777.blockymodel",
           "Light": {
-            "Color": "#0ff",
+            "Color": "#0bf",
             "Radius": 0
           },
           "InteractionHint": "server.interactionHints.turnoff",

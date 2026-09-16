@@ -2,7 +2,7 @@
   "research": [
     {
       "title": "Introduction to Research",
-      "content": "The Research Machine is your gateway to unlocking new technologies and understanding the strange anomalies that appear throughout the world.\n\nBy studying anomalies and completing research, you can gain access to powerful tools, advanced machines, and exotic materials that defy normal physics.\n\nThis research will teach you the fundamentals of using the research system and guide you through your journey into anomaly study."
+      "content": "The Research Machine is your gateway to new technologies and an understanding of the world's anomalies.\n\nBuild a Laboratory Bench at an ordinary workbench. The Field Scanner, Research Tablet, Research Machine and their basic resonite components are available from the start. Mine shards and raw resonite beneath anomalies, then smelt the resonite in an ordinary furnace.\n\nCoils, circuits and stabilized cores can be assembled at the Laboratory Bench before completing any experiments. Use these to build the Research Machine, then study anomalies to unlock powered equipment."
     },
     {
       "title": "The Field Scanner",
@@ -110,13 +110,32 @@
   ],
   "resonant_energy": [
     {
-      "title": "Resonant Energy",
-      "content": "The discovery of resonant energy has revolutionized my understanding of anomaly-based power generation.\n\nThis form of energy harnesses the natural frequencies present in anomaly phenomena to create stable, usable power.\n\nIt represents the foundation for all advanced anomaly technology."
+      "title": "Resonant Energy Fundamentals",
+      "content": "Gadgets store Resonant Energy (RE). This is electrical power, separate from the Energy observations in your research journal. Crafted gadgets begin at full charge. An empty gadget remains intact and can always be recharged.\n\nThe burner, conduits and charging station form your first power network. Build them at the Laboratory Bench and supply fuel to keep your equipment charged."
     },
     {
-      "title": "Resonant Burner",
-      "content": "The Resonant Burner is\nmy first practical\napplication of resonant\nenergy principles.\n\nThis device converts\nconventional fuel into\nresonant energy through\ncareful frequency\nmodulation and\nstabilization.\n\nWhile primitive compared\nto future machines, it\npaves the way for the\nadvanced power systems\nneeded for anomalous\nenergy generation.",
+      "title": "Fuel becomes power",
+      "content": "Craft the Resonant Burner at the Laboratory Bench. Fuel produces a shared store of RE. Its separate gadget dock charges a single gadget directly from that store; the ordinary inventory continues to accept fuel.\n\nThe dock transfers up to 200 RE per second while energy remains available. You may remove your gadget at any charge level.",
       "recipe": "resonant_burner"
+    },
+    {
+      "title": "Connect the laboratory",
+      "content": "Place Resonant Conduits between the burner and charging station. Connected machines share the actual generated supply: conduits cannot create power. A station directly adjacent to the burner can connect without an intervening conduit.\n\nCoils, conduits and the charging station use ordinary laboratory materials. No captured anomaly or Reality Forge is needed to establish charging.",
+      "recipe": "resonant_conduit"
+    },
+    {
+      "title": "The charging cradle",
+      "content": "The charging station holds one gadget and buffers up to 10,000 RE. It transfers up to 800 RE per second while supplied with enough power. Its native gadget slot preserves the item and its stored energy when moved or saved.\n\nAutomated tubes insert depleted gadgets and extract them once full. Manual removal works at any charge level. Battery packs recharge in this same slot.",
+      "recipe": "resonant_charging_station"
+    },
+    {
+      "title": "Store a reserve",
+      "recipe": "resonant_energy_storage",
+      "content": "Resonant Energy Storage buffers up to 60,000 RE and starts empty. It accepts spare generation and supplies machines later, up to 400 RE per second. Craft it at the Laboratory Bench.\n\nUse the block to configure each of its six faces as Input, Output or Disabled. The front is an output by default; the other five faces are inputs. These faces follow the block when it is rotated. Route conduits from your generator to an input, and from an output to your machines.\n\nStorage does not generate power. Pack Up preserves its charge and face settings when moving it."
+    },
+    {
+      "title": "Keep your scanner ready",
+      "content": "A Field Scanner begins with 2,000 RE, enough for 100 fresh completed scans at the default settings. Cancelled scans and previously recorded fields cost nothing. Recharge before a long expedition.\n\nThe energy bar on the gadget HUD shows your remaining charge. Empty gadgets remain intact; put them in the burner dock or a supplied charging station to restore their power."
     }
   ],
   "reality_forge": [
@@ -342,6 +361,27 @@
       "title": "Pattern Assembly",
       "content": "Press Choose Recipe to open the Workbench category tabs. Pick a discovered recipe, then supply its ingredients and resonant power. Craft once or enable Repeat and choose how many finished items to keep in this machine. The assembler works slowly for you while powered. The owner provides recipe knowledge, even while offline. Visitors cannot lend their discoveries. Upgrade using the ordinary Workbench tier materials plus resonant parts. Other crafting stations keep their own recipes.",
       "recipe": "pattern_assembler"
+    }
+  ],
+  "resonant_battery_pack": [
+    {
+      "title": "Portable reserve",
+      "content": "Twin caged resonant cells carry 60,000 RE on your back. Equip the pack in the chest equipment slot. It provides no armor resistance.\n\nThe pack transfers up to 200 RE per second across your inventory. Your held gadget receives power first; other depleted gadgets take turns sharing the remaining allowance. Packs do not recharge each other.\n\nRemove the pack to stop automatic transfer. Recharge it in the station or burner dock.",
+      "recipe": "resonant_battery_pack"
+    }
+  ],
+  "gravitic_manipulation": [
+    {
+      "title": "Carry a suspended target",
+      "content": "Secondary captures the aimed ordinary block, dropped item or eligible creature within 8 blocks. It floats about 3 blocks ahead of you. Secondary again gently releases it.\n\nPrimary launches your held target along your aim. Blocks and chests settle in clear space. Single and joined chests keep their inventory, item data and facing; joined chests require room for the entire chest. Chest access pauses briefly while a placement is saved. If no safe placement is available, the original location is used when it becomes clear. The manipulator never overwrites occupied terrain. Other machines, fluids, players and protected blocks cannot be transported.\n\nAcquisition costs 100 RE, holding uses 40 RE per second and launching costs 300 RE. Releasing is always available, even when empty. Switching items, losing the target or leaving the world safely releases it.",
+      "recipe": "gravitic_manipulator"
+    }
+  ],
+  "arc_projection": [
+    {
+      "title": "Electricity under control",
+      "content": "Hold primary to fire five electrical pulses per second. Each pulse traces up to 18 blocks and can arc through three additional hostile enemies within 5 blocks of the preceding target. Walls stop both the first strike and subsequent hops.\n\nDamage falls to 75 percent at each hop. A brief movement slow helps contain crowds without permanent stuns. The bolt uses the same bright electrical filament seen between an Energetic Rift and a Rift Stabilizer.\n\nEvery fired pulse uses 200 RE, including misses. The 12,000 RE reserve allows 60 pulses before recharging. A battery pack extends this reserve but cannot sustain continuous fire.",
+      "recipe": "arc_projector"
     }
   ]
 }

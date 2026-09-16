@@ -1,5 +1,7 @@
 package com.hexvane.strangematter.automation;
 
+import com.hexvane.strangematter.util.WorldAccess;
+
 import com.hexvane.strangematter.machine.*;
 import com.hexvane.strangematter.research.ResearchService;
 import com.hexvane.strangematter.util.InventoryOps;
@@ -27,7 +29,9 @@ import java.util.concurrent.ConcurrentHashMap;
 /** World-thread powered processing. Delayed UI acknowledgements never pause these jobs. */
 public final class FactoryService implements TubeInventoryProvider,AutoCloseable {
     public static final Set<String> IDS=Set.of("SM_Reality_Forge","SM_Resonant_Separator","SM_Flux_Furnace","SM_Pattern_Assembler");
-    private static final Set<String> LEGACY=Set.of("SM_Resonant_Burner","SM_Resonance_Condenser");
+    private static final Set<String> LEGACY=Set.of(EnergyStoragePorts.ID,"SM_Resonant_Burner","SM_Resonance_Condenser","SM_Resonant_Charging_Station");
+    public static boolean chargingMachine(String id){return id.equals("SM_Resonant_Burner")||id.equals("SM_Resonant_Charging_Station");}
+    public static boolean packableMachine(String id){return chargingMachine(id)||EnergyStoragePorts.storage(id);}
     public final MachineService machines;
     public final ResearchService research;
     private final FactoryKnowledge knowledge=new FactoryKnowledge();
@@ -37,30 +41,66 @@ public final class FactoryService implements TubeInventoryProvider,AutoCloseable
     private final Map<String,Recipes> recipeCache=new ConcurrentHashMap<>();
     private volatile java.util.function.BiPredicate<World,Vector3i> recoveryBlocker=(w,p)->false;
     private final Map<String,Set<String>> reservedTokens=new ConcurrentHashMap<>();
-    public FactoryService(MachineService machines,ResearchService research){this.machines=machines;this.research=research;FactoryRecipes.loadSeparations(machines);}
+    private final FactoryPacking packing;
+    final GadgetDockDisplays dockDisplays=new GadgetDockDisplays();
+    public FactoryService(MachineService machines,ResearchService research){this.machines=machines;this.research=research;FactoryRecipes.loadSeparations(machines);packing=new FactoryPacking(this);}
     public static boolean owns(String id){return IDS.contains(id);}
     public static void register(com.hypixel.hytale.server.core.plugin.JavaPlugin plugin){FactoryComponent.register(plugin);}
     public void setRecoveryBlocker(java.util.function.BiPredicate<World,Vector3i> blocker){recoveryBlocker=Objects.requireNonNull(blocker);}
-    public boolean blocked(World world,MachineState state){return recoveryBlocker.test(world,state.block());}
+    public boolean blocked(World world,MachineState state){return recoveryBlocker.test(world,state.block())||packing.blocked(world,state);}
+    public boolean parcelBlocked(World world,MachineState state){return packing.blocked(world,state);}
+    public boolean packingValidation(MachineState state){return packing.validating(state);}
+    public boolean canPlaceParcel(ItemStack stack){return packing.available(stack);}
+    public boolean reserveParcelPlacement(ItemStack stack){return packing.reservePlacement(stack);}
+    public void releaseParcelPlacement(ItemStack stack){packing.releasePlacement(stack);}
+    public void interruptParcelForEnvironmentBreak(World world,MachineState state){packing.environmentBreak(world,state);}
+    public boolean placeParcel(World world,MachineState state,ItemStack item,UUID owner){return packing.place(world,state,item,owner);}
+    public String pack(World world,MachineState state,PlayerRef owner){return packing.pack(world,state,owner);}
+    public void recoverParcels(World world){packing.tick(world);}
+    void restoreParcel(World world,MachineState state,String payload,String token,String identity,UUID owner){
+        var c=register(world,state);if(c==null)return;
+        var saved=FactoryComponent.CODEC.decode(org.bson.BsonDocument.parse(payload),new com.hypixel.hytale.codec.ExtraInfo());
+        c.input=saved.input;c.output=saved.output;c.escrow=saved.escrow;c.pending=saved.pending;c.recovery=saved.recovery;c.charging=saved.charging;c.data=saved.data;
+        c.data.identity=identity;c.data.parcel=token;c.data.owner=owner.toString();c.data.allowed.clear();c.data.selected.clear();c.data.configured=true;c.data.migrated=true;
+        state.energy=c.data.energy;state.owner=owner.toString();state.factoryMigration="";state.selectedRecipes.clear();
+        sites.remove(state.key());register(world,state);changed(world,state);
+    }
     public void invalidateKnowledge(UUID owner){knowledge.invalidate(owner);}
     public FactoryComponent register(World world,MachineState state){
         if(!owns(state.id)&&!LEGACY.contains(state.id)||FactoryComponent.getComponentType()==null)return null;
         var store=world.getChunkStore().getStore();store.assertThread();
+        var resident=WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock(state.x,state.z));
+        if(resident==null||WorldAccess.tickingSection(resident,state.y)==null)return null;
         var ref=BlockModule.getBlockEntity(world,state.x,state.y,state.z);
         if(ref==null){
             var section=world.getChunkStore().getChunkSectionReferenceAtBlock(state.x,state.y,state.z);if(section==null||!section.isValid())return null;
             var b=store.getComponent(section,BlockComponentSection.getComponentType());if(b==null)return null;
-            var holder=ChunkStore.REGISTRY.newHolder();holder.addComponent(BlockModule.BlockStateInfo.getComponentType(),new BlockModule.BlockStateInfo(ChunkUtil.indexBlock(state.x,state.y,state.z),section));holder.addComponent(FactoryComponent.getComponentType(),new FactoryComponent());
-            ref=store.addEntity(holder,AddReason.LOAD);
+            // Cubic section publication may leave authoritative block holders parked even
+            // after its NonTicking marker is gone. Activate this exact existing holder;
+            // never manufacture a second component or reset its saved inventory/energy.
+            int blockIndex=ChunkUtil.indexBlock(state.x,state.y,state.z);
+            if(b.getBlockReference(blockIndex)!=null)return null;
+            var holder=b.removeBlockHolder(blockIndex);
+            if(holder!=null){
+                holder.putComponent(BlockModule.BlockStateInfo.getComponentType(),new BlockModule.BlockStateInfo(blockIndex,section));
+                try{ref=store.addEntity(holder,AddReason.LOAD);}
+                catch(RuntimeException|Error failure){
+                    if(b.getBlockReference(blockIndex)==null&&b.getBlockHolder(blockIndex)==null)b.storeBlockHolder(blockIndex,holder);
+                    throw failure;
+                }
+            }else{
+                holder=ChunkStore.REGISTRY.newHolder();holder.addComponent(BlockModule.BlockStateInfo.getComponentType(),new BlockModule.BlockStateInfo(blockIndex,section));holder.addComponent(FactoryComponent.getComponentType(),new FactoryComponent());
+                ref=store.addEntity(holder,AddReason.LOAD);
+            }
         }
         var component=store.getComponent(ref,FactoryComponent.getComponentType());if(component==null){component=new FactoryComponent();store.addComponent(ref,FactoryComponent.getComponentType(),component);}
         var old=sites.get(state.key());
         if(old==null||old.ref!=ref||old.component!=component){
             var site=new Site(world,state,ref,component);sites.put(state.key(),site);
-            if(!component.data.configured){component.input=new SimpleItemContainer((short)inputSize(state.id,component.tier()));component.output=new SimpleItemContainer((short)(state.id.equals("SM_Pattern_Assembler")?10:5));component.data.configured=true;}
+            if(!component.data.configured){component.input=new SimpleItemContainer((short)inputSize(state.id,component.tier()));component.output=new SimpleItemContainer((short)(state.id.equals("SM_Pattern_Assembler")?10:5));component.data.configured=true;if(EnergyStoragePorts.storage(state.id)){component.input=EmptyItemContainer.INSTANCE;component.output=EmptyItemContainer.INSTANCE;}}
             migrate(site);restoreLegacy(site);state.factoryTier=component.tier();
             final var local=site;
-            for(var container:List.of(component.input,component.output,component.escrow,component.pending,component.recovery))container.registerChangeEvent(event->mark(local));
+            for(var container:List.of(component.input,component.output,component.escrow,component.pending,component.recovery,component.charging))container.registerChangeEvent(event->mark(local));
             filters(site);state.energy=component.data.energy;mark(site);
         }
         return component;
@@ -70,7 +110,7 @@ public final class FactoryService implements TubeInventoryProvider,AutoCloseable
         var c=site.component;var s=site.state;if(c.data.migrated)return;
         if(s.factoryMigration!=null&&!s.factoryMigration.isEmpty()){
             var saved=FactoryComponent.CODEC.decode(org.bson.BsonDocument.parse(s.factoryMigration),new com.hypixel.hytale.codec.ExtraInfo());
-            c.input=saved.input;c.output=saved.output;c.escrow=saved.escrow;c.pending=saved.pending;c.recovery=saved.recovery;c.data=saved.data;
+            c.input=saved.input;c.output=saved.output;c.escrow=saved.escrow;c.pending=saved.pending;c.recovery=saved.recovery;c.charging=saved.charging;c.data=saved.data;
             s.output="";s.outputQuantity=0;s.reservedInputs.clear();s.recipe="";s.progress=0;machines.markDirty();return;
         }
         c.data.owner=s.owner==null?"":s.owner;c.data.energy=s.energy;captureLegacy(site);
@@ -102,18 +142,23 @@ public final class FactoryService implements TubeInventoryProvider,AutoCloseable
     public FactoryRecipes.Recipe recipe(MachineState state,String id){return recipes(state).stream().filter(r->r.id().equals(id)).findFirst().orElse(null);}
     private Site site(World world,MachineState state){var s=sites.get(state.key());return s!=null&&s.world==world&&s.ref.isValid()?s:null;}
     private void mark(Site site){if(site==null||!site.ref.isValid())return;captureLegacy(site);var tokens=new HashSet<String>();var reserved=new ArrayList<>(FactoryInventory.stacks(site.component.escrow));for(var encoded:site.component.data.retiredCapsules)reserved.add(TubeStacks.decode(encoded));for(var stack:reserved){String token=stack.getFromMetadataOrNull("SMAnomaly",com.hypixel.hytale.codec.Codec.STRING);if(token!=null)tokens.add(token);}reservedTokens.put(site.state.key(),Set.copyOf(tokens));if(owns(site.state.id))site.state.reservedInputs=reserved.stream().map(MachineState.ReservedInput::from).collect(java.util.stream.Collectors.toCollection(ArrayList::new));var info=site.ref.getStore().getComponent(site.ref,BlockModule.BlockStateInfo.getComponentType());if(info!=null)info.markNeedsSaving(site.ref.getStore());machines.markDirty();}
-    private static void captureLegacy(Site site){var c=site.component.data;var s=site.state;if(s.id.equals("SM_Resonant_Burner")){c.fuelTicks=s.fuelTicks;c.queuedFuelTicks=s.queuedFuelTicks;c.fuelQueue=new ArrayList<>(s.fuelQueue);c.recoveredFuel=new ArrayList<>(s.recoveredFuel);}else if(s.id.equals("SM_Resonance_Condenser"))c.condenserProgress=s.progress;}
-    private static void restoreLegacy(Site site){var c=site.component.data;var s=site.state;if(s.id.equals("SM_Resonant_Burner")){s.fuelTicks=c.fuelTicks;s.queuedFuelTicks=c.queuedFuelTicks;s.fuelQueue=new ArrayList<>(c.fuelQueue);s.recoveredFuel=new ArrayList<>(c.recoveredFuel);}else if(s.id.equals("SM_Resonance_Condenser"))s.progress=c.condenserProgress;}
+    private static void captureLegacy(Site site){var c=site.component.data;var s=site.state;if(s.id.equals("SM_Resonant_Burner")){c.fuelTicks=s.fuelTicks;c.fuelDuration=s.fuelDuration;c.queuedFuelTicks=s.queuedFuelTicks;c.fuelQueue=new ArrayList<>(s.fuelQueue);c.recoveredFuel=new ArrayList<>(s.recoveredFuel);}else if(s.id.equals("SM_Resonance_Condenser"))c.condenserProgress=s.progress;else if(EnergyStoragePorts.storage(s.id))c.energyFaces=EnergyStoragePorts.snapshot(s);}
+    private static void restoreLegacy(Site site){var c=site.component.data;var s=site.state;if(s.id.equals("SM_Resonant_Burner")){s.fuelTicks=c.fuelTicks;s.fuelDuration=c.fuelDuration;s.queuedFuelTicks=c.queuedFuelTicks;s.fuelQueue=new ArrayList<>(c.fuelQueue);s.recoveredFuel=new ArrayList<>(c.recoveredFuel);}else if(s.id.equals("SM_Resonance_Condenser"))s.progress=c.condenserProgress;else if(EnergyStoragePorts.storage(s.id))s.energyFaces=c.energyFaces==null?null:c.energyFaces.clone();}
     private void filters(Site site){
         for(short i=0;i<site.component.input.getCapacity();i++)site.component.input.setSlotFilter(FilterActionType.ADD,i,(a,c,s,stack)->ItemStack.isEmpty(stack)||accepts(site,stack));
         for(short i=0;i<site.component.output.getCapacity();i++)site.component.output.setSlotFilter(FilterActionType.ADD,i,(a,c,s,stack)->ItemStack.isEmpty(stack));
+        for(short i=0;i<site.component.charging.getCapacity();i++)site.component.charging.setSlotFilter(FilterActionType.ADD,i,(a,c,s,stack)->ItemStack.isEmpty(stack)||chargingMachine(site.state.id)&&GadgetCharging.accepts(stack));
     }
-    public boolean mayAccess(World world,Vector3i origin,UUID player){var site=sites.get(MachineState.key(world.getName(),origin.x,origin.y,origin.z));return site!=null&&access(site.component,player);}
+    public boolean mayAccess(World world,Vector3i origin,UUID player){var site=sites.get(MachineState.key(world.getName(),origin.x,origin.y,origin.z));return site!=null&&!packing.blocked(world,site.state)&&access(site.component,player);}
     public boolean access(FactoryComponent c,UUID player){return c.data.owner.equals(player.toString())||c.data.allowed.contains(player.toString())||PermissionsModule.get().hasPermission(player,"strangematter.admin");}
     public String allow(World world,MachineState state,UUID actor,UUID target,boolean add){var site=site(world,state);if(site==null||!site.component.data.owner.equals(actor.toString())&&!PermissionsModule.get().hasPermission(actor,"strangematter.admin"))return "Only the owner can change access.";if(add)site.component.data.allowed.add(target.toString());else site.component.data.allowed.remove(target.toString());mark(site);return add?"Access granted.":"Access removed.";}
-    public List<TubePort> ports(World world,Vector3i origin){var site=sites.get(MachineState.key(world.getName(),origin.x,origin.y,origin.z));if(site==null||!site.ref.isValid())return List.of();return List.of(new TubePort("input",site.state.id.equals("SM_Resonant_Burner")?"Fuel":"Ingredients",site.component.input,stack->accepts(site,stack),false),new TubePort("output","Finished items",site.component.output,stack->false,true));}
+    public List<TubePort> ports(World world,Vector3i origin){var site=sites.get(MachineState.key(world.getName(),origin.x,origin.y,origin.z));if(site==null||!site.ref.isValid())return List.of();
+        if(EnergyStoragePorts.storage(site.state.id))return List.of();
+        if(site.state.id.equals("SM_Resonant_Charging_Station"))return List.of(new TubePort("charging","Gadget dock",site.component.charging,GadgetCharging::depleted,true,GadgetCharging::full));
+        return List.of(new TubePort("input",site.state.id.equals("SM_Resonant_Burner")?"Fuel":"Ingredients",site.component.input,stack->accepts(site,stack),false),new TubePort("output","Finished items",site.component.output,stack->false,true));}
     private boolean accepts(Site site,ItemStack stack){
         if(ItemStack.isEmpty(stack))return false;
+        if(site.state.id.equals("SM_Resonant_Charging_Station"))return false;
         if(site.state.id.equals("SM_Resonant_Burner"))return FurnaceFuel.ticks(stack)>0;
         if(site.state.id.equals("SM_Resonance_Condenser"))return false;
         var candidates=recipes(site.state);if(site.state.id.equals("SM_Pattern_Assembler")||site.state.id.equals("SM_Reality_Forge"))candidates=candidates.stream().filter(r->r.id().equals(site.component.data.pattern)).toList();
@@ -146,7 +191,6 @@ public final class FactoryService implements TubeInventoryProvider,AutoCloseable
         if(!current(recipe)){recipeCache.remove(state.id);return "Recipe changed. Select it again.";}
         String rejection=authorization(site.world,state,c,recipe,authority);if(rejection!=null)return rejection;
         if(!FactoryInventory.fits(c.output,recipe.outputs()))return "Output full";
-        if(state.energy<machines.consumption(state,c.tier()))return "Waiting for power";
         var plan=FactoryInventory.plan(c.input,recipe.inputs(),s->!recipe.forge()||machines.availableIngredient(s,false),recipe.forge());if(plan==null)return "Needs materials";
         if(!FactoryInventory.fits(c.escrow,plan.stacks())||!FactoryInventory.fits(c.pending,recipe.outputs()))return "Recipe exceeds machine capacity";
         if(!FactoryInventory.commit(c.input,plan))return "Ingredients changed";
@@ -166,8 +210,13 @@ public final class FactoryService implements TubeInventoryProvider,AutoCloseable
     private static Bench bench(String itemId){var block=com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType.getAssetMap().getAsset(itemId);return block==null?null:block.getBench();}
     private static double modifier(String id,int tier){var b=bench(id);var level=b==null?null:b.getTierLevel(tier);return level==null?0:level.getCraftingTimeReductionModifier();}
     public void tick20(World world,List<MachineState> states){
+        var visible=new HashSet<String>();
+        for(var state:states)if(chargingMachine(state.id)&&machines.valid(world,state)){
+            visible.add(state.key());dockDisplays.sync(world,state,register(world,state));
+        }
+        dockDisplays.retain(world,visible);
         for(var state:states){if(!owns(state.id)&&!LEGACY.contains(state.id))continue;var c=register(world,state);if(c==null)continue;var site=site(world,state);if(site==null)continue;
-            if(recoveryBlocker.test(world,state.block())){state.active=false;c.status="Checking item transfer";continue;}
+            if(blocked(world,state)){state.active=false;c.status="Checking item transfer";continue;}
             retireCapsules(site);state.factoryTier=c.tier();
             if(LEGACY.contains(state.id)){legacy(site);continue;}
             state.active=false;if(automaticInput(state.id))c.data.repeat=false;
@@ -178,7 +227,7 @@ public final class FactoryService implements TubeInventoryProvider,AutoCloseable
                 if(state.id.equals("SM_Pattern_Assembler")&&c.data.pattern.isBlank()){automatic=false;c.status="Choose a recipe";}
                 if(automatic){var candidates=recipes(state);if(!c.data.pattern.isEmpty()&&(state.id.equals("SM_Pattern_Assembler")||state.id.equals("SM_Reality_Forge")))candidates=candidates.stream().filter(r->r.id().equals(c.data.pattern)).toList();
                     if(state.id.equals("SM_Resonant_Separator")||state.id.equals("SM_Flux_Furnace")){var ordered=new ArrayList<>(candidates);ordered.sort(Comparator.comparingInt(r->firstSlot(c.input,r)));candidates=ordered;}
-                    for(var recipe:candidates){int yield=recipe.outputs().stream().filter(s->s.getItemId().equals(recipe.output())).mapToInt(ItemStack::getQuantity).sum();if(c.data.repeat&&stock(c.output,recipe.output())+yield>c.data.target){c.status="Stock target reached";break;}if(FactoryInventory.plan(c.input,recipe.inputs(),s->!recipe.forge()||machines.availableIngredient(s,false),recipe.forge())==null)continue;String reason=begin(site,recipe,uuid(c.data.owner));c.status=reason==null?"Working":reason;if(reason==null)advance(site);break;}
+                    for(var recipe:candidates){int yield=recipe.outputs().stream().filter(s->s.getItemId().equals(recipe.output())).mapToInt(ItemStack::getQuantity).sum();if(c.data.repeat&&stock(c.output,recipe.output())+yield>c.data.target){c.status="Stock target reached";break;}if(FactoryInventory.plan(c.input,recipe.inputs(),s->!recipe.forge()||machines.availableIngredient(s,false),recipe.forge())==null)continue;if(state.energy<machines.consumption(state,c.tier())){c.status="Waiting for power";break;}String reason=begin(site,recipe,uuid(c.data.owner));c.status=reason==null?"Working":reason;if(reason==null)advance(site);break;}
                 }
             }
             if(!state.id.equals("SM_Reality_Forge")){if(state.active){if(c.effectTicks++%20==0)com.hexvane.strangematter.effects.GadgetEffects.particle(world,state.id+"_Work",state.center().add(0,.45,0));}else c.effectTicks=0;}
@@ -186,6 +235,25 @@ public final class FactoryService implements TubeInventoryProvider,AutoCloseable
         }
     }
     private static int firstSlot(ItemContainer input,FactoryRecipes.Recipe recipe){for(short s=0;s<input.getCapacity();s++)for(var material:recipe.inputs())if(matches(material,input.getItemStack(s),recipe.forge()))return s;return Integer.MAX_VALUE;}
+    /** Actual runnable work, independent of stored power and presentation from the previous tick. */
+    public int powerDemand(World world,MachineState state){
+        var site=site(world,state);if(site==null||!state.enabled||blocked(world,state))return 0;var c=site.component;
+        if(c.busy()){
+            if(!FactoryInventory.fits(c.output,FactoryInventory.stacks(c.pending)))return 0;
+            if(!c.data.jobKind.equals("upgrade")){var recipe=recipe(state,c.data.jobRecipe);if(recipe==null||!current(recipe)||!recipe.fingerprint().equals(c.data.jobFingerprint)||authorization(world,state,c,recipe,uuid(c.data.jobOwner))!=null)return 0;}
+            return machines.consumption(state,c.tier());
+        }
+        if(!automaticInput(state.id)&&!c.data.repeat)return 0;
+        if(state.id.equals("SM_Pattern_Assembler")&&c.data.pattern.isBlank())return 0;
+        for(var recipe:recipes(state)){
+            if(!c.data.pattern.isEmpty()&&(state.id.equals("SM_Pattern_Assembler")||state.id.equals("SM_Reality_Forge"))&&!c.data.pattern.equals(recipe.id()))continue;
+            int yield=recipe.outputs().stream().filter(s->s.getItemId().equals(recipe.output())).mapToInt(ItemStack::getQuantity).sum();
+            if(c.data.repeat&&stock(c.output,recipe.output())+yield>c.data.target)continue;
+            if(FactoryInventory.plan(c.input,recipe.inputs(),s->!recipe.forge()||machines.availableIngredient(s,false),recipe.forge())==null)continue;
+            if(current(recipe)&&FactoryInventory.fits(c.output,recipe.outputs())&&authorization(world,state,c,recipe,uuid(c.data.owner))==null)return machines.consumption(state,c.tier());
+        }
+        return 0;
+    }
     private static int stock(ItemContainer output,String id){int n=0;for(var s:FactoryInventory.stacks(output))if(s.getItemId().equals(id))n+=s.getQuantity();return n;}
     private void advance(Site site){
         var c=site.component;var state=site.state;
@@ -213,21 +281,38 @@ public final class FactoryService implements TubeInventoryProvider,AutoCloseable
     }
     public String collect(World world,MachineState state,UUID player,ItemContainer inventory){var site=site(world,state);if(site==null||blocked(world,state)||!access(site.component,player))return "Access denied.";int n=0;for(var source:List.of(site.component.output,site.component.recovery))for(short s=0;s<source.getCapacity();s++){var item=source.getItemStack(s);if(ItemStack.isEmpty(item)||!FactoryInventory.fits(inventory,List.of(item)))continue;var result=source.moveItemStackFromSlot(s,inventory,true,true);if(result.succeeded())n++;}mark(site);return n>0?"Items collected.":"Make room in your inventory.";}
     public List<MaterialQuantity> upgradeMaterials(MachineState state,FactoryComponent c){String id=state.id.equals("SM_Pattern_Assembler")?"Bench_WorkBench":state.id.equals("SM_Flux_Furnace")?"Bench_Furnace":null;if(id==null)return List.of();var bench=bench(id);var upgrade=bench==null?null:bench.getUpgradeRequirement(c.tier());if(upgrade==null)return List.of();var result=new ArrayList<MaterialQuantity>(Arrays.asList(upgrade.getInput()));int amount=c.tier()==1?2:4;result.add(new MaterialQuantity("SM_Resonant_Circuit",null,null,amount,null));if(state.id.equals("SM_Pattern_Assembler"))result.add(new MaterialQuantity("SM_Resonant_Coil",null,null,amount,null));return result;}
-    public String upgrade(World world,MachineState state,UUID player,ItemContainer inventory){var site=site(world,state);if(site==null||blocked(world,state)||!access(site.component,player))return "Access denied.";var c=site.component;if(c.busy())return "Finish or stop this job first.";if(!state.enabled)return "Paused";if(state.energy<machines.consumption(state,c.tier()))return "Waiting for power";var cost=upgradeMaterials(state,c);if(cost.isEmpty())return "Highest machine tier reached.";var plan=FactoryInventory.plan(inventory,cost,s->true,false);if(plan==null)return "Missing upgrade materials.";if(!FactoryInventory.fits(c.escrow,plan.stacks()))return "Upgrade exceeds machine capacity";if(!FactoryInventory.commit(inventory,plan))return "Your inventory changed.";FactoryInventory.add(c.escrow,plan.stacks());c.data.jobKind="upgrade";c.data.jobRecipe="upgrade:"+(c.tier()+1);c.data.jobOwner=player.toString();c.data.upgradeTier=c.tier()+1;var b=bench(state.id.equals("SM_Pattern_Assembler")?"Bench_WorkBench":"Bench_Furnace");c.data.duration=Math.max(1,(int)Math.ceil(b.getUpgradeRequirement(c.tier()).getTimeSeconds()*20));c.data.progress=0;mark(site);return "Upgrade started.";}
+    public String upgrade(World world,MachineState state,UUID player,ItemContainer inventory){var site=site(world,state);if(site==null||blocked(world,state)||!access(site.component,player))return "Access denied.";var c=site.component;if(c.busy())return "Finish or stop this job first.";if(!state.enabled)return "Paused";var cost=upgradeMaterials(state,c);if(cost.isEmpty())return "Highest machine tier reached.";var plan=FactoryInventory.plan(inventory,cost,s->true,false);if(plan==null)return "Missing upgrade materials.";if(!FactoryInventory.fits(c.escrow,plan.stacks()))return "Upgrade exceeds machine capacity";if(!FactoryInventory.commit(inventory,plan))return "Your inventory changed.";FactoryInventory.add(c.escrow,plan.stacks());c.data.jobKind="upgrade";c.data.jobRecipe="upgrade:"+(c.tier()+1);c.data.jobOwner=player.toString();c.data.upgradeTier=c.tier()+1;var b=bench(state.id.equals("SM_Pattern_Assembler")?"Bench_WorkBench":"Bench_Furnace");c.data.duration=Math.max(1,(int)Math.ceil(b.getUpgradeRequirement(c.tier()).getTimeSeconds()*20));c.data.progress=0;mark(site);return "Upgrade started.";}
     public void changed(World world,MachineState state){mark(site(world,state));}
+    /** Ignite a single item only after all already-burning and legacy queued fuel is exhausted. */
+    public void prepareBurnerFuel(World world,MachineState state){
+        if(!state.id.equals("SM_Resonant_Burner")||!state.enabled||state.fuelTicks>0||state.queuedFuelTicks>0||!state.fuelQueue.isEmpty()||blocked(world,state))return;
+        var c=register(world,state);if(c==null)return;
+        machines.fuel(c.input,state,false);mark(site(world,state));
+    }
+    /** Called before generator export for the burner and after routing for the dedicated station. */
+    public void chargeDock(World world,MachineState state){
+        if(!chargingMachine(state.id))return;
+        var c=register(world,state);if(c==null)return;
+        if(blocked(world,state)){c.status="Checking item transfer";return;}
+        int rate=state.id.equals("SM_Resonant_Burner")?machines.config.burnerDockTransfer:machines.config.chargerTransfer;
+        int transferred=state.enabled?GadgetCharging.transfer(state,c,rate):0;
+        c.status=GadgetCharging.status(state,c);
+        if(transferred>0){if(state.id.equals("SM_Resonant_Charging_Station"))state.active=true;mark(site(world,state));}
+    }
     public String status(FactoryComponent component){return component.status;}
     public void open(PlayerRef player,Ref<EntityStore> ref,Store<EntityStore> store,MachineState state){var world=store.getExternalData().getWorld();claim(world,state,player.getUuid());var c=register(world,state);if(c==null||!access(c,player.getUuid()))return;var entity=store.getComponent(ref,Player.getComponentType());if(entity!=null){var page=new FactoryPage(player,this,state,ref,store);entity.getPageManager().openCustomPageWithWindows(ref,store,page,page.windows());}}
     /** Read-only identity for deferred callbacks; never registers or migrates a replacement block. */
     public FactoryComponent registeredComponent(World world,MachineState state){var site=sites.get(state.key());return site!=null&&site.world==world&&site.state==state?site.component:null;}
     public List<ItemStack> remove(World world,MachineState state){return remove(world,state,null);}
-    public List<ItemStack> remove(World world,MachineState state,FactoryComponent expected){var site=sites.get(state.key());if(site==null||site.world!=world||site.state!=state||expected!=null&&site.component!=expected)return List.of();retireCapsules(site);var c=site.component;var all=new ArrayList<ItemStack>();for(var inventory:List.of(c.input,c.output,c.escrow,c.recovery)){all.addAll(FactoryInventory.stacks(inventory));FactoryInventory.clear(inventory);}FactoryInventory.clear(c.pending);reset(c);mark(site);sites.remove(state.key(),site);reservedTokens.remove(state.key());state.reservedInputs.clear();return all;}
-    public boolean hasContents(World world,MachineState state){var c=register(world,state);return c!=null&&(c.busy()||!c.data.retiredCapsules.isEmpty()||List.of(c.input,c.output,c.escrow,c.pending,c.recovery).stream().anyMatch(i->!FactoryInventory.stacks(i).isEmpty()));}
+    public List<ItemStack> remove(World world,MachineState state,FactoryComponent expected){var site=sites.get(state.key());if(site==null||site.world!=world||site.state!=state||expected!=null&&site.component!=expected)return List.of();dockDisplays.remove(state.key());retireCapsules(site);var c=site.component;var all=new ArrayList<ItemStack>();for(var inventory:List.of(c.input,c.output,c.escrow,c.recovery,c.charging)){all.addAll(FactoryInventory.stacks(inventory));FactoryInventory.clear(inventory);}FactoryInventory.clear(c.pending);reset(c);mark(site);sites.remove(state.key(),site);reservedTokens.remove(state.key());state.reservedInputs.clear();return all;}
+    public boolean hasContents(World world,MachineState state){var c=register(world,state);return c!=null&&(c.busy()||!c.data.retiredCapsules.isEmpty()||List.of(c.input,c.output,c.escrow,c.pending,c.recovery,c.charging).stream().anyMatch(i->!FactoryInventory.stacks(i).isEmpty()));}
     public boolean hasRecovery(World world,MachineState state){var c=register(world,state);return c!=null&&!FactoryInventory.stacks(c.recovery).isEmpty();}
     public ItemContainer outputInventory(World world,MachineState state,boolean recovery){var c=register(world,state);return c==null?EmptyItemContainer.INSTANCE:recovery?c.recovery:c.output;}
     public boolean isCapsuleReserved(String token){return reservedTokens.values().stream().anyMatch(set->set.contains(token));}
-    public void cleanup(World world){sites.entrySet().removeIf(e->e.getValue().world==world);}
-    @Override public void close(){sites.clear();knowledge.close();}
-    private void legacy(Site site){var c=site.component;var s=site.state;if(s.id.equals("SM_Resonant_Burner")){machines.fuel(c.input,s,true);for(var iterator=s.recoveredFuel.iterator();iterator.hasNext();){var stack=iterator.next().toItemStack();if(!FactoryInventory.fits(c.recovery,List.of(stack)))break;FactoryInventory.add(c.recovery,List.of(stack));iterator.remove();}}c.data.energy=s.energy;mark(site);}
+    public void removeDisplay(World world,Vector3i position){dockDisplays.remove(MachineState.key(world.getName(),position.x,position.y,position.z));}
+    public void cleanup(World world){dockDisplays.cleanup(world);sites.entrySet().removeIf(e->e.getValue().world==world);}
+    @Override public void close(){dockDisplays.close();sites.clear();knowledge.close();}
+    private void legacy(Site site){var c=site.component;var s=site.state;if(s.id.equals("SM_Resonant_Burner")){for(var iterator=s.recoveredFuel.iterator();iterator.hasNext();){var stack=iterator.next().toItemStack();if(!FactoryInventory.fits(c.recovery,List.of(stack)))break;FactoryInventory.add(c.recovery,List.of(stack));iterator.remove();}}c.data.energy=s.energy;mark(site);}
     public boolean outputHasRoom(World world,MachineState state,String itemId){var c=register(world,state);return c!=null&&FactoryInventory.fits(c.output,List.of(new ItemStack(itemId,1)));}
     public boolean outputHasRoom(World world,MachineState state,String itemId,int quantity){var c=register(world,state);return c!=null&&!recoveryBlocker.test(world,state.block())&&FactoryInventory.fits(c.output,List.of(new ItemStack(itemId,quantity)));}
     public boolean acceptOutput(World world,MachineState state,ItemStack stack){if(!outputHasRoom(world,state,stack.getItemId(),stack.getQuantity()))return false;var site=site(world,state);FactoryInventory.add(site.component.output,List.of(stack));mark(site);return true;}

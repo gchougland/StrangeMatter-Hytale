@@ -44,6 +44,7 @@ final class TubeEndpoints {
     }
     List<Endpoint> all(World world,Position contact,boolean createReceipt){
         var origin=origin(world,contact);if(origin==null)return List.of();
+        if(com.hexvane.strangematter.equipment.GraviticChestMarker.locked(world,origin.vector()))return List.of();
         var ref=BlockModule.getBlockEntity(world,origin.x,origin.y,origin.z);if(ref==null||!ref.isValid())return List.of();
         var store=world.getChunkStore().getStore();List<TubePort> ports=provider==null?List.of():provider.ports(world,origin.vector());
         boolean suppliedByProvider=!ports.isEmpty();

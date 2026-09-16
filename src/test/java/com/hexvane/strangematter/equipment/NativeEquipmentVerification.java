@@ -31,6 +31,8 @@ import java.util.concurrent.CompletableFuture;
 /** Requires the actual loaded server/world; records native packets without opening a socket. */
 public final class NativeEquipmentVerification {
     public static void verify(World world,ResearchService research,AnomalyService anomalies,MachineService machines,Path directory)throws Exception {
+        NativeGadgetEnergyVerification.verify(world,directory);
+        NativeAdvancedGadgetsVerification.verify(world);
         verifyHeldInteractions();
         var holder=EntityStore.REGISTRY.newHolder();var player=new Player();holder.addComponent(Player.getComponentType(),player);
         var packets=new RecordingPackets();var owner=new PlayerRef(holder,UUID.randomUUID(),"EquipmentVerification","en-US",packets,null);

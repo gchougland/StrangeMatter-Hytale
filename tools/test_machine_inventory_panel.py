@@ -34,7 +34,7 @@ def validate(text, row, slot):
     assert re.search(r'Group(?:\s+#\w+)?\s*\{',row),'Rows must accept appended cell children'
     assert anchor(row).get('Height')==46 and 'LayoutMode: Left;' in row,'One row must fit native slots plus a four pixel vertical gap'
     wrappers=re.findall(r'Group\s+#(\w+)\s*\{',slot)
-    assert wrappers==['InventoryCell'],'Each cell needs one stable wrapper for its slot and displayed revision'
+    assert wrappers==['InventoryCell','ChargeMeter','ChargeFill'],'Each cell keeps one stable wrapper and a charge overlay'
     wrapper=block(slot,'InventoryCell')
     assert anchor(wrapper)=={'Width':46,'Height':42},'Cell footprint must fit all nine native inventory columns'
     cells=re.findall(r'ItemGrid\s+#(\w+)\s*\{([^{}]*)\}',wrapper)
@@ -44,6 +44,10 @@ def validate(text, row, slot):
     revisions=re.findall(r'TextField\s+#(\w+)\s*\{([^{}]*)\}',wrapper)
     assert len(revisions)==1 and revisions[0][0]=='DisplayRevision','Each cell needs one native Value field for stable event bindings'
     revision=revisions[0][1]
+    meter=block(slot,'ChargeMeter');fill=block(slot,'ChargeFill')
+    assert anchor(meter)=={'Left':4,'Top':37,'Width':34,'Height':3},'Charge overlay stays within the native slot'
+    assert 'HitTestVisible: false;' in meter and 'HitTestVisible: false;' in fill,'Charge graphics must never intercept item dragging'
+    assert re.search(r'(?<![A-Za-z])Visible:\s*false\s*;',meter),'Non-gadget slots start with no energy overlay'
     assert re.search(r'Visible:\s*false\s*;',revision),'The revision field must never appear over or intercept a visible inventory slot'
     assert re.search(r'Value:\s*"0"\s*;',revision),'The revision field must have a defined initial native Value'
     assert re.search(r'SlotsPerRow:\s*1\s*;',cell),'One slot per cell supplies an unambiguous static event address'
@@ -93,8 +97,9 @@ class MachineInventoryPanelTests(unittest.TestCase):
             validate(UI.read_text(),ROW.read_text(),text)
 
     def test_visible_revision_field_is_rejected(self):
+        text=re.sub(r'(TextField\s+#DisplayRevision\s*\{\s*Visible:\s*)false',r'\g<1>true',SLOT.read_text(),count=1)
         with self.assertRaises(AssertionError):
-            validate(UI.read_text(),ROW.read_text(),SLOT.read_text().replace('Visible: false;', 'Visible: true;', 1))
+            validate(UI.read_text(),ROW.read_text(),text)
 
     def test_missing_revision_field_is_rejected(self):
         text=re.sub(r'TextField #DisplayRevision\s*\{[^{}]*\}', '', SLOT.read_text())

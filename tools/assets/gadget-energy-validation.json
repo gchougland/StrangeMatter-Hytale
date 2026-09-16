@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "items": [
+    {
+      "item": "SM_Resonant_Charging_Station",
+      "faces": 210,
+      "coplanarOverlaps": 0,
+      "texture": [
+        256,
+        128
+      ]
+    },
+    {
+      "item": "SM_Resonant_Battery_Pack",
+      "faces": 216,
+      "coplanarOverlaps": 0,
+      "texture": [
+        256,
+        128
+      ]
+    },
+    {
+      "item": "SM_Gravitic_Manipulator",
+      "faces": 270,
+      "coplanarOverlaps": 0,
+      "texture": [
+        256,
+        64
+      ]
+    },
+    {
+      "item": "SM_Arc_Projector",
+      "faces": 318,
+      "coplanarOverlaps": 0,
+      "texture": [
+        256,
+        64
+      ]
+    },
+    {
+      "item": "SM_Resonant_Energy_Storage",
+      "faces": 354,
+      "coplanarOverlaps": 0,
+      "texture": [
+        256,
+        128
+      ]
+    }
+  ],
+  "originalBurnerNodes": "exactly preserved",
+  "originalBurnerAtlasPixels": "exactly preserved",
+  "existingArtFilesByteIdentical": 571,
+  "arcElectricity": "SM_Stabilizer_Link reused unchanged",
+  "errors": [],
+  "limitations": "Offline models and neutral native rig checked. Client hand alignment, animated armor poses and live VFX require client acceptance."
+}

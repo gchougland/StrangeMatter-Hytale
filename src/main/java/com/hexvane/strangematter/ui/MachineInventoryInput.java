@@ -1,6 +1,7 @@
 package com.hexvane.strangematter.ui;
 
 import com.google.gson.JsonParser;
+import com.hexvane.strangematter.equipment.GadgetEnergy;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.Packet;
@@ -63,9 +64,17 @@ final class MachineInventoryInput implements AutoCloseable {
 
     long project(int section, short slot) {
         var at = new Address(section, slot);
-        long version = ++revision;
+        var previous=projections.get(at);
+        // Charge is live numeric state on the same gadget. Replacing its callback revision
+        // every tick loses the actual drag source, allowing a crossed cell to become one.
+        long version = previous!=null&&sameItem(previous.stack(),stack(at))?previous.version():++revision;
         projections.put(at, new Projection(version, stack(at)));
         return version;
+    }
+    private static boolean sameItem(ItemStack first,ItemStack second){
+        if(Objects.equals(first,second))return true;
+        return GadgetEnergy.powered(first)&&GadgetEnergy.powered(second)
+                &&Objects.equals(GadgetEnergy.withCharge(first,0),GadgetEnergy.withCharge(second,0));
     }
     void bind(UIEventBuilder events, String selector, String versionSelector, int section, short slot) {
         bind(events, selector, CustomUIEventBindingType.SlotClicking, "press", section, slot, versionSelector);
@@ -146,7 +155,7 @@ final class MachineInventoryInput implements AutoCloseable {
         var projection = projections.get(at);
         if (projection == null || projection.version() != version) return;
         if ((action.equals("press") || action.equals("drag")) && selection != null
-                && (selection == cancelling || !Objects.equals(stack(selection.from()), selection.stack()))) {
+                && (selection == cancelling || !sameItem(stack(selection.from()), selection.stack()))) {
             selection = null; cancelling = null; pending = null;
         }
         switch (action) {
@@ -154,14 +163,14 @@ final class MachineInventoryInput implements AutoCloseable {
                 if (selection != null && !selection.from().equals(at)) { drop(at); return; }
                 // Native moves can arrive before the custom press envelope. An old displayed
                 // stack may never select the remainder of an already completed native move.
-                if (!Objects.equals(stack(at), projection.stack())) return;
+                if (!sameItem(stack(at), projection.stack())) return;
                 pending = null; completion = null;
                 var item = stack(at);
                 selection = ItemStack.isEmpty(item) ? null : new Selection(at, item, ++generation, version);
             }
             case "drag" -> {
                 // Crossing other cells cannot change the source of an ongoing drag.
-                if (selection == null && Objects.equals(stack(at), projection.stack()) && !ItemStack.isEmpty(stack(at))) {
+                if (selection == null && sameItem(stack(at), projection.stack()) && !ItemStack.isEmpty(stack(at))) {
                     // Dragging does not have to emit SlotClicking. A fresh valid source begins
                     // its own gesture even when the previous transfer has a duplicate guard.
                     completion = null;
@@ -202,7 +211,7 @@ final class MachineInventoryInput implements AutoCloseable {
         var selected = selection;
         pending = null; selection = null;
         if (!usable()) return;
-        if (!Objects.equals(stack(selected.from()), selected.stack())) return;
+        if (!sameItem(stack(selected.from()), selected.stack())) return;
         completion = new Completion(selected.from(), candidate.to());
         InventoryUtils.moveItem(ref, selected.from().section(), selected.from().slot(), selected.stack().getQuantity(),
                 candidate.to().section(), candidate.to().slot(), store);
@@ -211,8 +220,11 @@ final class MachineInventoryInput implements AutoCloseable {
         if (!valid(from) || !valid(to) || from.equals(to) || quantity <= 0) return;
         // Prevent a second release callback/native move from moving a remainder or undoing a swap.
         if (completion != null && completion.from().equals(from) && completion.to().equals(to)) return;
+        // The scoped source wins over an unrelated native cell packet emitted during this drag.
+        // Retain the pending custom release so rejecting that packet does not lose the gadget.
+        if(selection!=null&&!selection.from().equals(from))return;
         if (selection != null && selection.from().equals(from)) {
-            if (!Objects.equals(stack(from), selection.stack())) { selection = null; pending = null; return; }
+            if (!sameItem(stack(from), selection.stack())) { selection = null; pending = null; return; }
             selection = null; pending = null;
         }
         var item = stack(from);

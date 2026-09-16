@@ -53,6 +53,8 @@ def native_recipe_costs(recipe_id, counts):
     counts = dict(counts)
     # The Hytale coil includes the copper winding described by its item lore.
     if recipe_id == 'resonant_coil': counts['Ingredient_Bar_Copper'] = 1
+    # A field journal must not require the scarce white crystal used as a glass substitute.
+    if recipe_id == 'research_tablet': counts.pop(MAP['minecraft:glass_pane'], None)
     return counts
 def write(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)

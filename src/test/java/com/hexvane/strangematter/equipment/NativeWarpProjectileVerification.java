@@ -48,11 +48,11 @@ public final class NativeWarpProjectileVerification {
 
             var gun = new ItemStack("SM_Warp_Gun", 1).withMetadata("NativeWarpMarker", Codec.STRING, "slot-move-preserved");
             owner.hotbar().setItemStackForSlot((short) 0, gun, false);
-            double initialDurability = gun.getDurability();
+            int initialCharge = GadgetEnergy.charge(gun);
             var cyan = launch(warps, owner, (short) 0, false, new Vector3d(1, 0, 0));
             require(gates(anomalies, previous).isEmpty(), "Trigger pull creates no endpoint before the native projectile arrives");
-            require(owner.hotbar().getItemStack((short) 0).getDurability() == initialDurability - 1,
-                    "A survival trigger pull wears the real gun exactly once");
+            require(GadgetEnergy.charge(owner.hotbar().getItemStack((short) 0)) == initialCharge - GadgetEnergy.cost("warp"),
+                    "A survival trigger pull debits the real gun exactly once");
             var stamped = owner.hotbar().getItemStack((short) 0);
             owner.hotbar().setItemStackForSlot((short) 6, stamped, false);
             owner.hotbar().setItemStackForSlot((short) 0, new ItemStack("SM_Resonite_Ingot", 2), false);
@@ -79,8 +79,8 @@ public final class NativeWarpProjectileVerification {
             assertNativeHitHeight(firstPurple, purple);
             require(firstPurple.portalChannel == 2 && firstPurple.pairedGate.equals(firstCyan.id)
                     && firstCyan.pairedGate.equals(firstPurple.id), "Both real impacts create a reciprocal cyan and purple pair");
-            require(owner.hotbar().getItemStack((short) 6).getDurability() == initialDurability - 2,
-                    "Travel and impact do not apply additional durability costs");
+            require(GadgetEnergy.charge(owner.hotbar().getItemStack((short) 6)) == initialCharge - 2 * GadgetEnergy.cost("warp"),
+                    "Travel and impact do not apply additional energy costs");
 
             var oldCyan = launch(warps, owner, (short) 6, false, new Vector3d(1, 0, 0));
             var latestCyan = launch(warps, owner, (short) 6, false, new Vector3d(0, 0, -1));
@@ -101,7 +101,7 @@ public final class NativeWarpProjectileVerification {
             var cleared = owner.hotbar().getItemStack((short) 6);
             for (boolean channel : new boolean[]{false, true}) require(metadata(cleared, WarpProjectiles.portalKey(channel)) == null
                     && metadata(cleared, WarpProjectiles.flightKey(channel)) == null, "Clear removes both endpoint and flight identities");
-            require(cleared.getDurability() == beforeClear.getDurability() && gates(anomalies, previous).isEmpty(),
+            require(GadgetEnergy.charge(cleared) == GadgetEnergy.charge(beforeClear) && gates(anomalies, previous).isEmpty(),
                     "Clear removes owned portals without charging another use");
             for (int i = 0; i < 45; i++) step(world, warps);
             require(gates(anomalies, previous).isEmpty(), "Cleared shots cannot create late portals");
@@ -156,13 +156,13 @@ public final class NativeWarpProjectileVerification {
             var actual = owner.hotbar().getItemStack((short) 6);
             require(!warps.launch(owner.owner(), store, EYE, new Vector3d(1, 0, 0), owner.hotbar(), (short) 6, gun, false)
                     && owner.hotbar().getItemStack((short) 6).equals(actual), "A stale stack snapshot cannot charge or launch another shot");
-            var broken = actual.withDurability(0); owner.hotbar().setItemStackForSlot((short) 6, broken, false);
+            var broken = GadgetEnergy.withCharge(actual,0); owner.hotbar().setItemStackForSlot((short) 6, broken, false);
             require(!warps.launch(owner.owner(), store, EYE, new Vector3d(1, 0, 0), owner.hotbar(), (short) 6, broken, false)
-                    && nativeBolts(store).isEmpty(), "A broken survival gun cannot launch a native projectile");
+                    && nativeBolts(store).isEmpty(), "A empty survival gun cannot launch a native projectile");
             owner.hotbar().setItemStackForSlot((short) 6, actual, false);
             Player.setGameMode(owner.ref(), GameMode.Creative, store);
             var creative = launch(warps, owner, (short) 6, false, new Vector3d(0, 1, 0));
-            require(owner.hotbar().getItemStack((short) 6).getDurability() == actual.getDurability(), "Creative launch retains durability");
+            require(GadgetEnergy.charge(owner.hotbar().getItemStack((short) 6)) == GadgetEnergy.charge(actual), "Creative launch retains energy");
             var otherColour = launch(warps, owner, (short) 6, true, new Vector3d(0, 1, 0));
             warps.cleanup(world);
             require(!warps.inFlight(creative.token) && !warps.inFlight(otherColour.token)
@@ -177,7 +177,7 @@ public final class NativeWarpProjectileVerification {
             anomalies.save();
             for (var p : wall) world.setBlock(p.x, p.y, p.z, "Empty");
         }
-        System.out.println("NATIVE_WARP_PROJECTILE_VERIFICATION_PASSED: real native flight and block/entity collision, impact height plus one, independent colour pairing, moved inventory identity, exact durability, stale/latest shot rules, clear, miss expiry and world cleanup.");
+        System.out.println("NATIVE_WARP_PROJECTILE_VERIFICATION_PASSED: real native flight and block/entity collision, impact height plus one, independent colour pairing, moved inventory identity, exact energy, stale/latest shot rules, clear, miss expiry and world cleanup.");
     }
 
     private static Bolt launch(WarpProjectiles warps, NativePlayerFixture owner, short slot, boolean purple, Vector3d direction) {

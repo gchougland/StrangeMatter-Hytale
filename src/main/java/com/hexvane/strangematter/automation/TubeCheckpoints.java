@@ -15,22 +15,29 @@ final class TubeCheckpoints {
         var world=endpoint.world();var store=world.getChunkStore().getStore();store.assertThread();
         var info=store.getComponent(endpoint.ref(),BlockModule.BlockStateInfo.getComponentType());
         if(info==null||!info.getSectionRef().isValid())return null;
+        return saveAt(world,endpoint.position().vector());
+    }
+    /** Also snapshots an emptied machine site after its block entity was removed. */
+    static CompletableFuture<Void> saveAt(com.hypixel.hytale.server.core.universe.world.World world,org.joml.Vector3i position){
+        var store=world.getChunkStore().getStore();store.assertThread();
+        var sectionRef=world.getChunkStore().getChunkSectionReferenceAtBlock(position.x,position.y,position.z);
+        if(sectionRef==null||!sectionRef.isValid())return null;
         if(world.isSavingLocked()||!world.getWorldConfig().canSaveChunks())return null;
         var queue=store.getResource(ChunkStore.SAVE_RESOURCE);
         var saver=world.getChunkStore().getSaver();
         if(saver instanceof IChunkSaver.Cubic cubic){
-            var section=store.getComponent(info.getSectionRef(),BlockComponentSection.getComponentType());
-            var geometry=store.getComponent(info.getSectionRef(),ChunkSection.getComponentType());
+            var section=store.getComponent(sectionRef,BlockComponentSection.getComponentType());
+            var geometry=store.getComponent(sectionRef,ChunkSection.getComponentType());
             if(section==null||geometry==null||section.isSaving()||geometry.isSaving()||!queue.tryReserveInFlight())return null;
             if(!queue.tryReserveInFlight()){queue.releaseInFlight();return null;}
-            section.setSaving(true);geometry.setSaving(true);info.markNeedsSaving();var p=endpoint.position();
+            section.setSaving(true);geometry.setSaving(true);section.markNeedsSaving();geometry.markNeedsSaving();var p=position;
             int x=Math.floorDiv(p.x(),32),y=Math.floorDiv(p.y(),32),z=Math.floorDiv(p.z(),32);
             boolean blockDispatched=false,geometryDispatched=false;
             try{
                 var blocks=cubic.saveBlockComponentSection(x,y,z,store,section,world,queue::releaseInFlight);blockDispatched=true;
                 section.consumeNeedsSaving();queue.pushSavingFuture(blocks);
                 var savedBlocks=blocks.whenCompleteAsync((v,error)->{if(error!=null)section.markNeedsSaving();section.setSaving(false);},world);
-                var terrain=cubic.saveSection(x,y,z,store,info.getSectionRef(),world,queue::releaseInFlight);geometryDispatched=true;
+                var terrain=cubic.saveSection(x,y,z,store,sectionRef,world,queue::releaseInFlight);geometryDispatched=true;
                 geometry.consumeNeedsSaving();queue.pushSavingFuture(terrain);
                 var savedGeometry=terrain.whenCompleteAsync((v,error)->{if(error!=null)geometry.markNeedsSaving();geometry.setSaving(false);},world);
                 return CompletableFuture.allOf(savedBlocks,savedGeometry);
@@ -39,14 +46,14 @@ final class TubeCheckpoints {
                 if(!geometryDispatched){geometry.setSaving(false);geometry.markNeedsSaving();queue.releaseInFlight();}
             }
         }
-        var p=endpoint.position();var column=WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock(p.x(),p.z()));
+        var p=position;var column=WorldAccess.loaded(world,ChunkUtil.indexChunkFromBlock(p.x(),p.z()));
         if(column==null||column.isSaving()||!queue.tryReserveInFlight())return null;
         // Legacy savers serialize the entire column holder; use the same exclusion flag as native saves.
-        column.setSaving(true);info.markNeedsSaving();
+        column.setSaving(true);column.markNeedsSaving();
         boolean dispatched=false;
         try{var saved=saver.saveChunkColumn(column.getX(),column.getZ(),store,column.getReference(),world,queue::releaseInFlight);dispatched=true;queue.pushSavingFuture(saved);
-            return saved.whenCompleteAsync((v,error)->{if(error!=null)info.markNeedsSaving();column.setSaving(false);},world);}
-        finally{if(!dispatched){column.setSaving(false);info.markNeedsSaving();queue.releaseInFlight();}}
+            return saved.whenCompleteAsync((v,error)->{if(error!=null)column.markNeedsSaving();column.setSaving(false);},world);}
+        finally{if(!dispatched){column.setSaving(false);column.markNeedsSaving();queue.releaseInFlight();}}
     }
     private TubeCheckpoints(){}
 }

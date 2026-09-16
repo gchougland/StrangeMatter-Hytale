@@ -98,7 +98,10 @@ public final class NativeMobilityRevisionVerification {
             for(int i=0;i<8&&countBoards(fixture.inventory())==0;i++){fixture.save();mobility.tick(world,.05);}
             fixture.save();mobility.tick(world,.05);
             require(countBoards(fixture.inventory())==1,"Native dismount returns exactly one physical item");
-            ItemStack returned=board(fixture.inventory());assertPayload(original,returned);
+            ItemStack returned=board(fixture.inventory());
+            int expectedCharge=GadgetEnergy.charge(original)-GadgetEnergy.cost("board_start")-GadgetEnergy.cost("board_second");
+            require(GadgetEnergy.charge(returned)==expectedCharge,"Native ride consumes activation and its first prepaid second exactly once");
+            assertPayload(GadgetEnergy.withCharge(original,expectedCharge),returned);
             require(returned.equals(fixture.hotbar().getItemStack((short)0)),"Open hotbar receives the folded board ahead of empty storage");
             require(new HoverboardLedger(directory.resolve("live")).validAvailable(returned),"Completed native return save retires the receipt with usable current identity");
             mobility.cleanup(world);

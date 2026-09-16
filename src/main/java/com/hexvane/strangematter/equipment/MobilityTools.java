@@ -57,6 +57,8 @@ public final class MobilityTools {
     private final Map<UUID, Morph> morphs = new ConcurrentHashMap<>();
     private final Set<UUID> mountPresented = ConcurrentHashMap.newKeySet();
     private final Map<String,Double> time = new ConcurrentHashMap<>();
+    private final Map<UUID,Double> boardPaidUntil=new ConcurrentHashMap<>(),morphPaidUntil=new ConcurrentHashMap<>();
+    private final Map<UUID,String> morphTokens=new ConcurrentHashMap<>();
     private final GadgetHudService hud;
     private final HoverboardRecovery recovery;
     public MobilityTools(GadgetHudService hud,Path directory) { this.hud = hud;this.recovery=new HoverboardRecovery(directory); }
@@ -78,6 +80,8 @@ public final class MobilityTools {
         ItemStack held=hotbar.getInventory().getItemStack(slot);
         if(ItemStack.isEmpty(held)||!BOARD.equals(held.getItemId()))return;
         if(!canDeploy(playerRef,store))return;
+        var entity=store.getComponent(ref,Player.getComponentType());
+        if(entity!=null&&entity.getGameMode()!=com.hypixel.hytale.protocol.GameMode.Creative&&GadgetEnergy.charge(held)<GadgetEnergy.cost("board_start")+GadgetEnergy.cost("board_second")){say(playerRef,"The hoverboard needs more Resonant Energy. Recharge it in a burner or charging station.");return;}
         if(recovery.begin(store.getExternalData().getWorld(),playerRef,hotbar.getInventory(),slot,held))
             say(playerRef,"Securing hoverboard inventory. The board will deploy when its save completes.");
         else say(playerRef,"This hoverboard is already deployed, recovering, or has a stale identity.");
@@ -131,6 +135,8 @@ public final class MobilityTools {
         Ref<EntityStore> board = spawned.first();
         var network = store.getComponent(board, NetworkId.getComponentType());
         if (network == null) { store.removeEntity(board, RemoveReason.REMOVE); return false; }
+        if(!recovery.ledger().spend(receipt,GadgetEnergy.cost("board_start")+GadgetEnergy.cost("board_second"),player.getGameMode()==com.hypixel.hytale.protocol.GameMode.Creative)){store.removeEntity(board,RemoveReason.REMOVE);return false;}
+        boardPaidUntil.put(uuid,time.getOrDefault(world.getName(),0d)+1);
         MovementManager original = (MovementManager) movement.clone();
         movement.setDefaultSettings(config, physics, player.getGameMode()); movement.applyDefaultSettings(); movement.update(playerRef.getPacketHandler());
         var velocity = store.getComponent(board, Velocity.getComponentType()); if (velocity != null) velocity.setZero();
@@ -214,6 +220,16 @@ public final class MobilityTools {
         ModelComponent originalComponent = store.getComponent(ref, ModelComponent.getComponentType());
         ModelComponent target = store.getComponent(scan.target(), ModelComponent.getComponentType());
         if (originalComponent == null || target == null) { say(scan.player(), "This echoform has no compatible model."); return; }
+        var hotbar=store.getComponent(ref,InventoryComponent.Hotbar.getComponentType());var player=store.getComponent(ref,Player.getComponentType());
+        if(hotbar==null||player==null||hotbar.getActiveSlot()<0)return;
+        short slot=hotbar.getActiveSlot();var instrument=hotbar.getInventory().getItemStack(slot);
+        String energyToken=UUID.randomUUID().toString();
+        try(var debit=GadgetEnergy.reserve(hotbar.getInventory(),slot,instrument,GadgetEnergy.cost("imprint_start")+GadgetEnergy.cost("imprint_second"),player.getGameMode()==com.hypixel.hytale.protocol.GameMode.Creative)){
+            if(debit==null){say(scan.player(),"The imprinter needs more Resonant Energy.");return;}
+            if(!hotbar.getInventory().setItemStackForSlot(slot,hotbar.getInventory().getItemStack(slot).withMetadata("SMImprintEnergy",com.hypixel.hytale.codec.Codec.STRING,energyToken),false).succeeded())return;
+            debit.commit();
+        }
+        morphTokens.put(scan.player().getUuid(),energyToken);morphPaidUntil.put(scan.player().getUuid(),time.getOrDefault(scan.world().getName(),0d)+1);
         suspendRiderPose(scan.player(), store);
         Morph previous = morphs.get(scan.player().getUuid());
         Model originalModel = previous == null ? originalComponent.getModel() : previous.originalModel();
@@ -243,6 +259,7 @@ public final class MobilityTools {
     }
     private void revert(UUID uuid, boolean announce) {
         Morph morph = morphs.remove(uuid);
+        morphTokens.remove(uuid);morphPaidUntil.remove(uuid);
         if (morph == null) return;
         Ref<EntityStore> ref = morph.player().getReference();
         if (ref == null || !ref.isValid()) return;
@@ -269,7 +286,7 @@ public final class MobilityTools {
     }
     public void tick(World world, double dt) {
         Store<EntityStore> store = world.getEntityStore().getStore();
-        double previousTime=time.getOrDefault(world.getName(),0d),currentTime=previousTime+dt;time.put(world.getName(),currentTime);
+        double previousTime=time.getOrDefault(world.getName(),0d),currentTime=previousTime+Math.clamp(dt,0,.25);time.put(world.getName(),currentTime);
         boolean visual=(int)(previousTime*5)!=(int)(currentTime*5);
         recovery.tick(world,this::deploy,this::say);
         for (var entry : scans.entrySet()) {
@@ -288,6 +305,14 @@ public final class MobilityTools {
             if (ref == null || !ref.isValid() || ref.getStore() != store || !ride.board().isValid()) { stopRide(ride); continue; }
             Player player = store.getComponent(ref, Player.getComponentType());
             if (player == null || player.getMountEntityId() != ride.networkId() || store.getComponent(ref, DeathComponent.getComponentType()) != null) { stopRide(ride); continue; }
+            if(currentTime>=boardPaidUntil.getOrDefault(ride.player().getUuid(),0d)){
+                if(!recovery.ledger().spend(ride.receipt(),GadgetEnergy.cost("board_second"),player.getGameMode()==com.hypixel.hytale.protocol.GameMode.Creative)){
+                    var transform=store.getComponent(ref,TransformComponent.getComponentType());
+                    if(transform==null||surfaceNearby(world,transform.getPosition())){say(ride.player(),"Hoverboard depleted. Folded safely near the ground.");stopRide(ride);continue;}
+                    // The ground-following native mount retains gravity while finishing its descent.
+                    if(visual)hud.update(ride.player(),store,"Hoverboard","Energy empty / landing","The board will fold when it reaches the ground.",-1);
+                }else boardPaidUntil.put(ride.player().getUuid(),currentTime+1);
+            }
             ride.pose().ensure(ride.player(), store);
             var viewer = store.getComponent(ref, EntityTrackerSystems.EntityViewer.getComponentType());
             if (viewer != null && viewer.sent.containsKey(ride.board()) && mountPresented.add(ride.player().getUuid())) {
@@ -304,12 +329,17 @@ public final class MobilityTools {
             Ref<EntityStore> ref = morph.player().getReference();
             if (ref == null || !ref.isValid()) { morphs.remove(morph.player().getUuid(), morph); continue; }
             if (ref.getStore() != store || store.getComponent(ref, DeathComponent.getComponentType()) != null) revert(morph.player().getUuid(), false);
+            else if(currentTime>=morphPaidUntil.getOrDefault(morph.player().getUuid(),0d)){
+                if(!spendMorph(morph,store)){revert(morph.player().getUuid(),true);say(morph.player(),"Disguise ended: the imprinter is empty or no longer carried.");}
+                else morphPaidUntil.put(morph.player().getUuid(),currentTime+1);
+            }
         }
     }
     private void stopRide(Ride ride) {
         if (rides.get(ride.player().getUuid())!=ride) return;
         recovery.fold(ride.receipt());
         if (!rides.remove(ride.player().getUuid(), ride)) return;
+        boardPaidUntil.remove(ride.player().getUuid());
         mountPresented.remove(ride.player().getUuid());
         ride.pose().restore(ride.player());
         Store<EntityStore> store = ride.world().getEntityStore().getStore();
@@ -346,6 +376,15 @@ public final class MobilityTools {
         });
     }
     private static void onWorld(World world,Runnable action){if(world.isInThread())action.run();else world.execute(action);}
+    private boolean spendMorph(Morph morph,Store<EntityStore> store){
+        var ref=morph.player().getReference();var player=store.getComponent(ref,Player.getComponentType());if(player==null)return false;
+        var inventory=InventoryComponent.getCombined(store,ref,InventoryComponent.HOTBAR_STORAGE_BACKPACK);String token=morphTokens.get(morph.player().getUuid());
+        if(inventory==null||token==null)return false;
+        for(short slot=0;slot<inventory.getCapacity();slot++){
+            var item=inventory.getItemStack(slot);if(ItemStack.isEmpty(item)||!IMPRINTER.equals(item.getItemId()))continue;
+            if(token.equals(item.getFromMetadataOrNull("SMImprintEnergy",com.hypixel.hytale.codec.Codec.STRING)))return GadgetEnergy.spend(inventory,slot,item,GadgetEnergy.cost("imprint_second"),player.getGameMode()==com.hypixel.hytale.protocol.GameMode.Creative);
+        }return false;
+    }
     private void suspendRiderPose(PlayerRef owner, Store<EntityStore> store) {
         var ride = rides.get(owner.getUuid());
         if (ride != null && ride.world().getEntityStore().getStore() == store) ride.pose().restoreNow(owner, store);
@@ -368,6 +407,12 @@ public final class MobilityTools {
         }
         Scan scan=scans.get(player.getUuid());boolean morphed=morphs.containsKey(player.getUuid());
         hud.update(player,store,"Echoform Imprinter",scan!=null?"Reading a living echoform":morphed?"Disguise active":"Original form", "Hold primary on a creature or player for 1s. Secondary or Use restores your own form.",scan==null?-1:Math.min(1,(System.nanoTime()-scan.began())/1_000_000_000d));
+    }
+    public boolean presentActive(PlayerRef player,Store<EntityStore> store){
+        var ride=rides.get(player.getUuid());if(ride==null||ride.world()!=store.getExternalData().getWorld())return false;
+        var receipt=recovery.ledger().get(ride.receipt());if(receipt==null)return false;
+        var board=HoverboardLedger.decode(receipt.item);
+        hud.active(player,store,board,"Hoverboard",GadgetEnergy.charge(board)>0?"Board engaged":"Energy empty / landing","Move to steer. Dismount to fold. Recharge the folded board in a burner or charging station.");return true;
     }
     private static boolean surfaceNearby(World world, Vector3d p) {
         int x = (int) Math.floor(p.x), z = (int) Math.floor(p.z);

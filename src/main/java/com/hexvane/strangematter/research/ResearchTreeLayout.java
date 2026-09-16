@@ -22,7 +22,8 @@ public final class ResearchTreeLayout {
         at("rift_stabilizer",12,280),at("stasis_projector",12,416),at("levitation_pad",12,552),
         at("echoform_imprinter",156,280),at("warp_gun",300,280),
         at("chrono_blister",156,416),at("graviton_hammer",300,416),at("hoverboard",228,552),
-        at("resonant_separation",588,280),at("flux_smelting",588,416),at("pattern_assembly",588,552));
+        at("resonant_separation",588,280),at("flux_smelting",588,416),at("pattern_assembly",588,552),
+        at("resonant_battery_pack",156,688),at("arc_projection",300,688),at("gravitic_manipulation",12,824));
     private static Map.Entry<String,int[]> at(String id,int x,int y){return Map.entry(id,new int[]{x,y});}
     public record Node(ResearchNode research,int x,int y){public int cx(){return x+64;}public int cy(){return y+24;}}
     /** parent owns research state; source is only the visible routing anchor. */
@@ -34,7 +35,7 @@ public final class ResearchTreeLayout {
             if(!node.category().equals(category))continue;
             int[] original=general?(GENERAL.contains(node.id())?ORIGINAL.get(node.id()):null):FORGE.get(node.id());int x,y;
             if(original!=null){x=general?36+(original[0]/80+2)*176:original[0];y=general?8+(original[1]/80+3)*76:original[1];}
-            else{x=12+(extra%5)*144;y=(general?484:688)+(extra/5)*92;extra++;}
+            else{x=12+(extra%5)*144;y=(general?484:960)+(extra/5)*92;extra++;}
             nodes.add(new Node(node,x,y));
         }
         int height=Math.max(464,nodes.stream().mapToInt(n->n.y+NODE_HEIGHT+16).max().orElse(464));
@@ -59,7 +60,13 @@ public final class ResearchTreeLayout {
     /** Separate buses make the root, containment and transport dependencies unambiguous. */
     private static List<int[]> branchRoute(Node start,Node end,List<Node> nodes){
         List<int[]> path;
-        if(start.research.id().equals("reality_forge_category")&&Set.of("resonance_condenser","rift_stabilizer","stasis_projector","levitation_pad").contains(end.research.id()))
+        // The manipulator needs two independent technologies. Bring stasis in from
+        // above and containment from the right; the traces meet only inside its card.
+        if(end.research.id().equals("gravitic_manipulation")&&start.research.id().equals("stasis_projector"))
+            path=List.of(new int[]{start.cx(),start.cy()},new int[]{148,start.cy()},new int[]{148,end.y-32},new int[]{end.cx(),end.y-32},new int[]{end.cx(),end.cy()});
+        else if(end.research.id().equals("gravitic_manipulation")&&start.research.id().equals("containment_basics"))
+            path=List.of(new int[]{start.cx(),start.cy()},new int[]{436,start.cy()},new int[]{436,end.cy()},new int[]{end.cx(),end.cy()});
+        else if(start.research.id().equals("reality_forge_category")&&Set.of("resonance_condenser","rift_stabilizer","stasis_projector","levitation_pad").contains(end.research.id()))
             path=List.of(new int[]{start.cx(),start.cy()},new int[]{start.cx(),104},new int[]{4,104},new int[]{4,end.cy()},new int[]{end.cx(),end.cy()});
         else if(start.research.id().equals("containment_basics")||start.research.id().equals("gravitic_transport")){
             int lane=start.research.id().equals("containment_basics")?436:548;
@@ -104,11 +111,16 @@ public final class ResearchTreeLayout {
     public static String icon(ResearchNode node){
         return switch(node.id()){
             case "resonant_separation"->"SM_Resonant_Separator";case "flux_smelting"->"SM_Flux_Furnace";case "gravitic_transport"->"SM_Gravitic_Tube";case "pattern_assembly"->"SM_Pattern_Assembler";
+            case "gravitic_manipulation"->"SM_Gravitic_Manipulator";case "arc_projection"->"SM_Arc_Projector";
             case "research"->"SM_Research_Notes";case "anomaly_types"->"SM_Research_Tablet";case "anomaly_shards","gravity_anomalies"->"SM_Gravitic_Shard";
             case "temporal_anomalies"->"SM_Chrono_Shard";case "spatial_anomalies"->"SM_Spatial_Shard";case "energy_anomalies"->"SM_Energetic_Shard";
             case "shadow_anomalies"->"SM_Shade_Shard";case "cognitive_anomalies"->"SM_Insight_Shard";case "resonite"->"SM_Raw_Resonite";
             case "resonant_energy"->"SM_Resonant_Burner";case "reality_forge_category"->"SM_Reality_Forge";case "containment_basics"->"SM_Echo_Vacuum";
             default->"SM_"+Arrays.stream(node.id().split("_")).map(s->Character.toUpperCase(s.charAt(0))+s.substring(1)).collect(java.util.stream.Collectors.joining("_"));
         };
+    }
+    /** Compact card caption; the complete research title remains in details and native hover text. */
+    public static String caption(ResearchNode node){
+        return node.id().equals("resonant_energy")&&node.name().equals("Resonant Energy Fundamentals")?"Energy Fundamentals":node.name();
     }
 }

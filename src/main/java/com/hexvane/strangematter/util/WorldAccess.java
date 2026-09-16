@@ -43,6 +43,13 @@ public final class WorldAccess {
         var ref=sectionRef(chunk,y);
         return ref==null||!ref.isValid()?null:ref.getStore().getComponent(ref,BlockSection.getComponentType());
     }
+    /** A published, independently ticking Y section. Does not activate a parked section. */
+    public static BlockSection tickingSection(WorldChunk chunk,int y) {
+        if(!chunk.is(ChunkFlag.TICKING))return null;
+        var ref=sectionRef(chunk,y);
+        return ref==null||!ref.isValid()||ref.getStore().getComponent(ref,ChunkStore.REGISTRY.getNonTickingComponentType())!=null
+                ?null:ref.getStore().getComponent(ref,BlockSection.getComponentType());
+    }
     public static int block(WorldChunk chunk,int x,int y,int z) {
         var section=section(chunk,y);return section==null?0:section.get(x,y,z);
     }

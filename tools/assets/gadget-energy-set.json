@@ -1,0 +1,158 @@
+{
+  "items": [
+    {
+      "sourceId": "resonant_charging_station",
+      "id": "SM_Resonant_Charging_Station",
+      "block": true,
+      "model": "Blocks/StrangeMatter/resonant_charging_station.blockymodel",
+      "texture": "Blocks/StrangeMatter/resonant_charging_station.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonant_Charging_Station.png",
+      "nodes": 35,
+      "boundsModelUnits": {
+        "min": [
+          -14.35,
+          0.0,
+          -15.0
+        ],
+        "max": [
+          14.35,
+          23.425,
+          16.45
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ]
+    },
+    {
+      "sourceId": "resonant_battery_pack",
+      "id": "SM_Resonant_Battery_Pack",
+      "block": false,
+      "model": "Items/StrangeMatter/resonant_battery_pack.blockymodel",
+      "texture": "Items/StrangeMatter/resonant_battery_pack.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonant_Battery_Pack.png",
+      "nodes": 36,
+      "boundsModelUnits": {
+        "min": [
+          -11.5,
+          -11.7,
+          -22.35
+        ],
+        "max": [
+          11.5,
+          12.1,
+          11.59
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ]
+    },
+    {
+      "sourceId": "gravitic_manipulator",
+      "id": "SM_Gravitic_Manipulator",
+      "block": false,
+      "model": "Items/StrangeMatter/gravitic_manipulator.blockymodel",
+      "texture": "Items/StrangeMatter/gravitic_manipulator.png",
+      "icon": "Icons/ItemsGenerated/SM_Gravitic_Manipulator.png",
+      "nodes": 45,
+      "boundsModelUnits": {
+        "min": [
+          -6.972,
+          -7.956,
+          -9.45
+        ],
+        "max": [
+          6.972,
+          15.8,
+          22.75
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "arc_projector",
+      "id": "SM_Arc_Projector",
+      "block": false,
+      "model": "Items/StrangeMatter/arc_projector.blockymodel",
+      "texture": "Items/StrangeMatter/arc_projector.png",
+      "icon": "Icons/ItemsGenerated/SM_Arc_Projector.png",
+      "nodes": 53,
+      "boundsModelUnits": {
+        "min": [
+          -6.25,
+          -7.956,
+          -9.45
+        ],
+        "max": [
+          6.25,
+          14.55,
+          28.05
+        ]
+      },
+      "atlas": [
+        256,
+        64
+      ]
+    },
+    {
+      "sourceId": "resonant_energy_storage",
+      "id": "SM_Resonant_Energy_Storage",
+      "block": true,
+      "model": "Blocks/StrangeMatter/resonant_energy_storage.blockymodel",
+      "texture": "Blocks/StrangeMatter/resonant_energy_storage.png",
+      "icon": "Icons/ItemsGenerated/SM_Resonant_Energy_Storage.png",
+      "nodes": 59,
+      "boundsModelUnits": {
+        "min": [
+          -14.7,
+          0.0,
+          -14.7
+        ],
+        "max": [
+          14.7,
+          31.555,
+          14.7
+        ]
+      },
+      "atlas": [
+        256,
+        128
+      ]
+    }
+  ],
+  "burnerDock": {
+    "sourceId": "resonant_burner_gadget_dock",
+    "id": "SM_Resonant_Burner_Gadget_Dock",
+    "block": true,
+    "model": "Blocks/StrangeMatter/resonant_burner_gadget_dock.blockymodel",
+    "texture": "Blocks/StrangeMatter/resonant_burner_gadget_dock.png",
+    "icon": "Icons/ItemsGenerated/SM_Resonant_Burner_Gadget_Dock.png",
+    "nodes": 8,
+    "boundsModelUnits": {
+      "min": [
+        14.05,
+        10.0,
+        -6.0
+      ],
+      "max": [
+        23.375,
+        15.875,
+        6.0
+      ]
+    },
+    "atlas": [
+      256,
+      32
+    ]
+  },
+  "mainArcEffect": "SM_Stabilizer_Link",
+  "modelUnitsPerBlock": 32,
+  "preservedResourcesSnapshot": "build/art-preservation/20260911T223853988404Z/Resources.zip",
+  "notes": "Native per-face painted UVs; true segmented-ring gaps; native Chest and R-Attachment pieces."
+}

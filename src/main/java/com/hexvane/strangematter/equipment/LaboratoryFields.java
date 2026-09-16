@@ -23,6 +23,8 @@ import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.modules.entity.item.ItemComponent;
+import com.hypixel.hytale.server.core.modules.entity.item.PreventPickup;
+import com.hypixel.hytale.server.core.modules.entity.component.Intangible;
 import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent;
 import com.hypixel.hytale.server.core.modules.physics.component.Velocity;
 import com.hypixel.hytale.server.core.universe.world.World;
@@ -189,7 +191,8 @@ final class LaboratoryFields {
     }
     private boolean taken(Ref<EntityStore> ref){return specimens.values().stream().anyMatch(s->ref.equals(s.mob)||ref.equals(s.item));}
     private static boolean usable(Store<EntityStore> store,Ref<EntityStore> ref,Vector3d center){
-        if(ref==null||!ref.isValid()||ref.getStore()!=store||store.getComponent(ref,Player.getComponentType())!=null||store.getComponent(ref,DeathComponent.getComponentType())!=null||store.getComponent(ref,NPCMountComponent.getComponentType())!=null)return false;
+        // Ordinary native dropped items are Intangible too; PreventPickup marks display-only items.
+        if(ref==null||!ref.isValid()||ref.getStore()!=store||store.getComponent(ref,Player.getComponentType())!=null||store.getComponent(ref,DeathComponent.getComponentType())!=null||store.getComponent(ref,NPCMountComponent.getComponentType())!=null||store.getComponent(ref,PreventPickup.getComponentType())!=null||(store.getComponent(ref,Intangible.getComponentType())!=null&&store.getComponent(ref,ItemComponent.getComponentType())==null))return false;
         var transform=store.getComponent(ref,TransformComponent.getComponentType());return transform!=null&&transform.getPosition().distanceSquared(center)<=16&&store.getComponent(ref,Velocity.getComponentType())!=null;
     }
     private void hold(Store<EntityStore> store,Ref<EntityStore> ref,Vector3d floating,boolean effects){

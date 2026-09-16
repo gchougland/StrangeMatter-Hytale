@@ -1,6 +1,7 @@
 package com.hexvane.strangematter.anomaly;
 
 import com.hexvane.strangematter.util.WorldAccess;
+import com.hexvane.strangematter.equipment.NativePlayerFixture;
 
 import com.hypixel.hytale.math.shape.Box;
 import com.hypixel.hytale.math.util.ChunkUtil;
@@ -22,8 +23,53 @@ public final class NativeWarpLandingVerification {
     public static void verify(World world)throws Exception{
         verifySupport(world);
         verifyLoads(world);
+        verifyResidency(world);
         verifyStaleCreation(world);
-        System.out.println("NATIVE_WARP_LANDING_VERIFICATION_PASSED: real two-chunk body clearance and solid support, opacity-only native bread rejected, unloaded destination stays unloaded during validation, nine-chunk bounded asynchronous area, one in-flight request, failure backoff, world cancellation, stale removed/disabled/relocated/repaired source callbacks.");
+        verifyApproach(world);
+        verifyObsoletePairedLoads(world);
+        System.out.println("NATIVE_WARP_LANDING_VERIFICATION_PASSED: native body clearance and footing, nine-column safety region, measured peak two in-flight loads and one start per 50ms, shared requests, fail-fast/backoff, timeout without native future cancellation, native residency reference counts, lease expiry/cancel/stale/stop cleanup and bounded retained destinations.");
+    }
+    private static void verifyResidency(World world)throws Exception{
+        var clock=new AtomicLong();var loads=new WarpLandingLoads((w,index)->{throw new AssertionError("Resident center must not issue generation");},clock::get);
+        var center=new Vector3d(16.5,241,16.5);var chunk=WorldAccess.loaded(world,ChunkUtil.indexChunk(0,0));
+        var field=chunk.getClass().getDeclaredField("keepLoaded");field.setAccessible(true);
+        var pins=(java.util.concurrent.atomic.AtomicInteger)field.get(chunk);int baseline=pins.get();
+        var first=UUID.randomUUID();var second=UUID.randomUUID();var results=new ArrayList<Boolean>();
+        try{
+            require(loads.requestCenter(world,first,center,results::add),"Resident native center starts a completion handoff");world.consumeTaskQueue();
+            require(results.equals(List.of(true))&&pins.get()==baseline+1,"Successful preparation retains one real native residency reference until arrival");
+            for(int n=0;n<5;n++){require(loads.requestCenter(world,first,center,results::add),"Same source can refresh its prepared destination");world.consumeTaskQueue();}
+            require(pins.get()==baseline+1,"Repeated destination preparation never leaks extra native references");
+            require(loads.requestCenter(world,second,center,results::add),"A second gate independently retains its shared native destination");world.consumeTaskQueue();
+            require(pins.get()==baseline+2,"Overlapping gate leases each own exactly one reference");
+            loads.cancel(world,first);require(pins.get()==baseline+1,"Cancellation releases only its own gate's native reference");
+            clock.set(WarpLandingLoads.RETAIN_NANOS-1);loads.tick(world);require(pins.get()==baseline+1,"Destination stays retained until the exact arrival lease boundary");
+            clock.incrementAndGet();loads.tick(world);require(pins.get()==baseline,"Idle residency expires without being prolonged by routine pumping");
+            boolean[] current={true};require(loads.requestCenter(world,first,center,()->current[0],results::add),"Current paired identity may retain terrain");world.consumeTaskQueue();
+            current[0]=false;loads.tick(world);require(pins.get()==baseline,"Stale paired identity releases native residency immediately");
+            var owners=new ArrayList<UUID>();
+            for(int n=0;n<WarpLandingLoads.MAX_REQUESTS;n++){var id=UUID.randomUUID();owners.add(id);loads.retainReady(world,id,center,()->true,false);}
+            require(pins.get()==baseline+WarpLandingLoads.MAX_REQUESTS,"Idle approaching destinations obey the same bound as pending preparations");
+            var overflow=UUID.randomUUID();loads.retainReady(world,overflow,center,()->true,false);
+            require(pins.get()==baseline+WarpLandingLoads.MAX_REQUESTS,"A ninth approaching destination cannot silently grow the residency set");
+            // Native reference ownership proves admission independently of how many
+            // neighboring columns earlier native player fixtures left in memory.
+            loads.retainReady(world,overflow,center,()->true,true);
+            require(pins.get()==baseline+WarpLandingLoads.MAX_REQUESTS,"Actual portal contact replaces idle residency without growing its bound");
+            loads.cancel(world,owners.getFirst());require(pins.get()==baseline+WarpLandingLoads.MAX_REQUESTS,"The oldest idle approach was evicted for real travel");
+            loads.cancel(world,overflow);require(pins.get()==baseline+WarpLandingLoads.MAX_REQUESTS-1,"The urgent contacting gate owns its admitted reference");
+            loads.retainReady(world,owners.getFirst(),center,()->true,false);
+            for(var owner:owners)loads.arriving(world,owner);
+            loads.retainReady(world,overflow,center,()->true,true);
+            require(pins.get()==baseline+WarpLandingLoads.MAX_REQUESTS,"Recent client arrivals cannot be evicted by new portal traffic");
+            loads.cancel(world,overflow);require(pins.get()==baseline+WarpLandingLoads.MAX_REQUESTS,"An arrival-protected area never admitted the overflowing gate");
+            clock.addAndGet(4_000_000_000L);
+            loads.retainReady(world,overflow,center,()->true,true);
+            loads.cancel(world,overflow);require(pins.get()==baseline+WarpLandingLoads.MAX_REQUESTS-1,"Arrival protection ends at its boundary and permits urgent replacement");
+            // An unrelated native owner must survive our world cleanup.
+            chunk.addKeepLoaded();loads.clear(world);require(pins.get()==baseline+1,"World cleanup releases every gate reference while preserving an unrelated native owner");chunk.removeKeepLoaded();
+            require(pins.get()==baseline,"All native residency reference counts return exactly to their original values");
+        }finally{loads.clear(world);}
     }
     private static void verifySupport(World world){
         var saved=new LinkedHashMap<Vector3i,Cell>();
@@ -64,24 +110,54 @@ public final class NativeWarpLandingVerification {
     private static void verifyLoads(World world){
         var clock=new AtomicLong();var requested=new ArrayList<Long>();var pending=new ArrayList<CompletableFuture<?>>();
         var outcomes=new ArrayList<Boolean>();var loads=new WarpLandingLoads((w,index)->{requested.add(index);var future=new CompletableFuture<Void>();pending.add(future);return future;},clock::get);
-        var center=new Vector3d(31.5,241,12.5);var source=UUID.randomUUID();var area=WarpLandingLoads.area(center);
-        require(area.size()==9&&area.contains(ChunkUtil.indexChunk(-1,-1))&&area.contains(ChunkUtil.indexChunk(1,1)),"Boundary landing preloads the entire bounded candidate/body neighborhood");
-        long missing=area.stream().filter(index->WorldAccess.loaded(world,index)==null).count();require(missing>0,"Boundary fixture has unloaded neighboring chunks");
-        require(loads.request(world,source,center,outcomes::add)&&requested.size()==missing&&outcomes.isEmpty(),"Only missing chunks are requested and no completion blocks the world thread");
-        require(!loads.request(world,source,center,outcomes::add)&&requested.size()==missing,"Repeated gate ticks never duplicate an in-flight batch");
+        var boundary=WarpLandingLoads.area(new Vector3d(31.5,241,12.5));
+        require(boundary.size()==9&&boundary.contains(ChunkUtil.indexChunk(-1,-1))&&boundary.contains(ChunkUtil.indexChunk(1,1)),"Boundary landing preloads the entire bounded candidate/body neighborhood");
+        // Prior real player fixtures may leave every nearby column resident but parked.
+        // Those are correctly reactivated without generation; pacing needs absent data.
+        var center=new Vector3d(1_048_576.5,241,1_048_576.5);var source=UUID.randomUUID();var area=WarpLandingLoads.area(center);
+        long missing=area.stream().filter(index->WorldAccess.inMemory(world,index)==null).count();require(missing==9,"Paced-load fixture uses nine genuinely unpublished native columns");
+        require(loads.request(world,source,center,outcomes::add)&&requested.size()==1&&outcomes.isEmpty(),"Preparation starts only one missing column without blocking the world thread");
+        require(!loads.request(world,source,center,outcomes::add)&&requested.size()==1,"Repeated gate ticks never duplicate an in-flight batch");
+        clock.addAndGet(WarpLandingLoads.START_INTERVAL_NANOS);loads.tick(world);require(requested.size()==2,"Second native load starts after its pacing interval");
+        clock.addAndGet(WarpLandingLoads.START_INTERVAL_NANOS);loads.tick(world);require(requested.size()==2,"Unresolved native loads consume the global two-load budget");
         boolean[] sentinel={false};world.execute(()->sentinel[0]=true);world.consumeTaskQueue();require(sentinel[0]&&outcomes.isEmpty(),"Owning world tasks continue while all destination futures remain pending");
-        complete(pending,false);world.consumeTaskQueue();require(outcomes.equals(List.of(true)),"Completed batch resumes once on the world thread");
+        int peak=0;
+        for(int i=0;i<20&&outcomes.isEmpty();i++){
+            peak=Math.max(peak,(int)pending.stream().filter(future->!future.isDone()).count());
+            int before=requested.size();complete(pending,false);world.consumeTaskQueue();require(requested.size()==before,"Completion cannot recursively launch more chunk generation");
+            clock.addAndGet(WarpLandingLoads.START_INTERVAL_NANOS);loads.tick(world);require(requested.size()-before<=1,"Each paced pump issues at most one load");
+        }
+        require(peak==2&&requested.size()==missing&&outcomes.equals(List.of(true)),"Complete safety area resumes exactly once with measured peak two native loads");
         require(!loads.ready(world,center),"Completion callbacks cannot pretend fake/unloaded chunks are available");
-        pending.clear();require(loads.request(world,source,center,outcomes::add),"A later attempt may prepare a still-unloaded area");
+        pending.clear();clock.addAndGet(WarpLandingLoads.START_INTERVAL_NANOS);require(loads.request(world,source,center,outcomes::add),"A later attempt may prepare a still-unloaded area");
         complete(pending,true);world.consumeTaskQueue();require(outcomes.equals(List.of(true,false)),"A failed chunk rejects the entire landing preparation");
-        int count=requested.size();clock.set(4_999_999_999L);
+        int count=requested.size();long failedAt=clock.get();clock.set(failedAt+4_999_999_999L);
         require(!loads.request(world,source,center,outcomes::add)&&requested.size()==count,"Failed loads have a full five-second retry backoff");
-        clock.set(5_000_000_001L);pending.clear();require(loads.request(world,source,center,outcomes::add),"Failure backoff eventually permits a bounded retry");
+        clock.set(failedAt+5_000_000_001L);pending.clear();require(loads.request(world,source,center,outcomes::add),"Failure backoff eventually permits a bounded retry");
         loads.clear(world);complete(pending,false);world.consumeTaskQueue();require(outcomes.size()==2,"World cleanup cancels stale completions without reviving work");
         pending.clear();require(loads.request(world,source,center,outcomes::add),"A fresh world request can start after cleanup");
         pending.getFirst().complete(null);complete(pending,false);world.consumeTaskQueue();
         require(outcomes.equals(List.of(true,false,false))&&!loads.request(world,source,center,outcomes::add),"Null chunk completion is a real failure with backoff, never false readiness");
         loads.clear(world);
+        verifySharedTimeout(world,center);
+    }
+    private static void verifySharedTimeout(World world,Vector3d center){
+        var clock=new AtomicLong();var pending=new ArrayList<CompletableFuture<Object>>();var indexes=new ArrayList<Long>();var results=new ArrayList<Boolean>();
+        var loads=new WarpLandingLoads((w,index)->{indexes.add(index);var future=new CompletableFuture<Object>();pending.add(future);return future;},clock::get);
+        var first=UUID.randomUUID();var second=UUID.randomUUID();
+        require(loads.request(world,first,center,results::add)&&loads.request(world,second,center,results::add)&&pending.size()==1,"Two gates share one pending column instead of duplicating native requests");
+        clock.addAndGet(WarpLandingLoads.START_INTERVAL_NANOS);loads.tick(world);
+        require(pending.size()==2&&new HashSet<>(indexes).size()==2,"Shared requests still obey the per-world two-load limit");
+        clock.set(WarpLandingLoads.TIMEOUT_NANOS);loads.tick(world);world.consumeTaskQueue();
+        require(results.equals(List.of(false,false))&&pending.stream().noneMatch(CompletableFuture::isCancelled),"Timeout notifies both gates and leaves shared native futures untouched");
+        clock.addAndGet(5_000_000_001L);require(loads.request(world,first,center,results::add),"A timed-out request can queue a retry after backoff");
+        require(pending.size()==2,"Timed-out native work retains its slots, so retries cannot accumulate generation");
+        loads.cancel(world,first);complete(pending,false);world.consumeTaskQueue();clock.addAndGet(WarpLandingLoads.START_INTERVAL_NANOS);loads.tick(world);
+        require(results.size()==2&&pending.size()==2,"Cancelled retry neither revives callbacks nor starts its unissued columns");
+        loads.clear(world);
+        for(int i=0;i<WarpLandingLoads.MAX_REQUESTS;i++)require(loads.request(world,UUID.randomUUID(),center,ignored->{}),"Bounded queue accepts its documented capacity");
+        require(!loads.request(world,UUID.randomUUID(),center,ignored->{}),"More simultaneous gate requests cannot grow the queue without bound");
+        loads.clear(world);complete(pending,false);world.consumeTaskQueue();
     }
     private static void verifyStaleCreation(World world)throws Exception{
         var method=AnomalyService.class.getDeclaredMethod("createDistantPair",World.class,AnomalyRecord.class,int.class);method.setAccessible(true);
@@ -91,7 +167,7 @@ public final class NativeWarpLandingVerification {
             var pending=new ArrayList<CompletableFuture<?>>();var loads=new WarpLandingLoads((w,index)->{var future=new CompletableFuture<Void>();pending.add(future);return future;},System::nanoTime);field.set(service,loads);
             try{
                 var source=service.spawn(AnomalyType.WARP_GATE,world,new Vector3d(16.5,241,16.5),true);source.creatingPair=true;
-                method.invoke(service,world,source,0);require(pending.size()==9&&source.creatingPair,"Natural destination requests nine unloaded chunks without waiting: "+change);
+                method.invoke(service,world,source,0);require(pending.size()==1&&source.creatingPair,"Natural destination checks only its center before generating any landing neighbors: "+change);
                 AnomalyRecord replacement=null;
                 switch(change){
                     case "removed"->service.remove(source.id);
@@ -100,13 +176,63 @@ public final class NativeWarpLandingVerification {
                     case "repaired"->{replacement=service.spawn(AnomalyType.WARP_GATE,world,new Vector3d(20.5,241,16.5),false);service.pair(source.id,replacement.id);}
                 }
                 int count=service.all().size();complete(pending,false);world.consumeTaskQueue();
-                require(service.all().size()==count&&!source.creatingPair&&pending.size()==9,"Stale "+change+" callback creates no partner and starts no additional generation");
+                require(service.all().size()==count&&!source.creatingPair&&pending.size()==1,"Stale "+change+" callback creates no partner and starts no additional generation");
                 if(replacement!=null)require(replacement.id.equals(source.pairedGate)&&source.id.equals(replacement.pairedGate),"New explicit pairing survives the old natural request completion");
             }finally{service.stopWorld(world);}
         }
     }
+    private static void verifyApproach(World world)throws Exception{
+        var service=new AnomalyService(Files.createTempDirectory("sm-warp-approach-"));service.naturalGeneration=false;
+        var pending=new ArrayList<CompletableFuture<Object>>();
+        var loads=new WarpLandingLoads((w,index)->{var future=new CompletableFuture<Object>();pending.add(future);return future;},System::nanoTime);
+        var field=AnomalyService.class.getDeclaredField("gateLoads");field.setAccessible(true);field.set(service,loads);
+        var gateTick=AnomalyService.class.getDeclaredMethod("tickGate",World.class,AnomalyRecord.class);gateTick.setAccessible(true);
+        try(var player=NativePlayerFixture.create(world,"NativeGateApproach",new Vector3d(46.5,241,16.5))){
+            player.player().handleClientReady(false);player.packets().packets.clear();
+            var source=service.spawn(AnomalyType.WARP_GATE,world,new Vector3d(16.5,241,16.5),false);
+            var target=service.spawn(AnomalyType.WARP_GATE,world,new Vector3d(8192.5,241,8192.5),false);service.pair(source.id,target.id);
+            gateTick.invoke(service,world,source);require(pending.isEmpty(),"A player thirty blocks away does not start destination generation");
+            var transform=player.store().getComponent(player.ref(),com.hypixel.hytale.server.core.modules.entity.component.TransformComponent.getComponentType());
+            transform.setPosition(new Vector3d(36.5,241,16.5));gateTick.invoke(service,world,source);
+            require(pending.size()==1&&source.creatingPair,"An approaching native player starts a bounded paired-destination load before contact");
+            require(player.packets().ofType(com.hypixel.hytale.protocol.packets.player.ClientTeleport.class).isEmpty()&&transform.getPosition().equals(new Vector3d(36.5,241,16.5)),"Approach preparation never moves or queues a teleport for the player");
+        }finally{service.stopWorld(world);complete(pending,false);world.consumeTaskQueue();}
+    }
+    private static void verifyObsoletePairedLoads(World world)throws Exception{
+        var field=AnomalyService.class.getDeclaredField("gateLoads");field.setAccessible(true);
+        var gateTick=AnomalyService.class.getDeclaredMethod("tickGate",World.class,AnomalyRecord.class);gateTick.setAccessible(true);
+        for(String change:List.of("target_disabled","target_suppressed","target_moved","source_moved","repaired")){
+            var service=new AnomalyService(Files.createTempDirectory("sm-warp-obsolete-"));service.naturalGeneration=false;
+            var clock=new AtomicLong();var pending=new ArrayList<CompletableFuture<Object>>();var requested=new ArrayList<Long>();
+            var loads=new WarpLandingLoads((w,index)->{requested.add(index);var future=new CompletableFuture<Object>();pending.add(future);return future;},clock::get);field.set(service,loads);
+            try(var player=NativePlayerFixture.create(world,"NativeGateRouteChange",new Vector3d(36.5,241,16.5))){
+                player.player().handleClientReady(false);
+                var source=service.spawn(AnomalyType.WARP_GATE,world,new Vector3d(16.5,241,16.5),false);
+                var target=service.spawn(AnomalyType.WARP_GATE,world,new Vector3d(8192.5,241,8192.5),false);
+                var replacement=service.spawn(AnomalyType.WARP_GATE,world,new Vector3d(12288.5,241,12288.5),false);
+                service.pair(source.id,target.id);gateTick.invoke(service,world,source);
+                require(pending.size()==1&&source.creatingPair,"Paired cancellation fixture starts one queued route: "+change);
+                var oldArea=WarpLandingLoads.area(target.position());
+                switch(change){
+                    case "target_disabled"->service.setEnabled(target.id,false);
+                    case "target_suppressed"->service.setSuppressionHook((w,p,t)->p.equals(target.position()));
+                    case "target_moved"->target.move(new Vector3d(9000.5,241,9000.5));
+                    case "source_moved"->source.move(new Vector3d(17.5,241,16.5));
+                    case "repaired"->service.pair(source.id,replacement.id);
+                }
+                clock.addAndGet(WarpLandingLoads.START_INTERVAL_NANOS);loads.tick(world);world.consumeTaskQueue();
+                require(pending.size()==1&&!source.creatingPair&&!pending.getFirst().isCancelled(),"The load pump invalidates obsolete identity before starting another old column, preserving the issued native future: "+change);
+                service.pair(source.id,replacement.id);gateTick.invoke(service,world,source);
+                require(pending.size()==2&&source.creatingPair&&WarpLandingLoads.area(replacement.position()).contains(requested.getLast()),"A newly paired destination starts immediately in the remaining slot without the obsolete route's timeout/backoff: "+change);
+                pending.getFirst().complete(Boolean.TRUE);world.consumeTaskQueue();
+                require(source.creatingPair&&replacement.id.equals(source.pairedGate),"Late completion from the obsolete route cannot clear the new route's preparation or pairing: "+change);
+                clock.addAndGet(WarpLandingLoads.START_INTERVAL_NANOS);loads.tick(world);
+                require(requested.size()==3&&requested.subList(1,requested.size()).stream().noneMatch(oldArea::contains),"Only the replacement destination can use slots freed by obsolete native work: "+change);
+            }finally{service.stopWorld(world);complete(pending,false);world.consumeTaskQueue();}
+        }
+    }
     @SuppressWarnings("unchecked")
-    private static void complete(List<CompletableFuture<?>> futures,boolean fail){
+    private static void complete(List<? extends CompletableFuture<?>> futures,boolean fail){
         for(int i=0;i<futures.size();i++){
             var future=(CompletableFuture<Object>)futures.get(i);
             if(fail&&i==0)future.completeExceptionally(new IllegalStateException("Expected test generation failure"));else future.complete(Boolean.TRUE);

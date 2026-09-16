@@ -41,6 +41,7 @@ public final class StrangeMatterCommand extends AbstractCommandCollection {
         addSubCommand(new PlayerAction("scientist","Spawn a laboratory scientist nearby",true));
         addSubCommand(new Save());addSubCommand(new Spawn());addSubCommand(new Locate());addSubCommand(new Points());addSubCommand(new AllPoints());
         addSubCommand(new ResearchCommands());addSubCommand(new Unlock("unlock"));
+        addSubCommand(new PowerCommands());
     }
     private final class Help extends CommandBase {
         Help(){super("help","Explain progression and list native commands");setPermissionGroups(HytalePermissionsProvider.GROUP_ADVENTURER);}
@@ -100,6 +101,27 @@ public final class StrangeMatterCommand extends AbstractCommandCollection {
     }
     private final class ResearchCommands extends AbstractCommandCollection {
         ResearchCommands(){super("research","Administer research progression");setPermissionGroups();requirePermission(ADMIN);addSubCommand(new Unlock("unlock"));addSubCommand(new GiveNote());addSubCommand(new ResetResearch());}
+    }
+    private final class PowerCommands extends AbstractCommandCollection {
+        PowerCommands(){super("power","Inspect an existing power network without changing it");setPermissionGroups();requirePermission(ADMIN);addSubCommand(new DiagnosePower());}
+    }
+    private final class DiagnosePower extends AbstractPlayerCommand {
+        private final OptionalArg<Integer> x=withOptionalArg("x","World block X; provide x, y and z together",ArgTypes.INTEGER);
+        private final OptionalArg<Integer> y=withOptionalArg("y","World block Y",ArgTypes.INTEGER);
+        private final OptionalArg<Integer> z=withOptionalArg("z","World block Z",ArgTypes.INTEGER);
+        private final OptionalArg<Integer> radius=withOptionalArg("radius","Audit radius, 1 to 128 blocks; default 32",ArgTypes.INTEGER);
+        DiagnosePower(){super("diagnose","Aim at a machine or conduit; report physical connections, registry, faces and chunks");setPermissionGroups();requirePermission(ADMIN);}
+        @Override protected void execute(CommandContext context,Store<EntityStore> store,Ref<EntityStore> ref,PlayerRef player,World world){
+            Integer px=x.get(context),py=y.get(context),pz=z.get(context),r=radius.get(context);
+            if((px!=null||py!=null||pz!=null)&&(px==null||py==null||pz==null)){context.sendMessage(Message.raw("Provide --x, --y and --z together, or aim at the network."));return;}
+            int distance=r==null?32:r;if(distance<1||distance>128){context.sendMessage(Message.raw("Radius must be from 1 to 128 blocks."));return;}
+            var anchor=px!=null?new org.joml.Vector3i(px,py,pz):com.hypixel.hytale.server.core.util.TargetUtil.getTargetBlockOrigin(ref,12,store);
+            if(anchor==null){context.sendMessage(Message.raw("Aim at a power block within 12 blocks, or use --x <x> --y <y> --z <z>."));return;}
+            var report=com.hexvane.strangematter.machine.PowerDiagnostics.inspect(world,machines,anchor,distance);
+            for(var line:report.summary())context.sendMessage(Message.raw(line));
+            try{var file=com.hexvane.strangematter.machine.PowerDiagnostics.write(machines,report);context.sendMessage(Message.raw("Full power report: "+file.toAbsolutePath()));}
+            catch(java.io.IOException error){context.sendMessage(Message.raw("Audit completed, but the report could not be saved: "+error.getMessage()));}
+        }
     }
     private final class GiveNote extends CommandBase {
         private final RequiredArg<String> node=withRequiredArg("node","Research experiment to put in the note",noteArgument());

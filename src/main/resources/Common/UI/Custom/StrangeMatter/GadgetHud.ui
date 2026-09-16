@@ -1,4 +1,4 @@
-Group {
+Group #GadgetPanel {
   Anchor: (Right: 34, Bottom: 176, Width: 376, Height: 244);
   HitTestVisible: false;
   Background: #263955;
@@ -17,6 +17,15 @@ Group {
     }
     Group #GadgetProgress { Anchor: (Left: 16, Top: 228, Width: 340, Height: 5); Background: #293a55; Visible: false;
       Group #GadgetProgressFill { Anchor: (Left: 0, Top: 0, Width: 1, Height: 5); Background: #67e8ef; }
+    }
+    Group #GadgetEnergy { Anchor: (Left: 16, Top: 240, Width: 340, Height: 38); Visible: false;
+      Label #GadgetEnergyText { Anchor: (Left: 0, Top: 0, Width: 340, Height: 22); Style: (FontSize: 12, TextColor: #b9e9ec, RenderBold: true); }
+      Group { Anchor: (Left: 0, Top: 26, Width: 340, Height: 7); Background: #293a55;
+        Group #GadgetEnergyFill { Anchor: (Left: 0, Top: 0, Width: 1, Height: 7); Background: #50e7ec; }
+      }
+    }
+    Group #GadgetPack { Anchor: (Left: 16, Top: 289, Width: 340, Height: 26); Visible: false;
+      Label #GadgetPackText { Anchor: (Full: 0); Style: (FontSize: 11, TextColor: #c1a5ef); }
     }
   }
 }

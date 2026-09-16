@@ -37,11 +37,11 @@
       }
     },
     "BlockParticleSetId": "Crystal",
-    "ParticleColor": "#243950",
+    "ParticleColor": "#54c55b",
     "BlockSoundSetId": "Crystal",
     "PhysicalMaterialId": "Stone",
     "Light": {
-      "Color": "#255",
+      "Color": "#151",
       "Radius": 5
     },
     "PlacementSettings": {

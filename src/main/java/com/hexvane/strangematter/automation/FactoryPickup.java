@@ -35,6 +35,7 @@ public final class FactoryPickup {
         world.debugAssertInTickingThread();
         var factory = machines.factory();
         if (factory == null) return;
+        if(factory.placeParcel(world,state,item,newOwner))return;
         // This is a successful new placement, including when another same-frame callback
         // discovered its native holder before our placement callback. Never inherit access.
         var component = factory.component(world, state);
@@ -42,6 +43,7 @@ public final class FactoryPickup {
             component.data.owner="";component.data.allowed.clear();component.data.pattern="";
             component.data.selected.clear();component.data.repeat=false;component.data.energy=0;
             state.owner=null;state.energy=0;state.selectedRecipes.clear();state.factoryMigration="";
+            if(com.hexvane.strangematter.machine.EnergyStoragePorts.storage(state.id)){state.energyFaces=null;component.data.energyFaces=null;}
         }
         factory.initializeTier(world, state, tier(item));
         if (newOwner != null) factory.claim(world, state, newOwner);

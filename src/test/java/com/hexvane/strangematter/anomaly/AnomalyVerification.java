@@ -8,6 +8,7 @@ import java.util.UUID;
 public final class AnomalyVerification {
     public static void main(String[] args) throws Exception { run(); System.out.println("Anomaly identity, capture rollback, persistence, rarity, first-contact economy, and native age-role verification passed."); }
     public static void run() throws Exception {
+        AnomalyGenerationBalanceVerification.verify();
         Path directory=Files.createTempDirectory("sm-anomaly-verification-");
         UUID id=UUID.fromString("2f1e3c47-2687-4b40-aaec-5a343d2ce531");
         String initial="""
@@ -36,7 +37,7 @@ public final class AnomalyVerification {
         check(!second.token().equals(capsule.token()),"Recapture issues a fresh nonce");
         check(!loaded.cancelCapture(capsule.token()),"Old token cannot cancel a new capture");
         var settings=new AnomalyGenerationSettings();
-        check(settings.rarity("default","Zone1",AnomalyType.GRAVITY,500)==500,"Original default rarity retained");
+        check(settings.rarity("default","Zone1",AnomalyType.GRAVITY,500)==500,"Explicit service rarity fallback retained");
         settings.environmentRarity.put("Zone1",java.util.Map.of("GRAVITY",120));
         check(settings.rarity("default","Zone1",AnomalyType.GRAVITY,500)==120,"Biome override used");
         check(settings.rarity("default","Zone1",AnomalyType.THOUGHTWELL,500)==500,"Biome override does not alter other types");
@@ -48,7 +49,7 @@ public final class AnomalyVerification {
         check(TemporalRoles.transition("Skeleton_Fighter").isEmpty(),"Hostiles are not changed into livestock");
         check(new TemporalAge("default","Cow","Cow_Calf").remainingSeconds==1200,"MC -24000 age becomes twenty loaded minutes");
         // Do not recursively delete a computed path: this test owns these exact three files.
-        Files.deleteIfExists(directory.resolve("anomalies.json.tmp"));Files.deleteIfExists(directory.resolve("anomalies.json"));Files.delete(directory);
+        Files.deleteIfExists(directory.resolve("anomalies.json.tmp"));Files.deleteIfExists(directory.resolve("anomalies.json"));Files.delete(directory.resolve("anomaly-generation.json"));Files.delete(directory);
     }
     private static void check(boolean value,String message) {if(!value)throw new AssertionError(message);}
 }

@@ -5,6 +5,9 @@ import com.hexvane.strangematter.util.InventoryOps;
 import com.hexvane.strangematter.ui.LivePageTransport;
 import com.hexvane.strangematter.ui.MachineInventoryPanel;
 import com.hexvane.strangematter.ui.PowerMeter;
+import com.hexvane.strangematter.automation.FactoryService;
+import com.hexvane.strangematter.automation.GadgetCharging;
+import com.hexvane.strangematter.equipment.GadgetEnergy;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.protocol.packets.interface_.*;
 import com.hypixel.hytale.server.core.entity.entities.Player;
@@ -33,6 +36,9 @@ public final class MachinePage extends InteractiveCustomUIPage<ResearchPageData>
     private String boundRecipe;
     private java.util.List<ForgeRecipe> visibleRecipes=java.util.List.of();
     private boolean forge(){return machine.id.equals("SM_Reality_Forge");}
+    private boolean charger(){return machine.id.equals("SM_Resonant_Charging_Station");}
+    private boolean dock(){return FactoryService.chargingMachine(machine.id);}
+    private boolean storage(){return EnergyStoragePorts.storage(machine.id);}
     public MachinePage(PlayerRef player,MachineService service,MachineState machine){super(player,CustomPageLifetime.CanDismissOrCloseThroughInteraction,ResearchPageData.CODEC);this.service=service;this.machine=machine;recipeIndex=service.selectedRecipeIndex(machine,player.getUuid());}
     public static void open(PlayerRef player,MachineService service,MachineState machine,Store<EntityStore> store){open(player,service,machine,store,false);}
     private static void open(PlayerRef player,MachineService service,MachineState machine,Store<EntityStore> store,boolean recovery){
@@ -41,9 +47,12 @@ public final class MachinePage extends InteractiveCustomUIPage<ResearchPageData>
         var factory=service.factory();var world=store.getExternalData().getWorld();
         var component=factory==null?null:factory.component(world,machine);
         if(component!=null){
-            page.inventoryComponent=component;page.inventoryInput=component.input;page.inventoryOutput=recovery?component.recovery:component.output;
-            page.inventoryPanel=new MachineInventoryPanel(ref,store,component.input,recovery?component.recovery:component.output,
-                ()->!page.dismissed&&page.inventoryCurrent()&&service.canUse(store,player,machine)&&factory.access(component,player.getUuid()),()->!factory.blocked(world,machine));
+            if(!factory.access(component,player.getUuid()))return;
+            page.inventoryComponent=component;page.inventoryInput=page.charger()?component.charging:component.input;
+            page.inventoryOutput=recovery?component.recovery:page.dock()&&!page.charger()?component.charging:component.output;
+            if(page.storage()){entity.getPageManager().openCustomPage(ref,store,page);return;}
+            page.inventoryPanel=new MachineInventoryPanel(ref,store,page.inventoryInput,page.inventoryOutput,
+                ()->!page.dismissed&&page.inventoryCurrent()&&service.canUse(store,player,machine)&&factory.access(component,player.getUuid()),()->!factory.blocked(world,machine),recovery||!page.dock()||page.charger());
             page.inventoryPanel.setPage(page);
             entity.getPageManager().openCustomPageWithWindows(ref,store,page,page.inventoryPanel.windows());
         }else entity.getPageManager().openCustomPage(ref,store,page);
@@ -52,7 +61,8 @@ public final class MachinePage extends InteractiveCustomUIPage<ResearchPageData>
         if(!initialized){
             input=service.research.pages().attach(playerRef,this,ref,store,data->handleDataEvent(ref,store,data));
             initialized=true;cmd.append(forge()?"StrangeMatter/RealityForge.ui":"StrangeMatter/Machine.ui");
-            for(String id:forge()?new String[]{"Close","Collect","Toggle"}:new String[]{"Close","Recovery","Toggle"})input.bind(events,"#"+id,id,"");
+            for(String id:forge()?new String[]{"Close","Collect","Toggle"}:new String[]{"Close","Recovery","Toggle","Pack"})input.bind(events,"#"+id,id,"");
+            if(storage())for(var face:EnergyStoragePorts.Face.values())input.bind(events,"#Port"+face.name(),"StorageFace",face.name());
             if(!forge()){
                 PowerMeter.append(cmd,"#PowerMeter");
                 if(inventoryPanel!=null){MachineInventoryPanel.append(cmd,"#InventoryHost");inventoryPanel.build(cmd,events);}
@@ -87,24 +97,41 @@ public final class MachinePage extends InteractiveCustomUIPage<ResearchPageData>
         boolean burner=machine.id.equals("SM_Resonant_Burner");
         cmd.set("#Title.Text",InventoryOps.label(machine.id).toUpperCase());
         cmd.set("#State.Text",machine.active?"OPERATING":machine.enabled?"STANDBY":"DISABLED");
-        String status=machine.active?"Working":!machine.enabled?"Paused":machine.energy<service.consumption(machine,machine.factoryTier)?"Waiting for power":"Ready";
+        String status=storage()?(!machine.enabled?"Paused":machine.active?"Transferring":machine.energy==0?"Empty":machine.energy>=service.capacity(machine)?"Full":"Stored")
+                :dock()&&inventoryComponent!=null?GadgetCharging.status(machine,inventoryComponent):machine.active?"Working":!machine.enabled?"Paused":machine.energy<service.consumption(machine,machine.factoryTier)?"Waiting for power":"Ready";
+        if(machine.id.equals("SM_Resonance_Condenser")&&inventoryStore!=null)status=service.condenserStatus(inventoryStore.getExternalData().getWorld(),machine);
         int generated=machine.active?switch(machine.id){case "SM_Resonant_Burner"->service.config.burnerGeneration*20;case "SM_Rift_Stabilizer"->service.config.riftGeneration*20;default->0;}:0;
-        PowerMeter.draw(cmd,"#PowerMeter",machine.energy,service.capacity(machine),machine.incomingRate+generated,machine.active?service.consumption(machine,machine.factoryTier)*20:0,Math.max(0,service.config.condenserTicksPerShard-machine.progress)*(long)service.consumption(machine,machine.factoryTier),status,machine.id.equals("SM_Paradoxical_Energy_Cell"));
-        if(inventoryPanel!=null){inventoryPanel.draw(cmd,events);cmd.set("#MachineInputLabel.Text",burner?"FUEL":"INGREDIENTS");cmd.set("#MachineOutputLabel.Text",recovering?"RECOVERED ITEMS":"FINISHED ITEMS");}
+        PowerMeter.draw(cmd,"#PowerMeter",machine.energy,service.capacity(machine),machine.incomingRate+generated,storage()?machine.outgoingRate:machine.active?service.consumption(machine,machine.factoryTier)*20:0,Math.max(0,service.config.condenserTicksPerShard-machine.progress)*(long)service.consumption(machine,machine.factoryTier),status,machine.id.equals("SM_Paradoxical_Energy_Cell"));
+        if(inventoryPanel!=null){inventoryPanel.draw(cmd,events);cmd.set("#MachineInputLabel.Text",burner?"FUEL":charger()?"GADGET DOCK":"INGREDIENTS");cmd.set("#MachineOutputLabel.Text",recovering?"RECOVERED ITEMS":burner?"GADGET DOCK":"FINISHED ITEMS");cmd.set("#MachineOutputGrid.Visible",!charger()||recovering);cmd.set("#MachineOutputLabel.Visible",!charger()||recovering);}
+        cmd.set("#DockCharge.Visible",dock());
+        cmd.set("#Pack.Visible",FactoryService.packableMachine(machine.id));
+        cmd.set("#StoragePorts.Visible",storage());
+        if(storage())for(var face:EnergyStoragePorts.Face.values())cmd.set("#Port"+face.name()+".Text",face.name()+": "+EnergyStoragePorts.mode(machine,face).name());
+        if(dock()){
+            var stack=inventoryComponent==null?null:inventoryComponent.charging.getItemStack((short)0);
+            String charge=GadgetCharging.accepts(stack)?InventoryOps.label(stack.getItemId())+"  "+GadgetEnergy.charge(stack)+" / "+GadgetEnergy.capacity(stack)+" RE":"Insert a powered gadget or battery pack";
+            cmd.set("#DockCharge.Text",charge+"  |  "+status+"  |  Up to "+((long)(burner?service.config.burnerDockTransfer:service.config.chargerTransfer)*20)+" RE/s");
+        }
         boolean recovery=false;
         if(service.factory()!=null&&inventoryStore!=null){var c=service.factory().component(inventoryStore.getExternalData().getWorld(),machine);if(c!=null)for(short i=0;i<c.recovery.getCapacity();i++)if(!com.hypixel.hytale.server.core.inventory.ItemStack.isEmpty(c.recovery.getItemStack(i))){recovery=true;break;}}
         cmd.set("#Recovery.Visible",recovering||recovery);cmd.set("#Recovery.Text",recovering?"SHOW OUTPUT":"RECOVERED ITEMS");
         int duration=service.config.condenserTicksPerShard;
-        cmd.set("#Progress.Text",burner?"Burning: "+fuelTime(machine.fuelTicks)+"  |  Queued: "+fuelTime(machine.queuedFuelTicks):"Cycle: "+(machine.progress*100/Math.max(1,duration))+"%"+(machine.lastAnomaly.isEmpty()?"":"  |  "+machine.lastAnomaly));
+        cmd.set("#Progress.Text",storage()?"Input and output: up to "+((long)service.config.energyStorageTransfer*20)+" RE/s each, shared across their enabled faces.":charger()?"Connect a burner directly or through resonant conduits.":burner?
+                (machine.fuelTicks>0?(machine.active?"Burning one fuel item":"Current fuel paused")+(machine.enabled&&machine.energy+service.config.burnerGeneration>service.config.burnerCapacity?" — buffer full":""):"Ignites one fuel item when power is needed")
+                        +(machine.queuedFuelTicks>0?"  |  Legacy fuel: "+fuelTime(machine.queuedFuelTicks):"")
+                :"Cycle: "+(machine.progress*100/Math.max(1,duration))+"%"+(machine.lastAnomaly.isEmpty()?"":"  |  "+machine.lastAnomaly));
         cmd.set("#FuelCapacity.Visible",burner);
         if(burner){
-            cmd.set("#FuelCapacityText.Text","FUEL CAPACITY   "+fuelTime(FurnaceFuel.storedTicks(machine))+" / 26m 40s  (includes burning fuel)");
-            anchor(cmd,"#FuelFill",0,0,(int)Math.min(738,738*FurnaceFuel.storedTicks(machine)/FurnaceFuel.MAX_FUEL_TICKS),6);
+            int items=0;if(inventoryComponent!=null)for(short slot=0;slot<inventoryComponent.input.getCapacity();slot++){
+                var item=inventoryComponent.input.getItemStack(slot);if(FurnaceFuel.ticks(item)>0)items+=item.getQuantity();
+            }
+            cmd.set("#FuelCapacityText.Text","CURRENT FUEL   "+fuelTime(machine.fuelTicks)+" remaining  |  Fuel items: "+items);
+            anchor(cmd,"#FuelFill",0,0,(int)Math.min(738,738L*machine.fuelTicks/Math.max(1,Math.max(machine.fuelDuration,machine.fuelTicks))),6);
 
         }
         cmd.set("#Toggle.Text",machine.id.equals("SM_Levitation_Pad")?(machine.ascending?"MODE: ASCEND":"MODE: DESCEND"):(machine.enabled?"DISABLE":"ENABLE"));
 
-        cmd.set("#Message.Text",message.isEmpty()?help():message);
+        cmd.set("#Message.Text",message.isEmpty()?(machine.powerRouteLimited?"Conduit network exceeds the "+service.config.maxNetworkSize+"-block scan limit. Shorten or split this network.":help()):message);
     }
     private void drawForge(UICommandBuilder cmd,Player player){
         if(player==null)return;
@@ -163,11 +190,14 @@ public final class MachinePage extends InteractiveCustomUIPage<ResearchPageData>
         if(inventoryComponent==null||inventoryStore==null)return false;
         var world=inventoryStore.getExternalData().getWorld();
         return com.hexvane.strangematter.automation.FactoryPickup.component(world,machine.block())==inventoryComponent
-            &&inventoryComponent.input==inventoryInput&&(recovering?inventoryComponent.recovery:inventoryComponent.output)==inventoryOutput;
+            &&(charger()?inventoryComponent.charging:inventoryComponent.input)==inventoryInput
+            &&(recovering?inventoryComponent.recovery:dock()&&!charger()?inventoryComponent.charging:inventoryComponent.output)==inventoryOutput;
     }
     private String help(){return switch(machine.id){
         case "SM_Resonant_Conduit"->"Connect machine faces. Up to 500 RE/t per conduit; distance reduces throughput by 5% per block, to a 10% floor. Energy is conserved.";
-        case "SM_Resonant_Burner"->"Place furnace fuel in the slots. The burner stores up to 26 minutes and 40 seconds of fuel and makes 400 RE each second while burning.";
+        case "SM_Resonant_Burner"->"Place furnace fuel on the left and a gadget in the separate charging dock. Dock charging shares the burner's real stored power with the network. You can remove the gadget at any charge level.";
+        case "SM_Resonant_Charging_Station"->"Insert a gadget or battery pack to recharge from the buffer. Remove it at any charge level. Tubes insert depleted gadgets and extract them only when full.";
+        case EnergyStoragePorts.ID->"Faces are relative to the front panel. Click a face to cycle INPUT, OUTPUT or DISABLED. Connect directly or through conduits. PACK UP preserves all stored energy and face settings.";
         case "SM_Resonance_Condenser"->"Connect power and keep an anomaly within 10 blocks. The condenser uses 40 RE each second and makes one shard every 75 seconds.";
         case "SM_Reality_Forge"->"Select a discovered recipe. Crafting reserves the listed materials and shards from your inventory. Collect the finished output here.";
         case "SM_Stasis_Projector"->"Suspends a nearby specimen above the lens. Disable the field to release it.";
@@ -179,11 +209,14 @@ public final class MachinePage extends InteractiveCustomUIPage<ResearchPageData>
         if(dismissed||input==null||!input.accepts(data))return;
         if("Close".equals(data.action)){dispose();close();return;}
         if(!service.canUse(store,playerRef,machine)){dispose();close();return;}
+        if(inventoryComponent!=null&&(!inventoryCurrent()||!service.factory().access(inventoryComponent,playerRef.getUuid())||service.factory().blocked(store.getExternalData().getWorld(),machine)))return;
         var player=store.getComponent(ref,Player.getComponentType());if(player==null)return;
         switch(data.action==null?"":data.action){
             case "Recovery"->{dispose();open(playerRef,service,machine,store,!recovering);return;}
             case "Collect"->message=service.collect(player,machine);
             case "Toggle"->{service.toggle(machine);message="";}
+            case "Pack"->{if(FactoryService.packableMachine(machine.id)&&service.factory()!=null)message=service.factory().pack(store.getExternalData().getWorld(),machine,playerRef);}
+            case "StorageFace"->{if(storage())message=service.cycleStorageFace(store.getExternalData().getWorld(),machine,playerRef,data.value);}
             case "SelectRecipe"->{
                 if(!forge()||data.value==null)return;
                 int selected=-1;for(int i=0;i<service.recipes.size();i++)if(service.recipes.get(i).id.equals(data.value)){selected=i;break;}
@@ -208,7 +241,7 @@ public final class MachinePage extends InteractiveCustomUIPage<ResearchPageData>
                 if(!ref.isValid()){dispose();return;}
                 if(!service.canUse(store,playerRef,machine)){dispose();close();return;}
                 var player=store.getComponent(ref,Player.getComponentType());if(player==null||player.getPageManager().getCustomPage()!=this){dispose();return;}
-                if(inventoryPanel!=null&&!inventoryCurrent()){dispose();close();return;}
+                if(inventoryComponent!=null&&!inventoryCurrent()){dispose();close();return;}
                 if(inventoryPanel!=null&&!inventoryPanel.isOpen()&&service.factory()!=null&&!service.factory().blocked(world,machine)){
                     dispose();open(playerRef,service,machine,store,recovering);return;
                 }

@@ -45,6 +45,7 @@ public final class NativeTerrainHostVerification {
         field=new AnomalyRecord(UUID.randomUUID(),AnomalyType.GRAVITY,world.getName(),new Vector3d(31.5,142,24.5),true);
         effects.terrainGenerated(chunk,field,new AlwaysFirst(),settings);
         require(id(chunk,31,140,24).equals("SM_Anomalous_Grass")&&id(chunk,0,140,24).equals("Soil_Sand"),"Fresh chunk terrain never wraps or crosses into a neighboring chunk");
+        NativeAnomalyGenerationBalanceVerification.verify(chunk);
         System.out.println("NATIVE_TERRAIN_HOST_VERIFICATION_PASSED: native desert sandstone mixed ores, six soil strata grass/dirt conversion, original ore density, shaped/bedrock/existing ore preservation, existing-chunk guard and chunk-edge clipping.");
     }
     private static String id(WorldChunk chunk,int x,int y,int z){return WorldAccess.blockType(chunk,x,y,z).getId();}

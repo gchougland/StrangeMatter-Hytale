@@ -13,7 +13,7 @@ import java.util.Set;
 /** Native block states own animation and ambient-loop lifetime; no periodic sound/UI packets. */
 public final class MachineWorkEffects {
     public static final String WORKING="Working", CONDENSER_HUM="SM_Condenser_Working_Hum";
-    public static final Set<String> MACHINES=Set.of("SM_Resonance_Condenser","SM_Resonant_Burner","SM_Reality_Forge","SM_Rift_Stabilizer","SM_Anomaly_Nullifier","SM_Resonant_Separator","SM_Flux_Furnace","SM_Pattern_Assembler");
+    public static final Set<String> MACHINES=Set.of(EnergyStoragePorts.ID,"SM_Resonance_Condenser","SM_Resonant_Burner","SM_Resonant_Charging_Station","SM_Reality_Forge","SM_Rift_Stabilizer","SM_Anomaly_Nullifier","SM_Resonant_Separator","SM_Flux_Furnace","SM_Pattern_Assembler");
     private MachineWorkEffects(){}
     public static boolean working(MachineState machine){
         if(!machine.enabled||!machine.active||!MACHINES.contains(machine.id))return false;

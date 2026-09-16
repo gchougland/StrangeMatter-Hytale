@@ -11,7 +11,7 @@ public final class ResonantNetworkVerification {
     public static void main(String[] args){verify();}
 
     public static void verify(){
-        boundaries();aliasesAndTieOrder();terminalAndIdentity();longPath();randomized();
+        boundaries();aliasesAndTieOrder();terminalAndIdentity();longPath();randomized();storagePorts();distribution();
         System.out.println("PASS: predecessor routes match the original BFS in 12,000 randomized walks and explicit boundary cases.");
     }
 
@@ -123,6 +123,81 @@ public final class ResonantNetworkVerification {
             if(trial%2==0&&trial%4!=0)nodes.put(pos(0,0,0),source);
             Map<Position,MachineState> graph=trial%3==0?new HashMap<>(nodes):nodes;
             for(int cap:new int[]{-1,0,1,2,3,8,32,64,128,Integer.MAX_VALUE})compare(source,graph,cap,"random graph "+trial);
+        }
+    }
+    private static void storagePorts(){
+        for(var rotation:com.hypixel.hytale.server.core.asset.type.blocktype.config.RotationTuple.VALUES)for(var face:EnergyStoragePorts.Face.values()){
+            var storage=node(EnergyStoragePorts.ID,pos(0,0,0));storage.powerRotation=rotation.index();
+            for(var other:EnergyStoragePorts.Face.values())EnergyStoragePorts.set(storage,other,EnergyStoragePorts.Mode.DISABLED);
+            var adjacent=pos(0,0,0).neighbors().get(EnergyStoragePorts.worldFace(storage,face));
+            var generator=node(SOURCE,adjacent);var nodes=Map.of(pos(0,0,0),storage,adjacent,generator);
+            check(ResonantNetwork.routes(generator,nodes,64).isEmpty(),"Disabled rotated storage face rejects input");
+            EnergyStoragePorts.set(storage,face,EnergyStoragePorts.Mode.INPUT);
+            var input=ResonantNetwork.routes(generator,nodes,64);check(input.size()==1&&input.getFirst().consumer()==storage,"Every native rotation maps each local input to the correct world face");
+            EnergyStoragePorts.set(storage,face,EnergyStoragePorts.Mode.OUTPUT);
+            check(ResonantNetwork.routes(generator,nodes,64).isEmpty(),"Output face never receives power");
+            var sink=node(SINK,adjacent);var output=ResonantNetwork.routes(storage,Map.of(pos(0,0,0),storage,adjacent,sink),64);
+            check(output.size()==1&&output.getFirst().consumer()==sink,"Every native rotation maps local output correctly");
+            EnergyStoragePorts.set(storage,face,EnergyStoragePorts.Mode.INPUT);
+            check(ResonantNetwork.routes(storage,Map.of(pos(0,0,0),storage,adjacent,sink),64).isEmpty(),"Input face never sends power");
+        }
+        var source=node(SOURCE,pos(0,0,0));var storage=node(EnergyStoragePorts.ID,pos(1,0,1));
+        EnergyStoragePorts.set(storage,EnergyStoragePorts.Face.BACK,EnergyStoragePorts.Mode.DISABLED);
+        var nodes=new LinkedHashMap<Position,MachineState>();nodes.put(pos(0,0,0),source);nodes.put(pos(1,0,0),node(WIRE,pos(1,0,0)));nodes.put(pos(0,0,1),node(WIRE,pos(0,0,1)));nodes.put(pos(1,0,1),storage);
+        var route=ResonantNetwork.routes(source,nodes,64);
+        check(route.size()==1&&route.getFirst().wires().equals(List.of(pos(0,0,1))),"An earlier disabled approach cannot hide another enabled input face");
+        storage=node(EnergyStoragePorts.ID,pos(1,0,0));EnergyStoragePorts.set(storage,EnergyStoragePorts.Face.RIGHT,EnergyStoragePorts.Mode.OUTPUT);
+        var behind=node(SINK,pos(3,0,0));nodes.clear();nodes.put(pos(0,0,0),source);nodes.put(pos(1,0,0),storage);nodes.put(pos(2,0,0),node(WIRE,pos(2,0,0)));nodes.put(pos(3,0,0),behind);
+        route=ResonantNetwork.routes(source,nodes,64);
+        check(route.size()==1&&route.getFirst().consumer()==storage,"Storage is a terminal endpoint, never a bypass conduit");
+        System.out.println("PASS: all six energy storage faces across all64 native rotations, disabled approaches and terminal storage routing.");
+    }
+    private static void distribution(){
+        for(int tick=0;tick<6;tick++){
+            var a=node(SOURCE,pos(0,0,0));var b=node(SOURCE,pos(1,0,0));var x=node(SINK,pos(0,0,2));var y=node(SINK,pos(1,0,2));a.energy=b.energy=10;
+            var supplies=List.of(new ResonantNetwork.Supply(a,List.of(new Route(x,List.of()),new Route(y,List.of())),10),new ResonantNetwork.Supply(b,List.of(new Route(x,List.of())),10));
+            long sent=ResonantNetwork.distribute(supplies,List.of(new ResonantNetwork.Demand(x,10,10,0),new ResonantNetwork.Demand(y,10,10,0)),500,0,tick);
+            check(sent==20&&x.energy==10&&y.energy==10&&a.energy==0&&b.energy==0,"Residual reassignment cannot strand an exclusive source behind a flexible source's earlier share");
+        }
+        // The residual chain must release and reuse a saturated common conduit atomically.
+        var a=node(SOURCE,pos(0,0,0));var b=node(SOURCE,pos(1,0,0));var x=node(SINK,pos(0,0,2));var y=node(SINK,pos(1,0,2));a.energy=b.energy=10;var shared=pos(0,0,1);
+        var supplies=List.of(new ResonantNetwork.Supply(a,List.of(new Route(x,List.of(shared)),new Route(y,List.of())),10),new ResonantNetwork.Supply(b,List.of(new Route(x,List.of(shared))),10));
+        check(ResonantNetwork.distribute(supplies,List.of(new ResonantNetwork.Demand(x,10,10,0),new ResonantNetwork.Demand(y,10,10,0)),10,0,0)==20&&x.energy==10&&y.energy==10,"Signed residual wire usage preserves a saturated path while filling the independent sink");
+        var sources=new ArrayList<MachineState>();var offers=new ArrayList<ResonantNetwork.Supply>();var storage=node(EnergyStoragePorts.ID,pos(0,0,2));
+        for(int i=0;i<3;i++){var source=node("SM_Rift_Stabilizer",pos(i,0,0));source.energy=1200;sources.add(source);offers.add(new ResonantNetwork.Supply(source,List.of(new Route(storage,List.of(shared),-1,5)),1000));}
+        check(ResonantNetwork.distribute(offers,List.of(new ResonantNetwork.Demand(storage,60000,20,1)),500,0,0)==20,"All generators share the storage's one input allowance");
+        var sent=sources.stream().mapToInt(s->s.sentThisTick).summaryStatistics();check(sent.getMin()>=6&&sent.getMax()-sent.getMin()<=1,"Three suppliers fairly share one receiving endpoint instead of filling only the first supplier's route");
+        var work=node(SINK,pos(0,0,3));storage.energy=0;offers.clear();for(var source:sources){source.energy=2;source.sentThisTick=0;offers.add(new ResonantNetwork.Supply(source,List.of(new Route(work,List.of(shared)),new Route(storage,List.of(shared),-1,5)),1000));}
+        check(ResonantNetwork.distribute(offers,List.of(new ResonantNetwork.Demand(work,2,1000,0),new ResonantNetwork.Demand(storage,60000,20,1)),6,0,0)==6&&work.energy==2&&storage.energy==4,"Work gets its current tick and storage gets every surplus RE through a constrained common wire");
+        var lone=node(SOURCE,pos(0,0,0));var recipients=List.of(node(SINK,pos(1,0,0)),node(SINK,pos(2,0,0)),node(SINK,pos(3,0,0)));
+        for(int tick=0;tick<3;tick++){lone.energy=1;ResonantNetwork.distribute(List.of(new ResonantNetwork.Supply(lone,recipients.stream().map(s->new Route(s,List.of())).toList(),1)),recipients.stream().map(s->new ResonantNetwork.Demand(s,100,100,0)).toList(),500,0,tick);}
+        check(recipients.stream().allMatch(s->s.energy==1),"Rotating integer remainders prevent starvation with only one available RE");
+        var disabled=node(SINK,pos(1,0,0));disabled.enabled=false;var graph=Map.of(pos(0,0,0),lone,pos(1,0,0),disabled);
+        var cached=ResonantNetwork.topology(lone,graph,64);check(cached.routes().size()==1,"Physical topology caches a disabled endpoint for immediate later enable");lone.energy=10;
+        var offer=List.of(new ResonantNetwork.Supply(lone,cached.routes(),10));var demand=List.of(new ResonantNetwork.Demand(disabled,10,10,0));
+        check(ResonantNetwork.distribute(offer,demand,500,0,0)==0,"Disabled cached sink receives no RE");disabled.enabled=true;check(ResonantNetwork.distribute(offer,demand,500,0,0)==10,"The same cached route supplies a re-enabled sink immediately");
+        var chain=new LinkedHashMap<Position,MachineState>();chain.put(pos(0,0,0),lone);for(int i=1;i<=4;i++)chain.put(pos(i,0,0),node(i==4?SINK:WIRE,pos(i,0,0)));
+        check(ResonantNetwork.topology(lone,chain,3).limited()&&!ResonantNetwork.topology(lone,chain,4).limited(),"A truncated bounded search is explicitly diagnosed; an exact-cap complete search is not");
+        flowOracle();
+        System.out.println("POWER_DISTRIBUTION_VERIFICATION_PASSED: residual source reassignment, signed shared-wire capacities, fair sources/sinks, tiny supplies, work/surplus priorities and disabled cached endpoints.");
+    }
+    private static void flowOracle(){
+        var random=new Random(0x504F574552464C4FL);
+        for(int trial=0;trial<1000;trial++){
+            int producers=1+random.nextInt(4),consumers=1+random.nextInt(4),terminal=producers+consumers+1;var residual=new int[terminal+1][terminal+1];
+            var sources=new ArrayList<MachineState>();var sinks=new ArrayList<MachineState>();var demands=new ArrayList<ResonantNetwork.Demand>();var supplies=new ArrayList<ResonantNetwork.Supply>();
+            for(int i=0;i<producers;i++){var source=node(SOURCE,pos(i,0,0));source.energy=random.nextInt(21);sources.add(source);residual[0][i+1]=source.energy;}
+            for(int j=0;j<consumers;j++){var sink=node(SINK,pos(j,0,2));sinks.add(sink);int capacity=random.nextInt(21);demands.add(new ResonantNetwork.Demand(sink,capacity,capacity,0));residual[producers+j+1][terminal]=capacity;}
+            for(int i=0;i<producers;i++){var routes=new ArrayList<Route>();for(int j=0;j<consumers;j++)if(random.nextBoolean()){routes.add(new Route(sinks.get(j),List.of()));residual[i+1][producers+j+1]=1000;}supplies.add(new ResonantNetwork.Supply(sources.get(i),routes,sources.get(i).energy));}
+            int expected=0;for(;;){var previous=new int[terminal+1];Arrays.fill(previous,-1);previous[0]=0;var queue=new ArrayDeque<Integer>();queue.add(0);
+                while(!queue.isEmpty()&&previous[terminal]<0){int at=queue.remove();for(int next=0;next<=terminal;next++)if(previous[next]<0&&residual[at][next]>0){previous[next]=at;queue.add(next);}}
+                if(previous[terminal]<0)break;int amount=Integer.MAX_VALUE;for(int at=terminal;at!=0;at=previous[at])amount=Math.min(amount,residual[previous[at]][at]);
+                for(int at=terminal;at!=0;at=previous[at]){residual[previous[at]][at]-=amount;residual[at][previous[at]]+=amount;}expected+=amount;
+            }
+            long actual=ResonantNetwork.distribute(supplies,demands,500,0,trial);
+            check(actual==expected,"Independent max-flow oracle matches fair residual distribution on random bipartite graph "+trial+": "+actual+" / "+expected);
+            for(var demand:demands)check(demand.consumer().energy<=demand.target()&&demand.consumer().energy==demand.consumer().receivedThisTick,"Oracle graph preserves all sink limits and incoming accounting");
+            for(var supply:supplies)check(supply.source().energy>=0&&supply.source().energy+supply.source().sentThisTick==supply.budget(),"Oracle graph preserves source energy and output accounting");
         }
     }
 }

@@ -22,6 +22,9 @@ import java.util.function.BiConsumer;
 public final class ResearchService implements AutoCloseable {
     public static final String NOTE_ITEM = "SM_Research_Notes";
     public static final String NOTE_TOKEN = "StrangeMatterNote";
+    private static final String ENERGY_RESEARCH_SCHEMA = "schema.gadgetEnergyResearch";
+    private static final String ENERGY_LEGACY_SERVER = "schema.gadgetEnergyLegacyServer";
+    private static final String ENERGY_PLAYER_MIGRATION = "migration.gadgetEnergyResearch";
     private final Path statePath;
     private final ResearchSettings settings;
     private final Map<String,ResearchNode> catalog;
@@ -37,11 +40,15 @@ public final class ResearchService implements AutoCloseable {
     });
     public ResearchService(Path dataDirectory) {
         statePath = dataDirectory.resolve("research.properties");
+        // ResearchSettings.load writes its config even on servers with no observed/researched
+        // UUIDs. Capture that older installation evidence before this startup creates files.
+        boolean existingResearchData = Files.exists(statePath) || Files.exists(dataDirectory.resolve("research-config.json"));
         try {
             Files.createDirectories(dataDirectory);
             settings = ResearchSettings.load(dataDirectory);
             catalog = ResearchCatalog.load(dataDirectory);
             if (Files.exists(statePath)) try (var in = Files.newBufferedReader(statePath, StandardCharsets.UTF_8)) { ledger.load(in); }
+            migrateEnergyResearch(existingResearchData);
         } catch (IOException e) { throw new UncheckedIOException("Cannot load Strange Matter research ledger", e); }
         pages = new com.hexvane.strangematter.ui.LivePageTransport();
     }
@@ -56,6 +63,45 @@ public final class ResearchService implements AutoCloseable {
     public synchronized List<ResearchNode> earnedNodes(UUID player) {
         return nodes().stream().filter(node -> !node.defaultUnlocked() && hasUnlocked(player, node.id())).toList();
     }
+    /** Older profiles implicitly knew power fundamentals. Persist that access before native knowledge reconciliation. */
+    private void migrateEnergyResearch(boolean existingResearchData) {
+        if ("2".equals(ledger.getProperty(ENERGY_RESEARCH_SCHEMA))) return;
+        boolean unversioned = !ledger.containsKey(ENERGY_RESEARCH_SCHEMA);
+        var existing = new HashSet<UUID>();
+        for (String key : ledger.stringPropertyNames()) {
+            if (!key.startsWith("player.")) continue;
+            int end = key.indexOf('.', 7);
+            if (end < 0) continue;
+            try { existing.add(UUID.fromString(key.substring(7, end))); }
+            catch (IllegalArgumentException ignored) { /* Preserve unrelated/malformed keys without guessing ownership. */ }
+        }
+        Properties next = copy();
+        for (UUID player : existing) {
+            if (unversioned) next.setProperty(prefix(player) + "unlocked.resonant_energy", "true");
+            next.setProperty(prefix(player) + ENERGY_PLAYER_MIGRATION, "2");
+        }
+        // Do not infer an old server merely because our earlier migration wrote a ledger.
+        // A v1 ledger already preserved its existing UUIDs; retain its knowledge verbatim.
+        next.setProperty(ENERGY_LEGACY_SERVER, Boolean.toString(unversioned && existingResearchData));
+        next.setProperty(ENERGY_RESEARCH_SCHEMA, "2");
+        commit(next);
+        if (unversioned && !existing.isEmpty()) System.getLogger(ResearchService.class.getName()).log(System.Logger.Level.INFO,
+                "Preserved Resonant Energy Fundamentals access for " + existing.size() + " existing research profiles (energy research migration v2).");
+    }
+    /** Called before revoking native recipe knowledge: older default recipes may be a player's only saved research evidence. */
+    synchronized void migrateNativeEnergyKnowledge(UUID player, Set<String> knownRecipes) {
+        String marker = prefix(player) + ENERGY_PLAYER_MIGRATION;
+        if ("2".equals(ledger.getProperty(marker))) return;
+        boolean legacyKnowledge = "true".equals(ledger.getProperty(ENERGY_LEGACY_SERVER))
+                && knownRecipes.stream().anyMatch(id -> Set.of("SM_Resonant_Burner", "SM_Resonant_Conduit", "SM_Resonant_Coil",
+                "SM_Resonant_Burner_Recipe_Generated_0", "SM_Resonant_Conduit_Recipe_Generated_0", "SM_Resonant_Coil_Recipe_Generated_0").contains(id));
+        Properties next = copy();
+        if (legacyKnowledge) next.setProperty(prefix(player) + "unlocked.resonant_energy", "true");
+        next.setProperty(marker, "2");
+        commit(next);
+        if (legacyKnowledge) System.getLogger(ResearchService.class.getName()).log(System.Logger.Level.INFO,
+                "Preserved Resonant Energy Fundamentals from legacy native recipe knowledge for " + player + " (migration v2).");
+    }
     /** An experiment belongs to the research state in which its page was opened. */
     public synchronized long generation(UUID player) { return Long.parseLong(ledger.getProperty(prefix(player) + "generation", "0")); }
     /** Clear earned knowledge, retaining observations, their scan identities and all notes. */
@@ -65,6 +111,7 @@ public final class ResearchService implements AutoCloseable {
         Properties next = copy(); String unlocked = prefix(player) + "unlocked.";
         next.keySet().removeIf(key -> key.toString().startsWith(unlocked));
         next.setProperty(prefix(player) + "generation", Long.toString(Math.addExact(generation(player), 1)));
+        next.setProperty(prefix(player) + ENERGY_PLAYER_MIGRATION, "2");
         commit(next);
         machineUsers.values().removeIf(player::equals); researchers.remove(player);
         return removed;

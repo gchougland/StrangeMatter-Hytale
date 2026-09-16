@@ -73,7 +73,7 @@ public final class NativeMachineWorkVerification {
             require(working!=null&&MachineService.baseId(working).equals(id),"Native working variant keeps base identity: "+id);
             require(idle.getCustomModelAnimation()==null&&idle.getAmbientSoundEventIndex()==SoundEvent.EMPTY_ID,"Idle item/block has no animation or ambient sound: "+id);
             var packet=working.toPacket();require(packet.looping&&packet.modelAnimation!=null&&packet.modelAnimation.endsWith("_working.blockyanim"),"Native asset packet carries a looping working animation: "+id);
-            int expectedHum=id.equals("SM_Resonance_Condenser")?hum:id.equals("SM_Anomaly_Nullifier")?SoundEvent.getAssetMap().getIndex("SM_Nullifier_Hum_SFX"):java.util.Set.of("SM_Resonant_Separator","SM_Flux_Furnace","SM_Pattern_Assembler").contains(id)?SoundEvent.getAssetMap().getIndex(id+"_Hum_SFX"):SoundEvent.EMPTY_ID;
+            int expectedHum=id.equals("SM_Resonance_Condenser")?hum:id.equals("SM_Resonant_Charging_Station")||EnergyStoragePorts.storage(id)?SoundEvent.getAssetMap().getIndex("SM_Charging_Hum_SFX"):id.equals("SM_Anomaly_Nullifier")?SoundEvent.getAssetMap().getIndex("SM_Nullifier_Hum_SFX"):java.util.Set.of("SM_Resonant_Separator","SM_Flux_Furnace","SM_Pattern_Assembler").contains(id)?SoundEvent.getAssetMap().getIndex(id+"_Hum_SFX"):SoundEvent.EMPTY_ID;
             require(packet.ambientSoundEventIndex==expectedHum,"Working machine resolves its expected ambient loop: "+id);
             var bytes=MemorySegment.ofArray(new byte[packet.computeSize()]);require(packet.serialize(bytes,0)==bytes.byteSize(),"Native block packet size: "+id);
             var decoded=com.hypixel.hytale.protocol.BlockType.toObject(bytes);

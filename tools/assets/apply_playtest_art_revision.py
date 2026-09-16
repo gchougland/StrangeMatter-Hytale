@@ -27,7 +27,7 @@ def shade_texture(image):
         rgba[y,x,:3]=[round(r*255),round(g*255),round(b*255)]
     return Image.fromarray(rgba)
 
-def lamp(family):
+def lamp_model(family):
     name=family+'_shard_lamp';m=art.Model(name,True);color=art.family(name)
     m.box('weighted_foot',(0,2,0),(24,4,24),'dark')
     m.box('stepped_base',(0,4.5,0),(20,3,20),'navy')
@@ -45,8 +45,12 @@ def lamp(family):
     m.ring('upper_crown',(0,60,0),9,1.8,2,'copper',axis='y',count=8)
     m.box('canopy',(0,62,0),(22,2,22),'navy')
     m.box('canopy_cap',(0,63.5,0),(14,1,14),'edge')
+    return m
+
+def lamp(family):
+    m=lamp_model(family)
+    name=m.name
     entry=m.save()
-    if family=='shade':shade_texture(Image.open(COMMON/entry['texture'])).save(COMMON/entry['texture'])
     item=read(ITEMS/(art.hid(name)+'.json'));b=item['BlockType']
     b['Light']={'Color':family_light(family,True),'Radius':0}
     b['CustomModel']=entry['model'];b['CustomModelTexture']=[{'Texture':entry['texture'],'Weight':1}]
@@ -89,12 +93,11 @@ def hat():
     write(p,model)
 
 def shade_family():
-    paths=[COMMON/'Items/StrangeMatter/shade_shard.png']
-    paths += [COMMON/f'Blocks/StrangeMatter/shade_shard_{kind}.png' for kind in ('crystal','ore','lantern')]
-    for p in paths:shade_texture(Image.open(p)).save(p)
-    for kind in ('crystal','ore','lamp','lantern'):
-        p=ITEMS/f'SM_Shade_Shard_{kind.title()}.json';item=read(p);block=item['BlockType'];block['ParticleColor']='#3b779d'
-        if 'Light' in block:block['Light']['Color']='#235' if kind=='crystal' else '#59f'
+    # The former teal override was superseded by discipline icon colors.
+    from build_discipline_minerals import rebuild, apply_colors
+    for suffix in ('', '_crystal', '_ore', '_lamp', '_lantern'):
+        name='shade_shard'+suffix;p=ITEMS/(art.hid(name)+'.json');item=read(p)
+        rebuild(name,suffix,item,True);apply_colors('shade',item)
         write(p,item)
 
 def category_icons():

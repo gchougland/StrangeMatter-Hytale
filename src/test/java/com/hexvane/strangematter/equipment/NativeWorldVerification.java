@@ -40,17 +40,27 @@ public final class NativeWorldVerification extends JavaPlugin {
     @Override protected void setup(){
         try {
             research=new ResearchService(getDataDirectory());anomalies=new AnomalyService(getDataDirectory());
+            com.hexvane.strangematter.anomaly.memory.AnomalyMemories.register(this);
+            anomalies.setMemoryEncounterHook(com.hexvane.strangematter.anomaly.memory.AnomalyMemories::collectNearby);
             var config=new StrangeMatterConfig();config.giveStarterTablet=false;
             machines=new MachineService(getDataDirectory(),config,research,anomalies);
             com.hexvane.strangematter.automation.FactoryService.register(this);
+            com.hexvane.strangematter.automation.NativeMachineLifecycleVerification.register(this);
             com.hexvane.strangematter.automation.TubeService.register(getChunkStoreRegistry(),getEntityStoreRegistry());
+            GraviticChestMarker.register(getChunkStoreRegistry());
             getCodecRegistry(Interaction.CODEC).register("SM_Use",StrangeMatterInteraction.class,StrangeMatterInteraction.CODEC);
             getCodecRegistry(RandomTickProcedure.CODEC).register("SM_Anomalous_Grass",AnomalousGrassService.class,AnomalousGrassService.CODEC);
             getChunkStoreRegistry().registerSystem(new com.hexvane.strangematter.block.FixtureLightingRefresh());
             getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.equipment.HoverboardRiderPose.RestoreOnRemove());
             getEntityStoreRegistry().registerSystem(new LevitationInputSystem());
             getEntityStoreRegistry().registerSystem(new LevitationInputSystem.RemoveSystem());
+            getEntityStoreRegistry().registerSystem(new AdvancedGadgetEvents.HeldAttack());
+            GraviticFlightSuspension.register(getEntityStoreRegistry());
+            getEntityStoreRegistry().registerSystem(new BatteryCapePresentation());
+            getEntityStoreRegistry().registerSystem(new GadgetEnergyArmorUpdates());
+            getEntityStoreRegistry().registerSystem(new GadgetEnergyArmorUpdates.Remember());
             getEntityStoreRegistry().registerSystem(new NativeFactoryPickupVerification.BreakBridge());
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.automation.NativeFactoryPackingWorldVerification.BreakBridge());
             getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.anomaly.NativeWarpGateTeleportVerification.RequestObserver());
             getEntityStoreRegistry().registerSystem(anomalies.gravityInputSystem());
             getEntityStoreRegistry().registerSystem(anomalies.gravitySystem());
@@ -67,7 +77,8 @@ public final class NativeWorldVerification extends JavaPlugin {
     @Override protected void start(){
         int timeout=Boolean.getBoolean("strangematter.benchmarks")?300:90;
         CompletableFuture.delayedExecutor(timeout,TimeUnit.SECONDS).execute(()->finish(new TimeoutException("Native verification exceeded "+timeout+" seconds")));
-        Universe.get().getUniverseReady().thenCompose(ignored->{
+        Universe.get().getUniverseReady().thenCompose(ignored->NativeSavedPowerRegionVerification.verifyAsync())
+                .thenCompose(ignored->{
             var config=new WorldConfig();config.setWorldGenProvider(new FlatWorldGenProvider());config.setSpawningNPC(false);config.setIsSpawnMarkersEnabled(false);config.setBlockTicking(false);config.setCanUnloadChunks(false);
             String name="sm_verification_"+UUID.randomUUID().toString().replace("-","");
             return Universe.get().makeWorld(name,Universe.get().validateWorldPath(name),config);
@@ -81,7 +92,9 @@ public final class NativeWorldVerification extends JavaPlugin {
                         return CompletableFuture.completedFuture(null);
                     }
                     verify(world);
-                    return NativeFactoryVerification.verifyAsync(world,research)
+                    return com.hexvane.strangematter.automation.NativeMachineLifecycleVerification.verifyAsync(research)
+                            .thenComposeAsync(unused->NativeFactoryVerification.verifyAsync(world,research),world)
+                            .thenComposeAsync(unused->com.hexvane.strangematter.automation.NativeFactoryPackingWorldVerification.verifyAsync(world,research),world)
                             .thenComposeAsync(unused->com.hexvane.strangematter.automation.NativeTubeVerification.verifyAsync(world),world)
                             .thenRunAsync(()->{try{com.hexvane.strangematter.automation.NativeTubeUseVerification.verify(world);}catch(Exception error){throw new CompletionException(error);}},world)
                             .thenRunAsync(()->{try{com.hexvane.strangematter.automation.NativeTubeBackendVerification.verify(world);}catch(Exception error){throw new CompletionException(error);}},world)
@@ -122,7 +135,7 @@ public final class NativeWorldVerification extends JavaPlugin {
         require(world.getBlockType(4,8,4).getId().equals("SM_Resonant_Burner"),"Native custom block placement");
         var burner=machines.register(world,new Vector3i(4,8,4),"SM_Resonant_Burner");burner.fuelTicks=20;
         for(int i=0;i<20;i++)machines.tick(world,.05);
-        require(burner.energy==400&&burner.fuelTicks==0,"Native world burner runs original20 RF/tick for20 ticks");
+        require(burner.energy==200&&burner.fuelTicks==0,"Native world burner generates exactly 200 RE over one second with the balanced fuel rate");
 
         world.setBlock(7,8,7,"Soil_Dirt");var dirt=world.getBlockType(7,8,7);var breaking=dirt.getGathering().getBreaking();
         int before=store.getEntityCountFor(ItemComponent.getComponentType());var section=world.getChunkStore().getChunkSectionReferenceAtBlock(7,8,7);
@@ -146,8 +159,11 @@ public final class NativeWorldVerification extends JavaPlugin {
         catch(Exception ex){throw new IllegalStateException(ex);}
         var failures=new java.util.ArrayList<Throwable>();
         verifyIndependent(failures,"Generation sections",()->NativeGenerationSectionVerification.verify(world));
+        verifyIndependent(failures,"Anomaly memories",()->com.hexvane.strangematter.anomaly.NativeAnomalyMemoriesVerification.verify(world));
         verifyIndependent(failures,"Factory tier pickup",()->NativeFactoryPickupVerification.verify(world));
         verifyIndependent(failures,"Machine native inventory",()->com.hexvane.strangematter.ui.NativeMachineInventoryVerification.verify(world));
+        verifyIndependent(failures,"Power command",com.hexvane.strangematter.machine.NativePowerCommandVerification::verify);
+        verifyIndependent(failures,"Power diagnostics",()->NativePowerDiagnosticsVerification.verify(world,research));
         verifyIndependent(failures,"Gravitic tubes",()->com.hexvane.strangematter.automation.NativeTubeVerification.verify(world));
         verifyIndependent(failures,"Hoverboard rider",()->NativeHoverboardRiderVerification.verify(world));
         verifyIndependent(failures,"Hoverboard presentation",()->NativeHoverboardPresentationVerification.verify(world));
@@ -159,6 +175,7 @@ public final class NativeWorldVerification extends JavaPlugin {
         // that exercise short timing windows on this shared world's simulation clock.
         verifyIndependent(failures,"Warp projectile",()->NativeWarpProjectileVerification.verify(world,anomalies));
         verifyIndependent(failures,"Warp teleport protocol",()->com.hexvane.strangematter.anomaly.NativeWarpGateTeleportVerification.verify(world));
+        verifyIndependent(failures,"Warp gate presentation",()->com.hexvane.strangematter.anomaly.NativeWarpGatePresentationVerification.verify(world));
         verifyIndependent(failures,"Warp landing",()->com.hexvane.strangematter.anomaly.NativeWarpLandingVerification.verify(world));
         verifyIndependent(failures,"Warp Gun gate isolation",()->NativeGateIsolationVerification.verify(world));
         verifyIndependent(failures,"Direct device controls",()->NativeDeviceControlVerification.verify(world));
@@ -277,7 +294,7 @@ public final class NativeWorldVerification extends JavaPlugin {
         String token=UUID.randomUUID()+":"+UUID.randomUUID();
         var metadata=BsonDocument.parse("{\"nested\":{\"rank\":3,\"labels\":[\"cyan\",\"purple\"]}}");
         var capsule=new ItemStack("SM_Containment_Capsule_Gravity",1,metadata).withMetadata("SMAnomaly",Codec.STRING,token);
-        var gun=new ItemStack("SM_Warp_Gun",1,metadata).withDurability(37);
+        var gun=new ItemStack("SM_Warp_Gun",1,37,100,metadata);
         var state=new MachineState("verification",new Vector3i(1,2,3),"SM_Reality_Forge");
         state.reservedInputs.add(MachineState.ReservedInput.from(capsule));state.reservedInputs.add(MachineState.ReservedInput.from(gun));
         state.fuelQueue.add(new MachineState.FuelCharge("SM_Resonite_Ingot",200,metadata.toJson()));

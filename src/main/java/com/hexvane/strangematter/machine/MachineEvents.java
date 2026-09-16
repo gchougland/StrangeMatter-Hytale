@@ -26,10 +26,11 @@ public final class MachineEvents {
         @Override public void handle(int index,ArchetypeChunk<EntityStore> chunk,Store<EntityStore> store,CommandBuffer<EntityStore> buffer,PlaceBlockEvent event){
             if(event.isCancelled()||event.getItemInHand()==null)return;
             var id=event.getItemInHand().getItemId();if(!MachineService.IDS.contains(id))return;
-            var world=store.getExternalData().getWorld();var pos=new Vector3i(event.getTargetBlock());
+            if(service.factory()!=null&&!service.factory().reserveParcelPlacement(event.getItemInHand())){event.setCancelled(true);return;}
+            var world=store.getExternalData().getWorld();
             var player=chunk.getComponent(index,PlayerRef.getComponentType());var owner=player==null?null:player.getUuid();
             var placedItem=event.getItemInHand();
-            world.execute(()->{if(event.isCancelled())return;var type=world.getBlockType(pos.x,pos.y,pos.z);if(type!=null&&id.equals(MachineService.baseId(type))){var state=service.register(world,pos,id);FactoryPickup.placed(service,world,state,placedItem,owner);service.save();}});
+            world.execute(()->{try{if(event.isCancelled())return;var pos=new Vector3i(event.getTargetBlock());var resident=com.hexvane.strangematter.util.WorldAccess.loaded(world,com.hypixel.hytale.math.util.ChunkUtil.indexChunkFromBlock(pos.x,pos.z));if(resident==null||com.hexvane.strangematter.util.WorldAccess.tickingSection(resident,pos.y)==null)return;var type=com.hexvane.strangematter.util.WorldAccess.blockType(resident,pos);if(type!=null&&id.equals(MachineService.baseId(type))){var state=service.register(world,pos,id);FactoryPickup.placed(service,world,state,placedItem,owner);service.save();}}finally{if(service.factory()!=null)service.factory().releaseParcelPlacement(placedItem);}});
         }
     }
     public static final class Break extends EntityEventSystem<EntityStore,BreakBlockEvent> {
@@ -39,9 +40,11 @@ public final class MachineEvents {
         @Override public void handle(int index,ArchetypeChunk<EntityStore> chunk,Store<EntityStore> store,CommandBuffer<EntityStore> buffer,BreakBlockEvent event){
             if(event.isCancelled()||!MachineService.IDS.contains(MachineService.baseId(event.getBlockType())))return;
             var world=store.getExternalData().getWorld();var pos=MachineService.origin(world,event.getTargetBlock());var state=service.get(world,pos);
+            if(service.factory()!=null&&service.factory().packingValidation(state))return;
+            if(state!=null&&service.factory()!=null&&service.factory().parcelBlocked(world,state)){event.setCancelled(true);return;}
             if(state!=null&&service.hasContents(world,state)) {
                 event.setCancelled(true);var player=chunk.getComponent(index,PlayerRef.getComponentType());
-                if(player!=null)player.sendMessage(Message.raw("Empty this machine and finish or stop its current job before picking it up."));
+                if(player!=null)player.sendMessage(Message.raw(com.hexvane.strangematter.automation.FactoryService.packableMachine(state.id)?"Use PACK UP in this machine's window to preserve its contents, settings and stored power.":"Empty this machine and finish or stop its current job before picking it up."));
             }else {var component=FactoryPickup.component(world,pos);world.execute(()->FactoryPickup.completeRemoval(service,world,pos,state,component,event));}
         }
     }
@@ -53,6 +56,7 @@ public final class MachineEvents {
             if(!MachineService.IDS.contains(MachineService.baseId(event.getBlockType())))return;
             var world=store.getExternalData().getWorld();var pos=MachineService.origin(world,event.getTargetBlock());var state=service.get(world,pos);
             if(state==null)return;
+            if(service.factory()!=null&&service.factory().parcelBlocked(world,state))service.factory().interruptParcelForEnvironmentBreak(world,state);
             List<ItemStack> refunds=new ArrayList<>();
             if(service.factory()!=null)for(var stack:service.factory().remove(world,state))add(refunds,stack);
             if(state.outputQuantity>0&&!state.output.isEmpty())add(refunds,new ItemStack(state.output,state.outputQuantity));

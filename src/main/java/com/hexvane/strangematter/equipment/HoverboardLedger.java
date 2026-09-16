@@ -72,6 +72,13 @@ final class HoverboardLedger {
     }
     synchronized void returned(UUID id){var r=entries.get(id);if(r!=null&&r.phase==Phase.RETURNING){r.phase=Phase.AVAILABLE;save();}}
     synchronized Receipt get(UUID id){return entries.get(id);}
+    synchronized int charge(UUID id){var r=entries.get(id);return r==null?0:GadgetEnergy.charge(decode(r.item));}
+    /** Prepay mounted use in the durable payload, so crash recovery cannot refill a board. */
+    synchronized boolean spend(UUID id,int amount,boolean creative){
+        var r=entries.get(id);if(r==null||r.phase!=Phase.MOUNTED||amount<0)return false;if(creative)return true;
+        var item=decode(r.item);if(GadgetEnergy.charge(item)<amount)return false;
+        r.item=encode(GadgetEnergy.withCharge(item,GadgetEnergy.charge(item)-amount));save();return true;
+    }
     synchronized List<Receipt> pendingReturns(UUID owner){return entries.values().stream().filter(r->r.owner.equals(owner)&&r.phase==Phase.RETURNING).toList();}
     synchronized boolean validAvailable(ItemStack stack){var token=token(stack);var r=token==null?null:entries.get(identity(token));return r!=null&&r.phase==Phase.AVAILABLE&&r.token().equals(token);}
     synchronized boolean hasPending(UUID owner){return entries.values().stream().anyMatch(r->r.owner.equals(owner)&&r.phase!=Phase.AVAILABLE);}

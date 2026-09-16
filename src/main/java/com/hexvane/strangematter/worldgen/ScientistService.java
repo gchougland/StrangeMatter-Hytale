@@ -50,7 +50,7 @@ public final class ScientistService {
     private final Path file;
     private final Prefab laboratory;
     private boolean dirty;
-    private int laboratoryWeight=6,ordinaryPlotWeight=10;
+    private int laboratoryWeight=6,ordinaryPlotWeight=186;
     private boolean generationEnabled=true;
     private MachineRegistrar machineRegistrar=(world,position,id)->{};
 
@@ -68,7 +68,7 @@ public final class ScientistService {
     }
     public synchronized void setGenerationEnabled(boolean enabled){generationEnabled=enabled;}
     public synchronized void setMachineRegistrar(MachineRegistrar registrar){machineRegistrar=Objects.requireNonNull(registrar);}
-    /** Weight six is source-authentic. The other pool weight is explicitly a Hytale placement adaptation. */
+    /** The default 6:186 lottery makes labs rare; these are Hytale plot weights, not native village pools. */
     public synchronized void setPlotWeights(int laboratory,int ordinary){laboratoryWeight=Math.max(0,laboratory);ordinaryPlotWeight=Math.max(0,ordinary);}
     public synchronized ScientistRecord record(UUID id){return scientists.get(id);}
     public synchronized Collection<ScientistRecord> records(){return List.copyOf(scientists.values());}
@@ -78,6 +78,10 @@ public final class ScientistService {
         if(!generationEnabled||laboratoryWeight==0)return;
         WorldChunk chunk=terrain.chunk;World world=chunk.getWorld();
         if(world.getName().toLowerCase(Locale.ROOT).contains("instance"))return;
+        // Reject 31 of 32 default candidates before scanning terrain for settlement furniture.
+        Random random=new Random(world.getWorldConfig().getSeed()^ChunkUtil.indexChunk(chunk.getX(),chunk.getZ())^0x537472616e67654cL);
+        if(random.nextInt(Math.max(1,laboratoryWeight+ordinaryPlotWeight))>=laboratoryWeight)return;
+        for(var state:scientists.values())if(state.world.equals(world.getName())&&Math.abs(state.x-chunk.getX()*32)<512&&Math.abs(state.z-chunk.getZ()*32)<512)return;
         // The original is a village house, never a wilderness ruin. Native settlement furniture is the plot marker.
         boolean settlement=false;
         outer:for(int x=1;x<32;x+=2)for(int z=1;z<32;z+=2) {
@@ -88,9 +92,6 @@ public final class ScientistService {
             }
         }
         if(!settlement)return;
-        for(var state:scientists.values())if(state.world.equals(world.getName())&&Math.abs(state.x-chunk.getX()*32)<128&&Math.abs(state.z-chunk.getZ()*32)<128)return;
-        Random random=new Random(world.getWorldConfig().getSeed()^ChunkUtil.indexChunk(chunk.getX(),chunk.getZ())^0x537472616e67654cL);
-        if(random.nextInt(Math.max(1,laboratoryWeight+ordinaryPlotWeight))>=laboratoryWeight)return;
         for(int attempt=0;attempt<48;attempt++) {
             int localX=2+random.nextInt(20),localZ=2+random.nextInt(21),y=terrain.height(localX,localZ);
             if(!emptyPlot(terrain,localX,y,localZ))continue;

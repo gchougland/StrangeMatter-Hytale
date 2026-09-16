@@ -3,17 +3,17 @@
     "Blocks": 1595392,
     "BlockTextures": 5120,
     "Icons": 626688,
-    "Items": 413696,
+    "Items": 479232,
     "NPC": 151552,
     "Particles": 376832,
-    "UI": 483328
+    "UI": 614400
   },
   "nativePaddedPixelLimits": {
     "Model/Entity": 953344,
     "Blocks": 2263040,
     "Item Icons": 541696,
     "FX/Particles": 330752,
-    "Custom UI": 493568,
+    "Custom UI": 626696,
     "World Map": 0
   },
   "referenceSourceFootprint": {

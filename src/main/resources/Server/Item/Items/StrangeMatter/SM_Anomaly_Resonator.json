@@ -72,5 +72,8 @@
     ],
     "KnowledgeRequired": true
   },
-  "SubCategory": "SM_FieldEquipment"
+  "SubCategory": "SM_FieldEquipment",
+  "Repairable": false,
+  "DurabilityLossOnDeath": false,
+  "DurabilityLossOnHit": 0
 }

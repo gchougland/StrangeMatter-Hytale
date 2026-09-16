@@ -5,7 +5,7 @@
   "Description": "Explore strange anomalies, discover new inventions and build a mad science laboratory.",
   "Authors": [{ "Name": "Hexvane" }],
   "ServerVersion": "*",
-  "Dependencies": {},
+  "Dependencies": {"Hytale:Memories":"*"},
   "OptionalDependencies": {"Alechilles:Beacon":"*"},
   "IncludesAssetPack": true,
   "Main": "com.hexvane.strangematter.StrangeMatterPlugin"

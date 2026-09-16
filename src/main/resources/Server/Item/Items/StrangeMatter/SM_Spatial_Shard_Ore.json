@@ -47,7 +47,7 @@
       }
     },
     "BlockParticleSetId": "Ore",
-    "ParticleColor": "#243950",
+    "ParticleColor": "#3d88dd",
     "BlockSoundSetId": "Ore",
     "PhysicalMaterialId": "Stone",
     "Textures": [

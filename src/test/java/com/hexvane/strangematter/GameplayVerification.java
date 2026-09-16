@@ -18,6 +18,7 @@ public final class GameplayVerification {
     }
     private static void verify() throws Exception {
         PluginDataPathsVerification.main(new String[0]);
+        EnergyBalanceVerification.verify();
         com.hexvane.strangematter.diagnostics.WorldStallDiagnosticsVerification.verify();
         network(); recipes();
         ResearchVerification.main(new String[0]);
@@ -78,7 +79,7 @@ public final class GameplayVerification {
         }
     }
     private static void recipes() throws Exception {
-        var recipes=ForgeRecipe.load();check(recipes.size()==15,"Original forge recipes, Anomaly Nullifier and three powered machines");
+        var recipes=ForgeRecipe.load();check(recipes.size()==18,"Original forge recipes, automation, battery pack and two powered weapons");
         Set<String> ids=new HashSet<>();
         for(var recipe:recipes){
             check(ids.add(recipe.id)&&recipe.quantity>0,"Unique productive recipe");
@@ -89,7 +90,7 @@ public final class GameplayVerification {
         }
         check(ids.containsAll(Set.of("chrono_blister","containment_capsule","echo_vacuum","echoform_imprinter","graviton_hammer","hoverboard","levitation_pad","resonance_condenser","rift_stabilizer","stasis_projector","warp_gun","anomaly_nullifier")),"Original forge recipe identities preserved beside the new device");
         check(ids.containsAll(Set.of("resonant_separator","flux_furnace","pattern_assembler")),"All powered production machines are obtainable");
-        check(ResearchCatalog.nodes().size()==30,"Original research and four automation discoveries");
+        check(ResearchCatalog.nodes().size()==33,"Original research, automation and three gadget discoveries");
         for(var node:ResearchCatalog.nodes())for(String pre:node.prerequisites())check(ResearchCatalog.get(pre)!=null,"Research prerequisite exists");
     }
     private static void check(boolean value,String message){if(!value)throw new AssertionError(message);}

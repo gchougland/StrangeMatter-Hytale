@@ -36,6 +36,20 @@ There is also a 3 MPx ceiling per atlas. A configured budget above that ceiling 
 
 Inspect growth and the largest texture list before raising a budget. Do not blindly regenerate a baseline after a failure. Source pixel budgets have approximately 15 percent headroom from the reviewed assets; native budgets have separately reviewed headroom. Normal fixture reports live in `build/native-world-run/<run>/atlas-audit-report.txt` and `.json`; benchmark runs include the same reports.
 
+### Gadget energy artwork review, September 11, 2026
+
+The gadget expansion adds exactly three source item atlases: `Items/StrangeMatter/resonant_battery_pack.png` (256 × 128, 32,768 pixels), `gravitic_manipulator.png` (256 × 64, 16,384 pixels) and `arc_projector.png` (256 × 64, 16,384 pixels). These painted, per-face atlases cover the native chest attachment and both held models, including UV gutters. Existing item textures remain byte-identical to the pre-edit resource archive. The 65,536 new pixels explain the complete increase from 359,424 to 424,960 unique item pixels; no duplicate exported or oversized texture accounts for the growth.
+
+Only the `Items` source limit changes, from 413,696 to 479,232: the exact reviewed 65,536-pixel addition preserves the previous absolute headroom of 54,272 pixels. Historical reference measurements remain unchanged. Blocks (1,468,416 unique pixels), icons (565,056), and every other source category remain within their existing limits. All native padded limits and the 3 MPx ceiling remain unchanged. The expansion's loaded native report is `build/native-world-run/gadget-energy-20260911-d/atlas-audit-report.json`; it fits the same native atlas dimensions as the prior baseline.
+
+### Anomaly memory category artwork review, September 12, 2026
+
+The native memory category adds exactly two 256 × 256 RGBA `@2x` icons under `UI/Custom/Pages/Memories/categories/`: `SM_Anomalies@2x.png` and `SM_AnomaliesComplete@2x.png`. This matches the native category resolution. Source growth is 131,072 pixels (524,288 decoded RGBA bytes); all pre-existing UI PNGs are byte-identical to the `warp-gate-states-20260912-a` native-run archive. Generated high-resolution masters remain outside the resource pack. The source UI limit increases from 483,328 to 614,400, preserving its previous absolute headroom.
+
+The native Custom UI auditor uses one pixel of padding on each side and selects one image per logical `@2x` path. These two icons therefore add exactly `2 × 258 × 258 = 133,128` padded pixels. Only that atlas limit increases, from 493,568 to 626,696; historical reference measurements, all other atlas limits, the 3 MPx ceiling and the 8192 maximum atlas dimension remain unchanged. The native world verification checks the actual loaded result.
+
+Native run `anomaly-memories-20260912-b` confirmed exactly 562,020 Custom UI padded pixels, with the combined UI atlas remaining 8192 × 4096. All six atlas checks passed.
+
 ## Upstream attribution
 
 The unmodified `src/test/java/dev/zero/atlasaudit/AtlasAudit.java` is from ZeroErrors' **hytale-atlas-audit**, supplied in the sibling repository, commit `cce5eb6a65ef0267e6c50cd54d5b2748cde7486c`.

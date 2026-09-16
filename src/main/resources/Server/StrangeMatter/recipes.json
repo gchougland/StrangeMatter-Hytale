@@ -508,8 +508,7 @@
     "output": "SM_Research_Tablet",
     "quantity": 1,
     "ingredients": {
-      "SM_Resonite_Ingot": 4,
-      "Rock_Crystal_White_Block": 1
+      "SM_Resonite_Ingot": 4
     },
     "shards": {},
     "research": "",
@@ -1244,6 +1243,93 @@
     "shards": {},
     "research": "resonite",
     "seconds": 2.0,
+    "station": "workbench"
+  },
+  {
+    "id": "resonant_charging_station",
+    "source": "StrangeMatter gadget energy expansion",
+    "output": "SM_Resonant_Charging_Station",
+    "quantity": 1,
+    "ingredients": {
+      "Ingredient_Bar_Iron": 4,
+      "Ingredient_Bar_Copper": 2,
+      "SM_Resonite_Ingot": 2,
+      "SM_Resonant_Coil": 1
+    },
+    "shards": {},
+    "research": "resonant_energy",
+    "seconds": 2,
+    "station": "workbench"
+  },
+  {
+    "id": "resonant_battery_pack",
+    "source": "StrangeMatter gadget energy expansion",
+    "output": "SM_Resonant_Battery_Pack",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 6,
+      "SM_Resonant_Coil": 2,
+      "SM_Resonant_Circuit": 1
+    },
+    "shards": {
+      "energetic": 3,
+      "gravitic": 1
+    },
+    "research": "resonant_battery_pack",
+    "seconds": 6,
+    "station": "forge"
+  },
+  {
+    "id": "gravitic_manipulator",
+    "source": "StrangeMatter gadget energy expansion",
+    "output": "SM_Gravitic_Manipulator",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 5,
+      "SM_Resonant_Coil": 2,
+      "SM_Resonant_Circuit": 1,
+      "SM_Containment_Capsule_Gravity": 1
+    },
+    "shards": {
+      "gravitic": 2,
+      "chrono": 1
+    },
+    "research": "gravitic_manipulation",
+    "seconds": 6,
+    "station": "forge"
+  },
+  {
+    "id": "arc_projector",
+    "source": "StrangeMatter gadget energy expansion",
+    "output": "SM_Arc_Projector",
+    "quantity": 1,
+    "ingredients": {
+      "SM_Resonite_Ingot": 5,
+      "SM_Resonant_Coil": 2,
+      "SM_Resonant_Circuit": 1,
+      "SM_Containment_Capsule_Energetic": 1
+    },
+    "shards": {
+      "energetic": 3
+    },
+    "research": "arc_projection",
+    "seconds": 6,
+    "station": "forge"
+  },
+  {
+    "id": "resonant_energy_storage",
+    "source": "StrangeMatter energy storage",
+    "output": "SM_Resonant_Energy_Storage",
+    "quantity": 1,
+    "ingredients": {
+      "Ingredient_Bar_Iron": 4,
+      "Ingredient_Bar_Copper": 4,
+      "SM_Resonite_Ingot": 6,
+      "SM_Resonant_Coil": 2
+    },
+    "shards": {},
+    "research": "resonant_energy",
+    "seconds": 3,
     "station": "workbench"
   }
 ]

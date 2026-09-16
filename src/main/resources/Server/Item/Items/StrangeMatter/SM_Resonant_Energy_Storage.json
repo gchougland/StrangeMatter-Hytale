@@ -1,0 +1,127 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Resonant_Energy_Storage.name",
+    "Description": "server.items.SM_Resonant_Energy_Storage.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Resonant_Energy_Storage.png",
+  "MaxStack": 25,
+  "Categories": [
+    "Furniture.Benches",
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Machines"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "SubCategory": "SM_PowerEquipment",
+  "BlockType": {
+    "BlockEntity": {
+      "Components": {
+        "SM_Factory": {}
+      }
+    },
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/StrangeMatter/resonant_energy_storage.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/StrangeMatter/resonant_energy_storage.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "SM_Resonant_Energy_Storage",
+    "VariantRotation": "NESW",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#243950",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "SM_Use",
+            "Action": "machine"
+          }
+        ],
+        "RequireNewClick": true
+      }
+    },
+    "InteractionHint": "server.interactionHints.SM_Resonant_Energy_Storage",
+    "State": {
+      "Definitions": {
+        "Working": {
+          "Looping": true,
+          "CustomModelAnimation": "Blocks/StrangeMatter/resonant_energy_storage_working.blockyanim",
+          "CustomModelAnimationSpeed": 1,
+          "AmbientSoundEventId": "SM_Charging_Hum_SFX",
+          "Particles": [
+            {
+              "SystemId": "SM_Gadget_Charge",
+              "PositionOffset": {
+                "X": 0,
+                "Y": 0.38,
+                "Z": 0.47
+              },
+              "Scale": 0.25
+            }
+          ]
+        }
+      }
+    }
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary",
+    "Use": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "machine"
+        }
+      ],
+      "RequireNewClick": true
+    }
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "Ingredient_Bar_Iron",
+        "Quantity": 4
+      },
+      {
+        "ItemId": "Ingredient_Bar_Copper",
+        "Quantity": 4
+      },
+      {
+        "ItemId": "SM_Resonite_Ingot",
+        "Quantity": 6
+      },
+      {
+        "ItemId": "SM_Resonant_Coil",
+        "Quantity": 2
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 3,
+    "KnowledgeRequired": true,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "SM_Laboratory",
+        "Categories": [
+          "SM_Laboratory_All"
+        ]
+      }
+    ]
+  }
+}

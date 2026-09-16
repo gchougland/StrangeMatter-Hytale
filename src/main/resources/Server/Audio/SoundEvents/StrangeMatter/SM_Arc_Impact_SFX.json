@@ -1,0 +1,17 @@
+{
+  "AudioCategory": "AudioCat_SFX",
+  "SpatialBlend": 1,
+  "StartAttenuationDistance": 1.5,
+  "MaxDistance": 14,
+  "MaxInstance": 8,
+  "Volume": -7,
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/StrangeMatter/GadgetEnergy/arc_impact.ogg",
+        "Sounds/StrangeMatter/GadgetEnergy/arc_impact_2.ogg",
+        "Sounds/StrangeMatter/GadgetEnergy/arc_impact_3.ogg"
+      ]
+    }
+  ]
+}

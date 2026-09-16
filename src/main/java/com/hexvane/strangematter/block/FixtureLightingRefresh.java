@@ -121,7 +121,8 @@ public final class FixtureLightingRefresh extends RefSystem<ChunkStore> {
 
     static String[] fixtureIds() {
         var names = new ArrayList<String>();
-        for (var family : FAMILIES) for (var kind : new String[]{"Lamp", "Lantern"})
+        // Crystals also save colored light, even though they have no On/Off switch.
+        for (var family : FAMILIES) for (var kind : new String[]{"Lamp", "Lantern", "Crystal"})
             names.add("SM_" + family + "_Shard_" + kind);
         names.add("SM_Lab_Lamp");
         return names.toArray(String[]::new);

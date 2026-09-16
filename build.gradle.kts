@@ -116,6 +116,20 @@ val verifyTabletUi by tasks.registering(Exec::class) {
 val verifyDisciplineIcons by tasks.registering(Exec::class) {
     commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_discipline_icons.py")
 }
+val verifyDisciplineMinerals by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/assets/test_discipline_minerals.py")
+}
+tasks.check { dependsOn(verifyDisciplineMinerals) }
+
+val verifyWarpGateStates by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/assets/test_warp_gate_states.py")
+}
+tasks.check { dependsOn(verifyWarpGateStates) }
+
+val verifyAnomalyMemories by tasks.registering(Exec::class) {
+    commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_anomaly_memories.py")
+}
+tasks.check { dependsOn(verifyAnomalyMemories) }
 val verifyEffects by tasks.registering(Exec::class) {
     commandLine(providers.gradleProperty("pythonExecutable").orElse("python").get(), "tools/validate_effects.py")
 }

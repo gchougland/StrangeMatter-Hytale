@@ -4,9 +4,9 @@ import java.util.Locale;
 
 /** The six original Strange Matter research disciplines. */
 public enum ResearchType {
-    COGNITION("Cognition", "#bc8fff"), ENERGY("Energy", "#39e9ff"),
-    GRAVITY("Gravity", "#a67eff"), SHADOW("Shadow", "#bd73de"),
-    SPACE("Space", "#55daec"), TIME("Time", "#efd283");
+    COGNITION("Cognition", "#54c55b"), ENERGY("Energy", "#3abde8"),
+    GRAVITY("Gravity", "#d75335"), SHADOW("Shadow", "#8752d0"),
+    SPACE("Space", "#3d88dd"), TIME("Time", "#e6b538");
 
     private final String displayName;
     private final String color;

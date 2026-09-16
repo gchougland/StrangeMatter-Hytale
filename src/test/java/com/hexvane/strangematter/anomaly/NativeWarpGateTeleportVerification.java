@@ -26,6 +26,7 @@ import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.modules.entity.component.HeadRotation;
 import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
+import com.hypixel.hytale.server.core.modules.entity.player.ChunkTracker;
 import com.hypixel.hytale.server.core.modules.entity.teleport.PendingTeleport;
 import com.hypixel.hytale.server.core.modules.entity.teleport.Teleport;
 import com.hypixel.hytale.server.core.modules.entity.teleport.TeleportSystems;
@@ -97,10 +98,60 @@ public final class NativeWarpGateTeleportVerification {
             var second=wire(subject.packets().ofType(ClientTeleport.class).getLast());
             require(second.teleportId!=packet.teleportId,"Native engine allocates the later request's teleport ID");
             acknowledge(subject,second);
+            verifyStreaming(subject);
             verifyMounted(subject,probe);
             PROBES.remove(subject.ref());
-        }finally{PROBES.keySet().removeIf(ref->!ref.isValid());}
-        System.out.println("NATIVE_WARP_GATE_TELEPORT_VERIFICATION_PASSED: native same-world packet/head rotation, existing-request protection, delayed ACK and old movement rejection, real ACK recovery, native NPC dismount before teleport, late mount packet rejection and exact hoverboard return.");
+        }finally{PROBES.keySet().removeIf(ref->!ref.isValid());WarpGateTeleport.clear(world);}
+        verifyDisconnectedStreaming(world);
+        System.out.println("NATIVE_WARP_GATE_TELEPORT_VERIFICATION_PASSED: native packet/head rotation and ACK ownership, bounded 4/8/16/32 section arrival ramp, exact custom-budget restoration, repeated travel, third-party overrides, disconnect/cleanup, waiting feedback throttle, native NPC dismount and exact hoverboard return.");
+    }
+
+    private static void verifyStreaming(NativePlayerFixture subject){
+        var world=subject.world();var tracker=subject.store().getComponent(subject.ref(),ChunkTracker.getComponentType());require(tracker!=null,"Actual native player has its native chunk tracker");
+        var originalPosition=new Vector3d(subject.store().getComponent(subject.ref(),TransformComponent.getComponentType()).getPosition());
+        WarpGateTeleport.clear(world);int original=tracker.getMaxSectionsPerTick(),rate=tracker.getMaxSectionsPerSecond();
+        try{
+            tracker.setMaxSectionsPerTick(40);long started=System.nanoTime();
+            require(WarpGateTeleport.teleport(subject.store(),subject.ref(),new Vector3d(25.5,220,25.5))&&tracker.getMaxSectionsPerTick()==4,"Native gate request immediately reduces the arrival burst from 40 to four sections per tick");
+            acknowledge(subject,wire(subject.packets().ofType(ClientTeleport.class).getLast()));
+            require(WarpGateTeleport.teleport(subject.store(),subject.ref(),new Vector3d(26.5,220,25.5))&&tracker.getMaxSectionsPerTick()==4,"A repeated acknowledged crossing during stage one restarts the ramp without capturing four as its original budget");
+            acknowledge(subject,wire(subject.packets().ofType(ClientTeleport.class).getLast()));
+            WarpGateTeleport.tick(world,started+1_100_000_000L);require(tracker.getMaxSectionsPerTick()==8,"Second ramp stage allows eight sections per tick");
+            WarpGateTeleport.tick(world,started+2_100_000_000L);require(tracker.getMaxSectionsPerTick()==16,"Third ramp stage allows sixteen sections per tick");
+            WarpGateTeleport.tick(world,started+3_100_000_000L);require(tracker.getMaxSectionsPerTick()==32,"Fourth ramp stage allows thirty-two sections per tick");
+            WarpGateTeleport.tick(world,started+4_100_000_000L);require(tracker.getMaxSectionsPerTick()==40&&tracker.getMaxSectionsPerSecond()==rate,"Lease expiry restores exact original burst budget and never changes the bandwidth setting");
+            tracker.setMaxSectionsPerTick(6);started=System.nanoTime();
+            require(WarpGateTeleport.teleport(subject.store(),subject.ref(),new Vector3d(26.5,220,25.5)),"Custom-budget traveller can use the gate");
+            acknowledge(subject,wire(subject.packets().ofType(ClientTeleport.class).getLast()));
+            WarpGateTeleport.tick(world,started+2_100_000_000L);require(tracker.getMaxSectionsPerTick()==6,"Ramp never raises an existing lower user budget");
+            require(WarpGateTeleport.teleport(subject.store(),subject.ref(),new Vector3d(25.5,220,25.5))&&tracker.getMaxSectionsPerTick()==4,"A subsequent acknowledged trip restarts the ramp");
+            acknowledge(subject,wire(subject.packets().ofType(ClientTeleport.class).getLast()));
+            WarpGateTeleport.clear(world);require(tracker.getMaxSectionsPerTick()==6,"Repeated travel still restores the original custom budget, never a temporary ramp value");
+            tracker.setMaxSectionsPerTick(2);
+            require(WarpGateTeleport.teleport(subject.store(),subject.ref(),new Vector3d(26.5,220,25.5))&&tracker.getMaxSectionsPerTick()==2,"A user budget below four remains untouched");
+            acknowledge(subject,wire(subject.packets().ofType(ClientTeleport.class).getLast()));
+            tracker.setMaxSectionsPerTick(40);
+            require(WarpGateTeleport.teleport(subject.store(),subject.ref(),new Vector3d(25.5,220,25.5)),"Third-party override fixture starts a normal arrival lease");
+            acknowledge(subject,wire(subject.packets().ofType(ClientTeleport.class).getLast()));
+            tracker.setMaxSectionsPerTick(3);WarpGateTeleport.tick(world);WarpGateTeleport.clear(world);
+            require(tracker.getMaxSectionsPerTick()==3,"Tick and cleanup preserve an external budget change made during our lease");
+            int packets=subject.packets().packets.size();WarpGateTeleport.preparing(world,List.of(subject.ref()));int once=subject.packets().packets.size();WarpGateTeleport.preparing(world,List.of(subject.ref()));
+            require(once>packets&&subject.packets().packets.size()==once,"Pending travel reports preparation once, without repeating chat on every gate tick");
+            WarpGateTeleport.preparationFailed(world,List.of(subject.ref()));int failed=subject.packets().packets.size();WarpGateTeleport.preparationFailed(world,List.of(subject.ref()));
+            require(failed>once&&subject.packets().packets.size()==failed,"A preparation failure replaces waiting feedback once instead of leaving a silent timeout");
+            require(WarpGateTeleport.teleport(subject.store(),subject.ref(),originalPosition),"Streaming fixture restores its original position through a real native teleport");
+            acknowledge(subject,wire(subject.packets().ofType(ClientTeleport.class).getLast()));
+            require(subject.store().getComponent(subject.ref(),TransformComponent.getComponentType()).getPosition().equals(originalPosition)&&subject.owner().getTeleportAckTracker().isEmpty(),"Streaming fixture leaves the following grounded mount case at its original location with the restoration ACK complete");
+        }finally{WarpGateTeleport.clear(world);tracker.setMaxSectionsPerTick(original);}
+    }
+    private static void verifyDisconnectedStreaming(World world)throws Exception{
+        ChunkTracker tracker;
+        try(var subject=NativePlayerFixture.create(world,"NativeGateDisconnect",new Vector3d(24.5,220,24.5))){
+            subject.player().handleClientReady(false);tracker=subject.store().getComponent(subject.ref(),ChunkTracker.getComponentType());tracker.setMaxSectionsPerTick(19);
+            require(WarpGateTeleport.teleport(subject.store(),subject.ref(),new Vector3d(25.5,220,25.5))&&tracker.getMaxSectionsPerTick()==4,"Disconnect fixture has an active arrival lease");
+            acknowledge(subject,wire(subject.packets().ofType(ClientTeleport.class).getLast()));
+        }
+        WarpGateTeleport.tick(world);require(tracker.getMaxSectionsPerTick()==19,"Native entity removal restores its tracker object and retires the lease without waiting for expiry");
     }
 
     private static void verifyMounted(NativePlayerFixture rider,Probe probe)throws Exception {

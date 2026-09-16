@@ -54,10 +54,6 @@
       {
         "ItemId": "SM_Resonite_Ingot",
         "Quantity": 4
-      },
-      {
-        "ItemId": "Rock_Crystal_White_Block",
-        "Quantity": 1
       }
     ],
     "OutputQuantity": 1,

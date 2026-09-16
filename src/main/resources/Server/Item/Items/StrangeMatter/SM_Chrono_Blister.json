@@ -59,6 +59,8 @@
       "RequireNewClick": true
     }
   },
-  "MaxDurability": 100,
-  "SubCategory": "SM_PersonalEquipment"
+  "SubCategory": "SM_PersonalEquipment",
+  "Repairable": false,
+  "DurabilityLossOnDeath": false,
+  "DurabilityLossOnHit": 0
 }

@@ -1,0 +1,46 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Gravitic_Manipulator.name",
+    "Description": "server.items.SM_Gravitic_Manipulator.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Gravitic_Manipulator.png",
+  "MaxStack": 1,
+  "Categories": [
+    "Items",
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Gadgets"
+  ],
+  "PlayerAnimationsId": "Item",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "SubCategory": "SM_PoweredTools",
+  "Model": "Items/StrangeMatter/gravitic_manipulator.blockymodel",
+  "Texture": "Items/StrangeMatter/gravitic_manipulator.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "gravity_launch"
+        }
+      ],
+      "RequireNewClick": true
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "gravity_grab"
+        }
+      ],
+      "RequireNewClick": true
+    }
+  },
+  "Repairable": false,
+  "DurabilityLossOnDeath": false,
+  "DurabilityLossOnHit": 0
+}

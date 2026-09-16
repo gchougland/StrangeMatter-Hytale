@@ -9,6 +9,7 @@ from pathlib import Path
 import argparse, json, math, random, hashlib, itertools
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
+from discipline_palette import DISCIPLINES, MATERIALS, material as discipline_material
 
 ROOT = Path(__file__).resolve().parents[2]
 COMMON = ROOT / 'src/main/resources/Common'
@@ -23,6 +24,8 @@ P = {'navy':(30,43,69),'edge':(61,81,109),'dark':(13,23,41),
 FAMILY = {'gravitic':'purple','gravity':'purple','chrono':'amber','temporal':'amber',
           'energetic':'cyan','spatial':'pink','warp':'pink','shade':'purple',
           'echoing':'purple','insight':'cyan','thoughtwell':'cyan','resonite':'cyan'}
+P.update(MATERIALS)
+FAMILY.update({name: discipline_material(name) for name in DISCIPLINES})
 
 def hid(name): return 'SM_' + '_'.join(s.capitalize() for s in name.split('_'))
 def family(name): return next((v for k,v in FAMILY.items() if k in name),'cyan')
@@ -73,7 +76,7 @@ class Model:
             a=2*math.pi*i/count; length=2*r*math.tan(math.pi/count)+0.4
             if axis=='y': pos=(p[0]+r*math.sin(a),p[1],p[2]+r*math.cos(a)); size=(length,depth,t); rot=(0,math.degrees(a),0)
             else: pos=(p[0]+r*math.sin(a),p[1]+r*math.cos(a),p[2]); size=(length,t,depth); rot=(0,0,-math.degrees(a))
-            self.box(name+str(i),pos,size,mat,rot,glow=mat in ('cyan','purple','amber','pink'))
+            self.box(name+str(i),pos,size,mat,rot,glow=mat in ('cyan','purple','amber','pink') or mat in MATERIALS)
         return self
     def crystal(self,name,p,h,mat='purple',rot=(0,0,0),w=None):
         w=w or h*.34
@@ -202,7 +205,7 @@ def paint(w,h,mat,seed):
         for i in range(5):
             x=rng.randrange(max(1,w)); y=rng.randrange(max(1,h)); d.line((x,y,x,min(h-1,y+5),min(w-1,x+4),min(h-1,y+5)),fill=col('copper'))
         d.rectangle((w//3,h//3,w*2//3,h*2//3),fill=col('dark'),outline=col('steel'))
-    if mat in ('cyan','purple','amber','pink'):
+    if mat in ('cyan','purple','amber','pink') or mat in MATERIALS:
         for y in range(h):
             light=max(0,1-abs(y-h*.25)/max(1,h))
             d.line((1,y,max(1,w-2),y),fill=tuple(min(255,int(c*.65+light*c*.35)) for c in base))

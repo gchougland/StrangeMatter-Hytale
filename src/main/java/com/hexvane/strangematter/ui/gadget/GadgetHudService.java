@@ -2,6 +2,9 @@ package com.hexvane.strangematter.ui.gadget;
 
 import com.hexvane.strangematter.research.ResearchDisciplineUi;
 import com.hexvane.strangematter.research.ResearchType;
+import com.hexvane.strangematter.equipment.GadgetEnergy;
+import com.hexvane.strangematter.equipment.BatteryPackService;
+import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.hud.CustomUIHud;
@@ -25,7 +28,9 @@ public final class GadgetHudService implements AutoCloseable {
     private static final String DOCUMENT = loadDocument();
     private final ConcurrentHashMap<UUID, State> states = new ConcurrentHashMap<>();
     private volatile boolean closed;
-    public record Readout(String title, String status, String detail, double progress, boolean error, String itemId, ResearchType discipline) {
+    public record EnergyReadout(int current,int capacity,int pack,int packCapacity,int transfer,boolean compact) {}
+    public record Readout(String title, String status, String detail, double progress, boolean error, String itemId, ResearchType discipline, EnergyReadout energy) {
+        public Readout(String title,String status,String detail,double progress,boolean error,String itemId,ResearchType discipline){this(title,status,detail,progress,error,itemId,discipline,null);}
         public Readout(String title, String status, String detail, double progress, boolean error, String itemId) {
             this(title, status, detail, progress, error, itemId, null);
         }
@@ -38,7 +43,7 @@ public final class GadgetHudService implements AutoCloseable {
     }
     private static final class State {
         final PlayerRef player; final Store<EntityStore> store; final World world; final GadgetHud hud;
-        Readout base, notice; long baseUntil, noticeUntil;
+        Readout base, notice; long baseUntil, noticeUntil, activeUntil;ItemStack activeStack;
         State(PlayerRef player, Store<EntityStore> store) {
             this.player = player; this.store = store; this.world = store.getExternalData().getWorld(); this.hud = new GadgetHud(player);
         }
@@ -51,9 +56,16 @@ public final class GadgetHudService implements AutoCloseable {
     public void update(PlayerRef player, Store<EntityStore> store, String title, String status, String detail, double progress, ResearchType discipline) {
         onWorld(store, () -> {
             State state = obtain(player, store); if (state == null) return;
+            state.activeUntil=0;
             state.base = new Readout(title, status, detail, progress, false, heldItem(player, store), discipline); state.baseUntil = System.nanoTime() + 1_000_000_000L;
             render(state, System.nanoTime());
         });
+    }
+    /** Deployed items keep their meter attached to the exact payload owned by their recovery ledger. */
+    public void active(PlayerRef player,Store<EntityStore> store,ItemStack stack,String title,String status,String detail){
+        onWorld(store,()->{State state=obtain(player,store);if(state==null)return;
+            state.activeStack=stack;state.activeUntil=System.nanoTime()+1_000_000_000L;state.baseUntil=state.activeUntil;
+            state.base=new Readout(title,status,detail,-1,false,stack.getItemId());render(state,System.nanoTime());});
     }
     /** A short result/error overlay; routine held-tool refreshes cannot immediately erase it. */
     public void notice(PlayerRef player, Store<EntityStore> store, String title, String status, String detail, boolean error) {
@@ -82,7 +94,16 @@ public final class GadgetHudService implements AutoCloseable {
     }
     private void render(State state, long now) {
         Player player = component(state.player, state.store); Readout visible = state.visible(now);
-        if (player == null || visible == null) { remove(state); return; }
+        if (player == null) { remove(state); return; }
+        var held=InventoryComponent.getItemInHand(state.store,state.player.getReference());
+        // A worn reserve supplements a held instrument; wearing armor never owns a HUD layer.
+        var pack=GadgetEnergy.powered(held)?BatteryPackService.equipped(state.player,state.store):ItemStack.EMPTY;
+        if(now<state.activeUntil&&state.activeStack!=null)held=state.activeStack;
+        String heldId=ItemStack.isEmpty(held)?"SM_Research_Tablet":held.getItemId();
+        if(visible!=null&&!visible.itemId().equals(heldId))visible=state.base!=null&&state.base.itemId().equals(heldId)&&now<state.baseUntil?state.base:null;
+        if (visible == null) { remove(state); return; }
+        var energy=new EnergyReadout(GadgetEnergy.charge(held),GadgetEnergy.capacity(held),GadgetEnergy.charge(pack),GadgetEnergy.capacity(pack),BatteryPackService.rate(state.player.getUuid()),false);
+        visible=new Readout(visible.title(),visible.status(),visible.detail(),visible.progress(),visible.error(),visible.itemId(),visible.discipline(),energy);
         var manager = player.getHudManager();
         if (manager.getCustomHud(KEY) != state.hud) manager.addCustomHud(state.player, state.hud);
         state.hud.render(visible);
@@ -146,7 +167,22 @@ public final class GadgetHudService implements AutoCloseable {
             cmd.set("#GadgetProgress.Visible", data.progress() >= 0);
             Anchor fill = new Anchor(); fill.setLeft(Value.of(0)); fill.setTop(Value.of(0)); fill.setHeight(Value.of(5));
             fill.setWidth(Value.of(Math.max(1, (int) (data.progress() * 340)))); cmd.setObject("#GadgetProgressFill.Anchor", fill);
+            var energy=data.energy();boolean compact=energy!=null&&energy.compact();
+            Anchor panel=new Anchor();panel.setRight(Value.of(34));panel.setBottom(Value.of(176));panel.setWidth(Value.of(376));panel.setHeight(Value.of(compact?114:energy!=null&&energy.packCapacity()>0?330:energy!=null&&energy.capacity()>0?292:244));cmd.setObject("#GadgetPanel.Anchor",panel);
+            cmd.set("#GadgetStatus.Visible",!compact);cmd.set("#GadgetDetail.Visible",!compact);
+            cmd.set("#GadgetEnergy.Visible",energy!=null&&energy.capacity()>0);
+            cmd.set("#GadgetPack.Visible",energy!=null&&energy.packCapacity()>0&&!compact);
+            if(energy!=null&&energy.capacity()>0){
+                Anchor row=new Anchor();row.setLeft(Value.of(16));row.setTop(Value.of(compact?66:240));row.setWidth(Value.of(340));row.setHeight(Value.of(38));cmd.setObject("#GadgetEnergy.Anchor",row);
+                String state=energy.current()==0?"EMPTY":energy.current()*5L<=energy.capacity()?"LOW":"Energy";
+                cmd.set("#GadgetEnergyText.Text",state+": "+energy.current()+" / "+energy.capacity()+" RE");
+                cmd.set("#GadgetEnergyFill.Visible",energy.current()>0);
+                meter(cmd,"#GadgetEnergyFill",(double)energy.current()/energy.capacity());
+                cmd.set("#GadgetEnergyFill.Background",energy.current()*5L<=energy.capacity()?"#eeb268":"#50e7ec");
+            }
+            if(energy!=null&&energy.packCapacity()>0&&!compact)cmd.set("#GadgetPackText.Text","Pack: "+energy.pack()+" / "+energy.packCapacity()+" RE"+(energy.transfer()>0?"  +"+energy.transfer()+" RE/s":""));
             update(false, cmd); shown = data;
         }
+        private static void meter(UICommandBuilder cmd,String selector,double amount){Anchor fill=new Anchor();fill.setLeft(Value.of(0));fill.setTop(Value.of(0));fill.setHeight(Value.of(7));fill.setWidth(Value.of(Math.max(1,(int)(Math.clamp(amount,0,1)*340))));cmd.setObject(selector+".Anchor",fill);}
     }
 }

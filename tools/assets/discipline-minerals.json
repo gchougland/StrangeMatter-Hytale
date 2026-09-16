@@ -1,0 +1,185 @@
+{
+  "status": "PASS",
+  "assets": [
+    {
+      "item": "SM_Insight_Shard",
+      "mineralFaces": 14,
+      "texture": "Items/StrangeMatter/insight_shard.png",
+      "geometrySha256": "d69329c62bfa8fa7dbdaccfb36880922cace4dbeaeda2027ccc76346eaf557d9"
+    },
+    {
+      "item": "SM_Insight_Shard_Ore",
+      "mineralFaces": 180,
+      "texture": "Blocks/StrangeMatter/insight_shard_ore.png",
+      "geometrySha256": "9bbaf0b69d4e97965297ad584f097ab6af66b65b17dd922d1304b6cd5a90e5a2"
+    },
+    {
+      "item": "SM_Insight_Shard_Crystal",
+      "mineralFaces": 98,
+      "texture": "Blocks/StrangeMatter/insight_shard_crystal.png",
+      "geometrySha256": "365224391aff61d2624cb3607a7f7f284828ec1551f9286b9995178b0401de15"
+    },
+    {
+      "item": "SM_Insight_Shard_Lamp",
+      "mineralFaces": 98,
+      "texture": "Blocks/StrangeMatter/insight_shard_lamp.png",
+      "geometrySha256": "079096be540898b9dc0a972b53dc35a99729089e872f234fb435f10694ef3fa9"
+    },
+    {
+      "item": "SM_Insight_Shard_Lantern",
+      "mineralFaces": 14,
+      "texture": "Blocks/StrangeMatter/insight_shard_lantern.png",
+      "geometrySha256": "8ecc9f93bb475ccbd78d8744dc99284ad31817215196bbfef6f360aec041befe"
+    },
+    {
+      "item": "SM_Energetic_Shard",
+      "mineralFaces": 14,
+      "texture": "Items/StrangeMatter/energetic_shard.png",
+      "geometrySha256": "d69329c62bfa8fa7dbdaccfb36880922cace4dbeaeda2027ccc76346eaf557d9"
+    },
+    {
+      "item": "SM_Energetic_Shard_Ore",
+      "mineralFaces": 180,
+      "texture": "Blocks/StrangeMatter/energetic_shard_ore.png",
+      "geometrySha256": "8ee26518af2cb68875c209217c963efafa3847bfe924058496d7293c69a945b0"
+    },
+    {
+      "item": "SM_Energetic_Shard_Crystal",
+      "mineralFaces": 98,
+      "texture": "Blocks/StrangeMatter/energetic_shard_crystal.png",
+      "geometrySha256": "365224391aff61d2624cb3607a7f7f284828ec1551f9286b9995178b0401de15"
+    },
+    {
+      "item": "SM_Energetic_Shard_Lamp",
+      "mineralFaces": 98,
+      "texture": "Blocks/StrangeMatter/energetic_shard_lamp.png",
+      "geometrySha256": "079096be540898b9dc0a972b53dc35a99729089e872f234fb435f10694ef3fa9"
+    },
+    {
+      "item": "SM_Energetic_Shard_Lantern",
+      "mineralFaces": 14,
+      "texture": "Blocks/StrangeMatter/energetic_shard_lantern.png",
+      "geometrySha256": "8ecc9f93bb475ccbd78d8744dc99284ad31817215196bbfef6f360aec041befe"
+    },
+    {
+      "item": "SM_Gravitic_Shard",
+      "mineralFaces": 14,
+      "texture": "Items/StrangeMatter/gravitic_shard.png",
+      "geometrySha256": "d69329c62bfa8fa7dbdaccfb36880922cace4dbeaeda2027ccc76346eaf557d9"
+    },
+    {
+      "item": "SM_Gravitic_Shard_Ore",
+      "mineralFaces": 180,
+      "texture": "Blocks/StrangeMatter/gravitic_shard_ore.png",
+      "geometrySha256": "53c8c04c78373b6e8c0fe553412c1966cb391833354283024d5f461277002604"
+    },
+    {
+      "item": "SM_Gravitic_Shard_Crystal",
+      "mineralFaces": 98,
+      "texture": "Blocks/StrangeMatter/gravitic_shard_crystal.png",
+      "geometrySha256": "365224391aff61d2624cb3607a7f7f284828ec1551f9286b9995178b0401de15"
+    },
+    {
+      "item": "SM_Gravitic_Shard_Lamp",
+      "mineralFaces": 98,
+      "texture": "Blocks/StrangeMatter/gravitic_shard_lamp.png",
+      "geometrySha256": "079096be540898b9dc0a972b53dc35a99729089e872f234fb435f10694ef3fa9"
+    },
+    {
+      "item": "SM_Gravitic_Shard_Lantern",
+      "mineralFaces": 14,
+      "texture": "Blocks/StrangeMatter/gravitic_shard_lantern.png",
+      "geometrySha256": "8ecc9f93bb475ccbd78d8744dc99284ad31817215196bbfef6f360aec041befe"
+    },
+    {
+      "item": "SM_Shade_Shard",
+      "mineralFaces": 14,
+      "texture": "Items/StrangeMatter/shade_shard.png",
+      "geometrySha256": "d69329c62bfa8fa7dbdaccfb36880922cace4dbeaeda2027ccc76346eaf557d9"
+    },
+    {
+      "item": "SM_Shade_Shard_Ore",
+      "mineralFaces": 180,
+      "texture": "Blocks/StrangeMatter/shade_shard_ore.png",
+      "geometrySha256": "e0a3350c4be3d5f15c6b284dcc2b4918283b5f7d52e28ab860a34875bee68891"
+    },
+    {
+      "item": "SM_Shade_Shard_Crystal",
+      "mineralFaces": 98,
+      "texture": "Blocks/StrangeMatter/shade_shard_crystal.png",
+      "geometrySha256": "365224391aff61d2624cb3607a7f7f284828ec1551f9286b9995178b0401de15"
+    },
+    {
+      "item": "SM_Shade_Shard_Lamp",
+      "mineralFaces": 98,
+      "texture": "Blocks/StrangeMatter/shade_shard_lamp.png",
+      "geometrySha256": "39038a9a39cdac326938b39d1ae88e599a08e093dd3a8b40a6f806398e3d1bb7"
+    },
+    {
+      "item": "SM_Shade_Shard_Lantern",
+      "mineralFaces": 14,
+      "texture": "Blocks/StrangeMatter/shade_shard_lantern.png",
+      "geometrySha256": "1e0bad9bb6f2d862275fcdde61fb6a0ed36cda871e0c7145205accec6f996b44"
+    },
+    {
+      "item": "SM_Spatial_Shard",
+      "mineralFaces": 14,
+      "texture": "Items/StrangeMatter/spatial_shard.png",
+      "geometrySha256": "d69329c62bfa8fa7dbdaccfb36880922cace4dbeaeda2027ccc76346eaf557d9"
+    },
+    {
+      "item": "SM_Spatial_Shard_Ore",
+      "mineralFaces": 180,
+      "texture": "Blocks/StrangeMatter/spatial_shard_ore.png",
+      "geometrySha256": "3eda11d440121d00728b25d4ea7f95da50bec9c774f831eb6f4f58284d3f928c"
+    },
+    {
+      "item": "SM_Spatial_Shard_Crystal",
+      "mineralFaces": 98,
+      "texture": "Blocks/StrangeMatter/spatial_shard_crystal.png",
+      "geometrySha256": "365224391aff61d2624cb3607a7f7f284828ec1551f9286b9995178b0401de15"
+    },
+    {
+      "item": "SM_Spatial_Shard_Lamp",
+      "mineralFaces": 98,
+      "texture": "Blocks/StrangeMatter/spatial_shard_lamp.png",
+      "geometrySha256": "39038a9a39cdac326938b39d1ae88e599a08e093dd3a8b40a6f806398e3d1bb7"
+    },
+    {
+      "item": "SM_Spatial_Shard_Lantern",
+      "mineralFaces": 14,
+      "texture": "Blocks/StrangeMatter/spatial_shard_lantern.png",
+      "geometrySha256": "1e0bad9bb6f2d862275fcdde61fb6a0ed36cda871e0c7145205accec6f996b44"
+    },
+    {
+      "item": "SM_Chrono_Shard",
+      "mineralFaces": 14,
+      "texture": "Items/StrangeMatter/chrono_shard.png",
+      "geometrySha256": "d69329c62bfa8fa7dbdaccfb36880922cace4dbeaeda2027ccc76346eaf557d9"
+    },
+    {
+      "item": "SM_Chrono_Shard_Ore",
+      "mineralFaces": 180,
+      "texture": "Blocks/StrangeMatter/chrono_shard_ore.png",
+      "geometrySha256": "71516b1f0732211b77159e8bf29c6163140a0a4d3c130b497f45f96130fd8cb0"
+    },
+    {
+      "item": "SM_Chrono_Shard_Crystal",
+      "mineralFaces": 98,
+      "texture": "Blocks/StrangeMatter/chrono_shard_crystal.png",
+      "geometrySha256": "365224391aff61d2624cb3607a7f7f284828ec1551f9286b9995178b0401de15"
+    },
+    {
+      "item": "SM_Chrono_Shard_Lamp",
+      "mineralFaces": 98,
+      "texture": "Blocks/StrangeMatter/chrono_shard_lamp.png",
+      "geometrySha256": "079096be540898b9dc0a972b53dc35a99729089e872f234fb435f10694ef3fa9"
+    },
+    {
+      "item": "SM_Chrono_Shard_Lantern",
+      "mineralFaces": 14,
+      "texture": "Blocks/StrangeMatter/chrono_shard_lantern.png",
+      "geometrySha256": "8ecc9f93bb475ccbd78d8744dc99284ad31817215196bbfef6f360aec041befe"
+    }
+  ]
+}

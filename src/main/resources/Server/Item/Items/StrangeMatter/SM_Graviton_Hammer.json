@@ -140,19 +140,10 @@
         "Power": 0.084,
         "GatherType": "OreMithril"
       }
-    ],
-    "DurabilityLossBlockTypes": [
-      {
-        "BlockSets": [
-          "Stone",
-          "Rock",
-          "Ores",
-          "Soil",
-          "Wood"
-        ],
-        "DurabilityLossOnHit": 0.25
-      }
     ]
   },
-  "SubCategory": "SM_PoweredTools"
+  "SubCategory": "SM_PoweredTools",
+  "Repairable": false,
+  "DurabilityLossOnDeath": false,
+  "DurabilityLossOnHit": 0
 }

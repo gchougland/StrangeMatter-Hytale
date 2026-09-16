@@ -51,6 +51,11 @@ public final class ResearchUnlockVerification {
             require(ResearchRecipeBridge.reconcile(research, id, config), "Join migration repairs stale native knowledge");
             require(config.getKnownRecipes().contains("OtherMod_Recipe") && !config.getKnownRecipes().contains("SM_Reality_Forge"), "Locked mod recipe is removed while unrelated recipe remains");
             require(config.getKnownRecipes().contains("SM_Field_Scanner") && config.getKnownRecipes().contains("SM_Field_Scanner_Recipe_Generated_0"), "Starting research grants native output and diagram recipe IDs");
+            verifyStarterRecipes(research, id, config, manager, ref, accessor, nativeValidation);
+            research.reset(id);
+            config.setKnownRecipes(new HashSet<>(Set.of("OtherMod_Recipe")));
+            ResearchRecipeBridge.reconcile(research, id, config);
+            verifyStarterRecipes(research, id, config, manager, ref, accessor, nativeValidation);
             require(!(boolean) nativeValidation.invoke(manager, ref, accessor, recipe), "Actual CraftingManager rejects unlearned research recipe");
             var gate = new ResearchCraftGate(research); var event = new CraftRecipeEvent.Pre(recipe, 1);
             gate.validate(id, event); require(event.isCancelled(), "Native pre-craft event blocks missing research");
@@ -72,8 +77,33 @@ public final class ResearchUnlockVerification {
         try (var restored = new ResearchService(directory)) {
             config.setKnownRecipes(new HashSet<>()); ResearchRecipeBridge.reconcile(restored, id, config);
             require(config.getKnownRecipes().contains("SM_Reality_Forge"), "Existing completed ledger migrates to native recipes after restart/join");
+            verifyStarterRecipes(restored, id, config, manager, ref, accessor, nativeValidation);
         }
         System.out.println("PASS: native recipe migration, output/diagram knowledge IDs, actual CraftingManager reject/accept, authoritative pre-craft gate, native UpdateKnownRecipes wire packet and restart migration.");
+    }
+    private static void verifyStarterRecipes(ResearchService research, UUID id,
+            com.hypixel.hytale.server.core.entity.entities.player.data.PlayerConfigData config,
+            CraftingManager manager, Ref<EntityStore> ref, ComponentAccessor<EntityStore> accessor,
+            java.lang.reflect.Method nativeValidation) throws Exception {
+        var gate = new ResearchCraftGate(research);
+        for (String output : List.of("SM_Resonant_Coil", "SM_Resonant_Circuit", "SM_Stabilized_Core",
+                "SM_Research_Machine", "SM_Research_Tablet", "SM_Field_Scanner")) {
+            var recipe = CraftingRecipe.getAssetMap().getAsset(output + "_Recipe_Generated_0");
+            require(recipe != null && config.getKnownRecipes().contains(output) && config.getKnownRecipes().contains(recipe.getId()),
+                    "Starter component/instrument is exposed in native output and diagram knowledge: " + output);
+            require((boolean) nativeValidation.invoke(manager, ref, accessor, recipe),
+                    "Actual CraftingManager permits startup recipe without paid research: " + output);
+            var event = new CraftRecipeEvent.Pre(recipe, 1);
+            gate.validate(id, event);
+            require(!event.isCancelled(), "Authoritative crafting gate allows bootstrap recipe: " + output);
+        }
+        for (String output : List.of("SM_Resonant_Burner", "SM_Resonant_Charging_Station", "SM_Resonant_Conduit", "SM_Resonant_Energy_Storage")) {
+            var recipe = CraftingRecipe.getAssetMap().getAsset(output + "_Recipe_Generated_0");
+            require(recipe != null && !config.getKnownRecipes().contains(output), "Power infrastructure remains undiscovered: " + output);
+            var event = new CraftRecipeEvent.Pre(recipe, 1);
+            gate.validate(id, event);
+            require(event.isCancelled(), "Default component access cannot bypass paid power research: " + output);
+        }
     }
     public static final class RecordingPackets extends PacketHandler {
         final List<ToClientPacket> sent = new ArrayList<>();

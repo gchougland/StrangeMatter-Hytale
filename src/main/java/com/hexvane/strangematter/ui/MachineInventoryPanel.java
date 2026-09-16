@@ -1,5 +1,6 @@
 package com.hexvane.strangematter.ui;
 
+import com.hexvane.strangematter.equipment.GadgetEnergy;
 import com.hypixel.hytale.component.ComponentAccessor;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -16,6 +17,7 @@ import com.hypixel.hytale.server.core.inventory.container.ItemContainer;
 import com.hypixel.hytale.server.core.inventory.container.filter.FilterActionType;
 import com.hypixel.hytale.server.core.inventory.transaction.*;
 import com.hypixel.hytale.server.core.ui.ItemGridSlot;
+import com.hypixel.hytale.server.core.ui.Value;
 import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.ui.builder.UIEventBuilder;
 import com.hypixel.hytale.server.core.universe.world.World;
@@ -53,13 +55,20 @@ public final class MachineInventoryPanel {
     public MachineInventoryPanel(Ref<EntityStore> owner, Store<EntityStore> store,
                                  ItemContainer input, ItemContainer output,
                                  BooleanSupplier validInventory, BooleanSupplier mayMutate) {
+        this(owner, store, input, output, validInventory, mayMutate, true);
+    }
+
+    /** A dock is a writable native section; finished-item trays retain their take-only guard. */
+    public MachineInventoryPanel(Ref<EntityStore> owner, Store<EntityStore> store,
+                                 ItemContainer input, ItemContainer output,
+                                 BooleanSupplier validInventory, BooleanSupplier mayMutate, boolean takeOnlyOutput) {
         this.owner = Objects.requireNonNull(owner);
         this.store = Objects.requireNonNull(store);
         this.world = store.getExternalData().getWorld();
         this.mayMutate = Objects.requireNonNull(mayMutate);
         this.validInventory = Objects.requireNonNull(validInventory);
         this.input = new GuardedWindow(guard(Objects.requireNonNull(input), false));
-        this.output = new GuardedWindow(guard(Objects.requireNonNull(output), true));
+        this.output = new GuardedWindow(guard(Objects.requireNonNull(output), takeOnlyOutput));
     }
 
     /** Call before openCustomPageWithWindows. Window IDs are assigned before the page builds. */
@@ -172,7 +181,7 @@ public final class MachineInventoryPanel {
                 // server BSON into the custom slot merely to retain a named note's tooltip.
                 try {
                     tooltips[slot * 2] = actual.getDisplayName().getRawText();
-                    tooltips[slot * 2 + 1] = actual.getDisplayDescription().getRawText();
+                    tooltips[slot * 2 + 1] = GadgetEnergy.powered(actual)?GadgetEnergy.descriptionText(actual):actual.getDisplayDescription().getRawText();
                 } catch (RuntimeException invalidDisplayMetadata) { /* The native item icon remains usable. */ }
             }
         }
@@ -184,6 +193,17 @@ public final class MachineInventoryPanel {
             if (previous != null && slot < previous.length && Objects.equals(previousActual[slot], actuals[slot])
                     && previousTips != null && Objects.equals(previousTips[slot * 2], tooltips[slot * 2])
                     && Objects.equals(previousTips[slot * 2 + 1], tooltips[slot * 2 + 1])) continue;
+            // Custom ItemGridStyle does not specify native durability-bar artwork. This
+            // explicit energy meter also stays visible for a fully charged or empty gadget.
+            boolean powered=GadgetEnergy.powered(actuals[slot]);
+            commands.set(cellHost(selector,slot)+" #ChargeMeter.Visible",powered);
+            if(powered){
+                int charge=GadgetEnergy.charge(actuals[slot]),capacity=GadgetEnergy.capacity(actuals[slot]);
+                var fill=new com.hypixel.hytale.server.core.ui.Anchor();
+                fill.setLeft(Value.of(0));fill.setTop(Value.of(0));fill.setHeight(Value.of(3));
+                fill.setWidth(Value.of((int)((34L*charge+capacity-1)/capacity)));
+                commands.setObject(cellHost(selector,slot)+" #ChargeFill.Anchor",fill);
+            }
             var entry = new ItemGridSlot(stacks[slot]);
             if (tooltips[slot * 2] != null) entry.setName(tooltips[slot * 2]);
             if (tooltips[slot * 2 + 1] != null) entry.setDescription(tooltips[slot * 2 + 1]);
@@ -210,6 +230,7 @@ public final class MachineInventoryPanel {
 
     /** Custom ItemGrid JSON has a client metadata schema, unlike native inventory wire packets. */
     static ItemStack presentation(ItemStack stack) {
+        if(GadgetEnergy.powered(stack))stack=GadgetEnergy.normalize(stack);
         return ItemStack.isEmpty(stack) || !stack.isValid() ? null : new ItemStack(stack.getItemId(), stack.getQuantity(),
                 stack.getDurability(), stack.getMaxDurability(), null);
     }

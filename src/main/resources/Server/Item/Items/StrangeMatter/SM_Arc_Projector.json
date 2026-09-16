@@ -1,0 +1,46 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Arc_Projector.name",
+    "Description": "server.items.SM_Arc_Projector.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Arc_Projector.png",
+  "MaxStack": 1,
+  "Categories": [
+    "Items",
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Gadgets"
+  ],
+  "PlayerAnimationsId": "Item",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter"
+    ]
+  },
+  "SubCategory": "SM_PoweredTools",
+  "Model": "Items/StrangeMatter/arc_projector.blockymodel",
+  "Texture": "Items/StrangeMatter/arc_projector.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "SM_Use",
+          "Action": "arc_fire",
+          "Next": {
+            "Type": "Simple",
+            "RunTime": 0.2
+          }
+        }
+      ],
+      "RequireNewClick": false,
+      "Cooldown": {
+        "Id": "SM_Arc_Projector_Pulse",
+        "Cooldown": 0.2,
+        "ClickBypass": false
+      }
+    }
+  },
+  "Repairable": false,
+  "DurabilityLossOnDeath": false,
+  "DurabilityLossOnHit": 0
+}

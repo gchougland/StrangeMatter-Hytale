@@ -9,10 +9,14 @@ import java.util.*;
 public final class MachineState {
     public static final int MAX_RECIPE_SELECTIONS=64;
     public String world, id;
-    public int x,y,z,energy,fuelTicks,queuedFuelTicks,progress,age;
+    public int x,y,z,energy,fuelTicks,fuelDuration,queuedFuelTicks,progress,age;
     /** Native factory component is authoritative; this cached tier sizes the power port. */
     public transient int factoryTier=1;
     public transient int incomingRate,receivedThisTick;
+    public transient int outgoingRate,sentThisTick,powerRotation;
+    public transient boolean powerRouteLimited;
+    public transient int[] sentLastSecond=new int[20];
+    public String[] energyFaces;
     public transient int[] receivedLastSecond=new int[20];
     public String factoryMigration="";
     public boolean enabled=true,ascending=true,active;
@@ -48,5 +52,5 @@ public final class MachineState {
     public static String key(String world,int x,int y,int z){return world+":"+x+","+y+","+z;}
     public Vector3i block(){return new Vector3i(x,y,z);}
     public Vector3d center(){return new Vector3d(x+.5,y+.5,z+.5);}
-    public boolean hasContents(){return outputQuantity>0||!recipe.isEmpty()||queuedFuelTicks>0||fuelTicks>0||!recoveredFuel.isEmpty();}
+    public boolean hasContents(){return outputQuantity>0||!recipe.isEmpty()||queuedFuelTicks>0||fuelTicks>0||!recoveredFuel.isEmpty()||EnergyStoragePorts.storage(id)&&(energy>0||EnergyStoragePorts.configured(this));}
 }

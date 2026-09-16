@@ -8,7 +8,9 @@ import java.lang.foreign.MemorySegment;
 /** Runs after actual assets load, validating native asset-to-client lighting. */
 public final class NativeHeldLightVerification {
     public static void verify(){
-        int[][] expected={{6,0,15},{15,9,0},{0,15,15},{15,0,13},{0,9,15},{0,15,15}};
+        // Icon-aligned orange-red, gold, cyan, blue, purple and green. Native
+        // light intensities exclude the neutral component of the texture RGB.
+        int[][] expected={{15,3,0},{15,11,0},{0,11,15},{0,7,15},{6,0,15},{0,15,1}};
         String[] families={"Gravitic","Chrono","Energetic","Spatial","Shade","Insight"};
         int count=0;
         for(int i=0;i<families.length;i++)for(String suffix:new String[]{"Lamp","Lantern"}){

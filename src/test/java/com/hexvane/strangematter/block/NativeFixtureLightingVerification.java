@@ -3,6 +3,7 @@ package com.hexvane.strangematter.block;
 import com.hexvane.strangematter.util.WorldAccess;
 import com.hexvane.strangematter.equipment.NativePlayerFixture;
 import com.hypixel.hytale.codec.ExtraInfo;
+import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.protocol.InteractionType;
@@ -10,6 +11,7 @@ import com.hypixel.hytale.protocol.BlockPosition;
 import com.hypixel.hytale.protocol.packets.world.PlaySoundEvent3D;
 import com.hypixel.hytale.server.core.entity.InteractionContext;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
+import com.hypixel.hytale.server.core.modules.block.components.ItemContainerBlock;
 import com.hypixel.hytale.server.core.modules.interaction.InteractionModule;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
@@ -23,6 +25,7 @@ import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.chunk.WorldChunk;
 import com.hypixel.hytale.server.core.universe.world.chunk.section.BlockSection;
+import com.hypixel.hytale.server.core.universe.world.chunk.section.BlockComponentSection;
 import com.hypixel.hytale.server.core.universe.world.chunk.section.ChunkLightDataBuilder;
 import java.nio.file.Files;
 import java.util.Arrays;
@@ -43,12 +46,14 @@ public final class NativeFixtureLightingVerification {
         var neighborChunk = loaded(world, 1, 0);
         require(sourceChunk != null && neighborChunk != null, "Fixture columns must be preloaded by the native harness");
         int[] paletteIds = FixtureLightingRefresh.fixtureIndexes();
-        int[] ids = Arrays.stream(FixtureLightingRefresh.fixtureIds()).mapToInt(BlockType.getAssetMap()::getIndex).toArray();
-        require(ids.length == 13 && paletteIds.length == 39 && Arrays.stream(paletteIds).allMatch(id -> id > 0), "All thirteen native fixtures and both switch states resolve");
+        int[] ids = Arrays.stream(FixtureLightingRefresh.fixtureIds()).filter(id -> !id.endsWith("_Crystal"))
+                .mapToInt(BlockType.getAssetMap()::getIndex).toArray();
+        require(FixtureLightingRefresh.fixtureIds().length == 19 && ids.length == 13 && paletteIds.length == 45
+                && Arrays.stream(paletteIds).allMatch(id -> id > 0), "All thirteen switchable fixtures, six crystals and both switch states resolve");
         require(!FixtureLightingRefresh.containsFixture(new BlockSection(), paletteIds), "Empty palette is not a fixture");
         for (int id : paletteIds) {
             var section = new BlockSection(); section.set(0, id, 0, 0);
-            require(FixtureLightingRefresh.containsFixture(section, paletteIds), "Every default/On/Off family and Lab Lamp triggers cache refresh");
+            require(FixtureLightingRefresh.containsFixture(section, paletteIds), "Every crystal, default/On/Off family and Lab Lamp triggers cache refresh");
         }
         var ordinary = new BlockSection(); ordinary.set(0, BlockType.getAssetMap().getIndex("Soil_Dirt"), 0, 0);
         require(!FixtureLightingRefresh.containsFixture(ordinary, ids), "Ordinary native terrain is excluded");
@@ -74,7 +79,9 @@ public final class NativeFixtureLightingVerification {
             require(source.getLocalLight().getRedBlockLight(sample) == 15
                 && source.getLocalLight().getGreenBlockLight(sample) == 15
                 && source.getLocalLight().getBlueBlockLight(sample) == 15, "Old white RGB survived native disk serialization");
-            require(BlockType.getAssetMap().getAsset(ids[0]).getLight().green == 0, "Current fixture asset is colored despite valid saved white cache");
+            var currentLight = BlockType.getAssetMap().getAsset(ids[0]).getLight();
+            require(currentLight.red == 15 && currentLight.green == 3 && currentLight.blue == 0 && currentLight.radius == 0,
+                    "Current gravity fixture has discipline orange-red RGB despite valid saved white cache");
             var sourceState = blockState(source); var neighborState = blockState(neighbor);
             short sourceLocal = source.getLocalChangeCounter(), sourceGlobal = source.getGlobalChangeCounter();
             short neighborLocal = neighbor.getLocalChangeCounter(), neighborGlobal = neighbor.getGlobalChangeCounter();
@@ -106,10 +113,89 @@ public final class NativeFixtureLightingVerification {
             advanced(sourceLocal, source.getLocalChangeCounter(), "Startup pass invalidates existing fixture cache");
             require(world.getChunkStore().getLoadedChunksCount() == loadedBefore, "Neither load nor startup refresh loads extra chunks");
             verifySwitches(world,sourceChunk,ids);
-            System.out.println("NATIVE_FIXTURE_LIGHTING_VERIFICATION_PASSED: disk RGB cache, 39 fixture state palettes, native toggles/sounds, Off save and cache refresh, unchanged collision/rotation/held lights, vertical and late-neighbor spill without chunk loads");
         } finally {
             for (int i = 0; i < ids.length; i++) world.setBlock(2 + i * 2, Y, 24, "Empty");
         }
+        verifyCrystalCaches(world, sourceChunk, neighborChunk);
+        System.out.println("NATIVE_FIXTURE_LIGHTING_VERIFICATION_PASSED: disk RGB cache, 45 fixture/crystal state palettes, crystal-only old colored light refresh, native toggles/sounds, Off save and cache refresh, unchanged blocks/metadata/rotation/held lights, vertical and late-neighbor spill without chunk loads");
+    }
+
+    private static void verifyCrystalCaches(World world, WorldChunk sourceChunk, WorldChunk neighborChunk) throws Exception {
+        int y = 96, sample = ChunkUtil.indexBlock(2, y, 24);
+        require(world.getBlock(2, y, 24) == 0 && world.getBlock(6, y, 24) == 0, "Crystal cache fixture space is empty");
+        var crystal = BlockType.getAssetMap().getAsset("SM_Insight_Shard_Crystal");
+        require(crystal != null && crystal.getLight().red == 1 && crystal.getLight().green == 5
+                && crystal.getLight().blue == 1 && crystal.getLight().radius == 5, "Insight crystal emits its current green #151 light");
+        try {
+            WorldAccess.set(sourceChunk, 2, y, 24, BlockType.getAssetMap().getIndex(crystal.getId()), crystal, 1, 0, 0);
+            world.setBlock(6, y, 24, "SM_Resonite_Chest");
+            var contents = blockInventory(world, 6, y, 24);
+            require(contents != null, "Nearby unlit chest has native saved block data");
+            var specimen = new ItemStack("SM_Insight_Shard_Crystal", 3).withMetadata("CrystalPaletteFixture", Codec.STRING, "preserve exact custom data");
+            contents.getItemContainer().setItemStackForSlot((short) 0, specimen, false);
+            var metadata = ItemContainerBlock.CODEC.encode(contents, new ExtraInfo());
+            var source = WorldAccess.section(sourceChunk, y);
+            var neighbor = WorldAccess.section(neighborChunk, y);
+            var lower = WorldAccess.section(sourceChunk, y - ChunkUtil.SIZE);
+            var upper = WorldAccess.section(sourceChunk, y + ChunkUtil.SIZE);
+            var distant = WorldAccess.section(sourceChunk, y + 2 * ChunkUtil.SIZE);
+            int[] switchable = Arrays.stream(FixtureLightingRefresh.fixtureIds()).filter(id -> !id.endsWith("_Crystal"))
+                    .mapToInt(BlockType.getAssetMap()::getIndex).toArray();
+            require(!FixtureLightingRefresh.containsFixture(source, switchable)
+                    && FixtureLightingRefresh.containsFixture(source, FixtureLightingRefresh.fixtureIndexes()),
+                    "A crystal-only section is detected without a lamp or lantern masking the regression");
+            var savedSource = savedCache(source, sample, 2, 5, 5);
+            var savedNeighbor = savedCache(neighbor, sample, 2, 5, 5);
+            require(savedSource.getLocalLight().getBlueBlockLight(sample) == 5 && savedSource.hasLocalLight()
+                    && savedSource.hasGlobalLight(), "Old cyan #255 crystal cache survives actual native disk serialization");
+            var sourceState = blockState(source);
+            var neighborState = blockState(neighbor);
+            require(Arrays.equals(sourceState, blockState(savedSource)), "Saved crystal ID, rotation and filler survive native decode");
+            int loadedBefore = world.getChunkStore().getLoadedChunksCount();
+            for (boolean startup : new boolean[]{false, true}) {
+                installCache(source, savedSource);
+                installCache(neighbor, savedNeighbor);
+                short sourceLocal = source.getLocalChangeCounter(), sourceGlobal = source.getGlobalChangeCounter();
+                short neighborLocal = neighbor.getLocalChangeCounter(), neighborGlobal = neighbor.getGlobalChangeCounter();
+                short lowerLocal = lower.getLocalChangeCounter(), upperLocal = upper.getLocalChangeCounter();
+                short distantLocal = distant.getLocalChangeCounter(), distantGlobal = distant.getGlobalChangeCounter();
+                int refreshed = startup ? FixtureLightingRefresh.refreshLoaded(world) : FixtureLightingRefresh.refreshChunk(sourceChunk);
+                require(refreshed == 3, "Crystal-only " + (startup ? "startup" : "load") + " refresh touches exactly source and vertical spill");
+                advanced(sourceLocal, source.getLocalChangeCounter(), "Old colored crystal source local cache invalidated");
+                advanced(sourceGlobal, source.getGlobalChangeCounter(), "Old colored crystal source global cache invalidated");
+                advanced(neighborGlobal, neighbor.getGlobalChangeCounter(), "Old colored crystal horizontal spill invalidated");
+                advanced(lowerLocal, lower.getLocalChangeCounter(), "Crystal lower-section spill invalidated");
+                advanced(upperLocal, upper.getLocalChangeCounter(), "Crystal upper-section spill invalidated");
+                require(neighbor.getLocalChangeCounter() == neighborLocal && distant.getLocalChangeCounter() == distantLocal
+                        && distant.getGlobalChangeCounter() == distantGlobal, "Crystal cache repair leaves unrelated lighting untouched");
+                require(Arrays.equals(sourceState, blockState(source)) && Arrays.equals(neighborState, blockState(neighbor)),
+                        "Crystal cache repair never changes block identities, custom rotation or fillers");
+                require(blockInventory(world, 6, y, 24) == contents && metadata.equals(ItemContainerBlock.CODEC.encode(contents, new ExtraInfo()))
+                        && specimen.equals(contents.getItemContainer().getItemStack((short) 0)), "Light repair preserves exact native block inventory and custom item metadata");
+                require(world.getChunkStore().getLoadedChunksCount() == loadedBefore, "Crystal cache repair cannot load distant terrain");
+            }
+            installCache(neighbor, savedNeighbor);
+            short before = neighbor.getGlobalChangeCounter();
+            require(FixtureLightingRefresh.refreshChunk(neighborChunk) == 3, "Late fixture-free neighbor also finds a crystal-only source");
+            advanced(before, neighbor.getGlobalChangeCounter(), "Late neighbor old colored crystal spill invalidated");
+        } finally {
+            var contents = blockInventory(world, 6, y, 24);
+            if (contents != null) contents.getItemContainer().clear();
+            world.setBlock(2, y, 24, "Empty");
+            world.setBlock(6, y, 24, "Empty");
+        }
+    }
+
+    private static ItemContainerBlock blockInventory(World world, int x, int y, int z) {
+        var store = world.getChunkStore().getStore();
+        var sectionRef = world.getChunkStore().getChunkSectionReferenceAtBlock(x, y, z);
+        var section = store.getComponent(sectionRef, BlockComponentSection.getComponentType());
+        if (section == null) return null;
+        int index = ChunkUtil.indexBlock(x, y, z);
+        var ref = section.getBlockReference(index);
+        if (ref != null && ref.isValid()) return store.getComponent(ref, ItemContainerBlock.getComponentType());
+        var holder = section.getBlockHolder(index);
+        return holder == null ? null : holder.getComponent(ItemContainerBlock.getComponentType());
     }
 
     private static void verifySwitches(World world,WorldChunk sourceChunk,int[] ids)throws Exception {
@@ -190,11 +276,14 @@ public final class NativeFixtureLightingVerification {
     }
 
     private static BlockSection savedWhiteCache(BlockSection source, int sample) throws Exception {
+        return savedCache(source, sample, 15, 15, 15);
+    }
+    private static BlockSection savedCache(BlockSection source, int sample, int red, int green, int blue) throws Exception {
         var detached = BlockSection.CODEC.decode(BlockSection.CODEC.encode(source,new com.hypixel.hytale.codec.ExtraInfo()),new com.hypixel.hytale.codec.ExtraInfo());
         var local = new ChunkLightDataBuilder(detached.getLocalChangeCounter());
-        local.setBlockLight(sample, (byte)15, (byte)15, (byte)15); detached.setLocalLight(local);
+        local.setBlockLight(sample, (byte)red, (byte)green, (byte)blue); detached.setLocalLight(local);
         var global = new ChunkLightDataBuilder(detached.getGlobalChangeCounter());
-        global.setBlockLight(sample, (byte)15, (byte)15, (byte)15); detached.setGlobalLight(global);
+        global.setBlockLight(sample, (byte)red, (byte)green, (byte)blue); detached.setGlobalLight(global);
         var path = Files.createTempFile("sm-saved-fixture-light-", ".json");
         try {
             Files.writeString(path, BlockSection.CODEC.encode(detached,new com.hypixel.hytale.codec.ExtraInfo()).asDocument().toJson());

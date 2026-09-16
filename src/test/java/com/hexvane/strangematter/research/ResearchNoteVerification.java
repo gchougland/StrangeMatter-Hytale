@@ -11,6 +11,7 @@ import java.util.UUID;
 /** Runs after native Item assets have loaded, alongside the isolated world smoke test. */
 public final class ResearchNoteVerification {
     public static void verify() throws Exception {
+        GadgetEnergyResearchVerification.verifyNativePurchase();
         var directory = Files.createTempDirectory("sm-native-notes-");
         try (var research = new ResearchService(directory)) {
             UUID player = UUID.randomUUID();

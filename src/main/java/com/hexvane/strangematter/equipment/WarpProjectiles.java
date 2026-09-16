@@ -65,11 +65,11 @@ final class WarpProjectiles {
         if(slot<0||slot>=inventory.getCapacity()||!gun.equals(inventory.getItemStack(slot))||!"SM_Warp_Gun".equals(gun.getItemId()))return false;
         var config=ProjectileConfig.getAssetMap().getAsset(purple?"SM_Warp_Bolt_Purple":"SM_Warp_Bolt_Cyan");
         var player=store.getComponent(ref,Player.getComponentType());
-        if(config==null||player==null||(player.getGameMode()!=GameMode.Creative&&gun.isBroken()))return false;
+        if(config==null||player==null||(player.getGameMode()!=GameMode.Creative&&GadgetEnergy.charge(gun)<GadgetEnergy.cost("warp")))return false;
         var world=store.getExternalData().getWorld();
         var shot=new Shot(owner,world,purple,eye);
         var reserved=gun.withMetadata(flightKey(purple),Codec.STRING,shot.token);
-        if(player.getGameMode()!=GameMode.Creative)reserved=reserved.withDurability(Math.max(0,reserved.getDurability()-1));
+        if(player.getGameMode()!=GameMode.Creative)reserved=GadgetEnergy.withCharge(reserved,GadgetEnergy.charge(gun)-GadgetEnergy.cost("warp"));
         if(!inventory.setItemStackForSlot(slot,reserved,false).succeeded())return false;
         try {
             // forEachChunk supplies a native command buffer and flushes it before returning.

@@ -22,6 +22,7 @@ public final class AnomalyRecord {
     public Set<UUID> shadowMobs = new HashSet<>();
     public Map<UUID,double[]> shadowMobPositions = new HashMap<>();
     public transient double age, particles, primary, secondary, sound;
+    public transient double gateParticles;
     public transient boolean creatingPair;
 
     public AnomalyRecord() {}

@@ -55,7 +55,8 @@ public final class NativeResearchTabletVerification {
             research.unlock(id,"reality_forge",true);ui.ackAll();var unlocked=ui.frame(page);require(has(unlocked,"#Forge.Disabled","false"),"Completed research unlocks the category without reopening");
             ui.click(page,binding(returned,"#Forge"));ui.click(page,node(returned,"gravity_anomalies"));
             require(field(page,"selected").equals("reality_forge_category"),"A stale foundation node event cannot select across the changed category");
-            ui.ackAll();var advanced=ui.frame(page);require(count(advanced,"#SelectNode")==15,"Advanced tree rebuild includes the original discoveries and four automation nodes with exact bindings");
+            ui.ackAll();var advanced=ui.frame(page);require(count(advanced,"#SelectNode")==18,"Advanced tree rebuild includes original discoveries, automation and all three powered gadgets with exact bindings");
+            for(String gadget:List.of("resonant_battery_pack","gravitic_manipulation","arc_projection"))require(node(advanced,gadget)!=null,"New gadget research has an exact native selection binding: "+gadget);
             require(has(advanced,"#CategoryTitle.Text","REALITY FORGE"),"Category heading matches its graph");
             var tree=(ResearchTreeLayout.Plan)field(page,"tree");int proxySegments=0;
             for(int i=0;i<tree.traces().size();i++){
@@ -76,7 +77,7 @@ public final class NativeResearchTabletVerification {
             var event=new CustomPageEvent(CustomPageEventType.Data,node(advanced,"hoverboard").data);require(PacketAdapters.__handleInbound(player.packets(),event),"Closed tree events remain scoped and consumed");
             require(player.player().getPageManager().getCustomPage()==null,"Stale closed page input cannot reopen or mutate another page");
         }
-        System.out.println("NATIVE_RESEARCH_TABLET_VERIFICATION_PASSED: 30 nodes, canonical Forge to Transport proxy edge and native color, real icons and tooltips, category gating, live ID selection and exact purchases under held ACKs, stale selection rejection, original observation costs, field guide Back and clean Close.");
+        System.out.println("NATIVE_RESEARCH_TABLET_VERIFICATION_PASSED: 33 nodes, canonical Forge to Transport proxy edge and native color, real icons and tooltips, category gating, live ID selection and exact purchases under held ACKs, stale selection rejection, original observation costs, field guide Back and clean Close.");
     }
     private static int notes(NativePlayerFixture player,ResearchService service,String id){int count=0;for(short slot=0;slot<player.inventory().getCapacity();slot++){ItemStack item=player.inventory().getItemStack(slot);var node=service.noteNode(item);if(node!=null&&node.id().equals(id))count+=item.getQuantity();}return count;}
     private static long count(CustomPage page,String suffix){return Arrays.stream(page.eventBindings).filter(b->b.selector.endsWith(suffix)).count();}

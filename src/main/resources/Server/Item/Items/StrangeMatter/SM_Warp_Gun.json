@@ -48,6 +48,8 @@
       "RequireNewClick": true
     }
   },
-  "MaxDurability": 100,
-  "SubCategory": "SM_PoweredTools"
+  "SubCategory": "SM_PoweredTools",
+  "Repairable": false,
+  "DurabilityLossOnDeath": false,
+  "DurabilityLossOnHit": 0
 }

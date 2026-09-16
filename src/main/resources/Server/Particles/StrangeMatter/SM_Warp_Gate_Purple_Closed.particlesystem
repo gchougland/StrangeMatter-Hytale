@@ -1,0 +1,23 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Warp_Event_Horizon_Purple_Closed",
+      "StartDelay": 0,
+      "TotalSpawners": 1
+    },
+    {
+      "SpawnerId": "SM_Warp_Rim_Purple_Closed",
+      "StartDelay": 0,
+      "TotalSpawners": 1
+    },
+    {
+      "SpawnerId": "SM_Warp_Outer_Rim_Purple_Closed",
+      "StartDelay": 0,
+      "TotalSpawners": 1
+    }
+  ],
+  "LifeSpan": 0.5,
+  "CullDistance": 96,
+  "BoundingRadius": 5,
+  "IsImportant": false
+}

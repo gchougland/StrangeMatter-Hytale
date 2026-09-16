@@ -1,0 +1,33 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Warp_Event_Horizon_Open",
+      "StartDelay": 0,
+      "TotalSpawners": 1
+    },
+    {
+      "SpawnerId": "SM_Warp_Vortex_Open",
+      "StartDelay": 0,
+      "TotalSpawners": 1
+    },
+    {
+      "SpawnerId": "SM_Warp_Rim_Open",
+      "StartDelay": 0,
+      "TotalSpawners": 1
+    },
+    {
+      "SpawnerId": "SM_Warp_Outer_Rim_Open",
+      "StartDelay": 0,
+      "TotalSpawners": 1
+    },
+    {
+      "SpawnerId": "SM_Warp_Infall_Open",
+      "StartDelay": 0,
+      "TotalSpawners": 1
+    }
+  ],
+  "LifeSpan": 0.5,
+  "CullDistance": 96,
+  "BoundingRadius": 5,
+  "IsImportant": false
+}

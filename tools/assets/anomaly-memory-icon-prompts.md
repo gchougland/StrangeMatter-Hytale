@@ -1,0 +1,19 @@
+# Anomaly memory category artwork
+
+Created with the built-in imagegen tool. The original RGBA masters are retained in `source/anomaly-memories/`; `export_anomaly_memory_icons.py` resamples them to Hytale's 256×256 memory-category `@2x` resolution without changing the design. Existing native artwork was inspected as a style reference and remains unchanged.
+
+## Regular icon prompt
+
+Create one production game UI category icon on a genuinely transparent background (alpha), square canvas. This is the REGULAR / incomplete 'Anomalies' memory category for a Hytale mod. Match Hytale's memory category glyph language: flat, bold angular shapes, chunky simplified silhouette, muted desaturated blue-gray fill approximately #A6BAD5, a second darker slate-blue inset edge approximately #859ABC, only 2-3 flat tones, softly hand-hewn polygon edges, NO realistic material, NO 3D lighting, NO text. Design an original anomaly symbol: one small fractured floating diamond-shaped core, surrounded by two asymmetric broken angular orbital arcs with three small detached diamond fragments. Compact clear silhouette, generous cutout negative spaces, centered, glyph occupies about 70% of width and height. It must read at 128px as an anomalous distortion / unstable field, not an atom science logo, not an eye, not a face, not a planet or decorative badge. No enclosing square, circle badge, background plate, gradients, blue glow, shadows, lettering or numbers. Transparent background everywhere outside the glyph and inside its openings. Orthographic flat UI artwork, consistent stroke/edge thickness, tasteful rough angular contour like carved game-interface rune icons. Deliver only the single muted icon.
+
+## Completed icon prompt
+
+The regular generated master was the edit target. Native `ElementalComplete@2x.png` and `VoidspawnComplete@2x.png` were completion-style references.
+
+Edit ONLY the first image (the new Anomalies glyph) into its COMPLETED memory-category state. Images 2 and 3 are STYLE REFERENCES for how completed Hytale memory icons look; do not copy their creature/spiral shapes. Keep image1's exact fractured diamond core, two broken angular orbital arcs, three detached diamond fragments, positions, relative sizes, angular geometry and empty spaces. Change its muted blue-gray face colors to the reference set's luminous pale lavender/near-white (#dadaff faces, #bec4f7 bevel bands, thin #eef0ff highlight edges), and add a restrained saturated periwinkle/royal-blue outer glow behind the same glyph, like the reference completed icons. Same square framing and generous transparent margin as image1. Genuine transparent background and transparent cutouts; no solid background plate or rectangle, no text, no checkmark or extra objects. Flat 2-3 tone hand-hewn UI rune style, not photorealistic, no 3D rendering. Do not redesign or rotate the glyph. Output only the completed icon on transparency.
+
+## Completed icon transparency correction
+
+The first completed output contained a painted checkerboard instead of alpha; it was rejected as a game asset. The same built-in imagegen tool received this correction with that output as its sole edit target:
+
+Background extraction for a production PNG game icon. Remove EVERY gray checkerboard square and all gray background pixels from this image, replacing them with ACTUAL alpha-channel transparency, including the openings between glyph shapes. The input's checkerboard is accidentally baked into an opaque RGB picture; the result MUST be a transparent RGBA PNG, not a picture of a checkerboard. Keep the pale lavender diamond glyph and its blue outer glow, all geometry, positions, color and framing identical. The blue glow should fade smoothly into alpha transparency. No added background of any color; no checkerboard pattern; no text; no new glyph details. Do not recreate or redesign the icon. Return only the isolated existing completed glyph with genuine transparent alpha.

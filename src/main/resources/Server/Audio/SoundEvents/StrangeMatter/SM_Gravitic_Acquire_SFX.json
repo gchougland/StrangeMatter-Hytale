@@ -1,0 +1,15 @@
+{
+  "AudioCategory": "AudioCat_SFX",
+  "SpatialBlend": 1,
+  "StartAttenuationDistance": 1.5,
+  "MaxDistance": 10,
+  "MaxInstance": 8,
+  "Volume": -4,
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/StrangeMatter/GadgetEnergy/gravitic_acquire.ogg"
+      ]
+    }
+  ]
+}

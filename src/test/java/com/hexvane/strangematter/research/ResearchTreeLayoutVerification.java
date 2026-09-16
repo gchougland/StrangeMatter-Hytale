@@ -10,16 +10,16 @@ public final class ResearchTreeLayoutVerification {
     public static void main(String[] args)throws Exception{
         var plans=verify();
         if(args.length>0){var path=Path.of(args[0]);Files.createDirectories(path.getParent());Files.writeString(path,new GsonBuilder().setPrettyPrinting().create().toJson(plans));}
-        System.out.println("RESEARCH_TREE_LAYOUT_VERIFICATION_PASSED: all 30 default nodes, complete local prerequisites, obstacle avoiding traces, two bounded circuits and scrollable custom nodes.");
+        System.out.println("RESEARCH_TREE_LAYOUT_VERIFICATION_PASSED: all 33 default nodes, complete local prerequisites, obstacle avoiding traces, two bounded circuits and scrollable custom nodes.");
     }
     public static Map<String,ResearchTreeLayout.Plan> verify(){
         var plans=new LinkedHashMap<String,ResearchTreeLayout.Plan>();int total=0;
         for(String category:List.of("general","reality_forge")){
             var plan=ResearchTreeLayout.arrange(ResearchCatalog.nodes(),category);verifyPlan(plan);
-            require(plan.height()<=(category.equals("general")?481:636),"Foundation map stays compact and the three Forge branches fit their scrolling canvas");total+=plan.nodes().size();plans.put(category,plan);
+            require(plan.height()<=(category.equals("general")?481:908),"Foundation map stays compact and Forge branches fit their scrolling canvas");total+=plan.nodes().size();plans.put(category,plan);
             if(category.equals("reality_forge"))require(plan.nodes().stream().filter(n->Set.of("resonant_separation","flux_smelting","gravitic_transport","pattern_assembly").contains(n.research().id())).count()==4,"Every automation discovery is reachable in the native scrolling map");
         }
-        require(total==30,"Original research nodes and four automation discoveries are present");
+        require(total==33,"Original research nodes, automation and three gadget discoveries are present");
         verifyForgeBranches(plans.get("reality_forge"));
         var foundations=plans.get("general");int[][] original={{388,236},{212,236},{564,236},{388,160},{212,312},{564,312},{36,312},{36,236},{212,388},{212,84},{388,84},{564,84},{212,8},{388,8},{564,8}};
         for(int i=0;i<original.length;i++)require(foundations.nodes().get(i).x()==original[i][0]&&foundations.nodes().get(i).y()==original[i][1],"Every original Foundation position stays unchanged");
@@ -54,7 +54,10 @@ public final class ResearchTreeLayoutVerification {
             String familyA=a.parent().replace("reality_forge_category","reality_forge"),familyB=b.parent().replace("reality_forge_category","reality_forge");
             if(familyA.equals(familyB)||!overlap(a.x(),a.y(),a.width(),a.height(),b.x(),b.y(),b.width(),b.height()))continue;
             int x=Math.max(a.x(),b.x()),y=Math.max(a.y(),b.y());
-            require(plan.nodes().stream().anyMatch(n->(n.research().id().equals(a.child())&&n.research().id().equals(b.source())||n.research().id().equals(b.child())&&n.research().id().equals(a.source()))&&x>=n.x()&&x<n.x()+128&&y>=n.y()&&y<n.y()+68),"Different prerequisite branches cannot merge into a misleading shared bus: "+a+" / "+b);
+            require(plan.nodes().stream().anyMatch(n->(n.research().id().equals(a.child())&&n.research().id().equals(b.source())
+                    ||n.research().id().equals(b.child())&&n.research().id().equals(a.source())
+                    ||n.research().id().equals(a.child())&&n.research().id().equals(b.child()))
+                    &&x>=n.x()&&x<n.x()+128&&y>=n.y()&&y<n.y()+68),"Different prerequisite branches cannot merge into a misleading shared bus: "+a+" / "+b);
         }
         require(plan.height()>464,"All Forge branches remain reachable through native scrolling");
     }

@@ -1,9 +1,9 @@
 {
   "status": "PASS",
   "uiFiles": 33,
-  "selectors": 703,
-  "importedSymbolUses": 183,
-  "javaLiteralSelectorFamilies": 243,
+  "selectors": 720,
+  "importedSymbolUses": 190,
+  "javaLiteralSelectorFamilies": 254,
   "checks": [
     "Native string escape rules",
     "Native parameter declaration order",

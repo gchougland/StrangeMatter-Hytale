@@ -39,6 +39,7 @@ public final class StrangeMatterPlugin extends JavaPlugin {
     private TubeService tubes;
     private GenerationCoordinator generation;
     private EquipmentService equipment;
+    private com.hexvane.strangematter.equipment.GadgetEnergyPresentation gadgetPresentation;
     private ScientistService scientists;
     private ProgressionService progression;
     private volatile com.hexvane.strangematter.telemetry.BeaconTelemetry beacon;
@@ -52,12 +53,17 @@ public final class StrangeMatterPlugin extends JavaPlugin {
         try {
             var config=StrangeMatterConfig.load(getDataDirectory());
             research=new ResearchService(getDataDirectory());anomalies=new AnomalyService(getDataDirectory());
+            com.hexvane.strangematter.anomaly.memory.AnomalyMemories.register(this);
+            anomalies.setMemoryEncounterHook(com.hexvane.strangematter.anomaly.memory.AnomalyMemories::collectNearby);
             machines=new MachineService(getDataDirectory(),config,research,anomalies);equipment=new EquipmentService(research,anomalies,machines);
+            gadgetPresentation=new com.hexvane.strangematter.equipment.GadgetEnergyPresentation();
             FactoryService.register(this);
             TubeService.register(getChunkStoreRegistry(),getEntityStoreRegistry());
+            com.hexvane.strangematter.equipment.GraviticChestMarker.register(getChunkStoreRegistry());
             factory=new FactoryService(machines,research);machines.setFactory(factory);
             tubes=new TubeService(getDataDirectory(),factory);
             equipment.setTubeService(tubes);
+            equipment.advancedGadgets().setChestMoveBlocker(tubes::isRecoveryBlocked);
             factory.setRecoveryBlocker(tubes::isRecoveryBlocked);
             tubes.registerSystems(getChunkStoreRegistry(),getEntityStoreRegistry());
             anomalies.setGroundingHook(machines::grounded);
@@ -83,6 +89,8 @@ public final class StrangeMatterPlugin extends JavaPlugin {
             getEntityStoreRegistry().registerSystem(new MachineEvents.EnvironmentBreak(machines));
             getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.research.ResearchCraftGate(research));
             getEntityStoreRegistry().registerSystem(new LaboratoryTick());
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.equipment.GadgetEnergyArmorUpdates());
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.equipment.GadgetEnergyArmorUpdates.Remember());
             getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.equipment.LevitationInputSystem());
             getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.equipment.LevitationInputSystem.RemoveSystem());
             getEntityStoreRegistry().registerSystem(anomalies.gravityInputSystem());
@@ -92,9 +100,20 @@ public final class StrangeMatterPlugin extends JavaPlugin {
             getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.anomaly.GravityTerrainEvents.Break(anomalies));
             getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.anomaly.GravityTerrainEvents.Damage(anomalies));
             getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.anomaly.GravityTerrainEvents.EnvironmentBreak(anomalies));
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.equipment.AdvancedGadgetEvents.Place(equipment.advancedGadgets()));
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.equipment.AdvancedGadgetEvents.Use(equipment.advancedGadgets()));
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.equipment.AdvancedGadgetEvents.Break(equipment.advancedGadgets()));
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.equipment.AdvancedGadgetEvents.Damage(equipment.advancedGadgets()));
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.equipment.AdvancedGadgetEvents.EnvironmentBreak(equipment.advancedGadgets()));
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.equipment.AdvancedGadgetEvents.HeldAttack());
+            com.hexvane.strangematter.equipment.GraviticFlightSuspension.register(getEntityStoreRegistry());
+            getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.equipment.BatteryCapePresentation());
             com.hexvane.strangematter.anomaly.ThoughtwellHallucinations.register(getEntityStoreRegistry());
             getEntityStoreRegistry().registerSystem(new com.hexvane.strangematter.equipment.HoverboardRiderPose.RestoreOnRemove());
             getChunkStoreRegistry().registerSystem(new FixtureLightingRefresh());
+            getChunkStoreRegistry().registerSystem(machines.discovery());
+            getChunkStoreRegistry().registerSystem(new MachineDiscovery.Sections(machines.discovery()));
+            getChunkStoreRegistry().registerSystem(new MachineDiscovery.Activation(machines.discovery()));
             getCommandRegistry().registerCommand(new StrangeMatterCommand(research,anomalies,machines,scientists,progression));
             getEventRegistry().registerGlobal(PlayerReadyEvent.class,event->{
                 var ref=event.getPlayerRef();if(ref==null||!ref.isValid())return;
@@ -112,7 +131,7 @@ public final class StrangeMatterPlugin extends JavaPlugin {
         diagnostics=new com.hexvane.strangematter.diagnostics.WorldStallDiagnostics(message->getLogger().atWarning().log("%s",message));
         // Loaded chunk lighting can outlive changes to block asset colors.
         for(var world:Universe.get().getWorlds().values())if(world.isAlive())
-            world.execute(()->{if(instance==this)FixtureLightingRefresh.refreshLoaded(world);});
+            world.execute(()->{if(instance==this){FixtureLightingRefresh.refreshLoaded(world);machines.discovery().enqueueLoaded(world);}});
     }
     private final class LaboratoryTick extends TickingSystem<EntityStore> {
         private final Set<String> pending=ConcurrentHashMap.newKeySet();
@@ -149,6 +168,7 @@ public final class StrangeMatterPlugin extends JavaPlugin {
         }
     }
     @Override protected void shutdown(){
+        if(gadgetPresentation!=null)gadgetPresentation.close();
         if(beacon!=null){beacon.close();beacon=null;}
         if(diagnostics!=null)diagnostics.close();
         instance=null;

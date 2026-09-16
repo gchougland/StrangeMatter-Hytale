@@ -3,7 +3,7 @@ $C = "../Common.ui";
 
 $C.@PageOverlay {}
 Group {
-  Anchor: (Width: 1040, Height: 800);
+  Anchor: (Width: 1040, Height: 900);
   Background: #101a2a;
   Padding: (Full: 26);
   LayoutMode: Top;
@@ -13,6 +13,7 @@ Group {
   Label #State { Anchor: (Height: 32); Style: (FontSize: 16, TextColor: #ba9bef); }
   Group #PowerMeter { Anchor: (Height: 78); }
   Label #Progress { Anchor: (Height: 30); Style: (FontSize: 14, TextColor: #d6deee); }
+  Label #DockCharge { Anchor: (Height: 30); Visible: false; Style: (FontSize: 13, TextColor: #89edf5); }
   Group #FuelCapacity { LayoutMode: Top; Anchor: (Height: 48);
     Label #FuelCapacityText { Anchor: (Height: 28); Style: (FontSize: 13, TextColor: #9cd9e5); }
     Group { Anchor: (Width: 738, Height: 6); Background: #25354c;
@@ -20,10 +21,30 @@ Group {
     }
   }
   Group #InventoryHost { Anchor: (Height: 310); }
+  Group #StoragePorts { LayoutMode: Top; Anchor: (Height: 166); Visible: false;
+    Label { Text: "FACE SETTINGS  /  Relative to the front panel"; Anchor: (Height: 32); Style: (FontSize: 15, TextColor: #9cd9e5); }
+    Group { LayoutMode: Left; Anchor: (Height: 48);
+      $B.@TextButton #PortFRONT { @Text = "FRONT: OUTPUT"; Anchor: (Width: 300, Height: 42); }
+      Group { Anchor: (Width: 16); }
+      $B.@TextButton #PortBACK { @Text = "BACK: INPUT"; Anchor: (Width: 300, Height: 42); }
+      Group { Anchor: (Width: 16); }
+      $B.@TextButton #PortLEFT { @Text = "LEFT: INPUT"; Anchor: (Width: 300, Height: 42); }
+    }
+    Group { LayoutMode: Left; Anchor: (Height: 48);
+      $B.@TextButton #PortRIGHT { @Text = "RIGHT: INPUT"; Anchor: (Width: 300, Height: 42); }
+      Group { Anchor: (Width: 16); }
+      $B.@TextButton #PortTOP { @Text = "TOP: INPUT"; Anchor: (Width: 300, Height: 42); }
+      Group { Anchor: (Width: 16); }
+      $B.@TextButton #PortBOTTOM { @Text = "BOTTOM: INPUT"; Anchor: (Width: 300, Height: 42); }
+    }
+    Label { Text: "INPUT receives power. OUTPUT sends power. DISABLED blocks transfer."; Anchor: (Height: 30); Style: (FontSize: 13, TextColor: #93a9c6); }
+  }
   Group { LayoutMode: Left; Anchor: (Height: 38);
     $B.@TextButton #Toggle { @Text = "PAUSE"; Anchor: (Width: 220, Height: 38); }
     Group { Anchor: (Width: 12); }
     $B.@TextButton #Recovery { @Text = "RECOVERED ITEMS"; Anchor: (Width: 220, Height: 38); Visible: false; }
+    Group { Anchor: (Width: 12); }
+    $B.@TextButton #Pack { @Text = "PACK UP"; Anchor: (Width: 220, Height: 38); Visible: false; }
   }
   Group { FlexWeight: 1; }
   Label #Message { Anchor: (Height: 70); Style: (FontSize: 14, TextColor: #93a9c6, Wrap: true); }

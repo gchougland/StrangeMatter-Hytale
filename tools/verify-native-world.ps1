@@ -1,4 +1,4 @@
-param([switch]$SkipBuild, [switch]$Benchmarks, [ValidatePattern('^[A-Za-z0-9][A-Za-z0-9-]{5,90}$')][string]$RunName)
+param([switch]$SkipBuild, [switch]$Benchmarks, [ValidatePattern('^[A-Za-z0-9][A-Za-z0-9-]{5,90}$')][string]$RunName, [string]$PowerSnapshotRegion)
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
 Push-Location $projectRoot
@@ -24,11 +24,28 @@ try {
     $modsPath = Join-Path $runPath 'mods'
     $manifestPath = Join-Path $runPath 'test-manifest'
     New-Item -ItemType Directory -Force $modsPath, $manifestPath | Out-Null
+    $snapshotCopy = $null
+    $snapshotOriginal = $null
+    $snapshotHash = $null
+    if ($PowerSnapshotRegion) {
+        $snapshotOriginal = (Resolve-Path -LiteralPath $PowerSnapshotRegion).Path
+        if ([System.IO.Path]::GetFileName($snapshotOriginal) -ne '-2.0.region.bin') { throw 'The saved power probe accepts only the named -2.0.region.bin snapshot.' }
+        $snapshotDirectory = Join-Path $runPath 'power-snapshot'
+        New-Item -ItemType Directory -Path $snapshotDirectory | Out-Null
+        $snapshotCopy = Join-Path $snapshotDirectory '-2.0.region.bin'
+        $snapshotHash = (Get-FileHash -LiteralPath $snapshotOriginal -Algorithm SHA256).Hash
+        Copy-Item -LiteralPath $snapshotOriginal -Destination $snapshotCopy
+        if ((Get-FileHash -LiteralPath $snapshotCopy -Algorithm SHA256).Hash -ne $snapshotHash -or
+            (Get-FileHash -LiteralPath $snapshotOriginal -Algorithm SHA256).Hash -ne $snapshotHash) {
+            throw 'The snapshot changed while copying; the native probe will not read an inconsistent copy.'
+        }
+        Set-Content -LiteralPath (Join-Path $snapshotDirectory 'source-sha256.txt') -Value $snapshotHash -Encoding ascii
+    }
     $testJar = Join-Path $modsPath 'StrangeMatter-Smoke.jar'
     Copy-Item -LiteralPath $modJar.FullName -Destination $testJar
     $manifest = Get-Content -LiteralPath 'src/main/resources/manifest.json' -Raw | ConvertFrom-Json
     $manifest.Main = 'com.hexvane.strangematter.equipment.NativeWorldVerification'
-    $manifest.Dependencies = @{ 'Hytale:Universe' = '*' }
+    $manifest.Dependencies = @{ 'Hytale:Universe' = '*'; 'Hytale:Memories' = '*' }
     $manifest | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath (Join-Path $manifestPath 'manifest.json') -Encoding utf8
     # Select exactly the same fixtures before updating the archive once. Keep the
     # wildcard scope local to each package, including matching inner classes.
@@ -41,6 +58,9 @@ try {
     }
     $fixtureClasses.Add('com/hexvane/strangematter/research/ResearchNoteVerification.class')
     $researchFixturePath = Join-Path $testClasses 'com/hexvane/strangematter/research'
+    foreach ($fixture in Get-ChildItem -LiteralPath $researchFixturePath -Filter 'GadgetEnergyResearchVerification*.class') {
+        $fixtureClasses.Add("com/hexvane/strangematter/research/$($fixture.Name)")
+    }
     foreach ($fixture in Get-ChildItem -LiteralPath $researchFixturePath -Filter 'ResearchUnlockVerification*.class') {
         $fixtureClasses.Add("com/hexvane/strangematter/research/$($fixture.Name)")
     }
@@ -50,6 +70,9 @@ try {
     $fixtureClasses.Add('com/hexvane/strangematter/machine/NativeMachineVerification.class')
     $fixtureClasses.Add('com/hexvane/strangematter/machine/NativeMachineWorkVerification.class')
     $machineFixturePath = Join-Path $testClasses 'com/hexvane/strangematter/machine'
+    foreach ($fixture in Get-ChildItem -LiteralPath $machineFixturePath -Filter 'NativePower*.class') {
+        $fixtureClasses.Add("com/hexvane/strangematter/machine/$($fixture.Name)")
+    }
     foreach ($fixture in Get-ChildItem -LiteralPath $machineFixturePath -Filter 'NativeNullifierContentVerification*.class') {
         $fixtureClasses.Add("com/hexvane/strangematter/machine/$($fixture.Name)")
     }
@@ -109,8 +132,14 @@ try {
         # The current server rejects bare mode's empty listener list. An ephemeral loopback
         # listener permits normal startup without exposing this isolated test to the network.
         $benchmarkFlag = '-Dstrangematter.benchmarks=' + $Benchmarks.IsPresent.ToString().ToLowerInvariant()
-        & $javaCommand -Xmx3G $benchmarkFlag -jar $serverJar --bind 127.0.0.1:0 --assets $assetsZip --disable-sentry --disable-file-watcher --auth-mode offline --log 'HytaleServer:INFO,PluginManager:INFO,Strange Matter|P:INFO' *> native-world.log
+        $snapshotFlags = @()
+        if ($snapshotCopy) { $snapshotFlags += '-Dstrangematter.powerSnapshotRegion=' + $snapshotCopy }
+        & $javaCommand -Xmx3G $benchmarkFlag @snapshotFlags -jar $serverJar --bind 127.0.0.1:0 --assets $assetsZip --disable-sentry --disable-file-watcher --auth-mode offline --log 'HytaleServer:INFO,PluginManager:INFO,Strange Matter|P:INFO' *> native-world.log
         $serverExit = $LASTEXITCODE
+        if ($snapshotCopy -and ((Get-FileHash -LiteralPath $snapshotCopy -Algorithm SHA256).Hash -ne $snapshotHash -or
+            (Get-FileHash -LiteralPath $snapshotOriginal -Algorithm SHA256).Hash -ne $snapshotHash)) {
+            throw 'Power snapshot integrity check failed: the original and disposable copy must remain byte-identical.'
+        }
         $logPath = Join-Path $runPath 'native-world.log'
         Copy-Item -LiteralPath $logPath -Destination (Join-Path $runRoot 'native-world.log')
         $resultPath = Join-Path $runPath 'native-world-result.txt'
@@ -119,6 +148,9 @@ try {
         $passed = Select-String -LiteralPath $logPath -Pattern "${resultMarker}_PASSED:" -Quiet
         $failed = Select-String -LiteralPath $logPath -Pattern "${resultMarker}_FAILED:" -Quiet
         if ($serverExit -ne 0 -or -not $passed -or $failed) { throw "Native world verification did not pass (server exit $serverExit). See $logPath" }
+        if ($snapshotCopy -and -not (Select-String -LiteralPath $logPath -Pattern 'NATIVE_SAVED_POWER_REGION_VERIFICATION_PASSED:' -Quiet)) {
+            throw "The requested saved-region probe did not pass. See $logPath"
+        }
         & python (Join-Path $PSScriptRoot 'diagnostics/check_reports.py') --atlas (Join-Path $runPath 'atlas-audit-report.json')
         if ($LASTEXITCODE -ne 0) { throw "Atlas budget check failed. See $runPath" }
         Get-Content -LiteralPath $resultPath

@@ -21,7 +21,7 @@ public final class ResearchCatalog {
         add("anomaly_shards", "general", "", "research");
         add("anomaly_types", "general", "", "research");
         add("resonite", "general", "", "research");
-        add("resonant_energy", "general", "", "research");
+        add("resonant_energy", "general", "ENERGY:5", "research");
         add("tinfoil_hat", "general", "ENERGY:10,COGNITION:10", "resonite");
         add("anomaly_resonator", "general", "ENERGY:10,SPACE:10", "field_scanner");
         add("reality_forge", "general", "ENERGY:5,SPACE:5,TIME:5", "resonite");
@@ -47,6 +47,9 @@ public final class ResearchCatalog {
         add("flux_smelting", "reality_forge", "ENERGY:15,TIME:5", "gravitic_transport");
         add("gravitic_transport", "reality_forge", "GRAVITY:15,SPACE:5", "reality_forge");
         add("pattern_assembly", "reality_forge", "COGNITION:25,ENERGY:20,GRAVITY:10", "gravitic_transport");
+        add("resonant_battery_pack", "reality_forge", "ENERGY:20,GRAVITY:10", "resonant_energy,containment_basics");
+        add("gravitic_manipulation", "reality_forge", "GRAVITY:20,ENERGY:10,TIME:5", "containment_basics,stasis_projector");
+        add("arc_projection", "reality_forge", "ENERGY:25,GRAVITY:5", "containment_basics,energy_anomalies");
     }
     private static void add(String id, String category, String costs, String prereq) {
         var map = new EnumMap<ResearchType, Integer>(ResearchType.class);

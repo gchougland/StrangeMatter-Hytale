@@ -35,7 +35,7 @@ def main():
     original = {'chrono_blister', 'containment_capsule', 'echo_vacuum', 'echoform_imprinter',
                 'graviton_hammer', 'hoverboard', 'levitation_pad', 'resonance_condenser',
                 'rift_stabilizer', 'stasis_projector', 'warp_gun'}
-    require(set(forge) == original | {'anomaly_nullifier', 'resonant_separator', 'flux_furnace', 'pattern_assembler'}, 'Original forge recipes, nullifier and three powered machines')
+    require(set(forge) == original | {'anomaly_nullifier', 'resonant_separator', 'flux_furnace', 'pattern_assembler', 'resonant_battery_pack', 'gravitic_manipulator', 'arc_projector'}, 'Original forge recipes, nullifier, automation and powered gadgets')
     recipe = forge['anomaly_nullifier']
     require(recipe == RECIPE and recipe['research'] == 'rift_stabilizer', 'Generator keeps the actual researched recipe')
     costs = dict(recipe['ingredients'])
@@ -55,7 +55,7 @@ def main():
     require(item['Interactions']['Use']['RequireNewClick'] and item['BlockType']['Interactions']['Use']['RequireNewClick'], 'One click requests one device toggle')
     require(item['Interactions']['Primary'] == 'Block_Primary' and item['Interactions']['Secondary'] == 'Block_Secondary', 'Native block placement remains intact')
     teaching = read('Server/StrangeMatter/Research/Teaching.json')
-    require(PAGE in teaching['rift_stabilizer'] and len(teaching) == 30, 'Existing discovery exposes the nullifier beside the automation discoveries')
+    require(PAGE in teaching['rift_stabilizer'] and len(teaching) == 33, 'Existing discovery exposes the nullifier beside automation and powered gadgets')
     require(sum(p.get('recipe') == 'anomaly_nullifier' for p in teaching['rift_stabilizer']) == 1, 'Guide contains the new recipe exactly once')
     original_catalog, original_teaching = deepcopy(catalog), deepcopy(teaching)
     add_recipe(catalog); add_recipe(catalog); add_teaching(teaching); add_teaching(teaching)
@@ -78,7 +78,7 @@ def main():
             pass
         else:
             raise AssertionError('Conduit regression probe must fail for a hidden interaction or hint')
-    print('PASS: fifteen gated forge recipes, all six shard inputs, eight visible costs, idempotent preserved catalog and guide, direct device prompts and all 64 passive conduit states.')
+    print('PASS: eighteen gated forge recipes, all six shard inputs, eight visible costs, idempotent preserved catalog and guide, direct device prompts and all 64 passive conduit states.')
 
 
 if __name__ == '__main__':

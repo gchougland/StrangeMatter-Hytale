@@ -59,6 +59,11 @@ public final class GadgetHudVerification {
         require(Arrays.stream(decoded.commands).anyMatch(c -> "#GadgetProgressFill.Anchor".equals(c.selector) && c.data.contains("170")), "Half-complete acquisition has a half-width visual meter");
         require(Arrays.stream(decoded.commands).anyMatch(c -> "#GadgetDisciplineIcon.Background".equals(c.selector) && c.data.contains(ResearchType.ENERGY.uiIconPath())), "Typed target uses the shared original research discipline texture alongside its held gadget");
         require(Arrays.stream(decoded.commands).anyMatch(c -> "#GadgetDisciplineName.Text".equals(c.selector) && c.data.contains("Energy")), "Discipline icon has a readable target label");
+        hud.render(new GadgetHudService.Readout("FIELD SCANNER","Acquiring anomaly","Hold steady",.5,false,"SM_Field_Scanner",ResearchType.ENERGY,new GadgetHudService.EnergyReadout(0,2000,12000,60000,200,false)));
+        var depleted=wire((CustomHud)sent.getLast());
+        require(Arrays.stream(depleted.commands).anyMatch(c->"#GadgetEnergyFill.Visible".equals(c.selector)&&c.data.contains("false")),"Empty energy renders no filled pixel");
+        require(Arrays.stream(depleted.commands).anyMatch(c->"#GadgetProgressFill.Anchor".equals(c.selector)&&c.data.contains("170")),"Energy does not replace scan progress");
+        require(Arrays.stream(depleted.commands).anyMatch(c->"#GadgetPackText.Text".equals(c.selector)&&c.data.contains("12000")&&c.data.contains("200 RE/s")),"Same HUD reports worn pack reserve and transfer");
         hud.render(new GadgetHudService.Readout("FIELD SCANNER", "Target lost", "Aim at the anomaly again", -1, true, "SM_Field_Scanner"));
         CustomHud error = (CustomHud) sent.getLast();
         require(Arrays.stream(error.commands).anyMatch(c -> "#GadgetAccent.Background".equals(c.selector) && c.data.contains("f37c9c")), "Error state changes the visual accent");

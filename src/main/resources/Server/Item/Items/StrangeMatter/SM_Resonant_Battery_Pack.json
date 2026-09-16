@@ -1,0 +1,50 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.SM_Resonant_Battery_Pack.name",
+    "Description": "server.items.SM_Resonant_Battery_Pack.description"
+  },
+  "Icon": "Icons/ItemsGenerated/SM_Resonant_Battery_Pack.png",
+  "MaxStack": 1,
+  "Categories": [
+    "Items.Armors",
+    "SM_StrangeMatter.All",
+    "SM_StrangeMatter.Gadgets"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Quality": "Uncommon",
+  "Tags": {
+    "Type": [
+      "StrangeMatter",
+      "Armor"
+    ]
+  },
+  "SubCategory": "SM_PersonalEquipment",
+  "Model": "Items/StrangeMatter/resonant_battery_pack.blockymodel",
+  "Texture": "Items/StrangeMatter/resonant_battery_pack.png",
+  "Armor": {
+    "ArmorSlot": "Chest",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "Cape"
+    ]
+  },
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    }
+  },
+  "Repairable": false,
+  "DurabilityLossOnDeath": false,
+  "DurabilityLossOnHit": 0
+}

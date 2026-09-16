@@ -1,0 +1,22 @@
+{
+  "Duration": 0.35,
+  "OverlapBehavior": "Overwrite",
+  "RemovalBehavior": "Duration",
+  "Debuff": true,
+  "ApplicationEffects": {
+    "HorizontalSpeedMultiplier": 0,
+    "EntityBottomTint": "#604096",
+    "EntityTopTint": "#c59dff",
+    "MovementEffects": {
+      "DisableAll": true
+    },
+    "AbilityEffects": {
+      "Disabled": [
+        "Primary",
+        "Secondary",
+        "Ability1",
+        "Ability3"
+      ]
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Arc_Impact_Ring"
+    },
+    {
+      "SpawnerId": "SM_Arc_Impact_Sparks"
+    }
+  ],
+  "LifeSpan": 0.4,
+  "CullDistance": 48,
+  "BoundingRadius": 1.5,
+  "IsImportant": false
+}

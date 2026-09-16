@@ -1,0 +1,14 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "SM_Gravitic_Suspension_Ring"
+    },
+    {
+      "SpawnerId": "SM_Gravitic_Suspension_Sparks"
+    }
+  ],
+  "LifeSpan": 0.4,
+  "CullDistance": 48,
+  "BoundingRadius": 1.5,
+  "IsImportant": false
+}
